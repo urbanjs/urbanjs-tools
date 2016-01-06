@@ -1,0 +1,39 @@
+{
+  "opts": {
+    "template": "templates/default",
+    "encoding": "utf8",
+    "destination": "./help/",
+    "recurse": true,
+    "readme": "./README.md"
+  },
+  "tags": {
+    "allowUnknownTags": false,
+    "dictionaries": [
+      "jsdoc",
+      "closure"
+    ]
+  },
+  "source": {
+    "include": [
+      "docs",
+      "src"
+    ],
+    "includePattern": ".+\\.js(doc)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "plugins": [
+    "./src/jsdoc-preprocessor-plugin"
+  ],
+  "templates": {
+    "cleverLinks": true,
+    "monospaceLinks": false,
+    "default": {
+      "layoutFile": "./docs/__fixtures__/layout.html",
+      "staticFiles": {
+        "include": [
+          "./docs/__fixtures__/static"
+        ]
+      }
+    }
+  }
+}

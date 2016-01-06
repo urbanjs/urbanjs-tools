@@ -1,0 +1,13 @@
+{
+  "preset": "airbnb",
+  "esnext": true,
+  "plugins": [
+    "jscs-jsdoc"
+  ],
+  "jsDoc": {
+    "checkAnnotations": "jsdoc3",
+    "checkTypes": "strictNativeCase",
+    "enforceExistence": false
+  },
+  "requireTrailingComma": false
+}

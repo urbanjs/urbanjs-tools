@@ -1,0 +1,19 @@
+# IDE specific folders
+.idea
+
+# Logs & runtime files
+logs
+**/*.log
+pids
+*.pid
+*.seed
+
+# Coverage directory used by tools like istanbul
+coverage
+
+# Documentation folder for JSDoc
+docs
+
+# Configuration files
+.npmignore
+.gitignore

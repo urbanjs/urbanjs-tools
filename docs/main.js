@@ -1,0 +1,72 @@
+/**
+ * @typedef {Object} Configuration
+ * @memberof module:main
+ * @property {module:main.CheckFileNamesParameters} [check-file-names]
+ * @property {module:main.JSDocParameters} [jsdoc]
+ * @property {module:main.NSPParameters} [nsp]
+ * @property {module:main.JSCSParameters} [jscs]
+ * @property {module:main.ESLintParameters} [eslint]
+ * @property {module:main.JestParameters} [jest]
+ * @property {module:main.WebpackParameters} [webpack]
+ */
+
+/**
+ * @typedef {Object} CheckFileNamesParameters
+ * @see https://github.com/HAKASHUN/gulp-check-file-naming-convention#optionscase
+ * @memberof module:main
+ * @property {string|string[]} [upperCase]
+ * @property {string|string[]} [upperCaseFirst]
+ * @property {string|string[]} [lowerCase]
+ * @property {string|string[]} [sentenceCase]
+ * @property {string|string[]} [titleCase]
+ * @property {string|string[]} [camelCase]
+ * @property {string|string[]} [pascalCase]
+ * @property {string|string[]} [snakeCase]
+ * @property {string|string[]} [paramCase]
+ * @property {string|string[]} [dotCase]
+ * @property {string|string[]} [pathCase]
+ * @property {string|string[]} [constantCase]
+ * @property {string|string[]} [swapCase]
+ */
+
+/**
+ * @typedef {Object} JSDocParameters
+ * @memberof module:main
+ * @property {string} configFile
+ * @property {string} executablePath
+ */
+
+/**
+ * @typedef {Object} NSPParameters
+ * @memberof module:main
+ * @property {string|string[]} packageFile
+ */
+
+/**
+ * @typedef {Object} JSCSParameters
+ * @memberof module:main
+ * @property {string} configFile
+ * @property {boolean} esnext
+ * @property {string|string[]} files
+ */
+
+/**
+ * @typedef {Object} ESLintParameters
+ * @memberof module:main
+ * @property {string} configFile
+ * @property {string|string[]} files
+ * @property {Object} [envs]
+ * @property {Object} [globals]
+ */
+
+/**
+ * @typedef {Object} JestParameters
+ * @memberof module:main
+ * @see https://facebook.github.io/jest/docs/api.html#content
+ */
+
+/**
+ * @typedef {Object} WebpackParameters
+ * @memberof module:main
+ * @see https://webpack.github.io/docs/configuration.html
+ */
