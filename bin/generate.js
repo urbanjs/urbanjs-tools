@@ -1,11 +1,27 @@
 'use strict';
 
-const mkdir = require('mkdirp').sync;
+const mkdir = require('mkdirp');
 const path = require('path');
 const ncp = require('ncp');
 const del = require('del');
 const fs = require('fs');
 const pkg = require('../package.json');
+
+function writeFile(file, content) {
+  fs.writeFile(
+    file,
+    content,
+    err => {
+      if (err) {
+        console.error(// eslint-disable-line no-console
+          `Unable to initialize \`${file}\` in the target directory.`
+        );
+
+        process.on('exit', () => process.exit(1));
+      }
+    }
+  );
+}
 
 module.exports = function generate(yargs) {
   const argv = yargs
@@ -45,12 +61,10 @@ module.exports = function generate(yargs) {
     return;
   }
 
-  mkdir(folderPath);
+  mkdir.sync(folderPath);
 
   [
     { path: '.editorconfig' },
-    { path: '.gitignore' },
-    { path: '.npmignore' },
     { path: 'docs', options: { filter: /docs(.+__fixtures__.*)?$/ } }
   ].forEach(source => {
     ncp(
@@ -60,7 +74,7 @@ module.exports = function generate(yargs) {
       err => {
         if (err) {
           console.error(// eslint-disable-line no-console
-            `Unable to initialize \`${source}\` in the target directory.`
+            `Unable to initialize \`${source.path}\` in the target directory.`
           );
 
           process.on('exit', () => process.exit(1));
@@ -68,6 +82,16 @@ module.exports = function generate(yargs) {
       }
     );
   });
+
+  writeFile(
+    path.join(folderPath, '.npmignore'),
+    fs.readFileSync(path.join(__dirname, '__skeleton__/npmignore'))
+  );
+
+  writeFile(
+    path.join(folderPath, '.gitignore'),
+    fs.readFileSync(path.join(__dirname, '__skeleton__/gitignore'))
+  );
 
   const packageJSON = {
     name: argv.name,
@@ -86,61 +110,24 @@ module.exports = function generate(yargs) {
     }
   };
   packageJSON.devDependencies[pkg.name] = '^' + pkg.version;
-
-  fs.writeFile(
+  writeFile(
     path.join(folderPath, 'package.json'),
-    JSON.stringify(packageJSON, null, '  '),
-    err => {
-      if (err) {
-        console.error(// eslint-disable-line no-console
-          `Unable to initialize \`package.json\` in the target directory.`
-        );
-
-        process.on('exit', () => process.exit(1));
-      }
-    }
+    JSON.stringify(packageJSON, null, '  ')
   );
 
-  fs.writeFile(
+  writeFile(
     path.join(folderPath, 'gulpfile.js'),
-    `require('${pkg.name}').initialize(require('gulp'));`,
-    err => {
-      if (err) {
-        console.error(// eslint-disable-line no-console
-          `Unable to initialize \`gulpfile.json\` in the target directory.`
-        );
-
-        process.on('exit', () => process.exit(1));
-      }
-    }
+    `require('${pkg.name}').initialize(require('gulp'));`
   );
 
-  mkdir(path.join(folderPath, 'src'));
-  fs.writeFile(
+  mkdir.sync(path.join(folderPath, 'src'));
+  writeFile(
     path.join(folderPath, 'src/index.js'),
-    '// let\'s get started...\n',
-    err => {
-      if (err) {
-        console.error(// eslint-disable-line no-console
-          `Unable to initialize \`src/index.js\` in the target directory.`
-        );
-
-        process.on('exit', () => process.exit(1));
-      }
-    }
+    '// let\'s get started...\n'
   );
 
-  fs.writeFile(
+  writeFile(
     path.join(folderPath, 'README.md'),
-    `# ${argv.name}\n`,
-    err => {
-      if (err) {
-        console.error(// eslint-disable-line no-console
-          `Unable to initialize \`README.md\` in the target directory.`
-        );
-
-        process.on('exit', () => process.exit(1));
-      }
-    }
+    `# ${argv.name}\n`
   );
 };

@@ -13,4 +13,3 @@ coverage
 
 # Documentation folder for JSDoc
 docs
-!docs/__fixtures__
