@@ -17,6 +17,16 @@ const taskWebpack = require('./webpack');
  */
 module.exports = {
 
+  /**
+   * @type {Object}
+   * @property {module:tasks/checkFileNames} checkFileNames
+   * @property {module:tasks/eslint} eslint
+   * @property {module:tasks/jest} jest
+   * @property {module:tasks/jscs} jscs
+   * @property {module:tasks/jsdoc} jsdoc
+   * @property {module:tasks/nsp} nsp
+   * @property {module:tasks/webpack} webpack
+   */
   tasks: {
     checkFileNames: taskCheckFileNames,
     eslint: taskESLint,
@@ -30,7 +40,7 @@ module.exports = {
   /**
    * TODO: configuration support
    * Initializes the gulp with the common tasks.
-   * @param {module:externals.Gulp} gulp
+   * @param {external:Gulp} gulp
    */
   initialize(gulp) {
     const processCwd = process.cwd();

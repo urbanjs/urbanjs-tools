@@ -3,10 +3,15 @@
 const checkFileNamingConvention = require('gulp-check-file-naming-convention');
 const mergeStream = require('event-stream').merge;
 
+/**
+ * @module tasks/checkFileNames
+ */
 module.exports = {
+
   /**
-   * @param {module:externals.Gulp} gulp
-   * @param {module:main.CheckFileNamesParameters} parameters
+   * @function
+   * @param {external:Gulp} gulp
+   * @param {module:tasks/checkFileNames.Parameters} parameters
    */
   register(gulp, parameters) {
     gulp.task('check-file-names', () => {

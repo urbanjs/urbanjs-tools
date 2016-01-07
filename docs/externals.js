@@ -1,10 +1,5 @@
 /**
- * @module externals
- */
-
-/**
  * The well-known gulp package.
- * @typedef Gulp
- * @memberof module:externals
+ * @external Gulp
  * @see {@link http://gulpjs.com/}
  */

@@ -3,11 +3,15 @@
 const jest = require('jest-cli');
 const del = require('del');
 
+/**
+ * @module tasks/jest
+ */
 module.exports = {
 
   /**
-   * @param {module:externals.Gulp} gulp
-   * @param {module:main.JestParameters} parameters
+   * @function
+   * @param {external.Gulp} gulp
+   * @param {module:tasks/jest.Parameters} parameters
    */
   register(gulp, parameters) {
     gulp.task('jest-clean', (done) => {

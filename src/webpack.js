@@ -3,11 +3,14 @@
 const del = require('del');
 const webpack = require('webpack');
 
+/**
+ * @module tasks/webpack
+ */
 module.exports = {
 
   /**
-   * @param {module:externals.Gulp} gulp
-   * @param {module:main.DistParameters} parameters
+   * @param {external:Gulp} gulp
+   * @param {module:tasks/webpack.Parameters} parameters
    */
   register(gulp, parameters) {
     gulp.task('webpack-clean', (done) => {

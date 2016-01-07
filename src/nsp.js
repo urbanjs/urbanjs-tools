@@ -2,11 +2,14 @@
 
 const nsp = require('nsp');
 
+/**
+ * @module tasks/nsp
+ */
 module.exports = {
 
   /**
-   * @param {module:externals.Gulp} gulp
-   * @param {module:main.NSPParameters} parameters
+   * @param {external:Gulp} gulp
+   * @param {module:tasks/nsp.Parameters} parameters
    */
   register(gulp, parameters) {
     gulp.task('nsp', (done) => {

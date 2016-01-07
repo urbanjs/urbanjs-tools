@@ -2,11 +2,15 @@
 
 const eslint = require('gulp-eslint');
 
+/**
+ * @module tasks/eslint
+ */
 module.exports = {
 
   /**
-   * @param {module:externals.Gulp} gulp
-   * @param {module:main.ESLintParameters} parameters
+   * @function
+   * @param {external:Gulp} gulp
+   * @param {module:tasks/eslint.Parameters} parameters
    */
   register(gulp, parameters) {
     gulp.task('eslint', () => {

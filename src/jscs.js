@@ -2,11 +2,15 @@
 
 const jscs = require('gulp-jscs');
 
+/**
+ * @module tasks/jscs
+ */
 module.exports = {
 
   /**
-   * @param {module:externals.Gulp} gulp
-   * @param {module:main.JSCSParameters} parameters
+   * @function
+   * @param {external:Gulp} gulp
+   * @param {module:tasks/jscs.Parameters} parameters
    */
   register(gulp, parameters) {
     gulp.task('jscs', () => {
