@@ -9,10 +9,11 @@ module.exports = {
 
   /**
    * @param {external:Gulp} gulp
+   * @param {string} taskName
    * @param {module:tasks/nsp.Parameters} parameters
    */
-  register(gulp, parameters) {
-    gulp.task('nsp', (done) => {
+  register(gulp, taskName, parameters) {
+    gulp.task(taskName, (done) => {
       let vulnerabilities = null;
       let i = 0;
 

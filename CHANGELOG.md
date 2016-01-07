@@ -1,7 +1,8 @@
 # Changelog
 
-## Not released yet
+## 0.1.6 (2016-01-08)
 - Proper JSDoc documentation
+- Add configuration options
 
 ## 0.1.5 (2016-01-08)
 - Bugfix: npm package does not contain the required files (/docs, .npmignore,. gitignore)

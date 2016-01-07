@@ -1,11 +1,11 @@
 /**
  * @typedef {Object} Configuration
  * @memberof module:main
- * @property {module:main.CheckFileNamesParameters} [check-file-names]
- * @property {module:main.JSDocParameters} [jsdoc]
- * @property {module:main.NSPParameters} [nsp]
- * @property {module:main.JSCSParameters} [jscs]
- * @property {module:main.ESLintParameters} [eslint]
- * @property {module:main.JestParameters} [jest]
- * @property {module:main.WebpackParameters} [webpack]
+ * @property {module:tasks/checkFileNames.Parameters} [checkFileNames]
+ * @property {module:tasks/jsdoc.Parameters} [jsdoc]
+ * @property {module:tasks/nsp.Parameters} [nsp]
+ * @property {module:tasks/jscs.Parameters} [jscs]
+ * @property {module:tasks/eslint.Parameters} [eslint]
+ * @property {module:tasks/jest.Parameters} [jest]
+ * @property {module:tasks/webpack.Parameters} [webpack]
  */

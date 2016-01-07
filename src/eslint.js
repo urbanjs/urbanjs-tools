@@ -10,10 +10,11 @@ module.exports = {
   /**
    * @function
    * @param {external:Gulp} gulp
+   * @param {string} taskName
    * @param {module:tasks/eslint.Parameters} parameters
    */
-  register(gulp, parameters) {
-    gulp.task('eslint', () => {
+  register(gulp, taskName, parameters) {
+    gulp.task(taskName, () => {
       return gulp.src(parameters.files)
         .pipe(eslint({
           configFile: parameters.configFile,

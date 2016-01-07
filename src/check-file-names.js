@@ -11,10 +11,11 @@ module.exports = {
   /**
    * @function
    * @param {external:Gulp} gulp
+   * @param {string} taskName
    * @param {module:tasks/checkFileNames.Parameters} parameters
    */
-  register(gulp, parameters) {
-    gulp.task('check-file-names', () => {
+  register(gulp, taskName, parameters) {
+    gulp.task(taskName, () => {
       return mergeStream(
         Object.keys(parameters).map(caseName => {
           return gulp.src(parameters[caseName])

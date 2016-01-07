@@ -10,16 +10,18 @@ module.exports = {
 
   /**
    * @param {external:Gulp} gulp
+   * @param {string} taskName
    * @param {module:tasks/webpack.Parameters} parameters
    */
-  register(gulp, parameters) {
-    gulp.task('webpack-clean', (done) => {
+  register(gulp, taskName, parameters) {
+    const cleanUpTaskName = taskName + '-clean';
+    gulp.task(cleanUpTaskName, (done) => {
       del([parameters.output.path], { force: true }).then(() => {
         done();
       });
     });
 
-    gulp.task('webpack', ['webpack-clean'], (done) => {
+    gulp.task(taskName, [cleanUpTaskName], (done) => {
       webpack(parameters).run((err) => {
         done(err);
       });

@@ -10,17 +10,19 @@ module.exports = {
 
   /**
    * @param {external:Gulp} gulp
+   * @param {string} taskName
    * @param {module:tasks/jsdoc.Parameters} parameters
    */
-  register(gulp, parameters) {
-    const command = `${parameters.executablePath}jsdoc -c ${parameters.configFile}`;
-
-    gulp.task('jsdoc-clean', (done) => {
+  register(gulp, taskName, parameters) {
+    const cleanUpTaskName = taskName + '-clean';
+    gulp.task(cleanUpTaskName, (done) => {
       del(['help'], { force: true }).then(() => {
         done();
       });
     });
 
-    gulp.task('jsdoc', ['jsdoc-clean'], shell.task([command]));
+    gulp.task(taskName, [cleanUpTaskName], shell.task([
+      `${parameters.executablePath}jsdoc -c ${parameters.configFile}`
+    ]));
   }
 };

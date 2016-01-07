@@ -11,16 +11,18 @@ module.exports = {
   /**
    * @function
    * @param {external.Gulp} gulp
+   * @param {string} taskName
    * @param {module:tasks/jest.Parameters} parameters
    */
-  register(gulp, parameters) {
-    gulp.task('jest-clean', (done) => {
+  register(gulp, taskName, parameters) {
+    const cleanUpTaskName = taskName + '-clean';
+    gulp.task(cleanUpTaskName, (done) => {
       del(['coverage'], { force: true }).then(() => {
         done();
       });
     });
 
-    gulp.task('jest', ['jest-clean'], (done) => {
+    gulp.task(taskName, [cleanUpTaskName], (done) => {
       jest.runCLI(
         {
           config: parameters

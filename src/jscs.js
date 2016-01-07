@@ -10,10 +10,11 @@ module.exports = {
   /**
    * @function
    * @param {external:Gulp} gulp
+   * @param {string} taskName
    * @param {module:tasks/jscs.Parameters} parameters
    */
-  register(gulp, parameters) {
-    gulp.task('jscs', () => {
+  register(gulp, taskName, parameters) {
+    gulp.task(taskName, () => {
       return gulp.src(parameters.files)
         .pipe(jscs({
           configPath: parameters.configFile,
