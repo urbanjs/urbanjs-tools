@@ -99,13 +99,6 @@ module.exports = function generate(yargs) {
     main: 'dist/index.js',
     scripts: pkg.scripts,
     devDependencies: {
-      // TODO: fix it to be able to remove these dependencies
-      // babel-core tries to find the preset around the folder of the source file
-      // and cannot be changed yet, YAY...
-      'babel-preset-es2015': pkg.dependencies['babel-preset-es2015'],
-      'babel-preset-react': pkg.dependencies['babel-preset-react'],
-      'babel-preset-stage-0': pkg.dependencies['babel-preset-stage-0'],
-
       gulp: pkg.dependencies.gulp
     }
   };
@@ -117,7 +110,7 @@ module.exports = function generate(yargs) {
 
   writeFile(
     path.join(folderPath, 'gulpfile.js'),
-    `require('${pkg.name}').initialize(require('gulp'));`
+    `'use strict';\n\nrequire('${pkg.name}').initialize(require('gulp'));\n`
   );
 
   mkdir.sync(path.join(folderPath, 'src'));

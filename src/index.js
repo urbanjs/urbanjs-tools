@@ -1,8 +1,6 @@
 'use strict';
 
-const merge = require('lodash.merge');
 const defaults = require('./index-defaults');
-
 const checkFileNames = require('./check-file-names');
 const eslint = require('./eslint');
 const jest = require('./jest');
@@ -15,6 +13,18 @@ const webpack = require('./webpack');
  * @module main
  */
 module.exports = {
+
+  /**
+   * @type {Object}
+   * @property {module:tasks/checkFileNames.Parameters} checkFileNames
+   * @property {module:tasks/eslint.Parameters} eslint
+   * @property {module:tasks/jest.Parameters} jest
+   * @property {module:tasks/jscs.Parameters} jscs
+   * @property {module:tasks/jsdoc.Parameters} jsdoc
+   * @property {module:tasks/nsp.Parameters} nsp
+   * @property {module:tasks/webpack.Parameters} webpack
+   */
+  defaults,
 
   /**
    * @type {Object}
@@ -42,7 +52,7 @@ module.exports = {
    * @param {module:main.Configuration} [configuration]
    */
   initialize(gulp, configuration) {
-    const config = merge({}, defaults, configuration);
+    const config = configuration || {};
 
     [
       ['checkFileNames', 'check-file-names'],
@@ -53,7 +63,19 @@ module.exports = {
       ['nsp'],
       ['webpack'],
     ].forEach(task => {
-      this.tasks[task[0]].register(gulp, task[1] || task[0], config[task[0]]);
+      if (config[task[0]] === false) {
+        gulp.task(task[0], done => done());
+        return;
+      }
+
+      let taskConfig = config[task[0]];
+      if (!taskConfig) {
+        taskConfig = defaults[task[0]];
+      } else if (typeof taskConfig === 'object' && !Array.isArray(taskConfig)) {
+        taskConfig = Object.assign({}, defaults[task[0]], taskConfig);
+      }
+
+      this.tasks[task[0]].register(gulp, task[1] || task[0], taskConfig);
     });
 
     gulp.task('dist', ['webpack']);
@@ -67,6 +89,10 @@ module.exports = {
     gulp.task('pre-commit', ['analyse', 'test']);
 
     gulp.task('pre-release', ['pre-commit', 'dist', 'doc']);
+
+    gulp.task('default', () => {
+      console.log('Not configured yet.'); // eslint-disable-line no-console
+    });
   }
 
 };

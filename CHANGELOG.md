@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.7 (2016-01-11)
+- Enhance configuration support of the webpack task
+- Add legacy decorator support to babel
+- Expose default configuration
+- Dummy default task
+
 ## 0.1.6 (2016-01-08)
 - Proper JSDoc documentation
 - Add configuration options

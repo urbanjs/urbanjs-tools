@@ -56,5 +56,7 @@
 /**
  * @typedef {Object} Parameters
  * @memberof module:tasks/webpack
+ * @property {Object|Object[]} config
+ * @property {boolean} [watch]
  * @see https://webpack.github.io/docs/configuration.html
  */

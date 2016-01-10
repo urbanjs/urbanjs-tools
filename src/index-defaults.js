@@ -1,7 +1,6 @@
 'use strict';
 
 const path = require('path');
-const merge = require('lodash.merge');
 const webpackConfig = require('./webpack-config.js');
 
 const processCwd = process.cwd();
@@ -61,12 +60,15 @@ module.exports = {
     files: allFiles,
     configFile: ESLintConfigFile
   },
-  webpack: merge({}, {
-    entry: [require.resolve('babel-polyfill'), webpackRootFile],
-    output: {
-      path: webpackBuildPath,
-      filename: 'index.js',
-      libraryTarget: 'commonjs2'
-    }
-  }, webpackConfig)
+  webpack: {
+    watch: false,
+    config: Object.assign({}, {
+      entry: [require.resolve('babel-polyfill'), webpackRootFile],
+      output: {
+        path: webpackBuildPath,
+        filename: 'index.js',
+        libraryTarget: 'umd'
+      }
+    }, webpackConfig)
+  }
 };
