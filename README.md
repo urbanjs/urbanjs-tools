@@ -53,7 +53,7 @@ of the technical specific tasks are used directly by the presets
 to give a chance to replace them as you want.
 
 Tasks:
-- ```check-file-names``` - Validator task for checking the names of the files
+- ```check-file-names``` - Validator for checking the names of the files
 - ```eslint``` - JS linter
 - ```jest``` - Unit tester
 - ```jscs``` - Code style checker
@@ -107,7 +107,6 @@ the project name before the generation.
 Use ```-h``` for help.
 
 ## Roadmap
-- Proper documentation
 - Add `flow` support
 - Add `deploy support` (pm2)
 

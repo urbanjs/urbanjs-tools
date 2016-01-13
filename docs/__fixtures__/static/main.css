@@ -20,7 +20,6 @@ div.description {
     margin-left: 30px;
 }
 
-h5 + ul,
 table.params,
 table.props,
 table.params + dl.details,
@@ -28,6 +27,11 @@ article > dl,
 div.param-desc,
 pre.prettyprint {
     margin-left: 60px;
+}
+
+h5 + ul {
+    list-style: none;
+    margin-left: 20px;
 }
 
 /* Vertical distance */

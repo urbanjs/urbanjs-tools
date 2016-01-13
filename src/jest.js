@@ -10,9 +10,18 @@ module.exports = {
 
   /**
    * @function
-   * @param {external.Gulp} gulp
-   * @param {string} taskName
-   * @param {module:tasks/jest.Parameters} parameters
+   * @description This task is responsible for running the jest unit tests.
+   *
+   * @param {external:gulp} gulp The gulp instance to use
+   * @param {string} taskName The name of the task
+   * @param {module:tasks/jest.Parameters} parameters The parameters of the task
+   *
+   * @example
+   * register(
+   *   require('gulp'),
+   *   'jest',
+   *   { rootDir: require('path').join(__dirname + 'src') }
+   * );
    */
   register(gulp, taskName, parameters) {
     const cleanUpTaskName = taskName + '-clean';

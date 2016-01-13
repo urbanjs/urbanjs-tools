@@ -1,5 +1,5 @@
 /**
  * The well-known gulp package.
- * @external Gulp
+ * @external gulp
  * @see {@link http://gulpjs.com/}
  */

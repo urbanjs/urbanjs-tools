@@ -9,9 +9,22 @@ const webpack = require('webpack');
 module.exports = {
 
   /**
-   * @param {external:Gulp} gulp
-   * @param {string} taskName
-   * @param {module:tasks/webpack.Parameters} parameters
+   * @function
+   * @description This task is responsible for building the project.
+   *
+   * @param {external:gulp} gulp The gulp instance to use
+   * @param {string} taskName The name of the task
+   * @param {module:tasks/webpack.Parameters} parameters The parameters of the task
+   *
+   * @example
+   * register(
+   *   require('gulp'),
+   *   'webpack',
+   *   {
+   *     watch: false,
+   *     config: require('path').join(__dirname, 'webpack.config.js')
+   *   }
+   * );
    */
   register(gulp, taskName, parameters) {
     const cleanUpTaskName = taskName + '-clean';

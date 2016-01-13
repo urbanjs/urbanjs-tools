@@ -8,9 +8,21 @@ const nsp = require('nsp');
 module.exports = {
 
   /**
-   * @param {external:Gulp} gulp
-   * @param {string} taskName
-   * @param {module:tasks/nsp.Parameters} parameters
+   * @function
+   * @description This task is responsible for validating the used packages against vulnerabilities.
+   *
+   * @param {external:gulp} gulp The gulp instance to use
+   * @param {string} taskName The name of the task
+   * @param {module:tasks/nsp.Parameters} parameters The parameters of the task
+   *
+   * @example
+   * register(
+   *   require('gulp'),
+   *   'nsp',
+   *   {
+   *     packageFile: require('path').join(__dirname + 'package.json')
+   *   }
+   * );
    */
   register(gulp, taskName, parameters) {
     gulp.task(taskName, (done) => {

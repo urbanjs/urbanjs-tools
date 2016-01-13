@@ -9,16 +9,28 @@ module.exports = {
 
   /**
    * @function
-   * @param {external:Gulp} gulp
-   * @param {string} taskName
-   * @param {module:tasks/jscs.Parameters} parameters
+   * @description This task is responsible for validating the code style of JS.
+   *
+   * @param {external:gulp} gulp The gulp instance to use
+   * @param {string} taskName The name of the task
+   * @param {module:tasks/jscs.Parameters} parameters The parameters of the task
+   *
+   * @example
+   * register(
+   *   require('gulp'),
+   *   'jscs',
+   *   {
+   *     configFile: require('path').join(__dirname + '.jscsrc'),
+   *     files: require('path').join(__dirname, 'src/*.js')
+   *   }
+   * );
    */
   register(gulp, taskName, parameters) {
     gulp.task(taskName, () => {
       return gulp.src(parameters.files)
         .pipe(jscs({
           configPath: parameters.configFile,
-          esnext: parameters.esnext
+          esnext: typeof parameters.esnext === 'undefined' ? true : !!parameters.esnext
         }));
     });
   }

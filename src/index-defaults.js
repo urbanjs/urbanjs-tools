@@ -21,8 +21,8 @@ const allFiles = Array.prototype.concat.apply([], Object.keys(files).map((key) =
 const jsDocConfigPath = path.join(__dirname, '../.jsdocrc');
 const jsDocExecutablePath = path.join(__dirname, '../node_modules/.bin/');
 const nspPackageFiles = processCwd + '/package.json';
-const JSCSConfigFile = path.join(__dirname, '../.jscsrc');
-const ESLintConfigFile = path.join(__dirname, '../.eslintrc');
+const jscsConfigFile = path.join(__dirname, '../.jscsrc');
+const eslintConfigFile = path.join(__dirname, '../.eslintrc');
 const jestConfig = {
   // TODO: fix coverage
   // if testPathDirs are given, coverage will be empty
@@ -53,12 +53,12 @@ module.exports = {
   jest: jestConfig,
   jscs: {
     files: allFiles,
-    configFile: JSCSConfigFile,
+    configFile: jscsConfigFile,
     esnext: true
   },
   eslint: {
     files: allFiles,
-    configFile: ESLintConfigFile
+    configFile: eslintConfigFile
   },
   webpack: {
     watch: false,
