@@ -37,7 +37,7 @@ module.exports = {
           config: parameters
         },
         parameters.rootDir,
-        success => done(!success)
+        success => () => done(!success)
       );
     });
   }
