@@ -1,6 +1,7 @@
 'use strict';
 
 const shell = require('gulp-shell');
+const globals = require('./index-globals');
 const del = require('del');
 
 /**
@@ -36,6 +37,6 @@ module.exports = {
 
     gulp.task(taskName, [cleanUpTaskName], shell.task([
       `${parameters.executablePath}jsdoc -c ${parameters.configFile}`
-    ]));
+    ], { env: { urbanJSToolGlobals: JSON.stringify(globals) } }));
   }
 };

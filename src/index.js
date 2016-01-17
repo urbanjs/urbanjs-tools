@@ -1,5 +1,6 @@
 'use strict';
 
+const globals = require('./index-globals');
 const defaults = require('./index-defaults');
 const tasks = {
   checkFileNames: require('./check-file-names'),
@@ -15,6 +16,19 @@ const tasks = {
  * @module main
  */
 module.exports = {
+
+  /**
+   * @type {Object}
+   * @description
+   * Global settings that are used by multiple tasks. These settings allow developers
+   * to keep common configuration of tasks in sync e.g. babel (used by jest, jsdoc, webpack)
+   *
+   * Note that these globals can take affect only if the defaults are used
+   * e.g. by overwriting the preprocessor of the jest global babel settings are not used anymore
+   *
+   * @property {Object} babel Parameters of the common babel
+   */
+  globals,
 
   /**
    * @type {Object}
@@ -91,7 +105,7 @@ module.exports = {
       existingTasks[taskName] = true;
     });
 
-    const filter = val => val.filter(task => !!existingTasks[task]);
+    const filter = val => val.filter(task => existingTasks.hasOwnProperty(task));
 
     gulp.task('dist', filter(['webpack']));
 
@@ -104,6 +118,23 @@ module.exports = {
     gulp.task('pre-commit', ['analyse', 'test']);
 
     gulp.task('pre-release', ['pre-commit', 'dist', 'doc']);
+  },
+
+  /**
+   * Overwrites global configurations
+   * @see module:main.globals
+   * @param {Object} configuration
+   * @param {Object} configuration.babel
+   */
+  setGlobalConfiguration(configuration) {
+    const unknownGlobals = Object.keys(configuration)
+      .filter(key => !globals.hasOwnProperty(key));
+
+    if (unknownGlobals.length) {
+      throw new Error('Unknown globals: ' + unknownGlobals.join(', '));
+    }
+
+    Object.assign(globals, configuration);
   }
 
 };

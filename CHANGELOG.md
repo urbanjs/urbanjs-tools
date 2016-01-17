@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- Introduce globals (common configurations used by multiple tasks)
+
 ## 0.1.8 (2016-01-15)
 - Allow tasks to be disabled
 - Extended API documentation
