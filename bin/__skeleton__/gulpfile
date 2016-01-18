@@ -1,0 +1,10 @@
+'use strict';
+
+const gulp = require('gulp');
+const tools = require('urbanjs-tools');
+
+tools.initialize(gulp);
+
+gulp.task('default', () => {
+  console.log('Not configured. See gulpfile.js'); // eslint-disable-line no-console
+});

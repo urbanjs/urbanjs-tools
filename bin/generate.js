@@ -93,6 +93,11 @@ module.exports = function generate(yargs) {
     fs.readFileSync(path.join(__dirname, '__skeleton__/gitignore'))
   );
 
+  writeFile(
+    path.join(folderPath, 'gulpfile.js'),
+    fs.readFileSync(path.join(__dirname, '__skeleton__/gulpfile'))
+  );
+
   const packageJSON = {
     name: argv.name,
     version: '0.1.0',
@@ -106,11 +111,6 @@ module.exports = function generate(yargs) {
   writeFile(
     path.join(folderPath, 'package.json'),
     JSON.stringify(packageJSON, null, '  ')
-  );
-
-  writeFile(
-    path.join(folderPath, 'gulpfile.js'),
-    `'use strict';\n\nrequire('${pkg.name}').initialize(require('gulp'));\n`
   );
 
   mkdir.sync(path.join(folderPath, 'src'));
