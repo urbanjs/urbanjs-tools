@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.1.9 (2016-01-18)
 - Introduce globals (common configurations used by multiple tasks)
 - Extended README (usage section)
 - Initialize dummy default task
