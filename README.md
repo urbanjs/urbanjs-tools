@@ -1,7 +1,5 @@
 # urbanjs-tools
 
-**`[in progress ...]`**
-
 Urbanjs-tools is a new concept to start a package.
 
 Every time you'd like to kick off your project you
@@ -11,6 +9,17 @@ need to
 - configure them properly
 
 Main goal of the package is to solve these problems out of the box.
+
+## How to use it?
+
+There are 3 typical phases during the development. The goal is here to support
+these phases with relevant commands.
+
+Commands:
+- `npm start`: runs the default gulp task, needs to be initialized in the project
+- `npm run pre-commit`: run it before a commit to analyze the code base and run the tests
+- `npm run pre-release`: run it before the new release to build the project,
+generate documentation and run everything that belongs to the pre-commit command
 
 ## Why use it?
 - less initialization steps around a new project
