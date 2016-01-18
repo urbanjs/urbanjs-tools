@@ -19,7 +19,7 @@ const allFiles = Array.prototype.concat.apply([], Object.keys(files).map((key) =
   return files[key];
 }));
 const jsDocConfigPath = path.join(__dirname, '../.jsdocrc');
-const jsDocExecutablePath = path.join(__dirname, '../node_modules/.bin/');
+const jsDocExecutablePath = path.join(require.resolve('jsdoc/jsdoc'), '../../.bin/');
 const nspPackageFiles = processCwd + '/package.json';
 const jscsConfigFile = path.join(__dirname, '../.jscsrc');
 const eslintConfigFile = path.join(__dirname, '../.eslintrc');

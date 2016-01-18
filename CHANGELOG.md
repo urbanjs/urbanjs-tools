@@ -1,9 +1,10 @@
 # Changelog
 
-## 0.1.9 (2016-01-18)
+## 0.1.10 (2016-01-18)
 - Introduce globals (common configurations used by multiple tasks)
 - Extended README (usage section)
 - Initialize dummy default task
+- Fix jsdoc executable path (npm v3)
 
 ## 0.1.8 (2016-01-15)
 - Allow tasks to be disabled
