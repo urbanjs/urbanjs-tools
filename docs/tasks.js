@@ -33,18 +33,17 @@
 /**
  * @typedef {Object} Parameters
  * @memberof module:tasks/jscs
- * @property {string} configFile The path to the jscs configuration file
  * @property {string|string[]} files Paths of the files to check
- * @property {boolean} [esnext] Whether allow esnext features
+ * @property {string} configFile The path to the jscs configuration file
  */
 
 /**
  * @typedef {Object} Parameters
  * @memberof module:tasks/eslint
- * @property {string} configFile The path to the eslint configuration file
+ * @description ESLint configuration object, can contain any options of the eslint cli engine.
+ * @see http://eslint.org/docs/developer-guide/nodejs-api#cliengine
  * @property {string|string[]} files Paths of the files to check
- * @property {Object} [envs] Target environments
- * @property {Object} [globals] Global variables
+ * @property {string} configFile The path to the eslint configuration file
  */
 
 /**

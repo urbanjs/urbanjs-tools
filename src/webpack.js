@@ -36,10 +36,13 @@ module.exports = {
 
     gulp.task(taskName, [cleanUpTaskName], (done) => {
       const bundler = webpack(parameters.config);
+      let counter = 0;
       const cb = (err/*, stats*/) => {
         //console.log(stats.toString(parameters.config.stats || {})); //eslint-disable-line no-console
 
-        done(err);
+        if (++counter === (parameters.config.length || 1)) {
+          done(err);
+        }
       };
 
       if (parameters.watch) {

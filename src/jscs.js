@@ -28,10 +28,7 @@ module.exports = {
   register(gulp, taskName, parameters) {
     gulp.task(taskName, () => {
       return gulp.src(parameters.files)
-        .pipe(jscs({
-          configPath: parameters.configFile,
-          esnext: typeof parameters.esnext === 'undefined' ? true : !!parameters.esnext
-        }));
+        .pipe(jscs({ configPath: parameters.configFile }));
     });
   }
 };

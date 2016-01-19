@@ -33,9 +33,7 @@ module.exports = {
 
     gulp.task(taskName, [cleanUpTaskName], (done) => {
       jest.runCLI(
-        {
-          config: parameters
-        },
+        { config: parameters },
         parameters.rootDir,
         success => done(!success)
       );

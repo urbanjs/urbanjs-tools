@@ -1,71 +1,70 @@
 'use strict';
 
 const path = require('path');
+const readdir = require('readdir');
 const webpackConfig = require('./webpack-config.js');
-
 const processCwd = process.cwd();
-const files = {
-  bin: [
-    processCwd + '/bin/**/*.js'
-  ],
-  gulp: [
-    processCwd + '/gulp/**/*.js'
-  ],
-  source: [
-    processCwd + '/src/**/*.js'
-  ]
-};
-const allFiles = Array.prototype.concat.apply([], Object.keys(files).map((key) => {
-  return files[key];
-}));
-const jsDocConfigPath = path.join(__dirname, '../.jsdocrc');
-const jsDocExecutablePath = path.join(require.resolve('jsdoc/jsdoc'), '../../.bin/');
-const nspPackageFiles = processCwd + '/package.json';
-const jscsConfigFile = path.join(__dirname, '../.jscsrc');
-const eslintConfigFile = path.join(__dirname, '../.eslintrc');
-const jestConfig = {
-  // TODO: fix coverage
-  // if testPathDirs are given, coverage will be empty
-  // collectCoverage: true
-
-  setupEnvScriptFile: path.join(__dirname, './jest-set-env-script.js'),
-  scriptPreprocessor: path.join(__dirname, './jest-preprocessor.js'),
-  unmockedModulePathPatterns: ['core-js/.*'],
-  rootDir: processCwd,
-  testPathDirs: [
-    path.join(processCwd, 'src')
-  ]
-};
-const webpackRootFile = path.join(processCwd, 'src/index.js');
-const webpackBuildPath = path.join(processCwd, 'dist');
+const sourceFiles = [
+  path.join(processCwd, 'bin/**/*.js'),
+  path.join(processCwd, 'src/**/*.js'),
+  path.join(processCwd, 'gulp/**/*.js'),
+  path.join(processCwd, 'gulpfile.js')
+];
 
 module.exports = {
   checkFileNames: {
-    paramCase: allFiles
+    paramCase: sourceFiles
   },
+
   jsdoc: {
-    configFile: jsDocConfigPath,
-    executablePath: jsDocExecutablePath
+    configFile: path.join(__dirname, '../.jsdocrc'),
+    executablePath: path.join(require.resolve('jsdoc/jsdoc'), '../../.bin/')
   },
+
   nsp: {
-    packageFile: nspPackageFiles
+    packageFile: path.join(processCwd, 'package.json')
   },
-  jest: jestConfig,
+
+  jest: {
+    rootDir: processCwd,
+    unmockedModulePathPatterns: ['core-js/.*'],
+    setupEnvScriptFile: path.join(__dirname, 'jest-set-env-script.js'),
+    scriptPreprocessor: path.join(__dirname, 'jest-preprocessor.js'),
+    collectCoverage: true,
+    collectCoverageOnlyFrom: readdir
+      .readSync(
+        path.join(processCwd, 'src'), ['**.js'],
+        readdir.ABSOLUTE_PATHS
+      )
+      .reduce((result, file) => {
+        if (file.indexOf('__tests__') === -1) {
+          result[file] = true;
+        }
+
+        return result;
+      }, {})
+  },
+
   jscs: {
-    files: allFiles,
-    configFile: jscsConfigFile,
-    esnext: true
+    files: sourceFiles,
+    configFile: path.join(__dirname, '../.jscsrc')
   },
+
   eslint: {
-    files: allFiles,
-    configFile: eslintConfigFile
+    files: sourceFiles,
+    configFile: path.join(__dirname, '../.eslintrc'),
+    extensions: ['.js', '.jsx']
   },
+
   webpack: {
     watch: false,
     config: Object.assign({}, {
-      entry: [require.resolve('babel-polyfill'), webpackRootFile],
+      entry: [
+        require.resolve('babel-polyfill'),
+        path.join(processCwd, 'src/index.js')
+      ],
       output: {
-        path: webpackBuildPath,
+        path: path.join(processCwd, 'dist'),
         filename: 'index.js',
         libraryTarget: 'umd'
       }
