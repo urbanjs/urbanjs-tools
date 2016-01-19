@@ -1,7 +1,8 @@
 # Changelog
 
-## Unreleased
+## 0.1.11 (2016-01-19)
 - Fix jest coverage report
+- Fix webpack task (multiple done)
 - Enhance configuration support (eslint and jscs tasks)
 
 ## 0.1.10 (2016-01-18)
