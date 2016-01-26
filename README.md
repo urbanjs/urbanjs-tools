@@ -66,6 +66,7 @@ Tasks:
 - ```eslint``` - JS linter
 - ```jest``` - Unit tester
 - ```jscs``` - Code style checker
+- ```jscs:fix``` - Code style fixer
 - ```jsdoc``` - API documentation generator
 - ```nsp``` - Vulnerability checker
 - ```webpack``` - Bundler

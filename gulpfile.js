@@ -1,5 +1,4 @@
 'use strict';
-
 const gulp = require('gulp');
 const tools = require('./src');
 
