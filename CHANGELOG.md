@@ -4,6 +4,7 @@
 - Enhance jscs task (extra rules for jsdoc, fix reporter)
 - Be strict in ESLint rules (no warnings)
 - Introduce jscs:fix task
+- Introduce eslint:fix task
 
 ## 0.1.11 (2016-01-19)
 - Fix jest coverage report

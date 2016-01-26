@@ -64,6 +64,7 @@ to give a chance to replace them as you want.
 Tasks:
 - ```check-file-names``` - Validator for checking the names of the files
 - ```eslint``` - JS linter
+- ```eslint:fix``` - JS linter
 - ```jest``` - Unit tester
 - ```jscs``` - Code style checker
 - ```jscs:fix``` - Code style fixer

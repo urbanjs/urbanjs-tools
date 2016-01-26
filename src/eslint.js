@@ -1,6 +1,8 @@
 'use strict';
 
 const eslint = require('gulp-eslint');
+const path = require('path');
+const gulpIf = require('gulp-if');
 
 /**
  * @module tasks/eslint
@@ -26,11 +28,43 @@ module.exports = {
    * );
    */
   register(gulp, taskName, parameters) {
-    gulp.task(taskName, () => {
-      return gulp.src(parameters.files)
-        .pipe(eslint(parameters))
-        .pipe(eslint.format())
-        .pipe(eslint.failOnError());
+    const validate = (source, fix) => {
+      return gulp.src(source)
+        .pipe(eslint(Object.assign({}, parameters, {
+          fix: !!fix
+        })))
+        .pipe(eslint.format());
+    };
+
+    gulp.task(taskName, () => validate(parameters.files));
+
+    gulp.task(taskName + ':fix', (done) => {
+      const filesByFolderPath = {};
+
+      gulp.src(parameters.files)
+        .on('error', err => done(err))
+        .on('data', (file) => {
+          const folderPath = path.dirname(file.path);
+          filesByFolderPath[folderPath] = filesByFolderPath[folderPath] || [];
+          filesByFolderPath[folderPath].push(file.path);
+        })
+        .on('end', () => {
+          Promise.all(
+            Object.keys(filesByFolderPath).map(folderPath => {
+              return new Promise((resolve, reject) => {
+                validate(filesByFolderPath[folderPath], true)
+                  .pipe(gulpIf(
+                    file => file.eslint && file.eslint.fixe,
+                    gulp.dest(folderPath)
+                  ))
+                  .on('error', err => reject(err))
+                  .on('end', () => resolve())
+                  .on('data', () => {
+                  });
+              });
+            })
+          ).then(() => done(), err => done(err));
+        });
     });
   }
 };
