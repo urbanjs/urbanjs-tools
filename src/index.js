@@ -85,7 +85,7 @@ module.exports = {
       ['jscs'],
       ['jsdoc'],
       ['nsp'],
-      ['webpack'],
+      ['webpack']
     ].forEach(task => {
       if (config[task[0]] === false) {
         return;

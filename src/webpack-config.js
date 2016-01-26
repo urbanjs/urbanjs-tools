@@ -29,7 +29,7 @@ const config = {
     modulesDirectories: [
       path.join(processCwd, 'node_modules'),
       path.join(__dirname, '../node_modules')
-    ],
+    ]
   },
 
   module: {

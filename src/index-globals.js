@@ -27,7 +27,7 @@ const globals = {
 
       // stage-3
       require.resolve('babel-plugin-transform-async-to-generator'),
-      require.resolve('babel-plugin-transform-exponentiation-operator'),
+      require.resolve('babel-plugin-transform-exponentiation-operator')
     ]
   }
 };
