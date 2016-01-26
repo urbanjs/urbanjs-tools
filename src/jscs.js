@@ -28,7 +28,8 @@ module.exports = {
   register(gulp, taskName, parameters) {
     gulp.task(taskName, () => {
       return gulp.src(parameters.files)
-        .pipe(jscs({ configPath: parameters.configFile }));
+        .pipe(jscs({ configPath: parameters.configFile }))
+        .pipe(jscs.reporter());
     });
   }
 };

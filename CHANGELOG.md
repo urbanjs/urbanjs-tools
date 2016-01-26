@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- Enhance jscs task (extra rules for jsdoc, fix reporter)
+
 ## 0.1.11 (2016-01-19)
 - Fix jest coverage report
 - Fix webpack task (multiple done)
