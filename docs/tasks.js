@@ -56,6 +56,16 @@
 
 /**
  * @typedef {Object} Parameters
+ * @memberof module:tasks/retire
+ * @see https://www.npmjs.com/package/retire
+ *
+ * @property {Object|Object[]} config Configuration of the retire
+ * @property {string} executablePath The path where retire executable can be found
+ * @property {string} [options] Options of retire command
+ */
+
+/**
+ * @typedef {Object} Parameters
  * @memberof module:tasks/webpack
  * @see https://webpack.github.io/docs/configuration.html
  *

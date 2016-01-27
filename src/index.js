@@ -9,6 +9,7 @@ const tasks = {
   jscs: require('./jscs'),
   jsdoc: require('./jsdoc'),
   nsp: require('./nsp'),
+  retire: require('./retire'),
   webpack: require('./webpack')
 };
 
@@ -42,6 +43,7 @@ module.exports = {
    * @property {module:tasks/jscs.Parameters} jscs Default parameters of the jscs task
    * @property {module:tasks/jsdoc.Parameters} jsdoc Default parameters of the jsdoc task
    * @property {module:tasks/nsp.Parameters} nsp Default parameters of the nsp task
+   * @property {module:tasks/retire.Parameters} retire Default parameters of the retire task
    * @property {module:tasks/webpack.Parameters} webpack Default parameters of the webpack task
    */
   defaults,
@@ -56,6 +58,7 @@ module.exports = {
    * @property {module:tasks/jscs} jscs Code style checker
    * @property {module:tasks/jsdoc} jsdoc API documentation generator
    * @property {module:tasks/nsp} nsp Vulnerability checker
+   * @property {module:tasks/retire} retire Vulnerability checker
    * @property {module:tasks/webpack} webpack Bundler
    */
   tasks,
@@ -85,6 +88,7 @@ module.exports = {
       ['jscs'],
       ['jsdoc'],
       ['nsp'],
+      ['retire'],
       ['webpack']
     ].forEach(task => {
       if (config[task[0]] === false) {
@@ -113,7 +117,7 @@ module.exports = {
 
     gulp.task('test', filter(['jest']));
 
-    gulp.task('analyse', filter(['check-file-names', 'jscs', 'eslint', 'nsp']));
+    gulp.task('analyse', filter(['check-file-names', 'jscs', 'eslint', 'nsp', 'retire']));
 
     gulp.task('pre-commit', ['analyse', 'test']);
 

@@ -70,13 +70,14 @@ Tasks:
 - ```jscs:fix``` - Code style fixer
 - ```jsdoc``` - API documentation generator
 - ```nsp``` - Vulnerability checker
+- ```retire``` - Vulnerability checker
 - ```webpack``` - Bundler
 
 Presets:
 - ```dist``` (```webpack```)
 - ```doc``` (```jsdoc```)
 - ```test``` (```jest```)
-- ```analyse``` (```check-file-names```, ```jscs```, ```eslint```, ```nsp```)
+- ```analyse``` (```check-file-names```, ```jscs```, ```eslint```, ```nsp```, ```retire```)
 - ```pre-commit``` (```analyze```, ```test```)
 - ```pre-release``` (```pre-commit```, ```dist```, ```doc```)
 

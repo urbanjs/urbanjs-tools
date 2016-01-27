@@ -56,6 +56,11 @@ module.exports = {
     extensions: ['.js', '.jsx']
   },
 
+  retire: {
+    executablePath: path.join(require.resolve('retire'), '../../../.bin/'),
+    options: '-n'
+  },
+
   webpack: {
     watch: false,
     config: Object.assign({}, {
