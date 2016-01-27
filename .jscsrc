@@ -10,10 +10,10 @@
   ],
   "jsDoc": {
     "checkAnnotations": "jsdoc3",
-    "checkParamExistence": true,
     "checkParamNames": true,
     "checkRedundantParams": true,
     "checkRedundantAccess": true
   },
-  "requireTrailingComma": false
+  "requireTrailingComma": false,
+  "validateLineBreaks": false
 }

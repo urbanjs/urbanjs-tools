@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.2 (2016-01-28)
+- Use babel-preset-stage-0
+- Fix webpack task
+
 ## 0.2.1 (2016-01-27)
 - Fix eslint:fix task
 

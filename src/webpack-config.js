@@ -37,7 +37,7 @@ const config = {
       {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components|vendor)/,
-        loader: 'babel',
+        loader: require.resolve('babel-loader'),
         get query() {
           return globals.babel;
         }
