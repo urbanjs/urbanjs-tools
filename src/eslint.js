@@ -33,7 +33,8 @@ module.exports = {
         .pipe(eslint(Object.assign({}, parameters, {
           fix: !!fix
         })))
-        .pipe(eslint.format());
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
     };
 
     gulp.task(taskName, () => validate(parameters.files));
@@ -54,7 +55,7 @@ module.exports = {
               return new Promise((resolve, reject) => {
                 validate(filesByFolderPath[folderPath], true)
                   .pipe(gulpIf(
-                    file => file.eslint && file.eslint.fixe,
+                    file => file.eslint && file.eslint.fixed,
                     gulp.dest(folderPath)
                   ))
                   .on('error', err => reject(err))
