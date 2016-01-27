@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.2.0 (2016-01-27)
 - Enhance jscs task (extra rules for jsdoc, fix reporter)
 - Be strict in ESLint rules (no warnings)
 - Introduce jscs:fix task
