@@ -21,13 +21,14 @@ module.exports = {
   /**
    * @type {Object}
    * @description
-   * Global settings that are used by multiple tasks. These settings allow developers
-   * to keep common configuration of tasks in sync e.g. babel (used by jest, jsdoc, webpack)
+   * Global settings that are used by multiple tasks by default. These settings allow developers
+   * to keep common configuration of tasks in sync e.g. babel or sourceFiles
    *
    * Note that these globals can take affect only if the defaults are used
    * e.g. by overwriting the preprocessor of the jest global babel settings are not used anymore
    *
-   * @property {Object} babel Parameters of the common babel
+   * @property {Object} babel Parameters of the common babel, used by jest, jsdoc & webpack
+   * @property {string|string[]} sourceFiles Input of the eslint, jscs & check-file-names tasks
    */
   globals,
 

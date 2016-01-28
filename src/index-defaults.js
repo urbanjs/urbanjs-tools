@@ -2,18 +2,15 @@
 
 const path = require('path');
 const readdir = require('readdir');
+const globals = require('./index-globals');
 const webpackConfig = require('./webpack-config.js');
 const processCwd = process.cwd();
-const sourceFiles = [
-  path.join(processCwd, 'bin/**/*.js'),
-  path.join(processCwd, 'src/**/*.js'),
-  path.join(processCwd, 'gulp/**/*.js'),
-  path.join(processCwd, 'gulpfile.js')
-];
 
 module.exports = {
   checkFileNames: {
-    paramCase: sourceFiles
+    get paramCase() {
+      return globals.sourceFiles;
+    }
   },
 
   jsdoc: {
@@ -46,14 +43,18 @@ module.exports = {
   },
 
   jscs: {
-    files: sourceFiles,
-    configFile: path.join(__dirname, '../.jscsrc')
+    configFile: path.join(__dirname, '../.jscsrc'),
+    get files() {
+      return globals.sourceFiles;
+    }
   },
 
   eslint: {
-    files: sourceFiles,
     configFile: path.join(__dirname, '../.eslintrc'),
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    get files() {
+      return globals.sourceFiles;
+    }
   },
 
   retire: {

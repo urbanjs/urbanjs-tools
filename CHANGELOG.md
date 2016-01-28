@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- Introduce ```sourceFiles``` global setting (used by eslint, jscs and check-file-names)
+
 ## 0.2.2 (2016-01-28)
 - Use babel-preset-stage-0
 - Fix webpack task
