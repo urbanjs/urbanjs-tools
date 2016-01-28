@@ -2,6 +2,8 @@
 
 ## Unreleased
 - Introduce ```sourceFiles``` global setting (used by eslint, jscs and check-file-names)
+- Add JSON loader to the default webpack config
+- Enhance error logging of webpack task
 
 ## 0.2.2 (2016-01-28)
 - Use babel-preset-stage-0

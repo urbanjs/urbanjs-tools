@@ -36,16 +36,30 @@ module.exports = {
 
     gulp.task(taskName, [cleanUpTaskName], (done) => {
       const bundler = webpack(parameters.config);
+      const logStats = stats => {
+        if (stats) {
+          const statsJson = stats.toJson();
+          console.log(// eslint-disable-line no-console
+            statsJson.errors.concat(statsJson.warnings).join('') ||
+            'Successful compiling'
+          );
+        }
+      };
 
       if (parameters.watch) {
         let counter = 0;
-        bundler.watch(200, err => {
-          if (++counter === (parameters.config.length || 1)) {
+        bundler.watch(200, (err, stats) => {
+          logStats(stats);
+
+          if (err || ++counter === (parameters.config.length || 1)) {
             done(err);
           }
         });
       } else {
-        bundler.run(err => done(err));
+        bundler.run((err, stats) => {
+          logStats(stats);
+          done(err || (stats.hasErrors() ? new Error('There were errors while compiling') : null));
+        });
       }
     });
   }

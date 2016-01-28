@@ -16,11 +16,6 @@ const config = {
     __dirname: false
   },
 
-  stats: {
-    colors: true,
-    timings: true
-  },
-
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin()
   ],
@@ -41,6 +36,10 @@ const config = {
         get query() {
           return globals.babel;
         }
+      },
+      {
+        test: /\.json$/,
+        loader: require.resolve('json-loader')
       }
     ]
   }
