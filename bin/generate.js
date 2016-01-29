@@ -105,7 +105,7 @@ module.exports = function generate(yargs) {
     main: 'dist/index.js',
     scripts: pkg.scripts,
     devDependencies: {
-      gulp: pkg.dependencies.gulp
+      gulp: pkg.devDependencies.gulp
     }
   };
   packageJSON.devDependencies[pkg.name] = '^' + pkg.version;

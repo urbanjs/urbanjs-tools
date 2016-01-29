@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.2.4 (2016-01-29)
 - Fix & ensure normalized line endings
 
 ## 0.2.3 (2016-01-29)
