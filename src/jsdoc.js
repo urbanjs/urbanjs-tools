@@ -36,7 +36,7 @@ module.exports = {
     });
 
     gulp.task(taskName, [cleanUpTaskName], shell.task([
-      `${parameters.executablePath}jsdoc -c ${parameters.configFile}`
+      `"${parameters.executablePath}jsdoc" -c "${parameters.configFile}"`
     ], { env: { urbanJSToolGlobals: JSON.stringify(globals) } }));
   }
 };

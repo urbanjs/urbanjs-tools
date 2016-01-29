@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- Fix shell tasks (handle spaces in path properly)
+
 ## 0.2.4 (2016-01-29)
 - Fix & ensure normalized line endings
 

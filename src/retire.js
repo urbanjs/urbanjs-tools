@@ -25,7 +25,7 @@ module.exports = {
    */
   register(gulp, taskName, parameters) {
     gulp.task(taskName, shell.task([
-      `${parameters.executablePath}retire ${parameters.options || ''}`
+      `"${parameters.executablePath}retire" ${parameters.options || ''}`
     ], { env: { urbanJSToolGlobals: JSON.stringify(globals) } }));
   }
 };
