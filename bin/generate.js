@@ -65,6 +65,7 @@ module.exports = function generate(yargs) {
 
   [
     { path: '.editorconfig' },
+    { path: '.gitattributes' },
     { path: 'docs', options: { filter: /docs(.+__fixtures__.*)?$/ } }
   ].forEach(source => {
     ncp(

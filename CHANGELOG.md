@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- Fix & ensure normalized line endings
+
 ## 0.2.3 (2016-01-29)
 - Introduce ```sourceFiles``` global setting (used by eslint, jscs and check-file-names)
 - Add JSON loader to the default webpack config
