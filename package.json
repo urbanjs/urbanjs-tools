@@ -6,9 +6,9 @@
   "contributors": [
     "Peter Bakonyi <peter.bakonyi05@gmail.com>"
   ],
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "bin": {
-    "urbanjs": "./bin/index.js"
+    "urbanjs": "./dist/cli.js"
   },
   "scripts": {
     "start": "node_modules/.bin/gulp",
@@ -36,14 +36,13 @@
   "dependencies": {
     "babel-core": "^6.3.26",
     "babel-eslint": "^5.0.0-beta6",
-    "babel-jscs": "^3.0.0-beta1",
     "babel-loader": "^6.2.1",
     "babel-plugin-transform-runtime": "^6.4.3",
     "babel-polyfill": "^6.3.14",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
-    "del": "^2.0.2",
+    "del": "^2.2.0",
     "eslint-config-airbnb": "^2.1.1",
     "eslint-plugin-react": "^3.5.1",
     "event-stream": "^3.3.2",
@@ -56,17 +55,16 @@
     "jscs-jsdoc": "^1.3.1",
     "jsdoc": "^3.4.0",
     "json-loader": "^0.5.4",
-    "lodash.merge": "^3.3.2",
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
     "nsp": "^2.2.0",
     "readdir": "0.0.13",
     "retire": "^1.1.2",
-    "run-sequence": "^1.1.2",
     "webpack": "^1.12.9",
     "yargs": "^3.31.0"
   },
   "devDependencies": {
-    "gulp": "^3.9.0"
+    "gulp": "^3.9.0",
+    "gulp-sequence": "^0.4.4"
   }
 }

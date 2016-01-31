@@ -5,7 +5,7 @@ const path = require('path');
 const ncp = require('ncp');
 const del = require('del');
 const fs = require('fs');
-const pkg = require('../package.json');
+const pkg = require('../../package.json');
 
 function writeFile(file, content) {
   fs.writeFile(
@@ -69,7 +69,7 @@ module.exports = function generate(yargs) {
     { path: 'docs', options: { filter: /docs(.+__fixtures__.*)?$/ } }
   ].forEach(source => {
     ncp(
-      path.join(__dirname, '../', source.path),
+      path.join(__dirname, '../../', source.path),
       path.join(folderPath, source.path),
       source.options || {},
       err => {

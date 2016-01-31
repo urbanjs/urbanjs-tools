@@ -2,6 +2,7 @@
 
 ## Unreleased
 - Fix shell tasks (handle spaces in path properly)
+- __dirname & __filename are polyfilled from now on (webpack)
 
 ## 0.2.4 (2016-01-29)
 - Fix & ensure normalized line endings
