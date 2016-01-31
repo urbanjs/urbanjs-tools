@@ -1,19 +1,30 @@
 'use strict';
 
-const webpack = require('webpack');
 const path = require('path');
-const globals = require('./index-globals');
-const processCwd = process.cwd();
+const webpack = require('webpack');
 
+const processCwd = process.cwd();
 const config = {
+  entry: [
+    require.resolve('babel-polyfill'),
+    path.join(processCwd, 'src/index.js')
+  ],
+
+  output: {
+    path: path.join(processCwd, 'dist'),
+    filename: 'index.js',
+    libraryTarget: 'umd'
+  },
+
   target: 'node',
+
   node: {
     console: false,
     global: false,
     process: false,
     Buffer: false,
-    __filename: true,
-    __dirname: true
+    __filename: false,
+    __dirname: false
   },
 
   plugins: [
@@ -33,9 +44,7 @@ const config = {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components|vendor)/,
         loader: require.resolve('babel-loader'),
-        get query() {
-          return globals.babel;
-        }
+        query: require('./lib/global-babel')
       },
       {
         test: /\.json$/,
@@ -45,4 +54,7 @@ const config = {
   }
 };
 
-module.exports = config;
+module.exports = {
+  watch: false,
+  config
+};

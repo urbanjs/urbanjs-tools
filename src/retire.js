@@ -1,7 +1,16 @@
 'use strict';
 
+const _ = require('lodash');
+const npmInstall = require('./npm-install');
+const pkg = require('../package.json');
 const shell = require('gulp-shell');
-const globals = require('./index-globals');
+const utils = require('./lib/utils');
+
+function buildConfig(parameters) {
+  const defaults = require('./retire-defaults');
+
+  return utils.mergeParameters(defaults, parameters);
+}
 
 /**
  * @module tasks/retire
@@ -24,8 +33,19 @@ module.exports = {
    * );
    */
   register(gulp, taskName, parameters) {
-    gulp.task(taskName, shell.task([
-      `"${parameters.executablePath}retire" ${parameters.options || ''}`
-    ], { env: { urbanJSToolGlobals: JSON.stringify(globals) } }));
+    const installDependenciesTaskName = taskName + '-install-dependencies';
+    npmInstall.register(gulp, installDependenciesTaskName, {
+      dependencies: _.pick(pkg.devDependencies, [
+        'retire'
+      ])
+    });
+
+    gulp.task(taskName, [installDependenciesTaskName], done => {
+      const config = buildConfig(parameters);
+
+      shell.task([
+        `"${config.executablePath}retire" ${config.options || ''}`
+      ])(done);
+    });
   }
 };

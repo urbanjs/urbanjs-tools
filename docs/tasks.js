@@ -1,5 +1,5 @@
 /**
- * @typedef {Object} Parameters
+ * @typedef {Object|function} Parameters
  * @memberof module:tasks/checkFileNames
  * @see https://github.com/HAKASHUN/gulp-check-file-naming-convention#optionscase
  * @property {string|string[]} [upperCase] Paths of files to validate against upperCase naming convention
@@ -18,27 +18,7 @@
  */
 
 /**
- * @typedef {Object} Parameters
- * @memberof module:tasks/jsdoc
- * @property {string} configFile The path to the jsdoc configuration file
- * @property {string} executablePath The path where jsdoc executable can be found
- */
-
-/**
- * @typedef {Object} Parameters
- * @memberof module:tasks/nsp
- * @property {string|string[]} packageFile Path of the package.json file or files
- */
-
-/**
- * @typedef {Object} Parameters
- * @memberof module:tasks/jscs
- * @property {string|string[]} files Paths of the files to check
- * @property {string} configFile The path to the jscs configuration file
- */
-
-/**
- * @typedef {Object} Parameters
+ * @typedef {Object|function} Parameters
  * @memberof module:tasks/eslint
  * @description ESLint configuration object, can contain any options of the eslint cli engine.
  * @see http://eslint.org/docs/developer-guide/nodejs-api#cliengine
@@ -47,7 +27,21 @@
  */
 
 /**
- * @typedef {Object} Parameters
+ * @typedef {Object|function} Parameters
+ * @memberof module:tasks/jscs
+ * @property {string|string[]} files Paths of the files to check
+ * @property {string} configFile The path to the jscs configuration file
+ */
+
+/**
+ * @typedef {Object|function} Parameters
+ * @memberof module:tasks/jsdoc
+ * @property {string} configFile The path to the jsdoc configuration file
+ * @property {string} executablePath The path where jsdoc executable can be found
+ */
+
+/**
+ * @typedef {Object|function} Parameters
  * @memberof module:tasks/jest
  * @see https://facebook.github.io/jest/docs/api.html#content
  *
@@ -55,7 +49,20 @@
  */
 
 /**
- * @typedef {Object} Parameters
+ * @typedef {Object|function} Parameters
+ * @memberof module:tasks/npmInstall
+ *
+ * @property {object} dependencies Dependencies to install. Key is the name and value is the version of the package.
+ */
+
+/**
+ * @typedef {Object|function} Parameters
+ * @memberof module:tasks/nsp
+ * @property {string|string[]} packageFile Path of the package.json file or files
+ */
+
+/**
+ * @typedef {Object|function} Parameters
  * @memberof module:tasks/retire
  * @see https://www.npmjs.com/package/retire
  *
@@ -65,7 +72,7 @@
  */
 
 /**
- * @typedef {Object} Parameters
+ * @typedef {Object|Object[]|function} Parameters
  * @memberof module:tasks/webpack
  * @see https://webpack.github.io/docs/configuration.html
  *

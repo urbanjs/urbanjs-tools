@@ -1,6 +1,15 @@
 'use strict';
 
-const nsp = require('nsp');
+const _ = require('lodash');
+const npmInstall = require('./npm-install');
+const pkg = require('../package.json');
+const utils = require('./lib/utils');
+
+function buildConfig(parameters) {
+  const defaults = require('./nsp-defaults');
+
+  return utils.mergeParameters(defaults, parameters);
+}
 
 /**
  * @module tasks/nsp
@@ -25,11 +34,20 @@ module.exports = {
    * );
    */
   register(gulp, taskName, parameters) {
-    gulp.task(taskName, (done) => {
+    const installDependenciesTaskName = taskName + '-install-dependencies';
+    npmInstall.register(gulp, installDependenciesTaskName, {
+      dependencies: _.pick(pkg.devDependencies, [
+        'nsp'
+      ])
+    });
+
+    gulp.task(taskName, [installDependenciesTaskName], (done) => {
+      const nsp = require('nsp');
+      const config = buildConfig(parameters);
       let vulnerabilities = null;
       let i = 0;
 
-      [].concat(parameters.packageFile).forEach(packageFile => {
+      [].concat(config.packageFile).forEach(packageFile => {
         i++;
 
         nsp.check({ package: packageFile }, (err, data) => {

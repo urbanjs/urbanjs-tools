@@ -69,6 +69,7 @@ Tasks:
 - ```jscs``` - Code style checker
 - ```jscs:fix``` - Code style fixer
 - ```jsdoc``` - API documentation generator
+- ```npmInstall``` - Dependency installer
 - ```nsp``` - Vulnerability checker
 - ```retire``` - Vulnerability checker
 - ```webpack``` - Bundler
@@ -121,6 +122,7 @@ Use ```-h``` for help.
 ## Roadmap
 - Add `flow` support
 - Add `deploy support` (pm2)
+- Add guides & examples
 
 ## Contribution
 Highly appreciated any ideas how to make it more powerful.

@@ -2,7 +2,17 @@
 
 ## Unreleased
 - Fix shell tasks (handle spaces in path properly)
-- __dirname & __filename are polyfilled from now on (webpack)
+- Support npm 2
+- Introduce lazy dependency load
+    BREAKING CHANGE:
+    - ```defaults``` has been removed from the public api
+        - use the function form of the settings to get the
+        task specific defaults as first argument
+    - ```globals``` has been removed from the public api
+        - no alternative
+- Tasks are needed to be turned on explicitly from now on
+    BREAKING CHANGE:
+    - specify exactly your needs in the ```.initialize()``` api
 
 ## 0.2.4 (2016-01-29)
 - Fix & ensure normalized line endings

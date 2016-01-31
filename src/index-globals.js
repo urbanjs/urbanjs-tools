@@ -1,28 +1,6 @@
 'use strict';
 
-const path = require('path');
-const processCwd = process.cwd();
-
-const globals = {
-  sourceFiles: [
-    path.join(processCwd, 'bin/**/*.js'),
-    path.join(processCwd, 'src/**/*.js'),
-    path.join(processCwd, 'gulp/**/*.js'),
-    path.join(processCwd, 'gulpfile.js')
-  ],
-
-  babel: {
-    presets: [
-      require.resolve('babel-preset-es2015'),
-      require.resolve('babel-preset-stage-0'),
-      require.resolve('babel-preset-react')
-    ],
-
-    plugins: [
-      require.resolve('babel-plugin-transform-runtime')
-    ]
-  }
-};
+const globals = {};
 
 // allow overwriting globals by environment variables
 // useful for shell tasks where globals need to be shared

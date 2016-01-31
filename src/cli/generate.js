@@ -1,10 +1,10 @@
 'use strict';
 
-const mkdir = require('mkdirp');
-const path = require('path');
-const ncp = require('ncp');
 const del = require('del');
 const fs = require('fs');
+const mkdir = require('mkdirp');
+const ncp = require('ncp');
+const path = require('path');
 const pkg = require('../../package.json');
 
 function writeFile(file, content) {
