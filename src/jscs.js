@@ -56,7 +56,10 @@ module.exports = {
     const validate = config => {
       const jscs = require('gulp-jscs');
       return gulp.src(config.files)
-        .pipe(jscs(_.omit(config, 'files')))
+        .pipe(jscs({
+          configPath: config.configFile,
+          fix: !!config.fix
+        }))
         .pipe(jscs.reporter());
     };
 
@@ -68,7 +71,7 @@ module.exports = {
       const filesByFolderPath = {};
       const config = buildConfig(parameters, globals);
 
-      gulp.src(config)
+      gulp.src(config.files)
         .on('error', err => done(err))
         .on('data', (file) => {
           const folderPath = path.dirname(file.path);
