@@ -99,14 +99,32 @@ module.exports = {
 
   /**
    * Overwrites global configurations
+   * Globals are used by multiple tasks. This settings allows you to
+   * keep the common configurations in sync e.g. babel, sourceFiles
+   * Globals are used to set up the defaults of the tasks.
    * @see module:main.globals
    * @param {Object} configuration
    * @param {Object} configuration.babel
    * @param {string|string[]} configuration.sourceFiles
+   *
+   * @example
+   *
+   * // Using the default configurations of tasks although slightly change the behaviour:
+   * //  - validate all files in the /lib folder by check-file-names, eslint, jscs tasks
+   * //  - set babel configuration for jsdoc, jest and webpack tasks
+   * setGlobalConfiguration({
+   *   sourceFiles: './lib/**',
+   *   babel: { presets: ['es2015'] }
+   * });
    */
   setGlobalConfiguration(configuration) {
+    const knownGlobals = {
+      babel: true,
+      sourceFiles: true
+    };
+
     const unknownGlobals = Object.keys(configuration)
-      .filter(key => !globals.hasOwnProperty(key));
+      .filter(key => !knownGlobals.hasOwnProperty(key));
 
     if (unknownGlobals.length) {
       throw new Error('Unknown globals: ' + unknownGlobals.join(', '));
