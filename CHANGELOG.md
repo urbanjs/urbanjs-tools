@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.2 (2016-02-04)
+- Fix package.json (bin path)
+
 ## 0.3.1 (2016-02-04)
 - Fix shell tasks (handle spaces in path properly)
 - Support npm 2

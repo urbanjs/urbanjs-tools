@@ -1,14 +1,14 @@
 {
   "name": "urbanjs-tools",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Common dev tools for JS projects",
   "author": "Tamas Magedli <tamas.magedli@gmail.com>",
   "contributors": [
     "Peter Bakonyi <peter.bakonyi05@gmail.com>"
   ],
-  "main": "./src",
+  "main": "./src/index.js",
   "bin": {
-    "urbanjs": "./src/cli"
+    "urbanjs": "./bin/index.js"
   },
   "scripts": {
     "start": "node_modules/.bin/gulp",
