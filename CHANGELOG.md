@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.3.1 (2016-02-04)
 - Fix shell tasks (handle spaces in path properly)
 - Support npm 2
 - Introduce lazy dependency load
