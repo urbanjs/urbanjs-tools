@@ -2,6 +2,7 @@
 
 ## Unreleased
 - CLI interface is public from now on
+- Introduce ```jest:watch``` task
 
 ## 0.3.3 (2016-02-04)
 - Fix jscs:fix task

@@ -67,6 +67,7 @@ Tasks:
 - ```eslint``` - JS linter
 - ```eslint:fix``` - JS linter
 - ```jest``` - Unit tester
+- ```jest:watch``` - Unit tester
 - ```jscs``` - Code style checker
 - ```jscs:fix``` - Code style fixer
 - ```jsdoc``` - API documentation generator

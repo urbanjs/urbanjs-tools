@@ -41,7 +41,7 @@ const config = {
   module: {
     loaders: [
       {
-        test: /\.jsx?$/,
+        test: /\.js$/,
         exclude: /(node_modules|bower_components|vendor)/,
         loader: require.resolve('babel-loader'),
         query: require('./lib/global-babel')

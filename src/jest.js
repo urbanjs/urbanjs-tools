@@ -3,6 +3,7 @@
 const _ = require('lodash');
 const del = require('del');
 const npmInstall = require('./npm-install');
+const path = require('path');
 const pkg = require('../package.json');
 const utils = require('./lib/utils');
 
@@ -67,6 +68,15 @@ module.exports = {
         { config },
         config.rootDir,
         success => done(!success)
+      );
+    });
+
+    const watchTaskName = taskName + ':watch';
+    gulp.task(watchTaskName, [installDependenciesTaskName], () => {
+      const config = buildConfig(parameters, globals);
+      gulp.watch(path.join(config.rootDir, '**/*.js'), [taskName]);
+      console.log(// eslint-disable-line no-console
+        'jest:watch has been initialized. Modify your source files to run the tests.'
       );
     });
   }
