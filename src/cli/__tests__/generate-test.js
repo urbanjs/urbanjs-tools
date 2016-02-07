@@ -6,6 +6,7 @@ jest.dontMock('yargs');
 const generate = require('../generate');
 const mockFs = require('../../lib/fs');
 const path = require('path');
+const pkg = require('../../../package.json');
 const yargs = require('yargs');
 
 describe('CLI - generate command', () => {
@@ -151,7 +152,7 @@ describe('CLI - generate command', () => {
         },
         devDependencies: {
           gulp: '^3.9.0',
-          'urbanjs-tools': '^0.3.2'
+          'urbanjs-tools': '^' + pkg.version
         }
       };
 
