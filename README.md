@@ -1,4 +1,5 @@
 # urbanjs-tools
+[![Build Status](https://travis-ci.org/urbanjs/tools.svg?branch=master)](https://travis-ci.org/urbanjs/tools)
 
 Urbanjs-tools is a new concept to start a package.
 

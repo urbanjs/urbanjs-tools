@@ -20,6 +20,18 @@ module.exports = {
 
   /**
    * @type {Object}
+   * @description Core cli commands
+   *
+   * @property {module:cli/index} index Main entry point of the cli
+   * @property {module:cli/generate} generate Generates the folder structure for the project
+   */
+  cli: {
+    index: require('./cli/index'),
+    generate: require('./cli/generate')
+  },
+
+  /**
+   * @type {Object}
    * @description Core tasks
    *
    * @property {module:tasks/checkFileNames} checkFileNames Validator for checking the names of the files

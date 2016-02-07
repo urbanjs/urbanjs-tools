@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- CLI interface is public from now on
+
 ## 0.3.3 (2016-02-04)
 - Fix jscs:fix task
 - Fix package.json (bin path)
