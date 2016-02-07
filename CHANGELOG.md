@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- CLI interface is public from now on
+
 ## 0.3.2 (2016-02-04)
 - Fix package.json (bin path)
 

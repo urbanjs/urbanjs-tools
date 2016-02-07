@@ -24,6 +24,3 @@ install:
   - npm config set spin false
   # Install npm dependencies
   - npm install
-
-script:
-  - gulp test
