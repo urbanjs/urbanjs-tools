@@ -46,24 +46,29 @@ module.exports = {
         y => runCommand(y, generate)
       );
 
+    let argv;
     try {
-      const argv = yargs.parse(args);
-
-      if (argv.v || argv.h) {
-        // yargs handles these options synchronously
-        return Promise.resolve();
-      } else if (commandExecution) {
-        // return the promise of the command
-        return commandExecution;
+      argv = yargs.parse(args);
+    } catch (err) {
+      // the command is responsible for showing help if an execution has been started
+      if (!commandExecution) {
+        // most of the time an unknown option causes this error
+        // let's show the help how to use urbanjs correctly
+        yargs.showHelp();
       }
 
-      yargs.showHelp();
-      return Promise.reject(new Error('Invalid argument'));
-    } catch (err) {
-      // most of the time an unknown option causes this error
-      // let's show the help how to use urbanjs
-      yargs.showHelp();
       return Promise.reject(err);
     }
+
+    if (argv.v || argv.h) {
+      // yargs handles these options synchronously
+      return Promise.resolve();
+    } else if (commandExecution) {
+      // return the promise of the command
+      return commandExecution;
+    }
+
+    yargs.showHelp();
+    return Promise.reject(new Error('Invalid argument'));
   }
 };

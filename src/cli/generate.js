@@ -1,34 +1,8 @@
 'use strict';
 
-const del = require('del');
-const fs = require('fs');
-const mkdir = require('mkdirp');
+const fs = require('../lib/fs');
 const path = require('path');
 const pkg = require('../../package.json');
-
-function readFileContent(filePath) {
-  return new Promise((resolve, reject) => {
-    fs.readFile(filePath, 'utf8', (err, content) => {
-      return err ? reject(`File cannot be read: ${filePath}`) : resolve(content);
-    });
-  });
-}
-
-function writeContent(targetPath, content) {
-  return new Promise((resolve, reject) => {
-    const folderPath = path.dirname(targetPath);
-    mkdir(folderPath, err => {
-      if (err) {
-        reject(`Folder cannot be created: ${folderPath}`);
-        return;
-      }
-
-      fs.writeFile(targetPath, content, writeErr => {
-        return writeErr ? reject(`File cannot be written: ${targetPath}`) : resolve();
-      });
-    });
-  });
-}
 
 /**
  * @module cli/generate
@@ -73,96 +47,102 @@ module.exports = {
       })
       .usage('Usage: urbanjs generate -n clean-project -f');
 
+    let argv;
     try {
-      const argv = yargs.parse(args);
-
-      if (!argv.name) {
-        return Promise.reject(new Error(`The given name is invalid: ${argv.name}`));
-      }
-
-      const folderPath = path.isAbsolute(argv.name)
-        ? argv.name
-        : path.join(process.cwd(), argv.name);
-
-      let generationProcess = Promise.resolve();
-
-      if (argv.force) {
-        generationProcess = generationProcess
-          .then(() => del(folderPath, { force: true }));
-      }
-
-      generationProcess = generationProcess
-        .then(() => {
-          return new Promise((resolve, reject) => {
-            fs.stat(folderPath, err => {
-              return err ? resolve() : reject();
-            });
-          });
-        })
-        .catch(() => {
-          throw new Error([
-            `The folder \`${argv.name}\` is existing`,
-            argv.force ? ' and cannot be deleted.' : '. Use -f to force to delete it.'
-          ].join(''));
-        });
-
-      generationProcess = generationProcess
-        .then(() => {
-          const packageJSON = {
-            name: argv.name,
-            version: '0.1.0',
-            main: 'dist/index.js',
-            scripts: pkg.scripts,
-            devDependencies: {
-              gulp: pkg.devDependencies.gulp
-            }
-          };
-          packageJSON.devDependencies[pkg.name] = '^' + pkg.version;
-
-          return Promise.all([
-            readFileContent(path.join(__dirname, '../../.editorconfig'))
-              .then(content => writeContent(path.join(folderPath, '.editorconfig'), content)),
-
-            readFileContent(path.join(__dirname, '../../.gitattributes'))
-              .then(content => writeContent(path.join(folderPath, '.gitattributes'), content)),
-
-            readFileContent(path.join(__dirname, '__skeleton__/npmignore'))
-              .then(content => writeContent(path.join(folderPath, '.npmignore'), content)),
-
-            readFileContent(path.join(__dirname, '__skeleton__/gitignore'))
-              .then(content => writeContent(path.join(folderPath, '.gitignore'), content)),
-
-            readFileContent(path.join(__dirname, '__skeleton__/gulpfile'))
-              .then(content => writeContent(path.join(folderPath, 'gulpfile.js'), content)),
-
-            readFileContent(path.join(__dirname, '../../docs/__fixtures__/static/main.css'))
-              .then(content => writeContent(path.join(folderPath, 'docs/__fixtures__/static/main.css'), content)),
-
-            readFileContent(path.join(__dirname, '../../docs/__fixtures__/layout.html'))
-              .then(content => writeContent(path.join(folderPath, 'docs/__fixtures__/layout.html'), content)),
-
-            writeContent(path.join(folderPath, 'docs/main.js'), '// write here your custom jsdoc documentation...\n'),
-
-            writeContent(path.join(folderPath, 'package.json'), JSON.stringify(packageJSON, null, '  ')),
-
-            writeContent(path.join(folderPath, 'src/index.js'), '// let\'s get started...\n'),
-
-            writeContent(path.join(folderPath, 'README.md'), `# ${argv.name}\n`)
-          ]);
-        });
-
-      return generationProcess
-        .then(() => {
-          console.log('Project skeleton has been successfully generated.'); // eslint-disable-line no-console
-        })
-        .catch(err => {
-          const message = `Project skeleton generation has exited with error: ${err.message}`;
-          console.error(message); // eslint-disable-line no-console
-          throw err;
-        });
+      argv = yargs.parse(args);
     } catch (err) {
-      // unexpected error
-      return Promise.reject(new Error(err));
+      // most of the time an unknown option causes this error
+      // let's show the help how to use urbanjs correctly
+      yargs.showHelp();
+
+      return Promise.reject(err);
     }
+
+    const force = argv.force;
+    let projectName = argv.name;
+    let folderPath = path.join(process.cwd(), projectName);
+
+    if (path.isAbsolute(projectName)) {
+      folderPath = projectName;
+      projectName = path.basename(projectName);
+    }
+
+    let generationProcess = projectName
+      ? Promise.resolve()
+      : Promise.reject(new Error(`The given name is invalid: ${argv.name}`));
+
+    if (force) {
+      generationProcess = generationProcess
+        .then(() => fs.delete(folderPath));
+    }
+
+    generationProcess = generationProcess
+      .then(() => fs.exists(folderPath))
+      .then(exists => {
+        if (exists) {
+          throw new Error([
+            `The folder \`${folderPath}\` is existing`,
+            force ? ' and cannot be deleted.' : '. Use -f to force to delete it.'
+          ].join(''));
+        }
+      });
+
+    generationProcess = generationProcess
+      .then(() => {
+        const packageJSON = {
+          name: projectName,
+          version: '0.1.0',
+          main: 'dist/index.js',
+          scripts: pkg.scripts,
+          devDependencies: {
+            gulp: pkg.devDependencies.gulp
+          }
+        };
+        packageJSON.devDependencies[pkg.name] = '^' + pkg.version;
+
+        return Promise.all([
+          fs.writeFile(path.join(folderPath, 'docs/main.js'), '// write here your custom jsdoc documentation...\n'),
+
+          fs.writeFile(path.join(folderPath, 'package.json'), JSON.stringify(packageJSON, null, '  ')),
+
+          fs.writeFile(path.join(folderPath, 'src/index.js'), '// let\'s get started...\n'),
+
+          fs.writeFile(path.join(folderPath, 'README.md'), `# ${projectName}\n`),
+
+          fs.readFile(path.join(__dirname, '../../.editorconfig'))
+            .then(content => fs.writeFile(path.join(folderPath, '.editorconfig'), content)),
+
+          fs.readFile(path.join(__dirname, '../../.gitattributes'))
+            .then(content => fs.writeFile(path.join(folderPath, '.gitattributes'), content)),
+
+          fs.readFile(path.join(__dirname, '__skeleton__/npmignore'))
+            .then(content => fs.writeFile(path.join(folderPath, '.npmignore'), content)),
+
+          fs.readFile(path.join(__dirname, '__skeleton__/gitignore'))
+            .then(content => fs.writeFile(path.join(folderPath, '.gitignore'), content)),
+
+          fs.readFile(path.join(__dirname, '__skeleton__/gulpfile'))
+            .then(content => fs.writeFile(path.join(folderPath, 'gulpfile.js'), content)),
+
+          fs.readFile(path.join(__dirname, '../../docs/__fixtures__/static/main.css'))
+            .then(content => fs.writeFile(path.join(folderPath, 'docs/__fixtures__/static/main.css'), content)),
+
+          fs.readFile(path.join(__dirname, '../../docs/__fixtures__/layout.html'))
+            .then(content => fs.writeFile(path.join(folderPath, 'docs/__fixtures__/layout.html'), content))
+        ]);
+      });
+
+    return generationProcess
+      .then(() => {
+        console.log('Project skeleton has been successfully generated.'); // eslint-disable-line no-console
+      })
+      .catch(err => {
+        console.error(// eslint-disable-line no-console
+          `Project skeleton generation has exited with error:`,
+          err
+        );
+
+        throw err;
+      });
   }
 };
