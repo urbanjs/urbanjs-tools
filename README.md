@@ -75,6 +75,7 @@ Tasks:
 - ```nsp``` - Vulnerability checker
 - ```retire``` - Vulnerability checker
 - ```webpack``` - Bundler
+- ```webpack:watch``` - Bundler
 
 Presets:
 - ```dist``` (```webpack```)

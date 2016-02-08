@@ -1,10 +1,10 @@
 'use strict';
 
 const path = require('path');
+const processCwd = process.cwd();
 const webpack = require('webpack');
 
-const processCwd = process.cwd();
-const config = {
+module.exports = {
   entry: [
     require.resolve('babel-polyfill'),
     path.join(processCwd, 'src/index.js')
@@ -33,10 +33,14 @@ const config = {
 
   resolveLoader: {
     modulesDirectories: [
-      path.join(processCwd, 'node_modules'),
-      path.join(__dirname, '../node_modules')
+      path.join(__dirname, '../node_modules'),
+      path.join(processCwd, 'node_modules')
     ]
   },
+
+  externals: [
+    /^[a-z\-0-9].+$/
+  ],
 
   module: {
     loaders: [
@@ -52,9 +56,4 @@ const config = {
       }
     ]
   }
-};
-
-module.exports = {
-  watch: false,
-  config
 };

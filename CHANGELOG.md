@@ -3,6 +3,12 @@
 ## Unreleased
 - CLI interface is public from now on
 - Introduce ```jest:watch``` task
+- Introduce ```webpack:watch``` task
+    BREAKING CHANGE:
+    - ```watch``` option has been removed from the ```webpack``` configuration
+        - use ```webpack:watch``` task instead
+    - the parameters of the task is the webpack config itself from now on
+        - see api documentation
 
 ## 0.3.3 (2016-02-04)
 - Fix jscs:fix task

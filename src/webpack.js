@@ -10,12 +10,22 @@ function buildConfig(parameters, globals) {
   const defaults = require('./webpack-defaults');
 
   if (globals && globals.babel) {
-    defaults.config.module.loaders[0].query = global.babel;
+    defaults.module.loaders[0].query = global.babel;
   } else if (globals) {
-    globals.babel = defaults.config.module.loaders[0].query;
+    globals.babel = defaults.module.loaders[0].query;
   }
 
   return utils.mergeParameters(defaults, parameters);
+}
+
+function logStats(stats) {
+  if (stats) {
+    const statsJson = stats.toJson();
+    console.log(// eslint-disable-line no-console
+      statsJson.errors.concat(statsJson.warnings).join('') ||
+      'Successful compiling'
+    );
+  }
 }
 
 /**
@@ -38,10 +48,7 @@ module.exports = {
    * register(
    *   require('gulp'),
    *   'webpack',
-   *   {
-   *     watch: false,
-   *     config: require('path').join(__dirname, 'webpack.config.js')
-   *   }
+   *   require('path').join(__dirname, 'webpack.config.js')
    * );
    */
   register(gulp, taskName, parameters, globals) {
@@ -61,42 +68,36 @@ module.exports = {
     const cleanUpTaskName = taskName + '-clean';
     gulp.task(cleanUpTaskName, [installDependenciesTaskName], (done) => {
       Promise.all(
-        [].concat(buildConfig(parameters, globals).config)
+        [].concat(buildConfig(parameters, globals))
           .map(webpackConfig => {
             return del([webpackConfig.output.path], { force: true });
           })
       ).then(() => done()).catch(e => done(e));
     });
 
-    gulp.task(taskName, [installDependenciesTaskName, cleanUpTaskName], (done) => {
-      const webpack = require('webpack');
+    gulp.task(taskName, [installDependenciesTaskName, cleanUpTaskName], done => {
       const config = buildConfig(parameters, globals);
-      const bundler = webpack(config.config);
-      const logStats = stats => {
-        if (stats) {
-          const statsJson = stats.toJson();
-          console.log(// eslint-disable-line no-console
-            statsJson.errors.concat(statsJson.warnings).join('') ||
-            'Successful compiling'
-          );
+      const bundler = require('webpack')(config);
+
+      bundler.run((err, stats) => {
+        logStats(stats);
+        done(err || (stats.hasErrors() ? new Error('There were errors while compiling') : null));
+      });
+    });
+
+    const watchTaskName = taskName + ':watch';
+    gulp.task(watchTaskName, [installDependenciesTaskName, cleanUpTaskName], done => {
+      const config = buildConfig(parameters, globals);
+      const bundler = require('webpack')(config);
+      let counter = 0;
+
+      bundler.watch(200, (err, stats) => {
+        logStats(stats);
+
+        if (err || ++counter === (config.length || 1)) {
+          done(err);
         }
-      };
-
-      if (config.watch) {
-        let counter = 0;
-        bundler.watch(200, (err, stats) => {
-          logStats(stats);
-
-          if (err || ++counter === (config.config.length || 1)) {
-            done(err);
-          }
-        });
-      } else {
-        bundler.run((err, stats) => {
-          logStats(stats);
-          done(err || (stats.hasErrors() ? new Error('There were errors while compiling') : null));
-        });
-      }
+      });
     });
   }
 };

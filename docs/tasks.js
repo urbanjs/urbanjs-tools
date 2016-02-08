@@ -75,7 +75,4 @@
  * @typedef {Object|Object[]|function} Parameters
  * @memberof module:tasks/webpack
  * @see https://webpack.github.io/docs/configuration.html
- *
- * @property {Object|Object[]} config Configuration of the webpack
- * @property {boolean} [watch] Whether watching the files as well
  */
