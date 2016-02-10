@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.4.1 (2016-02-10)
 - CLI interface is public from now on
 - Introduce ```jest:watch``` task
 - Introduce ```webpack:watch``` task
