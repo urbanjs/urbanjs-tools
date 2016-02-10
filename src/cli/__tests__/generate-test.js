@@ -150,8 +150,11 @@ describe('CLI - generate command', () => {
           'pre-commit': 'node_modules/.bin/gulp pre-commit',
           'pre-release': 'node_modules/.bin/gulp pre-release'
         },
+        dependencies: {
+          'babel-polyfill': pkg.devDependencies['babel-polyfill']
+        },
         devDependencies: {
-          gulp: '^3.9.0',
+          gulp: pkg.devDependencies.gulp,
           'urbanjs-tools': '^' + pkg.version
         }
       };

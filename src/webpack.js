@@ -10,7 +10,7 @@ function buildConfig(parameters, globals) {
   const defaults = require('./webpack-defaults');
 
   if (globals && globals.babel) {
-    defaults.module.loaders[0].query = global.babel;
+    defaults.module.loaders[0].query = globals.babel;
   } else if (globals) {
     globals.babel = defaults.module.loaders[0].query;
   }

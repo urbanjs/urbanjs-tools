@@ -6,7 +6,7 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: [
-    require.resolve('babel-polyfill'),
+    path.join(__dirname, 'webpack-set-env-script.js'),
     path.join(processCwd, 'src/index.js')
   ],
 

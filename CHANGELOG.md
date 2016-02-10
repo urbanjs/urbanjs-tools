@@ -9,6 +9,8 @@
         - use ```webpack:watch``` task instead
     - the parameters of the task is the webpack config itself from now on
         - see api documentation
+- Defaults of the ```webpack``` has been changed
+    - all of the node_modules are handled as externals not to bundle them
 
 ## 0.3.3 (2016-02-04)
 - Fix jscs:fix task

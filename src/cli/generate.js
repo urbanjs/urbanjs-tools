@@ -94,6 +94,14 @@ module.exports = {
           version: '0.1.0',
           main: 'dist/index.js',
           scripts: pkg.scripts,
+          dependencies: {
+
+            // based on the defaults, webpack handles babel-polyfill as external dependency
+            // and requires it from node_modules as babel-polyfill can only be used once
+            // with this move we can avoid the usage of babel-polyfill multiple times
+            // but we can be sure that polyfills are included which our codebase relies on
+            'babel-polyfill': pkg.devDependencies['babel-polyfill']
+          },
           devDependencies: {
             gulp: pkg.devDependencies.gulp
           }
