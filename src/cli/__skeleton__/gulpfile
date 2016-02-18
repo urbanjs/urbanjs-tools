@@ -7,9 +7,9 @@ tools.initialize(gulp, {
   checkFileNames: true,
   eslint: true,
   jest: true,
-  jscs: false,
+  jscs: true,
   jsdoc: true,
-  nsp: false,
+  nsp: true,
   retire: true,
   webpack: true
 });

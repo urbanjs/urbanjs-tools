@@ -24,3 +24,7 @@ install:
   - npm config set spin false
   # Install npm dependencies
   - npm install
+
+script:
+  - npm test
+  - node scripts/cli-test.js
