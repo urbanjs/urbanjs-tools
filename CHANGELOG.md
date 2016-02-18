@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.2 (2016-02-18)
+- Fix ```jest``` tasks (globals are not working in parallel mode)
+
 ## 0.4.1 (2016-02-10)
 - CLI interface is public from now on
 - Introduce ```jest:watch``` task
