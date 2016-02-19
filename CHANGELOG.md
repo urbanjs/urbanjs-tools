@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.4.2 (2016-02-18)
+## 0.4.2 (2016-02-19)
 - Fix ```jest``` tasks (globals are not working in parallel mode)
 
 ## 0.4.1 (2016-02-10)
