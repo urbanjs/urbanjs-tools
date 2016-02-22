@@ -5,7 +5,7 @@ const del = require('del');
 const npmInstall = require('./npm-install');
 const path = require('path');
 const pkg = require('../package.json');
-const utils = require('./lib/utils');
+const configHelper = require('./lib/helper-config.js');
 
 function buildConfig(parameters, globals) {
   const defaults = require('./jest-defaults');
@@ -14,13 +14,23 @@ function buildConfig(parameters, globals) {
     globals.babel = require('./lib/global-babel');
   }
 
-  return utils.mergeParameters(defaults, parameters);
+  return configHelper.mergeParameters(defaults, parameters);
 }
 
 /**
  * @module tasks/jest
  */
 module.exports = {
+
+  dependencies: _.pick(pkg.devDependencies, [
+    'babel-core',
+    'babel-polyfill',
+    'babel-preset-es2015',
+    'babel-preset-react',
+    'babel-preset-stage-0',
+    'jest-cli',
+    'readdir'
+  ]),
 
   /**
    * @function
@@ -43,15 +53,7 @@ module.exports = {
   register(gulp, taskName, parameters, globals) {
     const installDependenciesTaskName = taskName + '-install-dependencies';
     npmInstall.register(gulp, installDependenciesTaskName, {
-      dependencies: _.pick(pkg.devDependencies, [
-        'babel-core',
-        'babel-polyfill',
-        'babel-preset-es2015',
-        'babel-preset-react',
-        'babel-preset-stage-0',
-        'jest-cli',
-        'readdir'
-      ])
+      dependencies: this.dependencies
     });
 
     const cleanUpTaskName = taskName + '-clean';

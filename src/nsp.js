@@ -3,18 +3,22 @@
 const _ = require('lodash');
 const npmInstall = require('./npm-install');
 const pkg = require('../package.json');
-const utils = require('./lib/utils');
+const configHelper = require('./lib/helper-config.js');
 
 function buildConfig(parameters) {
   const defaults = require('./nsp-defaults');
 
-  return utils.mergeParameters(defaults, parameters);
+  return configHelper.mergeParameters(defaults, parameters);
 }
 
 /**
  * @module tasks/nsp
  */
 module.exports = {
+
+  dependencies: _.pick(pkg.devDependencies, [
+    'nsp'
+  ]),
 
   /**
    * @function
@@ -36,9 +40,7 @@ module.exports = {
   register(gulp, taskName, parameters) {
     const installDependenciesTaskName = taskName + '-install-dependencies';
     npmInstall.register(gulp, installDependenciesTaskName, {
-      dependencies: _.pick(pkg.devDependencies, [
-        'nsp'
-      ])
+      dependencies: this.dependencies
     });
 
     gulp.task(taskName, [installDependenciesTaskName], (done) => {

@@ -32,19 +32,27 @@ function missing(packageName, version) {
 /**
  * Runs dependency installations after each other
  * @param {array} dependencies
+ * @param {Object} options
+ * @param {boolean} options.verbose
  * @returns {Promise}
  * @private
  */
-function installDependencies(dependencies) {
+function installDependencies(dependencies, options) {
   if (missingDependencies !== null) {
     missingDependencies = missingDependencies.concat(dependencies);
   } else if (dependencies.length) {
     missingDependencies = dependencies;
     promise = promise.then(() => {
       return new Promise((resolve, reject) => {
-        console.log(`Installing missing dependencies...\n${missingDependencies}`); // eslint-disable-line no-console
+        console.log(// eslint-disable-line no-console
+          `Installing missing dependencies...\n${missingDependencies}`);
 
-        shell.task([`npm install ${missingDependencies.join(' ')}`])(err => {
+        const verbose = options && options.verbose;
+
+        shell.task(
+          [`npm install ${missingDependencies.join(' ')}`],
+          { quiet: !verbose, verbose }
+        )(err => {
           return err ? reject(err) : resolve();
         });
 
@@ -61,6 +69,27 @@ function installDependencies(dependencies) {
  */
 module.exports = {
 
+  dependencies: [],
+
+  /**
+   * @function
+   * @param {Object} dependencies
+   * @param {Object} options
+   * @param {boolean} options.verbose
+   * @example
+   * install({
+   *   urbanjs-tools: '^0.2.5'
+   * });
+   */
+  install(dependencies, options) {
+    return installDependencies(
+      Object.keys(dependencies)
+        .filter(packageName => missing(packageName, dependencies[packageName]))
+        .map(packageName => `${packageName}@${dependencies[packageName]}`),
+      options
+    );
+  },
+
   /**
    * @function
    * @description This task is responsible for installing the given dependencies.
@@ -74,6 +103,7 @@ module.exports = {
    *   require('gulp'),
    *   'npmInstall',
    *   {
+   *     verbose: false,
    *     dependencies: {
    *       urbanjs-tools: '^0.2.5'
    *     }
@@ -82,11 +112,7 @@ module.exports = {
    */
   register(gulp, taskName, parameters) {
     gulp.task(taskName, done => {
-      installDependencies(
-        Object.keys(parameters.dependencies)
-          .filter(packageName => missing(packageName, parameters.dependencies[packageName]))
-          .map(packageName => `${packageName}@${parameters.dependencies[packageName]}`)
-      ).then(done, done);
+      this.install(parameters.dependencies, parameters).then(done, done);
     });
   }
 };

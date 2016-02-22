@@ -4,18 +4,22 @@ const _ = require('lodash');
 const npmInstall = require('./npm-install');
 const pkg = require('../package.json');
 const shell = require('gulp-shell');
-const utils = require('./lib/utils');
+const configHelper = require('./lib/helper-config.js');
 
 function buildConfig(parameters) {
   const defaults = require('./retire-defaults');
 
-  return utils.mergeParameters(defaults, parameters);
+  return configHelper.mergeParameters(defaults, parameters);
 }
 
 /**
  * @module tasks/retire
  */
 module.exports = {
+
+  dependencies: _.pick(pkg.devDependencies, [
+    'retire'
+  ]),
 
   /**
    * @function
@@ -35,9 +39,7 @@ module.exports = {
   register(gulp, taskName, parameters) {
     const installDependenciesTaskName = taskName + '-install-dependencies';
     npmInstall.register(gulp, installDependenciesTaskName, {
-      dependencies: _.pick(pkg.devDependencies, [
-        'retire'
-      ])
+      dependencies: this.dependencies
     });
 
     gulp.task(taskName, [installDependenciesTaskName], done => {

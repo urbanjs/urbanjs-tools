@@ -4,7 +4,7 @@ const _ = require('lodash');
 const del = require('del');
 const npmInstall = require('./npm-install');
 const pkg = require('../package.json');
-const utils = require('./lib/utils');
+const configHelper = require('./lib/helper-config.js');
 
 function buildConfig(parameters, globals) {
   const defaults = require('./webpack-defaults');
@@ -15,7 +15,7 @@ function buildConfig(parameters, globals) {
     globals.babel = defaults.module.loaders[0].query;
   }
 
-  return utils.mergeParameters(defaults, parameters);
+  return configHelper.mergeParameters(defaults, parameters);
 }
 
 function logStats(stats) {
@@ -32,6 +32,16 @@ function logStats(stats) {
  * @module tasks/webpack
  */
 module.exports = {
+
+  dependencies: _.pick(pkg.devDependencies, [
+    'babel-loader',
+    'babel-polyfill',
+    'babel-preset-es2015',
+    'babel-preset-react',
+    'babel-preset-stage-0',
+    'json-loader',
+    'webpack'
+  ]),
 
   /**
    * @function
@@ -54,15 +64,7 @@ module.exports = {
   register(gulp, taskName, parameters, globals) {
     const installDependenciesTaskName = taskName + '-install-dependencies';
     npmInstall.register(gulp, installDependenciesTaskName, {
-      dependencies: _.pick(pkg.devDependencies, [
-        'babel-loader',
-        'babel-polyfill',
-        'babel-preset-es2015',
-        'babel-preset-react',
-        'babel-preset-stage-0',
-        'json-loader',
-        'webpack'
-      ])
+      dependencies: this.dependencies
     });
 
     const cleanUpTaskName = taskName + '-clean';

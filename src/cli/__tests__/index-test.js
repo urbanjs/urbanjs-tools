@@ -1,6 +1,7 @@
 'use strict';
 
 jest.dontMock('../index.js');
+jest.dontMock('../../lib/helper-yargs.js');
 jest.dontMock('yargs');
 
 const index = require('../index');
@@ -17,43 +18,60 @@ describe('CLI - index command', () => {
     mockGenerate.run.mockReturnValue(Promise.resolve());
   });
 
-  it('accepts options yargs instance as second arguments', () => {
+  pit('accepts options yargs instance as second arguments', () => {
     expect(() => {
-      index.run([]);
+      index.run(['-v']);
     }).not.toThrow();
 
-    mockYargs.showHelp = jest.genMockFunction().mockReturnValue(mockYargs);
-    index.run([], mockYargs);
-    expect(mockYargs.showHelp.mock.calls.length).toBe(1);
+    const mockShowHelp = jest.genMockFunction().mockReturnValue(mockYargs);
+    mockYargs.showHelp = mockShowHelp;
+    return index.run(['-h'], mockYargs).then(() => {
+      expect(mockShowHelp.mock.calls.length).toBe(1);
+    });
   });
 
-  it('shows help if empty or unknown command/option is given', () => {
-    mockYargs.showHelp = jest.genMockFunction().mockReturnValue(mockYargs);
+  pit('shows help if empty or unknown command/option is given', () => {
+    const mockShowHelp = jest.genMockFunction().mockReturnValue(mockYargs);
+    const reset = () => {
+      mockYargs.reset();
+      mockYargs.showHelp = mockShowHelp;
+    };
 
     // empty args
-    index.run([], mockYargs);
-    expect(mockYargs.showHelp.mock.calls.length).toBe(1);
+    reset();
+    return index.run([], mockYargs)
+      .catch(() => {
+        expect(mockShowHelp.mock.calls.length).toBe(1);
+        reset();
 
-    // unknown command given
-    mockYargs.reset();
-    index.run(['unknown'], mockYargs);
-    expect(mockYargs.showHelp.mock.calls.length).toBe(2);
+        // unknown command given
+        return index.run(['unknown'], mockYargs);
+      })
+      .catch(() => {
+        expect(mockShowHelp.mock.calls.length).toBe(2);
+        reset();
 
-    // unknown option given
-    mockYargs.reset();
-    index.run(['-uo'], mockYargs);
-    expect(mockYargs.showHelp.mock.calls.length).toBe(3);
+        // unknown option given
+        return index.run(['-uo'], mockYargs);
+      })
+      .catch(() => {
+        expect(mockShowHelp.mock.calls.length).toBe(3);
+        reset();
 
-    // known command given, help is not needed
-    mockYargs.reset();
-    index.run(['generate'], mockYargs);
-    expect(mockYargs.showHelp.mock.calls.length).toBe(3);
+        // known command given, help is not needed
+        return index.run(['generate'], mockYargs);
+      })
+      .catch(() => {
+        expect(mockShowHelp.mock.calls.length).toBe(3);
+        reset();
 
-    // known command but invalid options are given
-    // command should take care of it
-    mockYargs.reset();
-    index.run(['generate', '-e'], mockYargs);
-    expect(mockYargs.showHelp.mock.calls.length).toBe(3);
+        // known command but invalid options are given
+        // command should take care of it
+        return index.run(['generate', '-e'], mockYargs);
+      })
+      .catch(() => {
+        expect(mockShowHelp.mock.calls.length).toBe(3);
+      });
   });
 
   it('runs the generate task', () => {
@@ -95,9 +113,11 @@ describe('CLI - index command', () => {
     return Promise.all(promises);
   });
 
-  it('returns the promise of the given command', () => {
-    const promise = Promise.resolve();
-    mockGenerate.run.mockReturnValue(promise);
-    expect(index.run(['generate'], mockYargs)).toBe(promise);
+  pit('returns the promise of the given command', () => {
+    const value = { command: true };
+    mockGenerate.run.mockReturnValue(Promise.resolve(value));
+    return index.run(['generate'], mockYargs).then(commandValue => {
+      expect(commandValue).toBe(value);
+    });
   });
 });

@@ -123,8 +123,6 @@ the project name before the generation.
 Use ```-h``` for help.
 
 ## Roadmap
-- Add `flow` support
-- Add `deploy support` (pm2)
 - Add guides & examples
 
 ## Contribution

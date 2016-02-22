@@ -4,7 +4,7 @@ const _ = require('lodash');
 const npmInstall = require('./npm-install');
 const path = require('path');
 const pkg = require('../package.json');
-const utils = require('./lib/utils');
+const configHelper = require('./lib/helper-config.js');
 
 function buildConfig(parameters, globals) {
   const defaults = require('./eslint-defaults');
@@ -15,13 +15,21 @@ function buildConfig(parameters, globals) {
     globals.sourceFiles = defaults.files;
   }
 
-  return utils.mergeParameters(defaults, parameters);
+  return configHelper.mergeParameters(defaults, parameters);
 }
 
 /**
  * @module tasks/eslint
  */
 module.exports = {
+
+  dependencies: _.pick(pkg.devDependencies, [
+    'babel-eslint',
+    'eslint-config-airbnb',
+    'eslint-plugin-react',
+    'gulp-eslint',
+    'gulp-if'
+  ]),
 
   /**
    * @function
@@ -47,13 +55,7 @@ module.exports = {
   register(gulp, taskName, parameters, globals) {
     const installDependenciesTaskName = taskName + '-install-dependencies';
     npmInstall.register(gulp, installDependenciesTaskName, {
-      dependencies: _.pick(pkg.devDependencies, [
-        'babel-eslint',
-        'eslint-config-airbnb',
-        'eslint-plugin-react',
-        'gulp-eslint',
-        'gulp-if'
-      ])
+      dependencies: this.dependencies
     });
 
     const validate = config => {

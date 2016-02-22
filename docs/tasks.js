@@ -2,19 +2,32 @@
  * @typedef {Object|function} Parameters
  * @memberof module:tasks/checkFileNames
  * @see https://github.com/HAKASHUN/gulp-check-file-naming-convention#optionscase
- * @property {string|string[]} [upperCase] Paths of files to validate against upperCase naming convention
- * @property {string|string[]} [upperCaseFirst] Paths of files to validate against upperCaseFirst naming convention
- * @property {string|string[]} [lowerCase] Paths of files to validate against lowerCase naming convention
- * @property {string|string[]} [sentenceCase] Paths of files to validate against sentenceCase naming convention
- * @property {string|string[]} [titleCase] Paths of files to validate against titleCase naming convention
- * @property {string|string[]} [camelCase] Paths of files to validate against camelCase naming convention
- * @property {string|string[]} [pascalCase] Paths of files to validate against pascalCase naming convention
- * @property {string|string[]} [snakeCase] Paths of files to validate against snakeCase naming convention
- * @property {string|string[]} [paramCase] Paths of files to validate against paramCase naming convention
- * @property {string|string[]} [dotCase] Paths of files to validate against dotCase naming convention
- * @property {string|string[]} [pathCase] Paths of files to validate against pathCase naming convention
- * @property {string|string[]} [constantCase] Paths of files to validate against constantCase naming convention
- * @property {string|string[]} [swapCase] Paths of files to validate against swapCase naming convention
+ * @property {string|string[]} [upperCase] Paths of files to validate
+ *                                         against upperCase naming convention
+ * @property {string|string[]} [upperCaseFirst] Paths of files to validate
+ *                                              against upperCaseFirst naming convention
+ * @property {string|string[]} [lowerCase] Paths of files to validate
+ *                                         against lowerCase naming convention
+ * @property {string|string[]} [sentenceCase] Paths of files to validate
+ *                                            against sentenceCase naming convention
+ * @property {string|string[]} [titleCase] Paths of files to validate
+ *                                         against titleCase naming convention
+ * @property {string|string[]} [camelCase] Paths of files to validate
+ *                                         against camelCase naming convention
+ * @property {string|string[]} [pascalCase] Paths of files to validate
+ *                                          against pascalCase naming convention
+ * @property {string|string[]} [snakeCase] Paths of files to validate
+ *                                         against snakeCase naming convention
+ * @property {string|string[]} [paramCase] Paths of files to validate
+ *                                         against paramCase naming convention
+ * @property {string|string[]} [dotCase] Paths of files to validate
+ *                                       against dotCase naming convention
+ * @property {string|string[]} [pathCase] Paths of files to validate
+ *                                        against pathCase naming convention
+ * @property {string|string[]} [constantCase] Paths of files to validate
+ *                                            against constantCase naming convention
+ * @property {string|string[]} [swapCase] Paths of files to validate
+ *                                        against swapCase naming convention
  */
 
 /**
@@ -52,7 +65,9 @@
  * @typedef {Object|function} Parameters
  * @memberof module:tasks/npmInstall
  *
- * @property {object} dependencies Dependencies to install. Key is the name and value is the version of the package.
+ * @property {boolean} verbose Whether to log additional details or not.
+ * @property {object} dependencies Dependencies to install.
+ *                    Key is the name and value is the version of the package.
  */
 
 /**

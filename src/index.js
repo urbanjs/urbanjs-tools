@@ -34,7 +34,7 @@ module.exports = {
    * @type {Object}
    * @description Core tasks
    *
-   * @property {module:tasks/checkFileNames} checkFileNames Validator for checking the names of the files
+   * @property {module:tasks/checkFileNames} checkFileNames Validator for checking file names
    * @property {module:tasks/eslint} eslint JS linter
    * @property {module:tasks/jest} jest Unit tester
    * @property {module:tasks/jscs} jscs Code style checker
@@ -52,9 +52,10 @@ module.exports = {
    *  presets: dist, doc, test, analyze, pre-commit, pre-release
    * @param {external:gulp} gulp The gulp instance to initialize
    * @param {module:main.Configuration} configuration Configuration of the tasks,
-   *                                                    true value means that defaults should be used
-   *                                                    if false value is given the task won't be initialized
-   *                                                    use function to get the defaults as first argument
+   *                                                  true value means that defaults should be used
+   *                                                  if false value is given the task won't be
+   *                                                  initialized, use function to get the
+   *                                                  defaults as first argument
    * @example
    *
    * // initialize tasks (eslint with defaults, disable jest)

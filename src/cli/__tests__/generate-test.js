@@ -1,6 +1,7 @@
 'use strict';
 
 jest.dontMock('../generate.js');
+jest.dontMock('../../lib/helper-yargs.js');
 jest.dontMock('yargs');
 
 const generate = require('../generate');
@@ -23,32 +24,45 @@ describe('CLI - generate command', () => {
     mockFs.writeFile.mockClear();
   });
 
-  it('accepts options yargs instance as second arguments', () => {
+  pit('accepts options yargs instance as second arguments', () => {
     expect(() => {
-      generate.run([]);
+      generate.run(['-v']);
     }).not.toThrow();
 
-    mockYargs.showHelp = jest.genMockFunction().mockReturnValue(mockYargs);
-    generate.run([], mockYargs);
-    expect(mockYargs.showHelp.mock.calls.length).toBe(1);
+    const mockShowHelp = jest.genMockFunction().mockReturnValue(mockYargs);
+    mockYargs.showHelp = mockShowHelp;
+    return generate.run(['-h'], mockYargs).catch(() => {
+      expect(mockShowHelp.mock.calls.length).toBe(1);
+    });
   });
 
-  it('shows help if there are missing/unknown options', () => {
-    mockYargs.showHelp = jest.genMockFunction().mockReturnValue(mockYargs);
+  pit('shows help if there are missing/unknown options', () => {
+    const mockShowHelp = jest.genMockFunction().mockReturnValue(mockYargs);
+    const reset = () => {
+      mockYargs.reset();
+      mockYargs.showHelp = mockShowHelp;
+    };
 
     // empty args
-    generate.run([], mockYargs);
-    expect(mockYargs.showHelp.mock.calls.length).toBe(1);
+    reset();
+    return generate.run([], mockYargs)
+      .catch(() => {
+        expect(mockShowHelp.mock.calls.length).toBe(1);
+        reset();
 
-    // unknown option given
-    mockYargs.reset();
-    generate.run(['-uo'], mockYargs);
-    expect(mockYargs.showHelp.mock.calls.length).toBe(2);
+        // unknown option given
+        return generate.run(['-uo'], mockYargs);
+      })
+      .catch(() => {
+        expect(mockShowHelp.mock.calls.length).toBe(2);
+        reset();
 
-    // correct args, help is not required
-    mockYargs.reset();
-    generate.run(['-n', 'asd'], mockYargs);
-    expect(mockYargs.showHelp.mock.calls.length).toBe(2);
+        // correct args, help is not required
+        return generate.run(['-n', 'asd'], mockYargs);
+      })
+      .then(() => {
+        expect(mockShowHelp.mock.calls.length).toBe(2);
+      });
   });
 
   pit('returns a promise', () => {
@@ -78,25 +92,22 @@ describe('CLI - generate command', () => {
   });
 
   pit('uses process.cwd() to define the absolute path of the project', () => {
-    return generate.run(['-n', 'projectName'], mockYargs)
-      .then(() => {
-        expect(mockFs.exists.mock.calls[0]).toEqual([path.join(process.cwd(), 'projectName')]);
-      });
+    return generate.run(['-n', 'projectName'], mockYargs).then(() => {
+      expect(mockFs.exists.mock.calls[0]).toEqual([path.join(process.cwd(), 'projectName')]);
+    });
   });
 
   pit('accepts absolute path as project name', () => {
     const absPath = path.join(__dirname, 'project');
-    return generate.run(['-n', absPath], mockYargs)
-      .then(() => {
-        expect(mockFs.exists.mock.calls[0]).toEqual([absPath]);
-      });
+    return generate.run(['-n', absPath], mockYargs).then(() => {
+      expect(mockFs.exists.mock.calls[0]).toEqual([absPath]);
+    });
   });
 
   pit('fails if the given name is invalid', () => {
-    return generate.run(['-n', ''], mockYargs)
-      .catch(err => {
-        expect(err.message).toBe('The given name is invalid: ');
-      });
+    return generate.run(['-n', ''], mockYargs).catch(err => {
+      expect(err.message).toBe('The given name is invalid: ');
+    });
   });
 
   pit('fails if the specified folder exists and force options is not used', () => {
@@ -105,10 +116,10 @@ describe('CLI - generate command', () => {
 
     mockFs.exists.mockReturnValue(Promise.resolve(true));
 
-    return generate.run(['-n', projectName], mockYargs)
-      .catch(err => {
-        expect(err.message).toBe(`The folder \`${folderPath}\` is existing. Use -f to force to delete it.`);
-      });
+    return generate.run(['-n', projectName], mockYargs).catch(err => {
+      expect(err.message)
+        .toBe(`The folder \`${folderPath}\` is existing. Use -f to force to delete it.`);
+    });
   });
 
   pit('fails if the specified folder cannot be deleted', () => {
@@ -117,12 +128,11 @@ describe('CLI - generate command', () => {
 
     mockFs.exists.mockReturnValue(Promise.resolve(true));
 
-    return generate.run(['-n', projectName, '-f'], mockYargs)
-      .catch(err => {
-        expect(mockFs.delete.mock.calls.length).toBe(1);
-        expect(mockFs.delete.mock.calls[0]).toEqual([folderPath]);
-        expect(err.message).toBe(`The folder \`${folderPath}\` is existing and cannot be deleted.`);
-      });
+    return generate.run(['-n', projectName, '-f'], mockYargs).catch(err => {
+      expect(mockFs.delete.mock.calls.length).toBe(1);
+      expect(mockFs.delete.mock.calls[0]).toEqual([folderPath]);
+      expect(err.message).toBe(`The folder \`${folderPath}\` is existing and cannot be deleted.`);
+    });
   });
 
   pit('fills the generates files with the correct content', () => {
@@ -170,7 +180,10 @@ describe('CLI - generate command', () => {
       ]);
 
       expect(mockFs.writeFile.mock.calls).toEqual([
-        [path.join(folderPath, 'docs/main.js'), '// write here your custom jsdoc documentation...\n'],
+        [
+          path.join(folderPath, 'docs/main.js'),
+          '// write here your custom jsdoc documentation...\n'
+        ],
         [path.join(folderPath, 'package.json'), JSON.stringify(packageJSON, null, '  ')],
         [path.join(folderPath, 'src/index.js'), '// let\'s get started...\n'],
         [path.join(folderPath, 'README.md'), `# ${projectName}\n`],
