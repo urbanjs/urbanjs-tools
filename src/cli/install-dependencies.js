@@ -2,6 +2,7 @@
 
 const yargsHelper = require('../lib/helper-yargs');
 const npmInstall = require('../npm-install');
+const _ = require('lodash');
 
 /**
  * @module cli/install-dependencies
@@ -13,7 +14,9 @@ module.exports = {
    * @example
    * Options:
    *  -t or --tasks   - Name of the tasks
-   *  -v or --verbose - Logs additional details during the installation
+   *  -g or --global  - Whether to install dependencies globally
+   *  -l or --link    - Whether to allow linking the globally installed, suitable packages
+   *  -v or --verbose - Whether to log additional details during the installation
    *  -h or --help    - Shows the manual
    *
    * run(['-t', 'jscs eslint jsdoc']);
@@ -30,10 +33,20 @@ module.exports = {
           demand: true,
           description: 'The name of the tasks'
         },
+        g: {
+          alias: 'global',
+          type: 'boolean',
+          description: 'Whether to install dependencies globally'
+        },
+        l: {
+          alias: 'link',
+          type: 'boolean',
+          description: 'Whether to allow linking globally installed, suitable packages'
+        },
         v: {
           alias: 'verbose',
           type: 'boolean',
-          description: 'Log additional details during the installation'
+          description: 'Whether to log additional details during the installation'
         }
       })
       .usage('Usage: urbanjs install-dependencies -t jscs eslint jsdoc');
@@ -44,7 +57,7 @@ module.exports = {
           try {
             return npmInstall.install(
               require(`../${taskName}`).dependencies,
-              { verbose: argv.verbose }
+              _.pick(argv, ['verbose', 'global', 'link'])
             );
           } catch (err) {
             return Promise.reject(new Error(`Unknown task: ${taskName}`));
@@ -53,7 +66,7 @@ module.exports = {
       ))
       .then(() => {
         console.log(// eslint-disable-line no-console
-          'Dependencies has been installed successfully');
+          'Dependencies have been installed successfully');
       })
       .catch(err => {
         console.error(// eslint-disable-line no-console

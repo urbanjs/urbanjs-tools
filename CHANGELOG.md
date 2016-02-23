@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+- Improve lazy dependency installation
+    - Allow global installation
+        use ```global``` parameter of ```install-dependencies``` command
+    - Allow linking modules instead of plain installation
+        use ```link``` parameter of ```install-dependencies``` command
+        or ```allowLinking```global configuration
+
 ## 0.5.0 (2016-02-23)
 - Introduce ```install-dependencies``` command
 - Add verbose parameter to ```npm-install``` task

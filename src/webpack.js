@@ -65,7 +65,7 @@ module.exports = {
     const installDependenciesTaskName = `${taskName}-install-dependencies`;
     npmInstall.register(gulp, installDependenciesTaskName, {
       dependencies: this.dependencies
-    });
+    }, globals);
 
     const cleanUpTaskName = `${taskName}-clean`;
     gulp.task(cleanUpTaskName, [installDependenciesTaskName], (done) => {

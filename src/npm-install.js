@@ -1,23 +1,51 @@
 'use strict';
 
+const _ = require('lodash');
+const exec = require('child_process').exec;
 const fs = require('fs');
 const path = require('path');
-const shell = require('gulp-shell');
 const semver = require('semver');
+const shell = require('gulp-shell');
 
-let promise = Promise.resolve();
+let installationPromise = Promise.resolve();
+let globalModulePathPromise = null;
 let missingDependencies = null;
 
 /**
+ * Resolves the returned promise with the global modules path
+ * @returns {Promise}
+ * @private
+ */
+function getGlobalModulesPath() {
+  if (!globalModulePathPromise) {
+    globalModulePathPromise = new Promise((resolve, reject) => {
+      exec('npm config get prefix', (err, stdout) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+
+        resolve(stdout.replace(/\n$/, ''));
+      });
+    });
+  }
+
+  return globalModulePathPromise;
+}
+
+/**
  * Tells whether the package has been installed synchronously
- * @param {string} packageName
- * @param {string} version According to the semver rules
+ * @param {string[]} nodeModulesPaths
+ * @param {string} packageName Can contain version after @ according to the semver rules
  * @returns {boolean}
  * @private
  */
-function missing(packageName, version) {
+function missing(nodeModulesPaths, packageName) {
+  const packageNameParts = packageName.split('@');
+  packageName = packageNameParts[0]; // eslint-disable-line no-param-reassign
+  const version = packageNameParts[1];
   const packageFilePath = `node_modules/${packageName}/package.json`;
-  const possibleNodeModulesPaths = [process.cwd(), path.join(__dirname, '../')];
+  const possibleNodeModulesPaths = nodeModulesPaths.slice();
 
   while (possibleNodeModulesPaths.length) {
     const packageFileAbsPath = path.join(possibleNodeModulesPaths.shift(), packageFilePath);
@@ -30,34 +58,60 @@ function missing(packageName, version) {
 }
 
 /**
- * Runs dependency installations after each other
- * @param {array} dependencies
+ * Runs dependency installations
+ * @param {array} dependencies Names of modules (can contain versions after @)
  * @param {Object} options
+ * @param {boolean} options.global
+ * @param {boolean} options.link
  * @param {boolean} options.verbose
  * @returns {Promise}
  * @private
  */
 function installDependencies(dependencies, options) {
+  const config = options || {};
+  const verbose = config.verbose;
+  const runCommand = command => new Promise((resolve, reject) => {
+    shell.task([command], { quiet: !verbose, verbose })(err => err ? reject(err) : resolve());
+  });
+
   if (missingDependencies !== null) {
     missingDependencies = missingDependencies.concat(dependencies);
   } else if (dependencies.length) {
     missingDependencies = dependencies;
-    promise = promise.then(() => new Promise((resolve, reject) => {
-      console.log(// eslint-disable-line no-console
-        `Installing missing dependencies...\n${missingDependencies}`);
+    installationPromise = installationPromise
+      .then(() => config.link ? getGlobalModulesPath() : null)
+      .then(globalModulesPath => {
+        console.log(// eslint-disable-line no-console
+          `Installing missing dependencies...\n${missingDependencies.join(' ')}`);
 
-      const verbose = options && options.verbose;
+        const promises = [];
+        let dependenciesToInstall = missingDependencies;
+        missingDependencies = null;
 
-      shell.task(
-        [`npm install ${missingDependencies.join(' ')}`],
-        { quiet: !verbose, verbose }
-      )(err => err ? reject(err) : resolve());
+        if (config.link) {
+          let dependenciesToLink = dependenciesToInstall
+            .filter(packageName => !missing([globalModulesPath], packageName));
 
-      missingDependencies = null;
-    }));
+          if (dependenciesToLink.length) {
+            dependenciesToInstall = _.difference(dependenciesToInstall, dependenciesToLink);
+            dependenciesToLink = dependenciesToLink.map(packageName => packageName.split('@')[0]);
+            promises.push(runCommand(`npm link ${dependenciesToLink.join(' ')}`));
+          }
+        }
+
+        if (dependenciesToInstall.length) {
+          promises.push(
+            Promise.all(promises).then(() => runCommand(
+              `npm install ${dependenciesToInstall.join(' ')} ${config.global ? '-g' : ''}`
+            ))
+          );
+        }
+
+        return Promise.all(promises).then(() => null);
+      });
   }
 
-  return promise;
+  return installationPromise;
 }
 
 /**
@@ -71,6 +125,8 @@ module.exports = {
    * @function
    * @param {Object} dependencies
    * @param {Object} options
+   * @param {boolean} options.global
+   * @param {boolean} options.link
    * @param {boolean} options.verbose
    * @example
    * install({
@@ -78,11 +134,24 @@ module.exports = {
    * });
    */
   install(dependencies, options) {
-    return installDependencies(
-      Object.keys(dependencies)
-        .filter(packageName => missing(packageName, dependencies[packageName]))
-        .map(packageName => `${packageName}@${dependencies[packageName]}`),
-      options
+    let promise = Promise.resolve();
+    let nodeModulePaths = [process.cwd(), path.join(__dirname, '../')];
+
+    if (options && options.global) {
+      promise = promise
+        .then(getGlobalModulesPath)
+        .then(globalModulesPath => {
+          nodeModulePaths = [globalModulesPath];
+        });
+    }
+
+    return promise.then(() =>
+      installDependencies(
+        Object.keys(dependencies)
+          .map(packageName => `${packageName}@${dependencies[packageName]}`)
+          .filter(packageName => missing(nodeModulePaths, packageName)),
+        options
+      )
     );
   },
 
@@ -93,6 +162,8 @@ module.exports = {
    * @param {external:gulp} gulp The gulp instance to use
    * @param {string} taskName The name of the task
    * @param {module:tasks/npmInstall.Parameters} parameters The parameters of the task
+   * @param {Object} [globals] The global configuration store of the tasks
+   *                           Globals are used to set up defaults
    *
    * @example
    * register(
@@ -106,9 +177,16 @@ module.exports = {
    *   }
    * );
    */
-  register(gulp, taskName, parameters) {
+  register(gulp, taskName, parameters, globals) {
     gulp.task(taskName, done => {
-      this.install(parameters.dependencies, parameters).then(done, done);
+      if (globals && !globals.hasOwnProperty('allowLinking')) {
+        globals.allowLinking = true; // eslint-disable-line no-param-reassign
+      }
+
+      this.install(
+        parameters.dependencies,
+        Object.assign({ link: globals.allowLinking }, parameters)
+      ).then(done, done);
     });
   }
 };

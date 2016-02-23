@@ -49,7 +49,7 @@ module.exports = {
     const installDependenciesTaskName = `${taskName}-install-dependencies`;
     npmInstall.register(gulp, installDependenciesTaskName, {
       dependencies: this.dependencies
-    });
+    }, globals);
 
     gulp.task(taskName, [installDependenciesTaskName], () => {// eslint-disable-line
       const checkFileNamingConvention = require('gulp-check-file-naming-convention');

@@ -65,7 +65,9 @@
  * @typedef {Object|function} Parameters
  * @memberof module:tasks/npmInstall
  *
- * @property {boolean} verbose Whether to log additional details or not.
+ * @property {boolean} link Whether to allow linking globally installed, suitable packages.
+ * @property {boolean} global Whether to install dependencies globally.
+ * @property {boolean} verbose Whether to log additional details.
  * @property {object} dependencies Dependencies to install.
  *                    Key is the name and value is the version of the package.
  */

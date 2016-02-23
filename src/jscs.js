@@ -53,7 +53,7 @@ module.exports = {
     const installDependenciesTaskName = `${taskName}-install-dependencies`;
     npmInstall.register(gulp, installDependenciesTaskName, {
       dependencies: this.dependencies
-    });
+    }, globals);
 
     const validate = config => {
       const jscs = require('gulp-jscs');
