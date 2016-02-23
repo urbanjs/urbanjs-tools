@@ -17,7 +17,7 @@ module.exports = {
     )
     .reduce((result, file) => {
       if (file.indexOf('__tests__') === -1) {
-        result[file] = true;
+        result[file] = true; // eslint-disable-line no-param-reassign
       }
 
       return result;

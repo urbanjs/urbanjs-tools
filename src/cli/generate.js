@@ -88,7 +88,7 @@ module.exports = {
             gulp: pkg.devDependencies.gulp
           }
         };
-        packageJSON.devDependencies[pkg.name] = '^' + pkg.version;
+        packageJSON.devDependencies[pkg.name] = `^${pkg.version}`;
 
         return Promise.all([
           fs.writeFile(
@@ -145,7 +145,7 @@ module.exports = {
       })
       .catch(err => {
         console.error(// eslint-disable-line no-console
-          `Project skeleton generation has exited with error:`,
+          'Project skeleton generation has exited with error:',
           err
         );
 

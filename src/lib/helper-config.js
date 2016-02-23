@@ -13,21 +13,22 @@ module.exports = {
    * @private
    */
   mergeParameters: function mergeParameters() {
-    return Array.prototype.slice.call(arguments).reduce((result, configuration) => {
-      if (!configuration || configuration === true) {
-        return result;
-      } else if (Array.isArray(configuration)) {
-        return configuration;
-      } else if (typeof configuration === 'object') {
-        // using assign instead of deep merge
-        // to be able to override values easily
-        return Object.assign({}, result, configuration);
-      } else if (typeof configuration === 'function') {
-        return mergeParameters(result, configuration(result));
-      }
+    return Array.prototype.slice.call(arguments) // eslint-disable-line prefer-rest-params
+      .reduce((result, configuration) => {
+        if (!configuration || configuration === true) {
+          return result;
+        } else if (Array.isArray(configuration)) {
+          return configuration;
+        } else if (typeof configuration === 'object') {
+          // using assign instead of deep merge
+          // to be able to override values easily
+          return Object.assign({}, result, configuration);
+        } else if (typeof configuration === 'function') {
+          return mergeParameters(result, configuration(result));
+        }
 
-      throw new Error('Invalid configuration: ' + JSON.stringify(configuration));
-    }, {});
+        throw new Error(`Invalid configuration: ${JSON.stringify(configuration)}`);
+      }, {});
   }
 
 };

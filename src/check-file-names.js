@@ -11,7 +11,7 @@ function buildConfig(parameters, globals) {
   if (globals && globals.sourceFiles) {
     defaults.paramCase = globals.sourceFiles;
   } else if (globals) {
-    globals.sourceFiles = defaults.paramCase;
+    globals.sourceFiles = defaults.paramCase; // eslint-disable-line no-param-reassign
   }
 
   return configHelper.mergeParameters(defaults, parameters);
@@ -46,12 +46,12 @@ module.exports = {
    * );
    */
   register(gulp, taskName, parameters, globals) {
-    const installDependenciesTaskName = taskName + '-install-dependencies';
+    const installDependenciesTaskName = `${taskName}-install-dependencies`;
     npmInstall.register(gulp, installDependenciesTaskName, {
       dependencies: this.dependencies
     });
 
-    gulp.task(taskName, [installDependenciesTaskName], () => {
+    gulp.task(taskName, [installDependenciesTaskName], () => {// eslint-disable-line
       const checkFileNamingConvention = require('gulp-check-file-naming-convention');
       const mergeStream = require('event-stream').merge;
       const config = buildConfig(parameters, globals);
@@ -59,10 +59,8 @@ module.exports = {
 
       if (caseNames.length) {
         return mergeStream(
-          caseNames.map(caseName => {
-            return gulp.src(config[caseName])
-              .pipe(checkFileNamingConvention({ caseName }));
-          })
+          caseNames.map(caseName => gulp.src(config[caseName])
+            .pipe(checkFileNamingConvention({ caseName })))
         );
       }
     });

@@ -140,7 +140,7 @@ module.exports = {
       .filter(key => !knownGlobals.hasOwnProperty(key));
 
     if (unknownGlobals.length) {
-      throw new Error('Unknown globals: ' + unknownGlobals.join(', '));
+      throw new Error(`Unknown globals: ${unknownGlobals.join(', ')}`);
     }
 
     Object.assign(globals, configuration);

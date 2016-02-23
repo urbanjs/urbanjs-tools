@@ -42,23 +42,19 @@ function installDependencies(dependencies, options) {
     missingDependencies = missingDependencies.concat(dependencies);
   } else if (dependencies.length) {
     missingDependencies = dependencies;
-    promise = promise.then(() => {
-      return new Promise((resolve, reject) => {
-        console.log(// eslint-disable-line no-console
-          `Installing missing dependencies...\n${missingDependencies}`);
+    promise = promise.then(() => new Promise((resolve, reject) => {
+      console.log(// eslint-disable-line no-console
+        `Installing missing dependencies...\n${missingDependencies}`);
 
-        const verbose = options && options.verbose;
+      const verbose = options && options.verbose;
 
-        shell.task(
-          [`npm install ${missingDependencies.join(' ')}`],
-          { quiet: !verbose, verbose }
-        )(err => {
-          return err ? reject(err) : resolve();
-        });
+      shell.task(
+        [`npm install ${missingDependencies.join(' ')}`],
+        { quiet: !verbose, verbose }
+      )(err => err ? reject(err) : resolve());
 
-        missingDependencies = null;
-      });
-    });
+      missingDependencies = null;
+    }));
   }
 
   return promise;

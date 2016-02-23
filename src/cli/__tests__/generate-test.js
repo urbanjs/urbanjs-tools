@@ -91,7 +91,7 @@ describe('CLI - generate command', () => {
     return Promise.all(promises);
   });
 
-  pit('uses process.cwd() to define the absolute path of the project', () => {
+  pit('uses process.cwd() to define the absolute path of the project', () => {// eslint-disable-line
     return generate.run(['-n', 'projectName'], mockYargs).then(() => {
       expect(mockFs.exists.mock.calls[0]).toEqual([path.join(process.cwd(), 'projectName')]);
     });
@@ -104,7 +104,7 @@ describe('CLI - generate command', () => {
     });
   });
 
-  pit('fails if the given name is invalid', () => {
+  pit('fails if the given name is invalid', () => {// eslint-disable-line
     return generate.run(['-n', ''], mockYargs).catch(err => {
       expect(err.message).toBe('The given name is invalid: ');
     });
@@ -165,7 +165,7 @@ describe('CLI - generate command', () => {
         },
         devDependencies: {
           gulp: pkg.devDependencies.gulp,
-          'urbanjs-tools': '^' + pkg.version
+          'urbanjs-tools': `^${pkg.version}`
         }
       };
 

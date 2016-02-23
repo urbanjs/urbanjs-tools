@@ -2,6 +2,6 @@
 
 require('../src/cli')
   .run(process.argv.slice(2))
-  .catch(function exit() {
+  .catch(() => {
     process.exit(1);
   });

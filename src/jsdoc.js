@@ -15,7 +15,7 @@ function buildConfig(parameters, globals) {
   };
 
   if (globals && !globals.babel) {
-    globals.babel = require('./lib/global-babel');
+    globals.babel = require('./lib/global-babel'); // eslint-disable-line no-param-reassign
   }
 
   return configHelper.mergeParameters(defaults, parameters);
@@ -57,12 +57,12 @@ module.exports = {
    * );
    */
   register(gulp, taskName, parameters, globals) {
-    const installDependenciesTaskName = taskName + '-install-dependencies';
+    const installDependenciesTaskName = `${taskName}-install-dependencies`;
     npmInstall.register(gulp, installDependenciesTaskName, {
       dependencies: this.dependencies
     });
 
-    const cleanUpTaskName = taskName + '-clean';
+    const cleanUpTaskName = `${taskName}-clean`;
     gulp.task(cleanUpTaskName, [installDependenciesTaskName], (done) => {
       del(['help'], { force: true }).then(() => {
         done();

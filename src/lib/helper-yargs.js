@@ -18,9 +18,9 @@ module.exports = {
 
     let counter = 0;
     const baseShowHelp = yargs.showHelp;
-    yargs.showHelp = function showHelp() {
+    yargs.showHelp = function showHelp() { // eslint-disable-line no-param-reassign
       return ++counter === 1
-        ? baseShowHelp.apply(yargs, arguments)
+        ? baseShowHelp.apply(yargs, arguments) // eslint-disable-line prefer-rest-params
         : yargs;
     };
 

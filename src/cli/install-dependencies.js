@@ -39,27 +39,25 @@ module.exports = {
       .usage('Usage: urbanjs install-dependencies -t jscs eslint jsdoc');
 
     return yargsHelper.parseArgs(yargs, args)
-      .then(argv => {
-        return Promise.all(
-          argv.tasks.map(taskName => {
-            try {
-              return npmInstall.install(
-                require(`../${taskName}`).dependencies,
-                { verbose: argv.verbose }
-              );
-            } catch (err) {
-              return Promise.reject(new Error(`Unknown task: ${taskName}`));
-            }
-          })
-        );
-      })
+      .then(argv => Promise.all(
+        argv.tasks.map(taskName => {
+          try {
+            return npmInstall.install(
+              require(`../${taskName}`).dependencies,
+              { verbose: argv.verbose }
+            );
+          } catch (err) {
+            return Promise.reject(new Error(`Unknown task: ${taskName}`));
+          }
+        })
+      ))
       .then(() => {
         console.log(// eslint-disable-line no-console
           'Dependencies has been installed successfully');
       })
       .catch(err => {
         console.error(// eslint-disable-line no-console
-          `Dependencies cannot be installed:`,
+          'Dependencies cannot be installed:',
           err
         );
 

@@ -3,6 +3,8 @@
 ## Unreleased
 - Introduce ```install-dependencies``` command
 - Add verbose parameter to ```npm-install``` task
+- Update dependencies
+- Update eslint airbnb config (6.x.x)
 
 ## 0.4.2 (2016-02-19)
 - Fix ```jest``` tasks (globals are not working in parallel mode)

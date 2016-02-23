@@ -12,7 +12,7 @@ function buildConfig(parameters, globals) {
   if (globals && globals.sourceFiles) {
     defaults.files = globals.sourceFiles;
   } else if (globals) {
-    globals.sourceFiles = defaults.files;
+    globals.sourceFiles = defaults.files; // eslint-disable-line no-param-reassign
   }
 
   return configHelper.mergeParameters(defaults, parameters);
@@ -50,7 +50,7 @@ module.exports = {
    * );
    */
   register(gulp, taskName, parameters, globals) {
-    const installDependenciesTaskName = taskName + '-install-dependencies';
+    const installDependenciesTaskName = `${taskName}-install-dependencies`;
     npmInstall.register(gulp, installDependenciesTaskName, {
       dependencies: this.dependencies
     });
@@ -65,11 +65,13 @@ module.exports = {
         .pipe(jscs.reporter());
     };
 
-    gulp.task(taskName, [installDependenciesTaskName], () => {
-      return validate(buildConfig(parameters, globals));
-    });
+    gulp.task(
+      taskName,
+      [installDependenciesTaskName],
+      () => validate(buildConfig(parameters, globals))
+    );
 
-    gulp.task(taskName + ':fix', [installDependenciesTaskName], (done) => {
+    gulp.task(`${taskName}:fix`, [installDependenciesTaskName], (done) => {
       const filesByFolderPath = {};
       const config = buildConfig(parameters, globals);
 
@@ -82,17 +84,15 @@ module.exports = {
         })
         .on('end', () => {
           Promise.all(
-            Object.keys(filesByFolderPath).map(folderPath => {
-              return new Promise((resolve, reject) => {
-                validate(Object.assign({}, config, {
-                  files: filesByFolderPath[folderPath],
-                  fix: true
-                }))
-                  .pipe(gulp.dest(folderPath))
-                  .on('error', err => reject(err))
-                  .on('end', () => resolve());
-              });
-            })
+            Object.keys(filesByFolderPath).map(folderPath => new Promise((resolve, reject) => {
+              validate(Object.assign({}, config, {
+                files: filesByFolderPath[folderPath],
+                fix: true
+              }))
+                .pipe(gulp.dest(folderPath))
+                .on('error', err => reject(err))
+                .on('end', () => resolve());
+            }))
           ).then(() => done(), err => done(err));
         });
     });

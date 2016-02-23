@@ -5,7 +5,7 @@ const process = require('./jest-preprocessor').process;
 exports.handlers = {
 
   beforeParse(event) {
-    event.source = process(event.source, event.filename);
+    event.source = process(event.source, event.filename); // eslint-disable-line no-param-reassign
   }
 
 };

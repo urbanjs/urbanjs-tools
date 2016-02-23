@@ -12,7 +12,7 @@ function buildConfig(parameters, globals) {
   if (globals && globals.babel) {
     defaults.module.loaders[0].query = globals.babel;
   } else if (globals) {
-    globals.babel = defaults.module.loaders[0].query;
+    globals.babel = defaults.module.loaders[0].query; // eslint-disable-line no-param-reassign
   }
 
   return configHelper.mergeParameters(defaults, parameters);
@@ -62,18 +62,16 @@ module.exports = {
    * );
    */
   register(gulp, taskName, parameters, globals) {
-    const installDependenciesTaskName = taskName + '-install-dependencies';
+    const installDependenciesTaskName = `${taskName}-install-dependencies`;
     npmInstall.register(gulp, installDependenciesTaskName, {
       dependencies: this.dependencies
     });
 
-    const cleanUpTaskName = taskName + '-clean';
+    const cleanUpTaskName = `${taskName}-clean`;
     gulp.task(cleanUpTaskName, [installDependenciesTaskName], (done) => {
       Promise.all(
         [].concat(buildConfig(parameters, globals))
-          .map(webpackConfig => {
-            return del([webpackConfig.output.path], { force: true });
-          })
+          .map(webpackConfig => del([webpackConfig.output.path], { force: true }))
       ).then(() => done()).catch(e => done(e));
     });
 
@@ -87,7 +85,7 @@ module.exports = {
       });
     });
 
-    const watchTaskName = taskName + ':watch';
+    const watchTaskName = `${taskName}:watch`;
     gulp.task(watchTaskName, [installDependenciesTaskName, cleanUpTaskName], done => {
       const config = buildConfig(parameters, globals);
       const bundler = require('webpack')(config);

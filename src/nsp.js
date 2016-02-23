@@ -38,7 +38,7 @@ module.exports = {
    * );
    */
   register(gulp, taskName, parameters) {
-    const installDependenciesTaskName = taskName + '-install-dependencies';
+    const installDependenciesTaskName = `${taskName}-install-dependencies`;
     npmInstall.register(gulp, installDependenciesTaskName, {
       dependencies: this.dependencies
     });
@@ -55,7 +55,7 @@ module.exports = {
         nsp.check({ package: packageFile }, (err, data) => {
           if (data && data.length) {
             vulnerabilities = vulnerabilities || [];
-            vulnerabilities.push('\r\n' + packageFile + ':\r\n');
+            vulnerabilities.push(`\r\n${packageFile}:\r\n`);
             vulnerabilities.push(nsp.formatters.summary(err, data));
           }
 

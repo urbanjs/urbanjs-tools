@@ -37,7 +37,7 @@ module.exports = {
    * );
    */
   register(gulp, taskName, parameters) {
-    const installDependenciesTaskName = taskName + '-install-dependencies';
+    const installDependenciesTaskName = `${taskName}-install-dependencies`;
     npmInstall.register(gulp, installDependenciesTaskName, {
       dependencies: this.dependencies
     });
