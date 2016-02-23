@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.5.0 (2016-02-23)
 - Introduce ```install-dependencies``` command
 - Add verbose parameter to ```npm-install``` task
 - Update dependencies
