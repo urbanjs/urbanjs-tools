@@ -124,6 +124,13 @@ Use ```-h``` for help.
 
 ## Roadmap
 - Add guides & examples
+    - How to start a package (urbanjs generate)
+    - How to override defaults
+    - How to use globals to sync configuration of multiple tasks
+    - How to divide one task (dist:bundle, dist:copy)
+    - How to register one task multiple times (eslint:test-files, eslint:source-files)
+    - How to make your deployment faster in docker (urbanjs install-dependencies)
+    - How to configure different IDEs properly
 
 ## Contribution
 Highly appreciated any ideas how to make it more powerful.

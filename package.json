@@ -1,6 +1,6 @@
 {
   "name": "urbanjs-tools",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "Common dev tools for JS projects",
   "author": "Tamas Magedli <tamas.magedli@gmail.com>",
   "contributors": [
