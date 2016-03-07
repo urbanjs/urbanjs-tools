@@ -38,7 +38,7 @@ module.exports = {
       const argv = yargs.parse(args);
 
       return argv.h
-        ? Promise.reject()
+        ? Promise.reject(new Error('Help'))
         : Promise.resolve(argv);
     } catch (err) {
       // most of the time an unknown option causes this error

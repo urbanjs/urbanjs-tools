@@ -1,14 +1,14 @@
 'use strict';
 
-jest.dontMock('../generate.js');
-jest.dontMock('../../lib/helper-yargs.js');
-jest.dontMock('yargs');
+import generate from '../generate';
+import mockFs from '../../lib/fs';
+import path from 'path';
+import pkg from '../../../package.json';
+import yargs from 'yargs';
 
-const generate = require('../generate');
-const mockFs = require('../../lib/fs');
-const path = require('path');
-const pkg = require('../../../package.json');
-const yargs = require('yargs');
+jest.unmock('../generate.js');
+jest.unmock('../../lib/helper-yargs.js');
+jest.unmock('yargs');
 
 describe('CLI - generate command', () => {
   let mockYargs;

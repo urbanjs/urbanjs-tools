@@ -28,6 +28,7 @@ module.exports = {
     'babel-preset-es2015',
     'babel-preset-react',
     'babel-preset-stage-0',
+    'babel-preset-jest',
     'jest-cli',
     'readdir'
   ]),

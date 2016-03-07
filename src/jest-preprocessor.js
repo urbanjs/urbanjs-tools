@@ -18,9 +18,12 @@ module.exports = {
     }
 
     if (filename.indexOf('node_modules') === -1) {
+      const presets = [require.resolve('babel-preset-jest')].concat(globals.babel.presets);
+
       return babel.transform(src, Object.assign({}, globals.babel, {
         filename,
-        retainLines: true
+        retainLines: true,
+        presets
       })).code;
     }
 

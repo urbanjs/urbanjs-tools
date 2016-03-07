@@ -1,12 +1,13 @@
 'use strict';
 
-jest.dontMock('../index.js');
-jest.dontMock('../../lib/helper-yargs.js');
-jest.dontMock('yargs');
+import index from '../index';
+import mockGenerate from '../generate';
+import yargs from 'yargs';
 
-const index = require('../index');
-const mockGenerate = require('../generate');
-const yargs = require('yargs');
+jest.unmock('gulp-shell');
+jest.unmock('../index.js');
+jest.unmock('../../lib/helper-yargs.js');
+jest.unmock('yargs');
 
 describe('CLI - index command', () => {
   let mockYargs;
@@ -25,7 +26,8 @@ describe('CLI - index command', () => {
 
     const mockShowHelp = jest.genMockFunction().mockReturnValue(mockYargs);
     mockYargs.showHelp = mockShowHelp;
-    return index.run(['-h'], mockYargs).then(() => {
+    return index.run(['-h'], mockYargs).catch(err => {
+      expect(err.message).toBe('Help');
       expect(mockShowHelp.mock.calls.length).toBe(1);
     });
   });
@@ -91,7 +93,7 @@ describe('CLI - index command', () => {
 
     [
       { args: ['-v'] },
-      { args: ['-h'] },
+      { args: ['-h'], error: 'Help' },
       { args: ['generate'] },
       { args: [], error: 'Invalid argument' },
       { args: ['unknown'], error: 'Invalid argument' },
