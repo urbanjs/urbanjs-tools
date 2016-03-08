@@ -2,6 +2,7 @@
 
 const globals = require('./index-globals');
 const tasks = {
+  checkDependencies: require('./check-dependencies'),
   checkFileNames: require('./check-file-names'),
   eslint: require('./eslint'),
   jest: require('./jest'),
@@ -34,6 +35,9 @@ module.exports = {
    * @type {Object}
    * @description Core tasks
    *
+   * @property {module:tasks/checkDependencies} checkDependencies Validator for checking
+   *                                                              missing, unused, outdated
+   *                                                              dependencies
    * @property {module:tasks/checkFileNames} checkFileNames Validator for checking file names
    * @property {module:tasks/eslint} eslint JS linter
    * @property {module:tasks/jest} jest Unit tester
@@ -76,6 +80,7 @@ module.exports = {
     const existingTasks = {};
 
     [
+      ['checkDependencies', 'check-dependencies'],
       ['checkFileNames', 'check-file-names'],
       ['eslint'],
       ['jest'],
@@ -103,7 +108,14 @@ module.exports = {
 
     gulp.task('test', filter(['jest']));
 
-    gulp.task('analyse', filter(['check-file-names', 'jscs', 'eslint', 'nsp', 'retire']));
+    gulp.task('analyse', filter([
+      'check-dependencies',
+      'check-file-names',
+      'jscs',
+      'eslint',
+      'nsp',
+      'retire'
+    ]));
 
     gulp.task('pre-commit', ['analyse', 'test']);
 

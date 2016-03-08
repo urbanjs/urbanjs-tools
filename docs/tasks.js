@@ -32,6 +32,13 @@
 
 /**
  * @typedef {Object|function} Parameters
+ * @memberof module:tasks/checkDependencies
+ * @property {string|string[]} [files] Paths of the files to check
+ * @property {string} packageFile Path of the package.json file or files
+ */
+
+/**
+ * @typedef {Object|function} Parameters
  * @memberof module:tasks/eslint
  * @description ESLint configuration object, can contain any options of the eslint cli engine.
  * @see http://eslint.org/docs/developer-guide/nodejs-api#cliengine

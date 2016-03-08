@@ -4,13 +4,22 @@ const gulp = require('gulp');
 const tools = require('urbanjs-tools');
 
 tools.initialize(gulp, {
+  checkDependencies: true,
+
   checkFileNames: true,
+
   eslint: true,
+
   jest: true,
+
   jscs: true,
+
   jsdoc: true,
+
   nsp: true,
+
   retire: true,
+
   webpack: true
 });
 

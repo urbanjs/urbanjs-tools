@@ -4,6 +4,8 @@ const gulp = require('gulp');
 const tools = require('./src');
 
 tools.initialize(gulp, {
+  checkDependencies: true,
+
   checkFileNames: true,
 
   eslint: true,

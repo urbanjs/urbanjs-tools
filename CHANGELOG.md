@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- Introduce ```check-dependencies``` task
 - Update dependencies (jest-cli@0.9.0)
 - Improve lazy dependency installation
     - Allow global installation

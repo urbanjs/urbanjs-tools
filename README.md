@@ -63,6 +63,7 @@ of the technical specific tasks are used directly by the presets
 to give a chance to replace them as you want.
 
 Tasks:
+- ```check-dependencies``` - Dependency checker
 - ```check-file-names``` - Validator for checking the names of the files
 - ```eslint``` - JS linter
 - ```eslint:fix``` - JS linter
@@ -81,7 +82,7 @@ Presets:
 - ```dist``` (```webpack```)
 - ```doc``` (```jsdoc```)
 - ```test``` (```jest```)
-- ```analyse``` (```check-file-names```, ```jscs```, ```eslint```, ```nsp```, ```retire```)
+- ```analyse``` (```check-dependencies```, ```check-file-names```, ```jscs```, ```eslint```, ```nsp```, ```retire```)
 - ```pre-commit``` (```analyze```, ```test```)
 - ```pre-release``` (```pre-commit```, ```dist```, ```doc```)
 

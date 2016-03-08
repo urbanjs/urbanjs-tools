@@ -5,7 +5,8 @@ const spawn = require('child-process-promise').spawn;
 const pkg = require('../package.json');
 
 const projectName = 'asd';
-const projectFolderPath = path.join(process.cwd(), projectName);
+const projectFolderPath = path.join(__dirname, `../${projectName}`);
+const packageFolderPath = path.join(__dirname, '../');
 
 const toExecutable = executable => process.platform === 'win32' ? `${executable}.cmd` : executable;
 const npmExecutable = toExecutable('npm');
@@ -19,29 +20,33 @@ const commands = [
   ['node', ['bin', 'generate', '-n', projectName, '-f']],
 
   // install dependencies, use the current repository as urbanjs-tools
-  [npmExecutable, ['link']],
-  [npmExecutable, ['link', pkg.name], { cwd: projectFolderPath }],
-  [npmExecutable, ['install'], { cwd: projectFolderPath }],
+  [npmExecutable, ['link'], { cwd: packageFolderPath }],
+  [npmExecutable, ['link', pkg.name]],
+  [npmExecutable, ['install']],
 
   // test each gulp task
-  [gulpExecutable, ['check-file-names'], { cwd: projectFolderPath }],
-  [gulpExecutable, ['eslint'], { cwd: projectFolderPath }],
-  [gulpExecutable, ['jest'], { cwd: projectFolderPath }],
-  [gulpExecutable, ['jscs'], { cwd: projectFolderPath }],
-  [gulpExecutable, ['jsdoc'], { cwd: projectFolderPath }],
-  [gulpExecutable, ['nsp'], { cwd: projectFolderPath }],
-  [gulpExecutable, ['retire'], { cwd: projectFolderPath, successfulExitCodes: [0, 1] }],
-  [gulpExecutable, ['webpack'], { cwd: projectFolderPath }],
+  [gulpExecutable, ['check-dependencies']],
+  [gulpExecutable, ['check-file-names']],
+  [gulpExecutable, ['eslint']],
+  [gulpExecutable, ['jest']],
+  [gulpExecutable, ['jscs']],
+  [gulpExecutable, ['jsdoc']],
+  [gulpExecutable, ['nsp']],
+  [gulpExecutable, ['retire'], { successfulExitCodes: [0, 1] }],
+  [gulpExecutable, ['webpack']],
 
   // TODO: test the build with prod dependencies only
-  // [npmExecutable, ['unlink', pkg.name], { cwd: projectFolderPath }],
-  // [npmExecutable, ['uninstall', '--production'], { cwd: projectFolderPath }],
-  ['node', ['dist'], { cwd: projectFolderPath }]
+  // [npmExecutable, ['unlink', pkg.name]],
+  // [npmExecutable, ['uninstall', '--production']],
+  ['node', ['dist']]
 ];
 
 const run = command => () => {
   const commandString = `${command[0]} ${command[1].join(' ')}`;
-  return spawn(command[0], command[1], Object.assign({ capture: ['stdout', 'stderr'] }, command[2]))
+  return spawn(command[0], command[1], Object.assign({
+    cwd: projectFolderPath,
+    capture: ['stdout', 'stderr']
+  }, command[2]))
     .then(() => console.log(`${commandString} was successful.`)) // eslint-disable-line no-console
     .catch(err => {
       console.log(`${commandString} has failed`); // eslint-disable-line no-console
