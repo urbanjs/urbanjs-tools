@@ -10,7 +10,9 @@ tools.initialize(gulp, {
 
   eslint: true,
 
-  jest: true,
+  jest: {
+    unmockedModulePathPatterns: ['node_modules/.*']
+  },
 
   jscs: true,
 

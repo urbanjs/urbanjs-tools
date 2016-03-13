@@ -55,17 +55,18 @@ function checkOutdatedPackages(packageFile) {
 
   return getOutdatedPackages(packageFile)
     .then(packages => {
-      outdatedPackages = packages;
+      // validate only installed dependencies
+      outdatedPackages = Object.keys(packages)
+        .filter(packageName => typeof packages[packageName].current !== 'undefined');
 
-      // These dependencies are problematic as they have a newer version which is allowed to
+      // these dependencies are problematic as they have a newer version which is also allowed to
       // be installed according the semver version.
       // Unless you use shrinkwrap file or fix version numbers you should update these
       // dependencies as soon as possible to avoid potential errors of the newer version.
-      problematicDependencies = Object.keys(packages)
-        .filter(packageName => {
-          const dependency = outdatedPackages[packageName];
-          return dependency.current !== dependency.wanted;
-        });
+      problematicDependencies = Object.keys(outdatedPackages).filter(packageName => {
+        const dependency = outdatedPackages[packageName];
+        return dependency.current !== dependency.wanted;
+      });
     })
     .then(() => fs.exists(path.join(path.dirname(packageFile), 'npm-shrinkwrap.json')))
     .then(exists => {
@@ -93,8 +94,6 @@ function checkMissingPackages(packageFile, files) {
     ignoreMatches: [],
     ignoreDirs: [],
     parsers: [].concat(files).reduce((acc, filePath) => {
-      // TODO: waiting for the new depcheck version
-      // currently patterns based on abs path are not supported
       acc[filePath] = [// eslint-disable-line no-param-reassign
         depcheck.parser.jsx,
         depcheck.special.babel,

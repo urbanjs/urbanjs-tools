@@ -91,11 +91,11 @@ describe('CLI - generate command', () => {
     return Promise.all(promises);
   });
 
-  pit('uses process.cwd() to define the absolute path of the project', () => {// eslint-disable-line
-    return generate.run(['-n', 'projectName'], mockYargs).then(() => {
+  pit('uses process.cwd() to define the absolute path of the project', () =>
+    generate.run(['-n', 'projectName'], mockYargs).then(() => {
       expect(mockFs.exists.mock.calls[0]).toEqual([path.join(process.cwd(), 'projectName')]);
-    });
-  });
+    })
+  );
 
   pit('accepts absolute path as project name', () => {
     const absPath = path.join(__dirname, 'project');
@@ -104,11 +104,16 @@ describe('CLI - generate command', () => {
     });
   });
 
-  pit('fails if the given name is invalid', () => {// eslint-disable-line
-    return generate.run(['-n', ''], mockYargs).catch(err => {
-      expect(err.message).toBe('The given name is invalid: ');
-    });
-  });
+  pit('fails if the given name is invalid', () =>
+    Promise.all([
+      generate.run(['-n'], mockYargs).catch(err => {
+        expect(err.message).toBe('The given name is invalid: ');
+      }),
+      generate.run(['-n', ''], mockYargs).catch(err => {
+        expect(err.message).toBe('Unknown argument: ');
+      })
+    ])
+  );
 
   pit('fails if the specified folder exists and force options is not used', () => {
     const projectName = 'asd';

@@ -1,5 +1,7 @@
 'use strict';
 
+const Yargs = require('yargs/yargs');
+
 module.exports = {
   /**
    * Initializes the given yargs with common settings
@@ -7,7 +9,7 @@ module.exports = {
    * @return {Object}
    */
   initYargs(yargs) {
-    yargs = yargs || require('yargs'); // eslint-disable-line no-param-reassign
+    yargs = yargs || new Yargs(); // eslint-disable-line no-param-reassign
 
     yargs
       .exitProcess(false)

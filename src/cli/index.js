@@ -36,7 +36,14 @@ module.exports = {
       [generate, 'generate', 'Generates a skeleton for your next project'],
       [installDependencies, 'install-dependencies', 'Installs the dependencies of the given tasks']
     ].forEach(command => yargs.command(command[1], command[2], y => {
-      commandExecution = command[0].run(args, y);
+      if (args[0] !== command[1]) {
+        console.log(// eslint-disable-line no-console
+          `Invalid argument: ${args.join(' ')}`);
+
+        throw new Error('Invalid argument');
+      }
+
+      commandExecution = command[0].run(args.slice(1), y);
     }));
 
     return yargsHelper.parseArgs(yargs, args).then(argv => {

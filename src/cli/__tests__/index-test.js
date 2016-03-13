@@ -2,19 +2,17 @@
 
 import index from '../index';
 import mockGenerate from '../generate';
-import yargs from 'yargs';
+import Yargs from 'yargs/yargs';
 
-jest.unmock('gulp-shell');
 jest.unmock('../index.js');
 jest.unmock('../../lib/helper-yargs.js');
-jest.unmock('yargs');
 
 describe('CLI - index command', () => {
   let mockYargs;
 
   beforeEach(() => {
     // kind of a real yargs...
-    mockYargs = yargs.reset();
+    mockYargs = new Yargs();
     mockGenerate.run.mockClear();
     mockGenerate.run.mockReturnValue(Promise.resolve());
   });
@@ -96,7 +94,7 @@ describe('CLI - index command', () => {
       { args: ['-h'], error: 'Help' },
       { args: ['generate'] },
       { args: [], error: 'Invalid argument' },
-      { args: ['unknown'], error: 'Invalid argument' },
+      { args: ['unknown'], error: 'Unknown argument: unknown' },
       { args: ['-u'], error: 'Unknown argument: u' }
     ].forEach(options => {
       mockYargs.reset();
