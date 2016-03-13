@@ -3,6 +3,7 @@
   "extends": "airbnb",
   "env": {
     "browser": true,
+    "jasmine": true,
     "node": true
   },
   "rules": {

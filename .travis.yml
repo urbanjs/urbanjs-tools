@@ -27,4 +27,3 @@ install:
 
 script:
   - npm test
-  - node scripts/cli-test.js

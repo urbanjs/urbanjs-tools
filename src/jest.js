@@ -68,10 +68,12 @@ module.exports = {
       const jest = require('jest-cli');
       const config = buildConfig(parameters, globals);
 
-      // add globals to the environment variables of the process
-      // as jest will create multiple processes to run tests in parallel
-      // see index-globals.js for more information
-      process.env.urbanJSToolGlobals = JSON.stringify(globals);
+      if (globals) {
+        // add globals to the environment variables of the process
+        // as jest will create multiple processes to run tests in parallel
+        // see index-globals.js for more information
+        process.env.urbanJSToolGlobals = JSON.stringify(globals);
+      }
 
       jest.runCLI(
         { config },

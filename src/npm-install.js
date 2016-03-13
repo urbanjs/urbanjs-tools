@@ -178,8 +178,10 @@ module.exports = {
    * );
    */
   register(gulp, taskName, parameters, globals) {
+    globals = globals || {}; // eslint-disable-line no-param-reassign
+
     gulp.task(taskName, done => {
-      if (globals && !globals.hasOwnProperty('allowLinking')) {
+      if (!globals.hasOwnProperty('allowLinking')) {
         globals.allowLinking = true; // eslint-disable-line no-param-reassign
       }
 
