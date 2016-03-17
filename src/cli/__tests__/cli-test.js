@@ -1,8 +1,11 @@
 'use strict';
 
-const path = require('path');
-const spawn = require('child-process-promise').spawn;
-const pkg = require('../../../package.json');
+import fs from '../../lib/fs';
+import path from 'path';
+import { spawn } from 'child-process-promise';
+import pkg from '../../../package.json';
+
+jest.unmock('../../lib/fs');
 
 const projectName = 'asd';
 const packageFolderPath = path.join(__dirname, '../../../');
@@ -29,11 +32,12 @@ const run = command => () => {
 describe('CLI - E2E test', () => {
   const originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
 
-  beforeEach(() => {
+  beforeAll(done => {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
+    fs.delete(projectFolderPath).then(() => done(), done.fail);
   });
 
-  afterEach(() => {
+  afterAll(() => {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
   });
 
