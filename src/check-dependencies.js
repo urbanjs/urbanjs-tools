@@ -41,7 +41,7 @@ function getOutdatedPackages(packageFile) {
       }
 
       try {
-        resolve(JSON.parse(stdout));
+        resolve(stdout ? JSON.parse(stdout) : {});
       } catch (e) {
         reject(e);
       }

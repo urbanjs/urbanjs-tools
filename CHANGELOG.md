@@ -9,6 +9,9 @@
     - Allow linking modules instead of plain installation
         use ```link``` parameter of ```install-dependencies``` command
         or ```allowLinking```global configuration
+- Fix ```.initialize()``` api
+    - If given configuration is a function,
+     the returned object won't be merged with defaults
 
 ## 0.5.0 (2016-02-23)
 - Introduce ```install-dependencies``` command
