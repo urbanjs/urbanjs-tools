@@ -11,3 +11,14 @@
  * @property {module:tasks/retire.Parameters} [retire] Parameters of the retire task
  * @property {module:tasks/webpack.Parameters} [webpack] Parameters of the webpack task
  */
+
+/**
+ * @typedef {Object} GlobalConfiguration
+ * @memberof module:main
+ * @property {Object} babel Common babel configuration, used by:
+ *                          jest, jsdoc, webpack
+ * @property {string|string[]} sourceFiles Common source files, used by:
+ *                                         eslint, jscs, check-dependencies
+ * @property {boolean} allowLinking Whether to allow linking globally installed packages, used by:
+ *                                  npm-install
+ */

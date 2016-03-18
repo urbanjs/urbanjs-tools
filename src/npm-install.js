@@ -162,8 +162,7 @@ module.exports = {
    * @param {external:gulp} gulp The gulp instance to use
    * @param {string} taskName The name of the task
    * @param {module:tasks/npmInstall.Parameters} parameters The parameters of the task
-   * @param {Object} [globals] The global configuration store of the tasks
-   *                           Globals are used to set up defaults
+   * @param {module:main.GlobalConfiguration} [globals] The global configuration
    *
    * @example
    * register(

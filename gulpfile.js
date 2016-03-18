@@ -30,6 +30,6 @@ tools.initialize(gulp, {
 tools.tasks.jest.register(gulp, 'test-unit', {
   unmockedModulePathPatterns,
   testPathPattern: /.*-spec\.js$/
-}, {});
+});
 
 gulp.task('default', ['pre-release']);

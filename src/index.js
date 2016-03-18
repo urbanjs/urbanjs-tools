@@ -128,9 +128,7 @@ module.exports = {
    * keep the common configurations in sync e.g. babel, sourceFiles
    * Globals are used to set up the defaults of the tasks.
    * @see module:main.globals
-   * @param {Object} configuration
-   * @param {Object} configuration.babel
-   * @param {string|string[]} configuration.sourceFiles
+   * @param {module:main.GlobalConfiguration} configuration
    *
    * @example
    *

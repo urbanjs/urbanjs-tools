@@ -9,9 +9,9 @@ const configHelper = require('./lib/helper-config.js');
 function buildConfig(parameters, globals) {
   const defaults = require('./webpack-defaults');
 
-  if (globals && globals.babel) {
+  if (globals.babel) {
     defaults.module.loaders[0].query = globals.babel;
-  } else if (globals) {
+  } else {
     globals.babel = defaults.module.loaders[0].query; // eslint-disable-line no-param-reassign
   }
 
@@ -50,9 +50,7 @@ module.exports = {
    * @param {external:gulp} gulp The gulp instance to use
    * @param {string} taskName The name of the task
    * @param {module:tasks/webpack.Parameters} parameters The parameters of the task
-   * @param {Object} [globals] The global configuration store of the tasks
-   *                           Globals are used to set up defaults
-   * @param {Object} globals.babel The babel configuration to use in babel-loader
+   * @param {module:main.GlobalConfiguration} [globals] The global configuration
    *
    * @example
    * register(
@@ -62,6 +60,8 @@ module.exports = {
    * );
    */
   register(gulp, taskName, parameters, globals) {
+    globals = globals || {}; // eslint-disable-line no-param-reassign
+
     const installDependenciesTaskName = `${taskName}-install-dependencies`;
     npmInstall.register(gulp, installDependenciesTaskName, {
       dependencies: this.dependencies

@@ -10,7 +10,7 @@ const configHelper = require('./lib/helper-config.js');
 function buildConfig(parameters, globals) {
   const defaults = require('./jest-defaults');
 
-  if (globals && !globals.babel) {
+  if (!globals.babel) {
     globals.babel = require('./lib/global-babel'); // eslint-disable-line no-param-reassign
   }
 
@@ -40,9 +40,7 @@ module.exports = {
    * @param {external:gulp} gulp The gulp instance to use
    * @param {string} taskName The name of the task
    * @param {module:tasks/jest.Parameters} parameters The parameters of the task
-   * @param {Object} [globals] The global configuration store of the tasks
-   *                           Globals are used to set up defaults
-   * @param {Object} globals.babel The babel configuration to use in babel-loader
+   * @param {module:main.GlobalConfiguration} [globals] The global configuration
    *
    * @example
    * register(
@@ -52,6 +50,8 @@ module.exports = {
    * );
    */
   register(gulp, taskName, parameters, globals) {
+    globals = globals || {}; // eslint-disable-line no-param-reassign
+
     const installDependenciesTaskName = `${taskName}-install-dependencies`;
     npmInstall.register(gulp, installDependenciesTaskName, {
       dependencies: this.dependencies
@@ -68,15 +68,20 @@ module.exports = {
       const jest = require('jest-cli');
       const config = buildConfig(parameters, globals);
 
-      if (globals) {
-        // add globals to the environment variables of the process
-        // as jest will create multiple processes to run tests in parallel
-        // see index-globals.js for more information
-        process.env.urbanJSToolGlobals = JSON.stringify(globals);
-      }
+      // add globals to the environment variables of the process
+      // as jest will create multiple processes to run tests in parallel
+      // see index-globals.js for more information
+      process.env.urbanJSToolGlobals = JSON.stringify(globals);
 
       jest.runCLI(
-        { config },
+        {
+          config,
+
+          // jest-cli has a bug, it looks for these options
+          // on the given argv and not in the config
+          testPathPattern: config.testPathPattern,
+          testPathIgnorePatterns: config.testPathIgnorePatterns
+        },
         config.rootDir,
         success => done(!success)
       );
