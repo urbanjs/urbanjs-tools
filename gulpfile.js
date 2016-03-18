@@ -3,6 +3,8 @@
 const gulp = require('gulp');
 const tools = require('./src');
 
+const unmockedModulePathPatterns = ['node_modules/.*'];
+
 tools.initialize(gulp, {
   checkDependencies: true,
 
@@ -11,7 +13,7 @@ tools.initialize(gulp, {
   eslint: true,
 
   jest: {
-    unmockedModulePathPatterns: ['node_modules/.*']
+    unmockedModulePathPatterns
   },
 
   jscs: true,
@@ -24,5 +26,10 @@ tools.initialize(gulp, {
 
   webpack: false
 });
+
+tools.tasks.jest.register(gulp, 'test-unit', {
+  unmockedModulePathPatterns,
+  testPathPattern: /.*-spec\.js$/
+}, {});
 
 gulp.task('default', ['pre-release']);
