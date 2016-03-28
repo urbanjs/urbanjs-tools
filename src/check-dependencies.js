@@ -129,7 +129,7 @@ function checkMissingPackages(packageFile, files) {
 }
 
 /**
- * @module tasks/check-dependencies
+ * @module tasks/checkDependencies
  */
 module.exports = {
 

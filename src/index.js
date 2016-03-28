@@ -24,10 +24,12 @@ module.exports = {
    * @description Core cli commands
    *
    * @property {module:cli/index} index Main entry point of the cli
+   * @property {module:cli/installDependencies} installDependencies Install npm packages
    * @property {module:cli/generate} generate Generates the folder structure for the project
    */
   cli: {
     index: require('./cli/index'),
+    installDependencies: require('./cli/install-dependencies'),
     generate: require('./cli/generate')
   },
 

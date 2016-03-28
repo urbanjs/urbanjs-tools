@@ -5,7 +5,7 @@ const npmInstall = require('../npm-install');
 const _ = require('lodash');
 
 /**
- * @module cli/install-dependencies
+ * @module cli/installDependencies
  */
 module.exports = {
 
