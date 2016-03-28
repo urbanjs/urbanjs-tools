@@ -71,7 +71,14 @@ function installDependencies(dependencies, options) {
   const config = options || {};
   const verbose = config.verbose;
   const runCommand = command => new Promise((resolve, reject) => {
-    shell.task([command], { quiet: !verbose, verbose })(err => err ? reject(err) : resolve());
+    shell.task([command], { quiet: !verbose, verbose })(err => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      resolve();
+    });
   });
 
   if (missingDependencies !== null) {
@@ -79,7 +86,13 @@ function installDependencies(dependencies, options) {
   } else if (dependencies.length) {
     missingDependencies = dependencies;
     installationPromise = installationPromise
-      .then(() => config.link ? getGlobalModulesPath() : null)
+      .then(() => {
+        if (config.link) {
+          return getGlobalModulesPath();
+        }
+
+        return null;
+      })
       .then(globalModulesPath => {
         console.log(// eslint-disable-line no-console
           `Installing missing dependencies...\n${missingDependencies.join(' ')}`);

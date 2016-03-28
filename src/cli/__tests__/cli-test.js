@@ -11,7 +11,14 @@ const projectName = 'asd';
 const packageFolderPath = path.join(__dirname, '../../../');
 const projectFolderPath = path.join(packageFolderPath, projectName);
 
-const toExecutable = executable => process.platform === 'win32' ? `${executable}.cmd` : executable;
+const toExecutable = executable => {
+  if (process.platform === 'win32') {
+    return `${executable}.cmd`;
+  }
+
+  return executable;
+};
+
 const npmExecutable = toExecutable('npm');
 const gulpExecutable = toExecutable('gulp');
 

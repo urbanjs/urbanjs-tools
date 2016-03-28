@@ -21,7 +21,14 @@ module.exports = {
       fs.readFile(
         filePath,
         'utf8',
-        (err, content) => err ? reject(`File cannot be read: ${filePath}`) : resolve(content)
+        (err, content) => {
+          if (err) {
+            reject(`File cannot be read: ${filePath}`);
+            return;
+          }
+
+          resolve(content);
+        }
       );
     });
   },
@@ -38,7 +45,14 @@ module.exports = {
         fs.writeFile(
           targetPath,
           content,
-          writeErr => writeErr ? reject(`File cannot be written: ${targetPath}`) : resolve()
+          writeErr => {
+            if (writeErr) {
+              reject(`File cannot be written: ${targetPath}`);
+              return;
+            }
+
+            resolve();
+          }
         );
       });
     });

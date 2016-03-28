@@ -110,7 +110,7 @@ describe('CLI - generate command', () => {
         expect(err.message).toBe('The given name is invalid: ');
       }),
       generate.run(['-n', ''], mockYargs).catch(err => {
-        expect(err.message).toBe('Unknown argument: ');
+        expect(err.message).toBe('The given name is invalid: ');
       })
     ])
   );
