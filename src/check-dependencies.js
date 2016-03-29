@@ -50,21 +50,21 @@ function getOutdatedPackages(packageFile) {
 }
 
 function checkOutdatedPackages(packageFile) {
-  let outdatedPackages;
+  let outdatedPackageNames;
   let problematicDependencies;
 
   return getOutdatedPackages(packageFile)
     .then(packages => {
       // validate only installed dependencies
-      outdatedPackages = Object.keys(packages)
+      outdatedPackageNames = Object.keys(packages)
         .filter(packageName => typeof packages[packageName].current !== 'undefined');
 
       // these dependencies are problematic as they have a newer version which is also allowed to
       // be installed according the semver version.
       // Unless you use shrinkwrap file or fix version numbers you should update these
       // dependencies as soon as possible to avoid potential errors of the newer version.
-      problematicDependencies = Object.keys(outdatedPackages).filter(packageName => {
-        const dependency = outdatedPackages[packageName];
+      problematicDependencies = outdatedPackageNames.filter(packageName => {
+        const dependency = packages[packageName];
         return dependency.current !== dependency.wanted;
       });
     })
@@ -82,7 +82,7 @@ function checkOutdatedPackages(packageFile) {
       }
     })
     .then(() => {
-      show(outdatedPackages, 'You have outdated packages, consider to update them');
+      show(outdatedPackageNames, 'You have outdated packages, consider to update them');
     });
 }
 

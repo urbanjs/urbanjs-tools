@@ -27,7 +27,6 @@ module.exports = {
     'babel-eslint',
     'eslint-config-airbnb',
     'eslint-plugin-react',
-    'estraverse-fb',
     'gulp-eslint',
     'gulp-if'
   ]),

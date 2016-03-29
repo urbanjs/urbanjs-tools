@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+- Update nsp (2.2.1 fails)
+- Fix ```check-dependencies``` task
+
 ## 0.6.0 (2016-03-28)
 - Introduce ```check-dependencies``` task
 - Improve lazy dependency installation
