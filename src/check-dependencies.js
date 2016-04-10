@@ -135,6 +135,7 @@ function checkMissingPackages(packageFile, files) {
 module.exports = {
 
   dependencies: _.pick(pkg.devDependencies, [
+    'babylon',
     'depcheck'
   ]),
 
