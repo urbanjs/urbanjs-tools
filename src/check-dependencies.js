@@ -8,7 +8,6 @@ const path = require('path');
 const pkg = require('../package.json');
 const prettyjson = require('prettyjson');
 const configHelper = require('./lib/helper-config.js');
-const parser = require('./check-dependencies-depcheck-parser');
 
 function buildConfig(parameters, globals) {
   const defaults = require('./check-dependencies-defaults');
@@ -89,6 +88,7 @@ function checkOutdatedPackages(packageFile) {
 
 function checkMissingPackages(packageFile, files) {
   const depcheck = require('depcheck');
+  const parser = require('./check-dependencies-depcheck-parser');
   const options = {
     withoutDev: false,
     ignoreBinPackage: false,
