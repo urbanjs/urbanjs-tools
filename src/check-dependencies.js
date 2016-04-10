@@ -8,6 +8,7 @@ const path = require('path');
 const pkg = require('../package.json');
 const prettyjson = require('prettyjson');
 const configHelper = require('./lib/helper-config.js');
+const parser = require('./check-dependencies-depcheck-parser');
 
 function buildConfig(parameters, globals) {
   const defaults = require('./check-dependencies-defaults');
@@ -95,7 +96,7 @@ function checkMissingPackages(packageFile, files) {
     ignoreDirs: [],
     parsers: [].concat(files).reduce((acc, filePath) => {
       acc[filePath] = [// eslint-disable-line no-param-reassign
-        depcheck.parser.jsx,
+        parser,
         depcheck.special.babel,
         depcheck.special.bin,
         depcheck.special.eslint,

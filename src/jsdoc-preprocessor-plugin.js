@@ -1,11 +1,15 @@
 'use strict';
 
-const process = require('./jest-preprocessor').process;
+const globals = require('./index-globals');
+const preprocessor = require('./lib/helper-preprocessor');
 
 exports.handlers = {
 
   beforeParse(event) {
-    event.source = process(event.source, event.filename); // eslint-disable-line no-param-reassign
+    const src = preprocessor.processWithBabel(event.source, event.filename, globals.babel);
+
+    event.source = src;// eslint-disable-line no-param-reassign
+    return src;
   }
 
 };

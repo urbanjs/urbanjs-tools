@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+- Update dependencies
+- Support flow syntax in ```check-dependencies``` task
+
 ## 0.6.1 (2016-03-29)
 - Update nsp (2.2.1 fails)
 - Fix ```check-dependencies``` task
