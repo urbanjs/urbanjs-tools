@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.6.2 (2016-04-10)
 - Update dependencies
 - Support flow syntax in ```check-dependencies``` task
 
