@@ -17,6 +17,33 @@ function buildConfig(parameters, globals) {
   return configHelper.mergeParameters(defaults, parameters);
 }
 
+function runJest(parameters, globals, watch) {
+  const jest = require('jest-cli');
+  const config = buildConfig(parameters, globals);
+
+  // add globals to the environment variables of the process
+  // as jest will create multiple processes to run tests in parallel
+  // see index-globals.js for more information
+  process.env.urbanJSToolGlobals = JSON.stringify(globals);
+
+  return new Promise((resolve, reject) => {
+    jest.runCLI(
+      {
+        config,
+
+        // jest-cli has a bug, it looks for these options
+        // on the given argv and not in the config
+        testPathPattern: config.testPathPattern,
+        testPathIgnorePatterns: config.testPathIgnorePatterns,
+
+        watch: watch ? 'all' : undefined
+      },
+      config.rootDir,
+      success => (success ? resolve() : reject(new Error('Error: tests failed.')))
+    );
+  });
+}
+
 /**
  * @module tasks/jest
  */
@@ -65,35 +92,12 @@ module.exports = {
     });
 
     gulp.task(taskName, [installDependenciesTaskName, cleanUpTaskName], (done) => {
-      const jest = require('jest-cli');
-      const config = buildConfig(parameters, globals);
-
-      // add globals to the environment variables of the process
-      // as jest will create multiple processes to run tests in parallel
-      // see index-globals.js for more information
-      process.env.urbanJSToolGlobals = JSON.stringify(globals);
-
-      jest.runCLI(
-        {
-          config,
-
-          // jest-cli has a bug, it looks for these options
-          // on the given argv and not in the config
-          testPathPattern: config.testPathPattern,
-          testPathIgnorePatterns: config.testPathIgnorePatterns
-        },
-        config.rootDir,
-        success => done(!success)
-      );
+      runJest(parameters, globals).then(done, done);
     });
 
     const watchTaskName = `${taskName}:watch`;
-    gulp.task(watchTaskName, [installDependenciesTaskName], () => {
-      const config = buildConfig(parameters, globals);
-      gulp.watch(path.join(config.rootDir, '**/*.js'), [taskName]);
-      console.log(// eslint-disable-line no-console
-        'jest:watch has been initialized. Modify your source files to run the tests.'
-      );
+    gulp.task(watchTaskName, [installDependenciesTaskName], (done) => {
+      runJest(parameters, globals, true).then(done, done);
     });
   }
 };

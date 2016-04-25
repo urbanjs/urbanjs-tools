@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- Improve ```jest:watch``` task - use built in support
 - Update dependencies
     Breaking changes:
     - child-process-promise@2.0.1
