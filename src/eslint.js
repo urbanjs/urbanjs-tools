@@ -26,6 +26,8 @@ module.exports = {
   dependencies: _.pick(pkg.devDependencies, [
     'babel-eslint',
     'eslint-config-airbnb',
+    'eslint-plugin-import',
+    'eslint-plugin-jsx-a11y',
     'eslint-plugin-react',
     'gulp-eslint',
     'gulp-if'

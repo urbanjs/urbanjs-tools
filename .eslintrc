@@ -4,6 +4,7 @@
   "env": {
     "browser": true,
     "jasmine": true,
+    "jest": true,
     "node": true
   },
   "rules": {
@@ -17,16 +18,5 @@
     "no-constant-condition": 2,
     "no-debugger": 2,
     "strict": 0
-  },
-  "globals": {
-    "afterEach": true,
-    "beforeEach": true,
-    "describe": true,
-    "expect": true,
-    "it": true,
-    "jest": true,
-    "pit": true,
-    "xdescribe": true,
-    "xit": true
   }
 }

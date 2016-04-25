@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+- Update dependencies
+    Breaking changes:
+    - child-process-promise@2.0.1
+    - eslint-config-airbnb@8.0.0
+    - eslint-plugin-react@5.0.1
+
 ## 0.6.3 (2016-04-10)
 - Update dependencies
 - Support flow syntax in ```check-dependencies``` task

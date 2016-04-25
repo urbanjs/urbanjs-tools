@@ -10,7 +10,11 @@ tools.initialize(gulp, {
 
   checkFileNames: true,
 
-  eslint: true,
+  eslint: {
+    rules: {
+      'global-require': 0
+    }
+  },
 
   jest: {
     unmockedModulePathPatterns
