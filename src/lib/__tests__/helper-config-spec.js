@@ -34,6 +34,22 @@ describe('Config helper', () => {
     expect(config.mergeParameters({ a: 1, b: 2 }, () => returnValue)).toEqual(returnValue);
   });
 
+  it('should get the defaults in the configuration function', () => {
+    const defaults = { a: 2 };
+    expect(config.mergeParameters(defaults, _defaults => _defaults)).toEqual(defaults);
+  });
+
+  it('should not allow to modify the defaults in the configuration function accidentally', () => {
+    const defaults = { a: 2 };
+
+    expect(config.mergeParameters(defaults, _defaults => _defaults)).not.toBe(defaults);
+    expect(config.mergeParameters(defaults, _defaults => {
+      _defaults.b = 1; // eslint-disable-line no-param-reassign
+      return _defaults;
+    })).toEqual({ a: 2, b: 1 });
+    expect(defaults).toEqual({ a: 2 });
+  });
+
   it('should validate arguments', () => {
     [
       undefined,

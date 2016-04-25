@@ -1,5 +1,7 @@
 'use strict';
 
+const _ = require('lodash');
+
 function isObject(obj) {
   return typeof obj === 'object'
     && obj instanceof Object
@@ -37,7 +39,7 @@ module.exports = {
       // to be able to override values easily
       return Object.assign({}, defaults, configuration);
     } else if (typeof configuration === 'function') {
-      const result = configuration(defaults);
+      const result = configuration(_.cloneDeep(defaults));
       if (!isValidConfig(result)) {
         throw new Error(`Invalid config: ${JSON.stringify(result)}`);
       }
