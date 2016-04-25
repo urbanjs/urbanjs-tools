@@ -21,26 +21,33 @@ function runJest(parameters, globals, watch) {
   const jest = require('jest-cli');
   const config = buildConfig(parameters, globals);
 
+  // coverage path cannot be set in jest currently
+  const coverageDirectoryPath = path.join(process.cwd(), 'coverage');
+
   // add globals to the environment variables of the process
   // as jest will create multiple processes to run tests in parallel
   // see index-globals.js for more information
   process.env.urbanJSToolGlobals = JSON.stringify(globals);
 
   return new Promise((resolve, reject) => {
-    jest.runCLI(
-      {
-        config,
+    del([coverageDirectoryPath], { force: true })
+      .then(() => {
+        jest.runCLI(
+          {
+            config,
 
-        // jest-cli has a bug, it looks for these options
-        // on the given argv and not in the config
-        testPathPattern: config.testPathPattern,
-        testPathIgnorePatterns: config.testPathIgnorePatterns,
+            // jest-cli has a bug, it looks for these options
+            // on the given argv and not in the config
+            testPathPattern: config.testPathPattern,
+            testPathIgnorePatterns: config.testPathIgnorePatterns,
 
-        watch: watch ? 'all' : undefined
-      },
-      config.rootDir,
-      success => (success ? resolve() : reject(new Error('Error: tests failed.')))
-    );
+            watch: watch ? 'all' : undefined
+          },
+          config.rootDir,
+          success => (success ? resolve() : reject(new Error('Error: tests failed.')))
+        );
+      })
+      .catch(reject);
   });
 }
 
@@ -84,14 +91,7 @@ module.exports = {
       dependencies: this.dependencies
     }, globals);
 
-    const cleanUpTaskName = `${taskName}-clean`;
-    gulp.task(cleanUpTaskName, [installDependenciesTaskName], (done) => {
-      del(['coverage'], { force: true }).then(() => {
-        done();
-      });
-    });
-
-    gulp.task(taskName, [installDependenciesTaskName, cleanUpTaskName], (done) => {
+    gulp.task(taskName, [installDependenciesTaskName], (done) => {
       runJest(parameters, globals).then(done, done);
     });
 
