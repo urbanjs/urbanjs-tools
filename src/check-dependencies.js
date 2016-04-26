@@ -65,7 +65,7 @@ function checkOutdatedPackages(packageFile) {
       // dependencies as soon as possible to avoid potential errors of the newer version.
       problematicDependencies = outdatedPackageNames.filter(packageName => {
         const dependency = packages[packageName];
-        return dependency.current !== dependency.wanted;
+        return dependency.current !== dependency.wanted && dependency.wanted !== 'linked';
       });
     })
     .then(() => fs.exists(path.join(path.dirname(packageFile), 'npm-shrinkwrap.json')))

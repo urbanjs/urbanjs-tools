@@ -1,38 +1,33 @@
 'use strict';
 
+import _ from 'lodash';
 import fs from '../../lib/fs';
 import path from 'path';
-import { spawn } from 'child-process-promise';
+import { exec } from 'child-process-promise';
 import pkg from '../../../package.json';
 
 jest.unmock('../../lib/fs');
 
 const projectName = 'asd';
 const packageFolderPath = path.join(__dirname, '../../../');
-const projectFolderPath = path.join(packageFolderPath, projectName);
-
-const toExecutable = executable => {
-  if (process.platform === 'win32') {
-    return `${executable}.cmd`;
-  }
-
-  return executable;
-};
-
-const npmExecutable = toExecutable('npm');
-const gulpExecutable = toExecutable('gulp');
+const projectFolderPath = path.join(packageFolderPath, '../', projectName);
 
 const run = command => () => {
-  const commandString = `${command[0]} ${command[1].join(' ')}`;
-  return spawn(command[0], command[1], Object.assign({
+  const commandString = command[0];
+  const config = Object.assign({
     cwd: packageFolderPath,
-    capture: ['stdout', 'stderr']
-  }, command[2]))
+    env: _.omit(process.env, 'urbanJSToolGlobals')
+  }, command[1]);
+
+  return exec(commandString, config)
     .then(() => console.log(`${commandString} was successful.`)) // eslint-disable-line no-console
     .catch(err => {
-      console.log(`${commandString} has failed`); // eslint-disable-line no-console
-      console.log(err.stderr || err.stdout || err); // eslint-disable-line no-console
-      throw err;
+      if (!config.allowToFail) {
+        console.log(config); // eslint-disable-line no-console
+        console.log(`${commandString} has failed`); // eslint-disable-line no-console
+        console.log(err.stderr || err.stdout || err); // eslint-disable-line no-console
+        throw err;
+      }
     });
 };
 
@@ -52,30 +47,30 @@ describe('CLI - E2E test', () => {
     const commands = [
 
       // test generation task
-      ['node', ['bin', 'generate', '-n', projectName]],
-      ['node', ['bin', 'generate', '-n', projectName], { successfulExitCodes: [1] }],
-      ['node', ['bin', 'generate', '-n', projectName, '-f']],
+      [`node bin generate -n ${projectFolderPath}`],
+      [`node bin generate -n ${projectFolderPath}`, { allowToFail: true }],
+      [`node bin generate -n ${projectFolderPath} -f`],
 
       // install dependencies, use the current repository as urbanjs-tools
-      [npmExecutable, ['link']],
-      [npmExecutable, ['link', pkg.name], { cwd: projectFolderPath }],
-      [npmExecutable, ['install'], { cwd: projectFolderPath }],
+      ['npm link'],
+      [`npm link ${pkg.name}`, { cwd: projectFolderPath }],
+      ['npm install', { cwd: projectFolderPath }],
 
       // test each gulp task
-      [gulpExecutable, ['check-dependencies'], { cwd: projectFolderPath }],
-      [gulpExecutable, ['check-file-names'], { cwd: projectFolderPath }],
-      [gulpExecutable, ['eslint'], { cwd: projectFolderPath }],
-      [gulpExecutable, ['jest'], { cwd: projectFolderPath }],
-      [gulpExecutable, ['jscs'], { cwd: projectFolderPath }],
-      [gulpExecutable, ['jsdoc'], { cwd: projectFolderPath }],
-      [gulpExecutable, ['nsp'], { cwd: projectFolderPath }],
-      [gulpExecutable, ['retire'], { cwd: projectFolderPath, successfulExitCodes: [0, 1] }],
-      [gulpExecutable, ['webpack'], { cwd: projectFolderPath }],
+      ['gulp check-dependencies', { cwd: projectFolderPath }],
+      ['gulp check-file-names', { cwd: projectFolderPath }],
+      ['gulp eslint', { cwd: projectFolderPath }],
+      ['gulp jest', { cwd: projectFolderPath }],
+      ['gulp jscs', { cwd: projectFolderPath }],
+      ['gulp jsdoc', { cwd: projectFolderPath }],
+      ['gulp nsp', { cwd: projectFolderPath, allowToFail: true }],
+      ['gulp retire', { cwd: projectFolderPath, allowToFail: true }],
+      ['gulp webpack', { cwd: projectFolderPath }],
 
       // TODO: test the build with prod dependencies only
-      // [npmExecutable, ['unlink', pkg.name]],
-      // [npmExecutable, ['uninstall', '--production']],
-      ['node', ['dist'], { cwd: projectFolderPath }]
+      // [`npm unlink ${pkg.name}`, { cwd: projectFolderPath }],
+      // ['npm uninstall --production', { cwd: projectFolderPath }],
+      ['node dist', { cwd: projectFolderPath }]
     ];
 
     let promise = Promise.resolve();
