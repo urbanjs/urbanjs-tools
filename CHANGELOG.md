@@ -1,12 +1,11 @@
 # Changelog
 
-## Unreleased
+## 0.7.0 (2016-04-26)
 - Improve ```parameter``` functions
     - The given ```defaults``` cannot be modified from the parameter function
 - Improve ```jest:watch``` task - use built in support
 - Update dependencies
     Breaking changes:
-    - child-process-promise@2.0.1
     - eslint-config-airbnb@8.0.0
     - eslint-plugin-react@5.0.1
 
