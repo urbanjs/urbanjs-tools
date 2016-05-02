@@ -86,17 +86,17 @@ module.exports = {
     });
 
     const watchTaskName = `${taskName}:watch`;
-    gulp.task(watchTaskName, [installDependenciesTaskName, cleanUpTaskName], done => {
+    gulp.task(watchTaskName, [installDependenciesTaskName, cleanUpTaskName], () => {
       const config = buildConfig(parameters, globals);
       const bundler = require('webpack')(config);
-      let counter = 0;
 
       bundler.watch(200, (err, stats) => {
-        logStats(stats);
-
-        if (err || ++counter === (config.length || 1)) {
-          done(err);
+        if (err) {
+          console.log(err); // eslint-disable-line no-console
+          return;
         }
+
+        logStats(stats);
       });
     });
   }

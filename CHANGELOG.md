@@ -6,9 +6,9 @@
 - Improve ```jest:watch``` task - use built in support
 - Update dependencies
     Breaking changes:
-    - child-process-promise@2.0.1
     - eslint-config-airbnb@8.0.0
     - eslint-plugin-react@5.0.1
+- Fix ```webpack:watch``` (won't stop after the first compilation anymore)
 
 ## 0.6.3 (2016-04-10)
 - Update dependencies
