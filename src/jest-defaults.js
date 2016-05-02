@@ -5,6 +5,7 @@ const path = require('path');
 const sourceFolderPath = path.join(process.cwd(), 'src');
 
 module.exports = {
+  name: '',
   rootDir: sourceFolderPath,
   unmockedModulePathPatterns: ['core-js/.*'],
   setupEnvScriptFile: path.join(__dirname, 'jest-set-env-script.js'),
