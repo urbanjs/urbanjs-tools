@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.7.0 (2016-05-04)
 - Improve ```parameter``` functions
     - The given ```defaults``` cannot be modified from the parameter function
 - Improve ```jest:watch``` task - use built in support
