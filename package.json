@@ -11,10 +11,10 @@
     "urbanjs": "./bin/index.js"
   },
   "scripts": {
-    "start": "node_modules/.bin/gulp",
-    "test": "node_modules/.bin/gulp test",
-    "pre-commit": "node_modules/.bin/gulp pre-commit",
-    "pre-release": "node_modules/.bin/gulp pre-release"
+    "start": "gulp",
+    "test": "gulp test",
+    "pre-commit": "gulp pre-commit",
+    "pre-release": "gulp pre-release"
   },
   "engines": {
     "node": ">=4.2.3"

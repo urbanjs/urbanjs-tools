@@ -54,7 +54,7 @@ describe('CLI - E2E test', () => {
       // install dependencies, use the current repository as urbanjs-tools
       ['npm link'],
       [`npm link ${pkg.name}`, { cwd: projectFolderPath }],
-      ['npm install', { cwd: projectFolderPath }],
+      ['npm install', { cwd: projectFolderPath, allowToFail: true }],
 
       // test each gulp task
       ['gulp check-dependencies', { cwd: projectFolderPath }],

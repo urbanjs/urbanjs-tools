@@ -74,10 +74,10 @@ module.exports = {
         const packageJSON = {
           name: projectName,
           version: '0.1.0',
+          private: true,
           main: 'dist/index.js',
           scripts: pkg.scripts,
           dependencies: {
-
             // based on the defaults, webpack uses babel-plugin-transform-runtime
             // so we need babel-runtime as a production dependency in our project
             'babel-runtime': pkg.devDependencies['babel-runtime']

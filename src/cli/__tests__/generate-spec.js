@@ -158,12 +158,13 @@ describe('CLI - generate command', () => {
       const packageJSON = {
         name: projectName,
         version: '0.1.0',
+        private: true,
         main: 'dist/index.js',
         scripts: {
-          start: 'node_modules/.bin/gulp',
-          test: 'node_modules/.bin/gulp test',
-          'pre-commit': 'node_modules/.bin/gulp pre-commit',
-          'pre-release': 'node_modules/.bin/gulp pre-release'
+          start: 'gulp',
+          test: 'gulp test',
+          'pre-commit': 'gulp pre-commit',
+          'pre-release': 'gulp pre-release'
         },
         dependencies: {
           'babel-runtime': pkg.devDependencies['babel-runtime']
