@@ -78,11 +78,9 @@ module.exports = {
           scripts: pkg.scripts,
           dependencies: {
 
-            // based on the defaults, webpack handles babel-polyfill as external dependency
-            // and requires it from node_modules as babel-polyfill can only be used once
-            // with this move we can avoid the usage of babel-polyfill multiple times
-            // but we can be sure that polyfills are included which our codebase relies on
-            'babel-polyfill': pkg.devDependencies['babel-polyfill']
+            // based on the defaults, webpack uses babel-plugin-transform-runtime
+            // so we need babel-runtime as a production dependency in our project
+            'babel-runtime': pkg.devDependencies['babel-runtime']
           },
           devDependencies: {
             gulp: pkg.devDependencies.gulp

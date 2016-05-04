@@ -166,7 +166,7 @@ describe('CLI - generate command', () => {
           'pre-release': 'node_modules/.bin/gulp pre-release'
         },
         dependencies: {
-          'babel-polyfill': pkg.devDependencies['babel-polyfill']
+          'babel-runtime': pkg.devDependencies['babel-runtime']
         },
         devDependencies: {
           gulp: pkg.devDependencies.gulp,

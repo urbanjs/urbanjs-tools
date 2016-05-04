@@ -58,13 +58,13 @@ module.exports = {
 
   dependencies: _.pick(pkg.devDependencies, [
     'babel-core',
-    'babel-polyfill',
+    'babel-runtime',
+    'babel-plugin-transform-runtime',
     'babel-preset-es2015',
     'babel-preset-react',
     'babel-preset-stage-0',
     'babel-preset-jest',
-    'jest-cli',
-    'readdir'
+    'jest-cli'
   ]),
 
   /**

@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+- Use ```babel-runtime``` instead of ```babel-polyfill```
+    https://medium.com/@jcse/clearing-up-the-babel-6-ecosystem-c7678a314bf3#.tu57xznwrŁ
+- Update dependencies
+
 ## 0.7.0 (2016-05-04)
 - Improve ```parameter``` functions
     - The given ```defaults``` cannot be modified from the parameter function

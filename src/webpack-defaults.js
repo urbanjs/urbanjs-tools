@@ -5,10 +5,7 @@ const processCwd = process.cwd();
 const webpack = require('webpack');
 
 module.exports = {
-  entry: [
-    path.join(__dirname, 'webpack-set-env-script.js'),
-    path.join(processCwd, 'src/index.js')
-  ],
+  entry: path.join(processCwd, 'src'),
 
   output: {
     path: path.join(processCwd, 'dist'),
@@ -17,6 +14,8 @@ module.exports = {
   },
 
   target: 'node',
+  bail: true,
+  devtool: 'source-map',
 
   node: {
     console: false,

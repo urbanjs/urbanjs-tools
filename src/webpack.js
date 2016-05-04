@@ -35,7 +35,7 @@ module.exports = {
 
   dependencies: _.pick(pkg.devDependencies, [
     'babel-loader',
-    'babel-polyfill',
+    'babel-plugin-transform-runtime',
     'babel-preset-es2015',
     'babel-preset-react',
     'babel-preset-stage-0',
