@@ -3,16 +3,12 @@
 const _ = require('lodash');
 const del = require('del');
 const npmInstall = require('./npm-install');
-const path = require('path');
 const pkg = require('../package.json');
 const shell = require('gulp-shell');
 const configHelper = require('./lib/helper-config.js');
 
 function buildConfig(parameters, globals) {
-  const defaults = {
-    configFile: path.join(__dirname, '../.jsdocrc'),
-    executablePath: path.join(require.resolve('jsdoc/jsdoc'), '../../.bin/')
-  };
+  const defaults = require('./jsdoc-defaults');
 
   if (!globals.babel) {
     globals.babel = require('./lib/global-babel'); // eslint-disable-line no-param-reassign
@@ -31,7 +27,6 @@ module.exports = {
     'babel-preset-es2015',
     'babel-preset-react',
     'babel-preset-stage-0',
-    'jest-cli',
     'jsdoc'
   ]),
 
@@ -50,7 +45,7 @@ module.exports = {
    *   'jsdoc',
    *   {
    *     configFile: require('path').join(__dirname + '.jsdocrc'),
-   *     executablePath: path.join(__dirname, 'node_modules/.bin/')
+   *     packagePath: path.join(require.resolve('jsdoc/jsdoc'), '../')
    *   }
    * );
    */
@@ -73,7 +68,7 @@ module.exports = {
       const config = buildConfig(parameters, globals);
 
       shell.task([
-        `"${config.executablePath}jsdoc" -c "${config.configFile}"`
+        `node "${config.packagePath}jsdoc.js" -c "${config.configFile}"`
       ], { env: { urbanJSToolGlobals: JSON.stringify(globals) } })(done);
     });
   }

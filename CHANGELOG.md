@@ -10,6 +10,9 @@
     - eslint-plugin-react@5.0.1
 - Fix ```webpack:watch``` (won't stop after the first compilation anymore)
 - Fix npm linking (find global node_modules path correctly)
+- Improve ```jsdoc``` and ```retire``` tasks
+    BREAKING CHANGE:
+    - ```executablePath``` is removed, use ```packagePath``` config instead
 
 ## 0.6.3 (2016-04-10)
 - Update dependencies

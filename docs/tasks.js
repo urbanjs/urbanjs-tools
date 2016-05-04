@@ -57,7 +57,7 @@
  * @typedef {Object|function} Parameters
  * @memberof module:tasks/jsdoc
  * @property {string} configFile The path to the jsdoc configuration file
- * @property {string} executablePath The path where jsdoc executable can be found
+ * @property {string} packagePath The path of jsdoc
  */
 
 /**
@@ -91,7 +91,7 @@
  * @see https://www.npmjs.com/package/retire
  *
  * @property {Object|Object[]} config Configuration of the retire
- * @property {string} executablePath The path where retire executable can be found
+ * @property {string} packagePath The package path retire
  * @property {string} [options] Options of retire command
  */
 

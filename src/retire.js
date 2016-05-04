@@ -34,7 +34,7 @@ module.exports = {
    * register(
    *   require('gulp'),
    *   'retire',
-   *   { executablePath: path.join(__dirname, 'node_modules/.bin/') }
+   *   { packagePath: require.resolve('retire') }
    * );
    */
   register(gulp, taskName, parameters, globals) {
@@ -49,7 +49,7 @@ module.exports = {
       const config = buildConfig(parameters);
 
       shell.task([
-        `"${config.executablePath}retire" ${config.options || ''}`
+        `node "${config.packagePath}bin/retire" ${config.options || ''}`
       ])(done);
     });
   }

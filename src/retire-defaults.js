@@ -3,6 +3,6 @@
 const path = require('path');
 
 module.exports = {
-  executablePath: path.join(require.resolve('retire'), '../../../.bin/'),
+  packagePath: path.join(require.resolve('retire'), '../../'),
   options: '-n'
 };
