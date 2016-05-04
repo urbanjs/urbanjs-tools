@@ -19,13 +19,19 @@ let missingDependencies = null;
 function getGlobalModulesPath() {
   if (!globalModulePathPromise) {
     globalModulePathPromise = new Promise((resolve, reject) => {
-      exec('npm config get prefix', (err, stdout) => {
-        if (err) {
-          reject(err);
-          return;
+      // omg npm... is this the only way to get the global node_modules path?!
+      // `npm config get prefix` returns the root folder of the npm
+      // and not the global node_modules location
+      exec('npm list -g --depth=0 -qq npm', (err, stdout) => {
+        if (stdout) {
+          const match = stdout.match(/.*/); // first line
+          if (match && path.isAbsolute(match[0])) {
+            resolve(match[0]);
+            return;
+          }
         }
 
-        resolve(stdout.replace(/\n$/, ''));
+        reject(new Error('Cannot define the global node modules path.'));
       });
     });
   }
@@ -82,13 +88,16 @@ function installDependencies(dependencies, options) {
   });
 
   if (missingDependencies !== null) {
-    missingDependencies = missingDependencies.concat(dependencies);
+    missingDependencies = _.uniq(missingDependencies.concat(dependencies));
   } else if (dependencies.length) {
     missingDependencies = dependencies;
     installationPromise = installationPromise
       .then(() => {
         if (config.link) {
-          return getGlobalModulesPath();
+          return getGlobalModulesPath().catch(e => {
+            // it is not critical though we might want to know about it
+            console.log(e); // eslint-disable-line no-console
+          });
         }
 
         return null;
@@ -101,7 +110,7 @@ function installDependencies(dependencies, options) {
         let dependenciesToInstall = missingDependencies;
         missingDependencies = null;
 
-        if (config.link) {
+        if (config.link && globalModulesPath) {
           let dependenciesToLink = dependenciesToInstall
             .filter(packageName => !missing([globalModulesPath], packageName));
 
