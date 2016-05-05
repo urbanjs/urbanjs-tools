@@ -65,11 +65,9 @@ describe('CLI - E2E test', () => {
       ['gulp jsdoc', { cwd: projectFolderPath }],
       ['gulp nsp', { cwd: projectFolderPath, allowToFail: true }],
       ['gulp retire', { cwd: projectFolderPath, allowToFail: true }],
-      ['gulp webpack', { cwd: projectFolderPath }],
 
-      // TODO: test the build with prod dependencies only
-      // [`npm unlink ${pkg.name}`, { cwd: projectFolderPath }],
-      // ['npm uninstall --production', { cwd: projectFolderPath }],
+      // build
+      ['gulp babel', { cwd: projectFolderPath }],
       ['node dist', { cwd: projectFolderPath }]
     ];
 

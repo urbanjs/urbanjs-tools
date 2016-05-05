@@ -26,9 +26,7 @@ tools.initialize(gulp, {
 
   nsp: true,
 
-  retire: true,
-
-  webpack: false
+  retire: true
 });
 
 tools.tasks.jest.register(gulp, 'test-unit', {

@@ -4,6 +4,8 @@ const gulp = require('gulp');
 const tools = require('urbanjs-tools');
 
 tools.initialize(gulp, {
+  babel: true,
+
   checkDependencies: true,
 
   checkFileNames: true,
@@ -18,9 +20,7 @@ tools.initialize(gulp, {
 
   nsp: true,
 
-  retire: true,
-
-  webpack: true
+  retire: true
 });
 
 gulp.task('default', () => {

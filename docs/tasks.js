@@ -1,5 +1,15 @@
 /**
  * @typedef {Object|function} Parameters
+ * @memberof module:tasks/babel
+ * @property {Object} output Output parameters
+ * @property {string} output.filename Output filename
+ * @property {string} output.path Output path
+ * @property {string|string[]} files Paths of the files to build
+ * @property {Object} [babel] Common babel configuration
+ */
+
+/**
+ * @typedef {Object|function} Parameters
  * @memberof module:tasks/checkFileNames
  * @see https://github.com/HAKASHUN/gulp-check-file-naming-convention#optionscase
  * @property {string|string[]} [upperCase] Paths of files to validate

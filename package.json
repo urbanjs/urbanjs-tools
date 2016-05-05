@@ -39,7 +39,7 @@
     "mkdirp": "0.5.1",
     "prettyjson": "1.1.3",
     "semver": "5.1.0",
-    "yargs": "4.6.0"
+    "yargs": "4.7.0"
   },
   "devDependencies": {
     "babel-core": "6.8.0",
@@ -60,10 +60,12 @@
     "eslint-plugin-react": "5.0.1",
     "event-stream": "3.3.2",
     "gulp": "3.9.1",
+    "gulp-babel": "6.1.2",
     "gulp-check-file-naming-convention": "0.0.2",
     "gulp-eslint": "2.0.0",
     "gulp-if": "2.0.0",
     "gulp-jscs": "3.0.2",
+    "gulp-sourcemaps": "2.0.0-alpha",
     "jest-cli": "12.0.2",
     "jscs-jsdoc": "1.3.2",
     "jsdoc": "3.4.0",

@@ -2,6 +2,7 @@
 
 const globals = require('./index-globals');
 const tasks = {
+  babel: require('./babel'),
   checkDependencies: require('./check-dependencies'),
   checkFileNames: require('./check-file-names'),
   eslint: require('./eslint'),
@@ -37,6 +38,7 @@ module.exports = {
    * @type {Object}
    * @description Core tasks
    *
+   * @property {module:tasks/babel} babel Transpiler
    * @property {module:tasks/checkDependencies} checkDependencies Validator for checking
    *                                                              missing, unused, outdated
    *                                                              dependencies
@@ -54,7 +56,7 @@ module.exports = {
 
   /**
    * Initializes the given gulp instance with the
-   *  core tasks (check-file-names, eslint, jest, jscs, jsdoc, nsp, webpack) and
+   *  core tasks (babel, check-file-names, eslint, jest, jscs, jsdoc, nsp, webpack) and
    *  presets: dist, doc, test, analyze, pre-commit, pre-release
    * @param {external:gulp} gulp The gulp instance to initialize
    * @param {module:main.Configuration} configuration Configuration of the tasks,
@@ -82,6 +84,7 @@ module.exports = {
     const existingTasks = {};
 
     [
+      ['babel'],
       ['checkDependencies', 'check-dependencies'],
       ['checkFileNames', 'check-file-names'],
       ['eslint'],
@@ -104,7 +107,7 @@ module.exports = {
 
     const filter = val => val.filter(task => existingTasks.hasOwnProperty(task));
 
-    gulp.task('dist', filter(['webpack']));
+    gulp.task('dist', filter(['webpack', 'babel']));
 
     gulp.task('doc', filter(['jsdoc']));
 
@@ -134,12 +137,14 @@ module.exports = {
    *
    * @example
    *
-   * // Using the default configurations of tasks although slightly change the behaviour:
+   * // Using the default configurations of tasks though slightly change the behaviour:
    * //  - validate all files in the /lib folder by check-file-names, eslint, jscs tasks
    * //  - set babel configuration for jsdoc, jest and webpack tasks
+   * //  - enable npm linking from global packages during the dependency installation
    * setGlobalConfiguration({
    *   sourceFiles: './lib/**',
-   *   babel: { presets: ['es2015'] }
+   *   babel: { presets: ['es2015'] },
+   *   allowLinking: true
    * });
    */
   setGlobalConfiguration(configuration) {

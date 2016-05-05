@@ -30,6 +30,7 @@ generate documentation and run everything that belongs to the pre-commit command
     - code validation (eslint, jscs, flow, check-file-names)
     - vulnerability check (nsp)
     - bundling (webpack)
+    - transpiling (babel)
 - tasks are updated
 - tasks are highly customizable
 - clean project dependency list
@@ -63,6 +64,7 @@ of the technical specific tasks are used directly by the presets
 to give a chance to replace them as you want.
 
 Tasks:
+- ```babel``` - Transpiler
 - ```check-dependencies``` - Dependency checker
 - ```check-file-names``` - Validator for checking the names of the files
 - ```eslint``` - JS linter
@@ -79,7 +81,7 @@ Tasks:
 - ```webpack:watch``` - Bundler
 
 Presets:
-- ```dist``` (```webpack```)
+- ```dist``` (```webpack```, ```babel```)
 - ```doc``` (```jsdoc```)
 - ```test``` (```jest```)
 - ```analyse``` (```check-dependencies```, ```check-file-names```, ```jscs```, ```eslint```, ```nsp```, ```retire```)

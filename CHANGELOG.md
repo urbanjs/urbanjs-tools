@@ -4,6 +4,8 @@
 - Use ```babel-runtime``` instead of ```babel-polyfill```
     https://medium.com/@jcse/clearing-up-the-babel-6-ecosystem-c7678a314bf3#.tu57xznwrŁ
 - Update dependencies
+- Introduce ```babel``` task
+    - Use ```babel``` and ```babel:watch``` tasks to build your project
 
 ## 0.7.0 (2016-05-04)
 - Improve ```parameter``` functions
