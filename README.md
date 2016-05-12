@@ -1,139 +1,49 @@
 # urbanjs-tools
 [![Build Status](https://travis-ci.org/urbanjs/tools.svg?branch=master)](https://travis-ci.org/urbanjs/tools)
 
-Urbanjs-tools is a new concept to start a package.
+## Usage
 
-Every time you'd like to kick off your project you
-need to
-- set up the development pipeline
-- decide which tools are the best at this time
-- configure them properly
+Check the [wiki](https://github.com/urbanjs/tools/wiki) for detailed guides e.g.
+- [starting a new project](https://github.com/urbanjs/tools/wiki/3.1---How-to-start-new-project)
+- [integrating with existing project](https://github.com/urbanjs/tools/wiki/3.2---How-to-integrate-with-existing-project)
+- [configuring tasks](https://github.com/urbanjs/tools/wiki/3.3-How-to-configure-tasks)
+- [using global configuration](https://github.com/urbanjs/tools/wiki/3.4-How-to-use-globals)
+- [handling special use cases](https://github.com/urbanjs/tools/wiki/3.5---How-to-handle-special-use-cases)
+- [preinstalling dependencies](https://github.com/urbanjs/tools/wiki/3.6---How-to-preinstall-dependencies)
+- [configuring IDEs](https://github.com/urbanjs/tools/wiki/3.7---How-to-configure-the-editors)
 
-Main goal of the package is to solve these problems out of the box.
+### Quick start
 
-## How to use it?
+Initialize the necessary tasks in your gulpfile.js:
+```
+const tools = require('urbanjs-tools');
+tools.initialize(gulp, {
+  babel: true,
+  checkDependencies: true,
+  checkFileNames: true,
+  eslint: true,
+  jest: true,
+  jscs: true,
+  jsdoc: false,
+  nsp: true,
+  retire: true,
+  webpack: false
+});
+```
 
-There are 3 typical phases during the development. The goal is here to support
-these phases with relevant commands.
-
-Commands:
-- `npm start`: runs the default gulp task, needs to be initialized in the project
-- `npm run pre-commit`: run it before a commit to analyze the code base and run the tests
-- `npm run pre-release`: run it before the new release to build the project,
-generate documentation and run everything that belongs to the pre-commit command
-
-## Why use it?
-- less initialization steps around a new project
-- common tasks are configured properly and ready to use
-    - documentation generation (jsdoc)
-    - testing (jest)
-    - code validation (eslint, jscs, flow, check-file-names)
-    - vulnerability check (nsp)
-    - bundling (webpack)
-    - transpiling (babel)
-- tasks are updated
-- tasks are highly customizable
-- clean project dependency list
-- all the projects use the same tasks
-- all the projects and their tasks can be improved in one step
-  by updating a single npm module
-
-## Why not generators?
-
-Generator creates a boilerplate for your project
-with all the necessary files but after that the
-repository is abandoned. There is no way to use
-the new features, affect all of your projects at once.
-
-## Why gulp?
-
-Gulp is a well-known package for setting up a
-development pipeline. We can create, overwrite
-or even compose tasks in a simple way.
-It's a very popular package with a big community
-and with many usable tasks. Once we've got gulp,
-urbanjs-tools can be integrated seamlessly.
-
-## How to customize?
-All of the existing ```tasks``` have got a configuration object, see ```Documentation``` section.
-Use those options to slightly modify the tasks.
-
-```Presets``` are composed from ```tasks``` and from other ```presets```.
-You can overwrite any of the tasks or even presets in your project. None
-of the technical specific tasks are used directly by the presets
-to give a chance to replace them as you want.
-
-Tasks:
-- ```babel``` - Transpiler
-- ```check-dependencies``` - Dependency checker
-- ```check-file-names``` - Validator for checking the names of the files
-- ```eslint``` - JS linter
-- ```eslint:fix``` - JS linter
-- ```jest``` - Unit tester
-- ```jest:watch``` - Unit tester
-- ```jscs``` - Code style checker
-- ```jscs:fix``` - Code style fixer
-- ```jsdoc``` - API documentation generator
-- ```npmInstall``` - Dependency installer
-- ```nsp``` - Vulnerability checker
-- ```retire``` - Vulnerability checker
-- ```webpack``` - Bundler
-- ```webpack:watch``` - Bundler
-
-Presets:
-- ```dist``` (```webpack```, ```babel```)
-- ```doc``` (```jsdoc```)
-- ```test``` (```jest```)
-- ```analyse``` (```check-dependencies```, ```check-file-names```, ```jscs```, ```eslint```, ```nsp```, ```retire```)
-- ```pre-commit``` (```analyze```, ```test```)
-- ```pre-release``` (```pre-commit```, ```dist```, ```doc```)
-
-### Example
-Let's assume that you'd like to use ```mocha``` instead of ```jest```.
-- create the gulp task with the name ```mocha```
-
-    ```gulp.task('mocha', ...);```
-- overwrite the ```test``` preset to use ```mocha``` instead of ```jest```
-
-    ```gulp.task('test', ['mocha']);```
-
-With these steps you've got a working ```analyze```,
-```pre-commit``` and ```pre-release``` presets but from now on
-using ```mocha```.
-
-**Note:**
-obviously presets and tasks are simple gulp tasks in the background
-but the preset abstraction helps to improve the configuration level.
-A technology specific task should not get a general name.
+**And that's it, you're good to go.**
+You can run any of the gulp tasks above (e.g. ```gulp eslint```) or you can use these [presets](https://github.com/urbanjs/tools/wiki/3---Usage#available-presets):
+- `gulp test`: runs tests (```jest```)
+- `gulp analyse`: analyzes the code base (```check-dependencies```, ```check-file-names```, ```jscs```, ```eslint```, ```nsp```, ```retire```)
+- `gulp pre-commit`: analyzes the code base and runs tests (```analyse```, ```test```)
+- `gulp doc`: generates the documentation (```jsdoc```)
+- `gulp dist`: runs the configured transpiler/bundler (```babel```, ```webpack```)
+- `gulp pre-release`: analyzes the code base, runs tests, generates documentation, and transpiles/bundles (```pre-commit```, ```doc```, ```dist```)
 
 ## Documentation
-Check out the [API reference](http://urbanjs.github.io/tools/)
-for documentation and examples.
+Check out the [wiki](https://github.com/urbanjs/tools/wiki) for guides, examples and details.
 
-## CLI
-Install urbanjs-tools globally:
-
-```npm install -g urbanjs-tools```
-
-Use the ```generate``` command to start a
-new project with the urbanjs skeleton:
-
-```urbanjs generate -n your-awesome-project```
-
-Use ```-f``` flag to remove the existing folder with
-the project name before the generation.
-
-Use ```-h``` for help.
-
-## Roadmap
-- Add guides & examples
-    - How to start a package (urbanjs generate)
-    - How to override defaults
-    - How to use globals to sync configuration of multiple tasks
-    - How to divide one task (dist:bundle, dist:copy)
-    - How to register one task multiple times (eslint:test-files, eslint:source-files)
-    - How to make your deployment faster in docker (urbanjs install-dependencies)
-    - How to configure different IDEs properly
+Also you can find the [API reference](http://urbanjs.github.io/tools/) here.
 
 ## Contribution
 Highly appreciated any ideas how to make it more powerful.
