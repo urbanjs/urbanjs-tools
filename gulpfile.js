@@ -3,12 +3,18 @@
 const gulp = require('gulp');
 const tools = require('./src');
 
-const unmockedModulePathPatterns = ['node_modules/.*'];
+const unmockedModulePathPatterns = [
+  'node_modules/.*',
+  'lib/helper-tests.js'
+];
 
 tools.initialize(gulp, {
   checkDependencies: true,
 
-  checkFileNames: true,
+  checkFileNames: defaults => {
+    defaults.paramCase.push('!src/tasks/check-file-names/__tests__/**');
+    return defaults;
+  },
 
   eslint: {
     rules: {
@@ -17,6 +23,7 @@ tools.initialize(gulp, {
   },
 
   jest: {
+    testPathPattern: /.*-(test|spec)\.js$/,
     unmockedModulePathPatterns
   },
 

@@ -1,9 +1,8 @@
 'use strict';
 
-import _ from 'lodash';
 import fs from '../../lib/helper-fs';
+import { runCommands } from '../../lib/helper-tests';
 import path from 'path';
-import { exec } from 'child-process-promise';
 import pkg from '../../../package.json';
 
 jest.unmock('../../lib/helper-fs');
@@ -11,35 +10,6 @@ jest.unmock('../../lib/helper-fs');
 const projectName = 'asd';
 const packageFolderPath = path.join(__dirname, '../../../');
 const projectFolderPath = path.join(packageFolderPath, '../', projectName);
-
-function runCommand(command) {
-  const commandString = command[0];
-  const config = Object.assign({
-    cwd: packageFolderPath,
-    env: _.omit(process.env, 'urbanJSToolGlobals')
-  }, command[1]);
-
-  return exec(commandString, config)
-    .then(() => console.log(`${commandString} was successful.`)) // eslint-disable-line no-console
-    .catch(err => {
-      if (!config.allowToFail) {
-        console.log(config); // eslint-disable-line no-console
-        console.log(`${commandString} has failed`); // eslint-disable-line no-console
-        console.log(err.stderr || err.stdout || err); // eslint-disable-line no-console
-        throw err;
-      }
-    });
-}
-
-function runCommands(commands) {
-  let promise = Promise.resolve();
-  while (commands.length) {
-    const command = commands.shift();
-    promise = promise.then(() => runCommand(command));
-  }
-
-  return promise;
-}
 
 describe('urbanjs cli', () => {
   const originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
