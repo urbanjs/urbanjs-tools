@@ -157,7 +157,7 @@ module.exports = {
    */
   install(dependencies, options) {
     let promise = Promise.resolve();
-    let nodeModulePaths = [process.cwd(), path.join(__dirname, '../')];
+    let nodeModulePaths = [process.cwd(), path.join(__dirname, '../../../')];
 
     if (options && options.global) {
       promise = promise

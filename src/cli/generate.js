@@ -1,6 +1,6 @@
 'use strict';
 
-const fs = require('../lib/fs');
+const fs = require('../lib/helper-fs');
 const path = require('path');
 const pkg = require('../../package.json');
 const yargsHelper = require('../lib/helper-yargs');

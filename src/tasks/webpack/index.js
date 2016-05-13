@@ -2,12 +2,12 @@
 
 const _ = require('lodash');
 const del = require('del');
-const npmInstall = require('./npm-install');
-const pkg = require('../package.json');
-const configHelper = require('./lib/helper-config.js');
+const npmInstall = require('../npm-install');
+const pkg = require('../../../package.json');
+const configHelper = require('../../lib/helper-config.js');
 
 function buildConfig(parameters, globals) {
-  const defaults = require('./webpack-defaults');
+  const defaults = require('./defaults');
 
   if (globals.babel) {
     defaults.module.loaders[0].query = globals.babel;

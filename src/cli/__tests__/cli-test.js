@@ -1,18 +1,18 @@
 'use strict';
 
 import _ from 'lodash';
-import fs from '../../lib/fs';
+import fs from '../../lib/helper-fs';
 import path from 'path';
 import { exec } from 'child-process-promise';
 import pkg from '../../../package.json';
 
-jest.unmock('../../lib/fs');
+jest.unmock('../../lib/helper-fs');
 
 const projectName = 'asd';
 const packageFolderPath = path.join(__dirname, '../../../');
 const projectFolderPath = path.join(packageFolderPath, '../', projectName);
 
-const run = command => () => {
+function runCommand(command) {
   const commandString = command[0];
   const config = Object.assign({
     cwd: packageFolderPath,
@@ -29,17 +29,27 @@ const run = command => () => {
         throw err;
       }
     });
-};
+}
 
-describe('CLI - E2E test', () => {
+function runCommands(commands) {
+  let promise = Promise.resolve();
+  while (commands.length) {
+    const command = commands.shift();
+    promise = promise.then(() => runCommand(command));
+  }
+
+  return promise;
+}
+
+describe('urbanjs cli', () => {
   const originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
 
-  beforeAll(done => {
+  beforeEach(done => {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
     fs.delete(projectFolderPath).then(() => done(), done.fail);
   });
 
-  afterAll(() => {
+  afterEach(() => {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
   });
 
@@ -71,11 +81,6 @@ describe('CLI - E2E test', () => {
       ['node dist', { cwd: projectFolderPath }]
     ];
 
-    let promise = Promise.resolve();
-    while (commands.length) {
-      promise = promise.then(run(commands.shift()));
-    }
-
-    return promise;
+    return runCommands(commands);
   });
 });

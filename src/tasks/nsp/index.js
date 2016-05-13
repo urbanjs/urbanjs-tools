@@ -1,12 +1,12 @@
 'use strict';
 
 const _ = require('lodash');
-const npmInstall = require('./npm-install');
-const pkg = require('../package.json');
-const configHelper = require('./lib/helper-config.js');
+const npmInstall = require('../npm-install');
+const pkg = require('../../../package.json');
+const configHelper = require('../../lib/helper-config.js');
 
 function buildConfig(parameters) {
-  const defaults = require('./nsp-defaults');
+  const defaults = require('./defaults');
 
   return configHelper.mergeParameters(defaults, parameters);
 }

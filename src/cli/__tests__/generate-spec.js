@@ -1,7 +1,7 @@
 'use strict';
 
 import generate from '../generate';
-import mockFs from '../../lib/fs';
+import mockFs from '../../lib/helper-fs';
 import path from 'path';
 import pkg from '../../../package.json';
 import yargs from 'yargs';

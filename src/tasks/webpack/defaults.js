@@ -32,7 +32,7 @@ module.exports = {
 
   resolveLoader: {
     modulesDirectories: [
-      path.join(__dirname, '../node_modules'),
+      path.join(__dirname, '../../../node_modules'),
       path.join(processCwd, 'node_modules')
     ]
   },
@@ -47,7 +47,7 @@ module.exports = {
         test: /\.js$/,
         exclude: /(node_modules|bower_components|vendor)/,
         loader: require.resolve('babel-loader'),
-        query: require('./lib/global-babel')
+        query: require('../../lib/global-babel')
       },
       {
         test: /\.json$/,

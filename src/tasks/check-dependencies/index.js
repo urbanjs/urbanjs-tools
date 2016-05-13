@@ -2,15 +2,15 @@
 
 const _ = require('lodash');
 const exec = require('child_process').exec;
-const fs = require('./lib/fs');
-const npmInstall = require('./npm-install');
+const fs = require('../../lib/helper-fs');
+const npmInstall = require('../npm-install');
 const path = require('path');
-const pkg = require('../package.json');
+const pkg = require('../../../package.json');
 const prettyjson = require('prettyjson');
-const configHelper = require('./lib/helper-config.js');
+const configHelper = require('../../lib/helper-config.js');
 
 function buildConfig(parameters, globals) {
-  const defaults = require('./check-dependencies-defaults');
+  const defaults = require('./defaults');
 
   if (globals.sourceFiles) {
     defaults.files = globals.sourceFiles;
@@ -88,7 +88,7 @@ function checkOutdatedPackages(packageFile) {
 
 function checkMissingPackages(packageFile, files) {
   const depcheck = require('depcheck');
-  const parser = require('./check-dependencies-depcheck-parser');
+  const parser = require('./depcheck-parser');
   const options = {
     withoutDev: false,
     ignoreBinPackage: false,

@@ -2,16 +2,16 @@
 
 const _ = require('lodash');
 const del = require('del');
-const npmInstall = require('./npm-install');
+const npmInstall = require('../npm-install');
 const path = require('path');
-const pkg = require('../package.json');
-const configHelper = require('./lib/helper-config.js');
+const pkg = require('../../../package.json');
+const configHelper = require('../../lib/helper-config.js');
 
 function buildConfig(parameters, globals) {
-  const defaults = require('./jest-defaults');
+  const defaults = require('./defaults');
 
   if (!globals.babel) {
-    globals.babel = require('./lib/global-babel'); // eslint-disable-line no-param-reassign
+    globals.babel = require('../../lib/global-babel'); // eslint-disable-line no-param-reassign
   }
 
   return configHelper.mergeParameters(defaults, parameters);

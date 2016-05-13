@@ -1,7 +1,7 @@
 'use strict';
 
-const globals = require('./index-globals');
-const preprocessor = require('./lib/helper-preprocessor');
+const globals = require('../../index-globals');
+const preprocessor = require('../../lib/helper-preprocessor');
 
 module.exports = {
   process(src, filename) {

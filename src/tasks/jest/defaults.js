@@ -7,6 +7,6 @@ module.exports = {
   name: '',
   rootDir: sourceFolderPath,
   unmockedModulePathPatterns: ['babel-runtime/.*'],
-  scriptPreprocessor: path.join(__dirname, 'jest-preprocessor.js'),
+  scriptPreprocessor: path.join(__dirname, 'preprocessor.js'),
   collectCoverage: true
 };

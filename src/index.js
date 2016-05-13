@@ -1,19 +1,10 @@
 'use strict';
 
 const globals = require('./index-globals');
-const tasks = {
-  babel: require('./babel'),
-  checkDependencies: require('./check-dependencies'),
-  checkFileNames: require('./check-file-names'),
-  eslint: require('./eslint'),
-  jest: require('./jest'),
-  jscs: require('./jscs'),
-  jsdoc: require('./jsdoc'),
-  npmInstall: require('./npm-install'),
-  nsp: require('./nsp'),
-  retire: require('./retire'),
-  webpack: require('./webpack')
-};
+const tasks = require('./tasks');
+const cliIndexCommand = require('./cli/index');
+const cliInstallDependenciesCommand = require('./cli/install-dependencies');
+const cliGenerateCommand = require('./cli/generate');
 
 /**
  * @module main
@@ -29,28 +20,13 @@ module.exports = {
    * @property {module:cli/generate} generate Generates the folder structure for the project
    */
   cli: {
-    index: require('./cli/index'),
-    installDependencies: require('./cli/install-dependencies'),
-    generate: require('./cli/generate')
+    index: cliIndexCommand,
+    installDependencies: cliInstallDependenciesCommand,
+    generate: cliGenerateCommand
   },
 
   /**
-   * @type {Object}
-   * @description Core tasks
-   *
-   * @property {module:tasks/babel} babel Transpiler
-   * @property {module:tasks/checkDependencies} checkDependencies Validator for checking
-   *                                                              missing, unused, outdated
-   *                                                              dependencies
-   * @property {module:tasks/checkFileNames} checkFileNames Validator for checking file names
-   * @property {module:tasks/eslint} eslint JS linter
-   * @property {module:tasks/jest} jest Unit tester
-   * @property {module:tasks/jscs} jscs Code style checker
-   * @property {module:tasks/jsdoc} jsdoc API documentation generator
-   * @property {module:tasks/npmInstall} npmInstall Dependency installer
-   * @property {module:tasks/nsp} nsp Vulnerability checker
-   * @property {module:tasks/retire} retire Vulnerability checker
-   * @property {module:tasks/webpack} webpack Bundler
+   * @type {module:tasks}
    */
   tasks,
 
@@ -67,13 +43,13 @@ module.exports = {
    * @example
    *
    * // initialize tasks (eslint with defaults, disable jest)
-   * require('urbanjs-tools').initialize(require('gulp', {
+   * require('urbanjs-tools').initialize(require('gulp'), {
    *   jest: false,
    *   eslint: true
    * }));
    *
    * // initialize tasks (overriding defaults)
-   * require('urbanjs-tools').initialize(require('gulp', {
+   * require('urbanjs-tools').initialize(require('gulp'), {
    *   jest: defaults => {
    *     return Object.assign({}, defaults, {unmockedModulePathPatterns: ['core-js/.*']})
    *   }

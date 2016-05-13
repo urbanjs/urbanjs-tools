@@ -1,13 +1,13 @@
 'use strict';
 
 const _ = require('lodash');
-const npmInstall = require('./npm-install');
+const npmInstall = require('../npm-install');
 const path = require('path');
-const pkg = require('../package.json');
-const configHelper = require('./lib/helper-config.js');
+const pkg = require('../../../package.json');
+const configHelper = require('../../lib/helper-config.js');
 
 function buildConfig(parameters, globals) {
-  const defaults = require('./jscs-defaults');
+  const defaults = require('./defaults');
 
   if (globals.sourceFiles) {
     defaults.files = globals.sourceFiles;
@@ -19,32 +19,37 @@ function buildConfig(parameters, globals) {
 }
 
 /**
- * @module tasks/jscs
+ * @module tasks/eslint
  */
 module.exports = {
 
   dependencies: _.pick(pkg.devDependencies, [
-    'gulp-jscs',
-    'jscs-jsdoc'
+    'babel-eslint',
+    'eslint-config-airbnb',
+    'eslint-plugin-import',
+    'eslint-plugin-jsx-a11y',
+    'eslint-plugin-react',
+    'gulp-eslint',
+    'gulp-if'
   ]),
 
   /**
    * @function
-   * @description This task is responsible for validating the code style of JS.
+   * @description This task is responsible for linting JS.
    *
    * @param {external:gulp} gulp The gulp instance to use
    * @param {string} taskName The name of the task
-   * @param {module:tasks/jscs.Parameters} parameters The parameters of the task
+   * @param {module:tasks/eslint.Parameters} parameters The parameters of the task
    * @param {module:main.GlobalConfiguration} [globals] The global configuration
    *
    * @example
    * register(
    *   require('gulp'),
-   *   'jscs',
+   *   'eslint',
    *   {
-   *     configFile: require('path').join(__dirname + '.jscsrc'),
-   *     files: require('path').join(__dirname, 'src/*.js')
-   *   }
+    *     configFile: require('path').join(__dirname + '.eslintrc'),
+    *     files: require('path').join(__dirname, 'src/*.js')
+    *   }
    * );
    */
   register(gulp, taskName, parameters, globals) {
@@ -56,13 +61,11 @@ module.exports = {
     }, globals);
 
     const validate = config => {
-      const jscs = require('gulp-jscs');
+      const eslint = require('gulp-eslint');
       return gulp.src(config.files)
-        .pipe(jscs({
-          configPath: config.configFile,
-          fix: !!config.fix
-        }))
-        .pipe(jscs.reporter());
+        .pipe(eslint(_.omit(config, 'files')))
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
     };
 
     gulp.task(
@@ -72,6 +75,7 @@ module.exports = {
     );
 
     gulp.task(`${taskName}:fix`, [installDependenciesTaskName], (done) => {
+      const gulpIf = require('gulp-if');
       const filesByFolderPath = {};
       const config = buildConfig(parameters, globals);
 
@@ -84,15 +88,21 @@ module.exports = {
         })
         .on('end', () => {
           Promise.all(
-            Object.keys(filesByFolderPath).map(folderPath => new Promise((resolve, reject) => {
-              validate(Object.assign({}, config, {
-                files: filesByFolderPath[folderPath],
-                fix: true
+            Object.keys(filesByFolderPath)
+              .map(folderPath => new Promise((resolve, reject) => {
+                validate(Object.assign({}, config, {
+                  files: filesByFolderPath[folderPath],
+                  fix: true
+                }))
+                  .pipe(gulpIf(
+                    file => file.eslint && file.eslint.fixed,
+                    gulp.dest(folderPath)
+                  ))
+                  .on('error', err => reject(err))
+                  .on('end', () => resolve())
+                  .on('data', () => {
+                  });
               }))
-                .pipe(gulp.dest(folderPath))
-                .on('error', err => reject(err))
-                .on('end', () => resolve());
-            }))
           ).then(() => done(), err => done(err));
         });
     });
