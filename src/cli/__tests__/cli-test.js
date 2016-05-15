@@ -1,7 +1,7 @@
 'use strict';
 
 import fs from '../../lib/helper-fs';
-import { runCommands } from '../../lib/helper-tests';
+import { runCommands, extendJasmineTimeout } from '../../lib/helper-tests';
 import path from 'path';
 import pkg from '../../../package.json';
 
@@ -12,15 +12,10 @@ const packageFolderPath = path.join(__dirname, '../../../');
 const projectFolderPath = path.join(packageFolderPath, '../', projectName);
 
 describe('urbanjs cli', () => {
-  const originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+  extendJasmineTimeout(jasmine, beforeEach, afterEach);
 
   beforeEach(done => {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
     fs.delete(projectFolderPath).then(() => done(), done.fail);
-  });
-
-  afterEach(() => {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
   });
 
   pit('full flow', () => {
