@@ -1,13 +1,13 @@
 'use strict';
 
 import generate from '../generate';
-import mockFs from '../../lib/helper-fs';
+import mockFs from '../../utils/helper-fs';
 import path from 'path';
 import pkg from '../../../package.json';
 import yargs from 'yargs';
 
 jest.unmock('../generate.js');
-jest.unmock('../../lib/helper-yargs.js');
+jest.unmock('../../utils/helper-yargs.js');
 jest.unmock('yargs');
 
 describe('CLI - generate command', () => {

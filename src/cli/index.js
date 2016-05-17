@@ -3,7 +3,7 @@
 const generate = require('./generate');
 const installDependencies = require('./install-dependencies');
 const pkg = require('../../package.json');
-const yargsHelper = require('../lib/helper-yargs');
+const yargsHelper = require('../utils/helper-yargs');
 
 /**
  * @module cli/index

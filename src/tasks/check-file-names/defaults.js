@@ -1,5 +1,5 @@
 'use strict';
 
 module.exports = {
-  paramCase: require('../../lib/global-source-files')
+  paramCase: require('../../utils/global-source-files')
 };

@@ -1,6 +1,6 @@
 'use strict';
 
-const yargsHelper = require('../lib/helper-yargs');
+const yargsHelper = require('../utils/helper-yargs');
 const npmInstall = require('../tasks/npm-install');
 const _ = require('lodash');
 

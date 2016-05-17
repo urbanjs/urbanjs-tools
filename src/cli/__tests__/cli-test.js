@@ -1,11 +1,11 @@
 'use strict';
 
-import fs from '../../lib/helper-fs';
-import { runCommands, extendJasmineTimeout } from '../../lib/helper-tests';
+import fs from '../../utils/helper-fs';
+import { runCommands, extendJasmineTimeout } from '../../utils/helper-tests';
 import path from 'path';
 import pkg from '../../../package.json';
 
-jest.unmock('../../lib/helper-fs');
+jest.unmock('../../utils/helper-fs');
 
 const projectName = 'asd';
 const packageFolderPath = path.join(__dirname, '../../../');

@@ -3,12 +3,12 @@
 const _ = require('lodash');
 const exec = require('child_process').exec;
 const gulpSrc = require('gulp').src;
-const fs = require('../../lib/helper-fs');
+const fs = require('../../utils/helper-fs');
 const npmInstall = require('../npm-install');
 const path = require('path');
 const pkg = require('../../../package.json');
 const prettyjson = require('prettyjson');
-const configHelper = require('../../lib/helper-config.js');
+const configHelper = require('../../utils/helper-config.js');
 
 function buildConfig(parameters, globals) {
   const defaults = require('./defaults');

@@ -4,7 +4,7 @@ const _ = require('lodash');
 const npmInstall = require('../npm-install');
 const pkg = require('../../../package.json');
 const shell = require('gulp-shell');
-const configHelper = require('../../lib/helper-config.js');
+const configHelper = require('../../utils/helper-config.js');
 
 function buildConfig(parameters) {
   const defaults = require('./defaults');

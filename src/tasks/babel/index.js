@@ -4,7 +4,7 @@ const _ = require('lodash');
 const del = require('del');
 const npmInstall = require('../npm-install');
 const pkg = require('../../../package.json');
-const configHelper = require('../../lib/helper-config.js');
+const configHelper = require('../../utils/helper-config.js');
 
 function buildConfig(parameters, globals) {
   const defaults = require('./defaults');

@@ -5,7 +5,7 @@ const tools = require('./src');
 
 const unmockedModulePathPatterns = [
   'node_modules/.*',
-  'lib/helper-tests.js'
+  'utils/helper-tests.js'
 ];
 
 tools.initialize(gulp, {

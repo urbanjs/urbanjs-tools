@@ -1,6 +1,6 @@
 'use strict';
 
-import { runCommands, extendJasmineTimeout } from '../../../lib/helper-tests';
+import { runCommands, extendJasmineTimeout } from '../../../utils/helper-tests';
 import { join } from 'path';
 
 describe('Retire task', () => {

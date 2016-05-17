@@ -5,13 +5,13 @@ const del = require('del');
 const npmInstall = require('../npm-install');
 const pkg = require('../../../package.json');
 const shell = require('gulp-shell');
-const configHelper = require('../../lib/helper-config.js');
+const configHelper = require('../../utils/helper-config.js');
 
 function buildConfig(parameters, globals) {
   const defaults = require('./defaults');
 
   if (!globals.babel) {
-    globals.babel = require('../../lib/global-babel'); // eslint-disable-line no-param-reassign
+    globals.babel = require('../../utils/global-babel'); // eslint-disable-line no-param-reassign
   }
 
   return configHelper.mergeParameters(defaults, parameters);

@@ -1,6 +1,6 @@
 'use strict';
 
-import { runCommand, runCommands, extendJasmineTimeout } from '../../../lib/helper-tests';
+import { runCommand, runCommands, extendJasmineTimeout } from '../../../utils/helper-tests';
 import { join } from 'path';
 
 describe('Check dependencies task', () => {

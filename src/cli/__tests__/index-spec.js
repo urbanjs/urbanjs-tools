@@ -5,7 +5,7 @@ import mockGenerate from '../generate';
 import Yargs from 'yargs/yargs';
 
 jest.unmock('../index.js');
-jest.unmock('../../lib/helper-yargs.js');
+jest.unmock('../../utils/helper-yargs.js');
 
 describe('CLI - index command', () => {
   let mockYargs;

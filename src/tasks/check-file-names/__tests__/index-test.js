@@ -1,6 +1,6 @@
 'use strict';
 
-import { runCommand } from '../../../lib/helper-tests';
+import { runCommand } from '../../../utils/helper-tests';
 import { join } from 'path';
 
 describe('Check file names task', () => {

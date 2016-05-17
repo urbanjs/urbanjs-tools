@@ -1,9 +1,9 @@
 'use strict';
 
-const fs = require('../lib/helper-fs');
+const fs = require('../utils/helper-fs');
 const path = require('path');
 const pkg = require('../../package.json');
-const yargsHelper = require('../lib/helper-yargs');
+const yargsHelper = require('../utils/helper-yargs');
 
 /**
  * @module cli/generate
