@@ -2,6 +2,7 @@
 
 const _ = require('lodash');
 const exec = require('child_process').exec;
+const gulpSrc = require('gulp').src;
 const fs = require('../../lib/helper-fs');
 const npmInstall = require('../npm-install');
 const path = require('path');
@@ -94,38 +95,45 @@ function checkMissingPackages(packageFile, files) {
     ignoreBinPackage: false,
     ignoreMatches: [],
     ignoreDirs: [],
-    parsers: [].concat(files).reduce((acc, filePath) => {
-      acc[filePath] = [// eslint-disable-line no-param-reassign
-        parser,
-        depcheck.special.babel,
-        depcheck.special.bin,
-        depcheck.special.eslint,
-        depcheck.special.webpack
-      ];
-      return acc;
-    }, {}),
     detectors: [
       depcheck.detector.requireCallExpression,
       depcheck.detector.importDeclaration
     ],
-    specials: []
+    specials: [],
+    parsers: {}
   };
 
   return new Promise((resolve, reject) => {
-    depcheck(path.dirname(packageFile), options, stats => {
-      if (Object.keys(stats.missing).length) {
-        show(stats.missing, 'Missing dependencies:', 'red');
-        reject(new Error('missing dependencies'));
-        return;
-      }
+    gulpSrc(files)
+      .on('data', (file) => {
+        options.parsers[file.path] = [
+          parser,
+          depcheck.special.babel,
+          depcheck.special.bin,
+          depcheck.special.eslint,
+          depcheck.special.webpack
+        ];
+      })
+      .on('end', (err) => {
+        if (err) {
+          reject(new Error('Unable to handle source files.'));
+        }
 
-      show(stats.dependencies, 'You might have unused dependencies:');
-      show(stats.devDependencies, 'You might have unused devDependencies:');
-      show(stats.invalidFiles, 'Some of your files are unprocessable:');
-      show(stats.invalidDirs, 'Some of your dirs are not accessible:');
+        depcheck(path.dirname(packageFile), options, stats => {
+          if (Object.keys(stats.missing).length) {
+            show(stats.missing, 'Missing dependencies:', 'red');
+            reject(new Error('missing dependencies'));
+            return;
+          }
 
-      resolve();
-    });
+          show(stats.dependencies, 'You might have unused dependencies:');
+          show(stats.devDependencies, 'You might have unused devDependencies:');
+          show(stats.invalidFiles, 'Some of your files are unprocessable:');
+          show(stats.invalidDirs, 'Some of your dirs are not accessible:');
+
+          resolve();
+        });
+      });
   });
 }
 

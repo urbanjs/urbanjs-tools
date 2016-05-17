@@ -6,6 +6,8 @@
 - Update dependencies
 - Introduce ```babel``` task
     - Use ```babel``` and ```babel:watch``` tasks to build your project
+- Fix ```check-dependencies``` task
+    - Handle ```files``` parameters with ```gulp``` to be consistent with the other tasks
 
 ## 0.7.0 (2016-05-04)
 - Improve ```parameter``` functions
