@@ -10,17 +10,21 @@ export function runCommand(command) {
   }, command[1]);
 
   return exec(commandString, config).then(
-    () => {
+    (childProcesses) => {
       if (config.expectToFail) {
         throw new Error('Expected to fail');
       }
+
+      return childProcesses.stdout;
     },
 
     err => {
       if (!config.allowToFail && !config.expectToFail) {
         console.log(config); // eslint-disable-line no-console
         console.log(`${commandString} has failed`); // eslint-disable-line no-console
-        console.log(err.stderr || err.stdout || err); // eslint-disable-line no-console
+        console.log('error:\n', err.message); // eslint-disable-line no-console
+        console.log('stderr:\n', err.stderr); // eslint-disable-line no-console
+        console.log('stdout:\n', err.stdout); // eslint-disable-line no-console
         throw err;
       }
     }
