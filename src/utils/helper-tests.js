@@ -32,7 +32,8 @@ export function runCommand(command) {
       }
     )
     .then(output => {
-      if (config.expectToContain && output.indexOf(config.expectToContain) === -1) {
+      const testRegex = config.expectToContain && new RegExp(config.expectToContain);
+      if (testRegex && !testRegex.test(output)) {
         throw new Error(`Expected to contain: ${config.expectToContain}`);
       }
     });

@@ -12,6 +12,12 @@ module.exports = {
     });
   },
 
+  isSymlink(targetPath) {
+    return new Promise((resolve) => {
+      fs.lstat(targetPath, (err, stats) => resolve(!err && stats.isSymbolicLink()));
+    });
+  },
+
   delete(targetPath) {
     return del(targetPath, { force: true });
   },

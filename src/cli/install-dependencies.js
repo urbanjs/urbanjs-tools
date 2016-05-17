@@ -56,7 +56,7 @@ module.exports = {
         argv.tasks.map(taskName => {
           try {
             return npmInstall.install(
-              require(`../${taskName}`).dependencies,
+              require(`../tasks/${taskName}`).dependencies,
               _.pick(argv, ['verbose', 'global', 'link'])
             );
           } catch (err) {
