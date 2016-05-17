@@ -22,38 +22,41 @@ describe('Check dependencies task', () => {
   pit('should fail if outdated package found', () =>
     runCommands([
       ['npm install del@2.0.0'],
-      ['gulp check-dependencies', { expectToFail: true }]
+      ['gulp check-dependencies', {
+        expectToFail: true,
+        expectToContain: 'You have critical outdated packages:\n - del'
+      }]
     ], { cwd: join(__dirname, 'outdated-package') })
   );
 
-  pit('should not fail if unused package found, only warning should come up', async() => {
-    const stdout = await runCommand(['gulp check-dependencies', {
-      cwd: join(__dirname, 'unused-package')
-    }]);
-
-    if (stdout.indexOf('You might have unused dependencies:\n - del\n') === -1) {
-      throw new Error('Warning message is missing');
-    }
-  });
+  pit('should not fail if unused package found, only warning should come up', () =>
+    runCommand(['gulp check-dependencies', {
+      cwd: join(__dirname, 'unused-package'),
+      expectToContain: 'You might have unused dependencies:\n - del'
+    }])
+  );
 
   pit('should fail if missing package found', () =>
     runCommand(['gulp check-dependencies', {
       cwd: join(__dirname, 'missing-package'),
-      expectToFail: true
+      expectToFail: true,
+      expectToContain: 'Missing dependencies:\n del'
     }])
   );
 
   pit('should use global configuration if parameters are not defined', () =>
     runCommand(['gulp check-dependencies', {
       cwd: join(__dirname, 'global-configuration'),
-      expectToFail: true
+      expectToFail: true,
+      expectToContain: 'Missing dependencies:\n del'
     }])
   );
 
   pit('should use default configuration without specific parameters', () =>
     runCommand(['gulp check-dependencies', {
       cwd: join(__dirname, 'default-configuration'),
-      expectToFail: true
+      expectToFail: true,
+      expectToContain: 'Missing dependencies:'
     }])
   );
 

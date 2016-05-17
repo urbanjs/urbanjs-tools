@@ -9,26 +9,33 @@ export function runCommand(command) {
     env: _.omit(process.env, 'urbanJSToolGlobals')
   }, command[1]);
 
-  return exec(commandString, config).then(
-    (childProcesses) => {
-      if (config.expectToFail) {
-        throw new Error('Expected to fail');
-      }
+  return exec(commandString, config)
+    .then(
+      (childProcesses) => {
+        if (config.expectToFail) {
+          throw new Error('Expected to fail');
+        }
 
-      return childProcesses.stdout;
-    },
+        return childProcesses.stdout;
+      },
 
-    err => {
-      if (!config.allowToFail && !config.expectToFail) {
-        console.log(config); // eslint-disable-line no-console
-        console.log(`${commandString} has failed`); // eslint-disable-line no-console
-        console.log('error:\n', err.message); // eslint-disable-line no-console
-        console.log('stderr:\n', err.stderr); // eslint-disable-line no-console
-        console.log('stdout:\n', err.stdout); // eslint-disable-line no-console
-        throw err;
+      err => {
+        if (!config.allowToFail && !config.expectToFail) {
+          console.log(`${commandString} has failed`); // eslint-disable-line no-console
+          console.log('error:\n', err.message); // eslint-disable-line no-console
+          console.log('stderr:\n', err.stderr); // eslint-disable-line no-console
+          console.log('stdout:\n', err.stdout); // eslint-disable-line no-console
+          throw err;
+        }
+
+        return [err.message, err.stderr, err.stdout].join('\n');
       }
-    }
-  );
+    )
+    .then(output => {
+      if (config.expectToContain && output.indexOf(config.expectToContain) === -1) {
+        throw new Error(`Expected to contain: ${config.expectToContain}`);
+      }
+    });
 }
 
 export function runCommands(commands, options) {

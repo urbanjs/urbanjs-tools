@@ -16,14 +16,20 @@ describe('Retire task', () => {
   pit('should throw error with insecure packages', () =>
     runCommands([
       ['npm install'],
-      ['gulp retire', { expectToFail: true }]
+      ['gulp retire', {
+        expectToFail: true,
+        expectToContain: 'marked 0.3.5 has known vulnerabilities'
+      }]
     ], { cwd: join(__dirname, 'package-with-vulnerability') })
   );
 
   pit('should use default configuration without specific parameters', () =>
     runCommands([
       ['npm install'],
-      ['gulp retire', { expectToFail: true }]
+      ['gulp retire', {
+        expectToFail: true,
+        expectToContain: 'marked 0.3.5 has known vulnerabilities'
+      }]
     ], { cwd: join(__dirname, 'default-configuration') })
   );
 
