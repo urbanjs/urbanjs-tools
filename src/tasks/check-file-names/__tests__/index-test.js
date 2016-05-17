@@ -1,9 +1,11 @@
 'use strict';
 
-import { runCommand } from '../../../utils/helper-tests';
+import { extendJasmineTimeout, runCommand } from '../../../utils/helper-tests';
 import { join } from 'path';
 
 describe('Check file names task', () => {
+  extendJasmineTimeout(jasmine, beforeEach, afterEach);
+
   pit('should pass with valid file & folder names', () =>
     runCommand(['gulp check-file-names', {
       cwd: join(__dirname, 'valid-project')
