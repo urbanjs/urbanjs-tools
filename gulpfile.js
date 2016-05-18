@@ -18,7 +18,8 @@ tools.initialize(gulp, {
 
   eslint: {
     rules: {
-      'global-require': 0
+      'global-require': 0,
+      'import/no-unresolved': 0
     }
   },
 

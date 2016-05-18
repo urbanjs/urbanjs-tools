@@ -54,7 +54,8 @@ module.exports = {
    *   {
    *     files: require('path').join(__dirname, 'src/*.js'),
    *     outputPath: require('path').join(__dirname, 'dist'),
-   *     babel: { presets: ['es2015'] }
+   *     babel: { presets: ['es2015'] },
+   *     sourcemap: { loadMaps: true }
    *   }
    * );
    */
@@ -79,11 +80,18 @@ module.exports = {
       const sourcemaps = require('gulp-sourcemaps');
       const babel = require('gulp-babel');
 
-      return gulp.src(config.files)
-        .pipe(sourcemaps.init())
-        .pipe(babel(config.babel))
-        .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(config.outputPath));
+      let stream = gulp.src(config.files);
+      if (config.sourcemap) {
+        stream = stream.pipe(sourcemaps.init(config.sourcemap));
+      }
+
+      stream = stream.pipe(babel(config.babel));
+      if (config.sourcemap) {
+        stream = stream.pipe(sourcemaps.write('.', config.sourcemap));
+      }
+
+      stream = stream.pipe(gulp.dest(config.outputPath));
+      return stream;
     });
 
     const watchTaskName = `${taskName}:watch`;

@@ -1,11 +1,11 @@
 /**
  * @typedef {Object|function} Parameters
  * @memberof module:tasks/babel
- * @property {Object} output Output parameters
- * @property {string} output.filename Output filename
- * @property {string} output.path Output path
+ * @property {string} outputPath Output path
  * @property {string|string[]} files Paths of the files to build
  * @property {Object} [babel] Common babel configuration
+ * @property {boolean|Object} [sourcemap] Sourcemap configuration,
+ *                                        see https://www.npmjs.com/package/gulp-sourcemaps
  */
 
 /**
