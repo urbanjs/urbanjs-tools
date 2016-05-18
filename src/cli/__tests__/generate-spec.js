@@ -26,7 +26,7 @@ describe('CLI - generate command', () => {
 
   pit('accepts options yargs instance as second arguments', () => {
     expect(() => {
-      generate.run(['-v']);
+      generate.run(['-h']);
     }).not.toThrow();
 
     const mockShowHelp = jest.genMockFunction().mockReturnValue(mockYargs);
