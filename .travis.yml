@@ -4,8 +4,8 @@ sudo: false
 
 node_js:
   - '6'
-  - '5.5'
-  - '4.2'
+  - '5'
+  - '4.2' # LTS
 
 env:
   # node 4 likes the G++ v4.8 compiler
