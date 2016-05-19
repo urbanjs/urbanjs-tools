@@ -2,11 +2,16 @@
 
 const gulp = require('gulp');
 const tools = require('./src');
+const globalSourceFiles = require('./src/utils/global-source-files');
 
 const unmockedModulePathPatterns = [
   'node_modules/.*',
   'utils/helper-tests.js'
 ];
+
+tools.setGlobalConfiguration({
+  sourceFiles: globalSourceFiles.concat('!**/dist/**')
+});
 
 tools.initialize(gulp, {
   checkDependencies: true,
@@ -18,8 +23,7 @@ tools.initialize(gulp, {
 
   eslint: {
     rules: {
-      'global-require': 0,
-      'import/no-unresolved': 0
+      'global-require': 0
     }
   },
 
