@@ -56,7 +56,7 @@ module.exports = {
         i++;
 
         nsp.check({ package: packageFile }, (err, data) => {
-          if (data && data.length) {
+          if (err || (data && data.length)) {
             vulnerabilities = vulnerabilities || [];
             vulnerabilities.push(`\r\n${packageFile}:\r\n`);
             vulnerabilities.push(nsp.formatters.summary(err, data));

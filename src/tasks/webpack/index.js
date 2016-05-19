@@ -8,11 +8,12 @@ const configHelper = require('../../utils/helper-config.js');
 
 function buildConfig(parameters, globals) {
   const defaults = require('./defaults');
+  const babelLoader = defaults.module.loaders[0];
 
   if (globals.babel) {
-    defaults.module.loaders[0].query = globals.babel;
+    babelLoader.query = globals.babel;
   } else {
-    globals.babel = defaults.module.loaders[0].query; // eslint-disable-line no-param-reassign
+    globals.babel = babelLoader.query; // eslint-disable-line no-param-reassign
   }
 
   return configHelper.mergeParameters(defaults, parameters);

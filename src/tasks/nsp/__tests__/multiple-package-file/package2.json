@@ -1,0 +1,7 @@
+{
+  "name": "valid2",
+  "private": true,
+  "dependencies": {
+    "left-pad": "1.1.0"
+  }
+}

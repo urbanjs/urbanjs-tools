@@ -13,6 +13,7 @@ export function runCommand(command) {
     .then(
       (childProcesses) => {
         if (config.expectToFail) {
+          console.log('stdout:\n', childProcesses.stdout); // eslint-disable-line no-console
           throw new Error('Expected to fail');
         }
 
@@ -34,6 +35,7 @@ export function runCommand(command) {
     .then(output => {
       const testRegex = config.expectToContain && new RegExp(config.expectToContain);
       if (testRegex && !testRegex.test(output)) {
+        console.log('output:\n', output); // eslint-disable-line no-console
         throw new Error(`Expected to contain: ${config.expectToContain}`);
       }
     });
@@ -62,4 +64,11 @@ export function extendJasmineTimeout(jasmine, setCb, restoreCb, timeout) {
   restoreCb(() => {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = jasmineDefaultTimeout; // eslint-disable-line
   });
+}
+
+export function testLoggerLib(lib) {
+  const logs = [];
+  const logger = new lib.Logger(message => logs.push(message));
+  logger.log('a', 'b', 'c');
+  expect(logs).toEqual(['a', 'b', 'c']);
 }

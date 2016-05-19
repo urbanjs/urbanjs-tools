@@ -5,7 +5,6 @@ const path = require('path');
 const task = require('../../index');
 
 task.dependencies = {};
-task.register(gulp, 'babel', true, {
-  babel: {},
-  sourceFiles: path.join(__dirname, 'index.js')
+task.register(gulp, 'nsp', {
+  packageFile: path.join(__dirname, 'package.json')
 });

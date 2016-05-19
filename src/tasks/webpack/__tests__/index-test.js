@@ -6,22 +6,22 @@ import { exists, writeFile } from '../../../utils/helper-fs';
 
 jest.unmock('../../../utils/helper-fs');
 
-describe('Babel task', () => {
+describe('Webpack task', () => {
   extendJasmineTimeout(jasmine, beforeEach, afterEach);
 
-  pit('should transpile the source code successfully', async() => {
+  pit('should bundle the source files successfully', async() => {
     const projectName = 'valid-project';
-    await runCommand(['gulp babel', { cwd: join(__dirname, projectName) }]);
-
-    const mapFileExists = await exists(join(__dirname, `${projectName}/dist/index.js.map`));
-    expect(mapFileExists).toBe(true);
+    await runCommand(['gulp webpack', {
+      cwd: join(__dirname, projectName),
+      expectToContain: 'Successful compiling'
+    }]);
 
     testLoggerLib(require.requireActual(`./${projectName}/dist/index.js`));
   });
 
-  pit('should fail if transpilation is not successfull', () =>
-    runCommand(['gulp babel', {
-      cwd: join(__dirname, 'failed-transpilation'),
+  pit('should fail if bundling is not successfull', () =>
+    runCommand(['gulp webpack', {
+      cwd: join(__dirname, 'failed-bundling'),
       expectToFail: true,
       expectToContain: 'Unexpected token'
     }])
@@ -31,22 +31,25 @@ describe('Babel task', () => {
     const projectName = 'clean-output-folder';
 
     await writeFile(join(__dirname, `${projectName}/dist/asd.txt`), '');
-    await runCommand(['gulp babel', { cwd: join(__dirname, projectName) }]);
+    await runCommand(['gulp webpack', { cwd: join(__dirname, projectName) }]);
 
     const fileExists = await exists(join(__dirname, `${projectName}/dist/asd.txt`));
     expect(fileExists).toBe(false);
   });
 
-  pit('should allow to skip sourcemap generation', async() => {
-    const projectName = 'skip-sourcemap';
-    await runCommand(['gulp babel', { cwd: join(__dirname, projectName) }]);
+  pit('should accept array as configuration', async() => {
+    const projectName = 'array-configuration';
+    await runCommand(['gulp webpack', { cwd: join(__dirname, projectName) }]);
 
-    const mapFileExists = await exists(join(__dirname, `${projectName}/dist/index.js.map`));
-    expect(mapFileExists).toBe(false);
+    const outputExists = await exists(join(__dirname, `${projectName}/dist/index.js`));
+    expect(outputExists).toBe(true);
+
+    const output2Exists = await exists(join(__dirname, `${projectName}/dist/index2.js`));
+    expect(output2Exists).toBe(true);
   });
 
   pit('should use global configuration if parameters are not defined', () =>
-    runCommand(['gulp babel', {
+    runCommand(['gulp webpack', {
       cwd: join(__dirname, 'global-configuration'),
       expectToFail: true,
       expectToContain: 'Unexpected token'
@@ -55,7 +58,7 @@ describe('Babel task', () => {
 
   pit('should use default configuration without specific parameters', async() => {
     const projectName = 'default-configuration';
-    await runCommand(['gulp babel', { cwd: join(__dirname, projectName) }]);
+    await runCommand(['gulp webpack', { cwd: join(__dirname, projectName) }]);
 
     const mapFileExists = await exists(join(__dirname, `${projectName}/dist/index.js.map`));
     expect(mapFileExists).toBe(true);

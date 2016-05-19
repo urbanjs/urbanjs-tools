@@ -10,12 +10,12 @@ module.exports = {
   output: {
     path: path.join(processCwd, 'dist'),
     filename: 'index.js',
-    libraryTarget: 'umd'
+    libraryTarget: 'commonjs'
   },
 
   target: 'node',
-  bail: true,
-  devtool: 'source-map',
+  bail: true, // quit after the first error
+  devtool: 'source-map', // generate production supported source map
 
   node: {
     console: false,
@@ -31,21 +31,21 @@ module.exports = {
   ],
 
   resolveLoader: {
-    modulesDirectories: [
-      path.join(__dirname, '../../../node_modules'),
+    modulesDirectories: [// used loaders might have dependencies installed only in urbanjs
+      path.join(processCwd, 'node_modules/urbanjs-tools/node_modules'),
       path.join(processCwd, 'node_modules')
     ]
   },
 
   externals: [
-    /^[a-z\-0-9].+$/
+    /^[a-z\-0-9].+$/ // global & npm packages are handled as externals
   ],
 
   module: {
     loaders: [
       {
-        test: /\.js$/,
-        exclude: /(node_modules|bower_components|vendor)/,
+        test: /[^.min]\.js$/, // minified files are ignored
+        exclude: /(node_modules|bower_components|vendor|dist)/,
         loader: require.resolve('babel-loader'),
         query: require('../../utils/global-babel')
       },
