@@ -16,7 +16,7 @@ describe('CLI - generate command', () => {
   beforeEach(() => {
     // kind of a real yargs...
     mockYargs = yargs.reset();
-    mockFs.delete.mockClear();
+    mockFs.remove.mockClear();
     mockFs.exists.mockClear();
     mockFs.exists.mockReturnValue(Promise.resolve(false));
     mockFs.readFile.mockClear();
@@ -134,8 +134,8 @@ describe('CLI - generate command', () => {
     mockFs.exists.mockReturnValue(Promise.resolve(true));
 
     return generate.run(['-n', projectName, '-f'], mockYargs).catch(err => {
-      expect(mockFs.delete.mock.calls.length).toBe(1);
-      expect(mockFs.delete.mock.calls[0]).toEqual([folderPath]);
+      expect(mockFs.remove.mock.calls.length).toBe(1);
+      expect(mockFs.remove.mock.calls[0]).toEqual([folderPath]);
       expect(err.message).toBe(`The folder \`${folderPath}\` is existing and cannot be deleted.`);
     });
   });

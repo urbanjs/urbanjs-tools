@@ -16,7 +16,7 @@ describe('urbanjs cli', () => {
   extendJasmineTimeout(jasmine, beforeEach, afterEach);
 
   beforeEach(done => {
-    fs.delete(projectFolderPath).then(() => done(), done.fail);
+    fs.remove(projectFolderPath).then(() => done(), done.fail);
   });
 
   pit('should be able to generate new project', () =>

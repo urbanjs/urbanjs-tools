@@ -18,7 +18,7 @@ module.exports = {
     });
   },
 
-  delete(targetPath) {
+  remove(targetPath) {
     return del(targetPath, { force: true });
   },
 

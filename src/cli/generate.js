@@ -60,7 +60,7 @@ module.exports = {
           throw new Error(`The given name is invalid: ${argv.name}`);
         }
       })
-      .then(() => force && fs.delete(folderPath))
+      .then(() => force && fs.remove(folderPath))
       .then(() => fs.exists(folderPath))
       .then(exists => {
         if (exists) {

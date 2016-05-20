@@ -141,8 +141,6 @@ function installDependencies(dependencies, options) {
  */
 module.exports = {
 
-  dependencies: [],
-
   /**
    * @function
    * @param {Object} dependencies
