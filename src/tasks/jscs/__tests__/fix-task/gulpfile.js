@@ -5,5 +5,5 @@ const task = require('../../index');
 
 task.dependencies = {};
 task.register(gulp, 'jscs', {
-  files: 'index.js'
+  files: 'index-invalid.js'
 });

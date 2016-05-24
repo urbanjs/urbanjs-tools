@@ -30,7 +30,7 @@ describe('JSCS task', () => {
     const projectPath = join(__dirname, projectName);
     const fixableContent = 'export function method () {\n}';
 
-    await writeFile(join(__dirname, projectName, 'index.js'), fixableContent);
+    await writeFile(join(__dirname, projectName, 'index-invalid.js'), fixableContent);
     await runCommands([
       ['gulp jscs:fix'],
       ['gulp jscs']
