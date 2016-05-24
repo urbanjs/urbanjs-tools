@@ -1,7 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
-const del = require('del');
+const fs = require('../../utils/helper-fs');
 const npmInstall = require('../npm-install');
 const pkg = require('../../../package.json');
 const shell = require('gulp-shell');
@@ -15,6 +15,15 @@ function buildConfig(parameters, globals) {
   }
 
   return configHelper.mergeParameters(defaults, parameters);
+}
+
+function getJSDocParameters(configFilePath) {
+  return fs.readFile(configFilePath)
+    .then(content => JSON.parse(content))
+    .catch(e => {
+      console.log('Config file cannot be found/parsed'); // eslint-disable-line no-console
+      throw e;
+    });
 }
 
 /**
@@ -60,17 +69,25 @@ module.exports = {
 
     const cleanUpTaskName = `${taskName}-clean`;
     gulp.task(cleanUpTaskName, [installDependenciesTaskName], (done) => {
-      del(['help'], { force: true }).then(() => {
-        done();
-      });
+      const config = buildConfig(parameters, globals);
+      getJSDocParameters(config.configFile)
+        .then(jsdocParameters => {
+          const outputPath = _.get(jsdocParameters, 'opts.destination');
+          if (!outputPath) {
+            throw new Error('Config file need to define the output folder');
+          }
+
+          return fs.remove(outputPath);
+        })
+        .then(() => done())
+        .catch(done);
     });
 
     gulp.task(taskName, [installDependenciesTaskName, cleanUpTaskName], done => {
       const config = buildConfig(parameters, globals);
-
       shell.task([
         `node "${config.packagePath}jsdoc.js" -c "${config.configFile}"`
-      ], { env: { urbanJSToolGlobals: JSON.stringify(globals) } })(done);
+      ], { quiet: true, env: { urbanJSToolGlobals: JSON.stringify(globals) } })(done);
     });
   }
 };

@@ -1,7 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
-const del = require('del');
+const fs = require('../../utils/helper-fs');
 const npmInstall = require('../npm-install');
 const path = require('path');
 const pkg = require('../../../package.json');
@@ -30,7 +30,7 @@ function runJest(parameters, globals, watch) {
   process.env.urbanJSToolGlobals = JSON.stringify(globals);
 
   return new Promise((resolve, reject) => {
-    del([coverageDirectoryPath], { force: true })
+    fs.remove(coverageDirectoryPath)
       .then(() => {
         jest.runCLI(
           {

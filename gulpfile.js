@@ -10,7 +10,10 @@ const unmockedModulePathPatterns = [
 ];
 
 tools.setGlobalConfiguration({
-  sourceFiles: globalSourceFiles.concat('!**/dist/**')
+  sourceFiles: globalSourceFiles.concat(
+    '!**/dist/**',
+    '!**/help/**'
+  )
 });
 
 tools.initialize(gulp, {
@@ -29,7 +32,8 @@ tools.initialize(gulp, {
 
   jest: {
     testPathPattern: /.*-(test|spec)\.js$/,
-    unmockedModulePathPatterns
+    unmockedModulePathPatterns,
+    collectCoverage: false
   },
 
   jscs: true,

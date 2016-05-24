@@ -29,11 +29,12 @@ describe('Webpack task', () => {
 
   pit('should clean the output folder automatically', async() => {
     const projectName = 'clean-output-folder';
+    const filePath = join(__dirname, `${projectName}/dist/asd.txt`);
 
-    await writeFile(join(__dirname, `${projectName}/dist/asd.txt`), '');
+    await writeFile(filePath, '');
     await runCommand(['gulp webpack', { cwd: join(__dirname, projectName) }]);
 
-    const fileExists = await exists(join(__dirname, `${projectName}/dist/asd.txt`));
+    const fileExists = await exists(filePath);
     expect(fileExists).toBe(false);
   });
 

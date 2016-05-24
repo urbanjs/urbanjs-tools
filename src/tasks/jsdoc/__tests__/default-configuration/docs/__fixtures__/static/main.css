@@ -1,0 +1,69 @@
+img.diagram {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Left indentation */
+
+article h1,
+dt div.param-desc,
+div.container-overview dl.details,
+div.container-overview div.description {
+    margin-left: 0;
+}
+
+h5,
+dl.details,
+div.description {
+    margin-left: 30px;
+}
+
+table.params,
+table.props,
+table.params + dl.details,
+article > dl,
+div.param-desc,
+pre.prettyprint {
+    margin-left: 60px;
+}
+
+h5 + ul {
+    list-style: none;
+    margin-left: 20px;
+}
+
+/* Vertical distance */
+
+h4 {
+    color: #ff4833;
+    font-weight: bold;
+    margin-top: 40px;
+}
+
+h3 + h4 {
+    margin-top: 0;
+}
+
+div.container-overview h4 {
+    margin-top: 0;
+}
+
+h3.subsection-title, div.container-overview h2 {
+    margin-top: 40px;
+}
+
+/* Source, See and Inherited From sections */
+
+.tag-source, .inherited-from, .tag-see {
+    font-size: 12px;
+}
+
+dd.tag-source, dd.inherited-from, dd.tag-see {
+    margin-left: 0;
+}
+
+dt.tag-source, dt.inherited-from, dt.tag-see {
+    width: 100px;
+}

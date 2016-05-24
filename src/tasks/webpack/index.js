@@ -1,7 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
-const del = require('del');
+const fs = require('../../utils/helper-fs');
 const npmInstall = require('../npm-install');
 const pkg = require('../../../package.json');
 const configHelper = require('../../utils/helper-config.js');
@@ -72,8 +72,8 @@ module.exports = {
     gulp.task(cleanUpTaskName, [installDependenciesTaskName], (done) => {
       Promise.all(
         [].concat(buildConfig(parameters, globals))
-          .map(webpackConfig => del([webpackConfig.output.path], { force: true }))
-      ).then(() => done()).catch(e => done(e));
+          .map(webpackConfig => fs.remove(webpackConfig.output.path))
+      ).then(() => done()).catch(done);
     });
 
     gulp.task(taskName, [installDependenciesTaskName, cleanUpTaskName], done => {

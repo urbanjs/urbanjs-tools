@@ -1,0 +1,14 @@
+{
+  "opts": {
+    "destination": "./help/"
+  },
+  "source": {
+    "include": [
+      "."
+    ],
+    "includePattern": ".+\\.js$"
+  },
+  "plugins": [
+    "../../preprocessor-plugin"
+  ]
+}
