@@ -3,12 +3,10 @@
 import { runCommand, extendJasmineTimeout } from '../../../utils/helper-tests';
 import { join } from 'path';
 
-jest.unmock('../../../utils/helper-fs');
-
 describe('Jest task', () => {
   extendJasmineTimeout(jasmine, beforeEach, afterEach);
 
-  pit('should be able to generate documentation', () =>
+  pit('should be able to run the tests successfully', () =>
     runCommand(['gulp jest', { cwd: join(__dirname, 'valid-project') }])
   );
 

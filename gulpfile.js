@@ -13,7 +13,8 @@ tools.setGlobalConfiguration({
   sourceFiles: globalSourceFiles.concat(
     '!**/dist/**',
     '!**/help/**',
-    '!**/coverage/**'
+    '!**/coverage/**',
+    '!**/__tests__/**/*-invalid.js'
   )
 });
 

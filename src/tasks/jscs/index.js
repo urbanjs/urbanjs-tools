@@ -62,7 +62,8 @@ module.exports = {
           configPath: config.configFile,
           fix: !!config.fix
         }))
-        .pipe(jscs.reporter());
+        .pipe(jscs.reporter())
+        .pipe(jscs.reporter('fail'));
     };
 
     gulp.task(
