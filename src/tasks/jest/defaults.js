@@ -1,11 +1,10 @@
 'use strict';
 
 const path = require('path');
-const sourceFolderPath = path.join(process.cwd(), 'src');
 
 module.exports = {
   name: '',
-  rootDir: sourceFolderPath,
+  rootDir: path.join(process.cwd(), 'src'),
   unmockedModulePathPatterns: ['babel-runtime/.*'],
   scriptPreprocessor: path.join(__dirname, 'preprocessor.js'),
   collectCoverage: true
