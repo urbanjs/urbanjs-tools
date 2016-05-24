@@ -16,7 +16,7 @@ describe('Jest task', () => {
     runCommand(['gulp jest', {
       cwd: join(__dirname, 'failed-test'),
       expectToFail: true,
-      expectToContain: 'Expected: false toBe: true'
+      expectToContain: 'Expected:? false toBe:? true'
     }])
   );
 
