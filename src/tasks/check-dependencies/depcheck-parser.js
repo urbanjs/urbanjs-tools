@@ -1,12 +1,12 @@
 'use strict';
 
 const babylon = require('babylon');
+const globals = require('../../index-globals');
+const preprocessor = require('../../utils/helper-preprocessor');
 
-module.exports = function parser(content) {
-  return babylon.parse(content, {
-    sourceType: 'module',
-
-    // Enable all possible babylon plugins.
-    plugins: ['flow', 'jsx', '*']
-  });
+module.exports = function parser(content, filename) {
+  return babylon.parse(
+    preprocessor.transpile(content, filename, globals.babel, globals.typescript),
+    { sourceType: 'module' }
+  );
 };

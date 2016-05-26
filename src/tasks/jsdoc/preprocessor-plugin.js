@@ -6,7 +6,12 @@ const preprocessor = require('../../utils/helper-preprocessor');
 exports.handlers = {
 
   beforeParse(event) {
-    const src = preprocessor.processWithBabel(event.source, event.filename, globals.babel);
+    const src = preprocessor.transpile(
+      event.source,
+      event.filename,
+      globals.babel,
+      global.typescript
+    );
 
     event.source = src;// eslint-disable-line no-param-reassign
     return src;

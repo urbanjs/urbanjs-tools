@@ -1,13 +1,15 @@
 # Changelog
 
 ## Unreleased
-- Use ```babel-runtime``` instead of ```babel-polyfill```
-    https://medium.com/@jcse/clearing-up-the-babel-6-ecosystem-c7678a314bf3#.tu57xznwrŁ
-- Update dependencies
+- Typescript support
+    - The tasks supports typescript source from now on
 - Introduce ```babel``` task
     - Use ```babel``` and ```babel:watch``` tasks to build your project
+- Use ```babel-runtime``` instead of ```babel-polyfill```
+    https://medium.com/@jcse/clearing-up-the-babel-6-ecosystem-c7678a314bf3#.tu57xznwrŁ
 - Fix ```check-dependencies``` task
     - Handle ```files``` parameters with ```gulp``` to be consistent with the other tasks
+- Update dependencies
 
 ## 0.7.0 (2016-05-04)
 - Improve ```parameter``` functions

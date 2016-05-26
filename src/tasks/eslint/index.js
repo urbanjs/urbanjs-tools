@@ -61,9 +61,13 @@ module.exports = {
     }, globals);
 
     const validate = config => {
+      const gulpIf = require('gulp-if');
       const eslint = require('gulp-eslint');
       return gulp.src(config.files)
-        .pipe(eslint(_.omit(config, 'files')))
+        .pipe(gulpIf(
+          file => !/\.tsx?$/.test(file.path),
+          eslint(_.omit(config, 'files'))
+        ))
         .pipe(eslint.format())
         .pipe(eslint.failAfterError());
     };

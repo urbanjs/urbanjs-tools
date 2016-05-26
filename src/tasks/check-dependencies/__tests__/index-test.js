@@ -65,4 +65,11 @@ describe('Check dependencies task', () => {
       cwd: join(__dirname, 'ignore-filepath')
     }])
   );
+
+  pit('should be able to handle typescript source', () =>
+    runCommand(['gulp check-dependencies', {
+      cwd: join(__dirname, 'typescript-source'),
+      expectToContain: 'You might have unused dependencies:\n - del'
+    }])
+  );
 });

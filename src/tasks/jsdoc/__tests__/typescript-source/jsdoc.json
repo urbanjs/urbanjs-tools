@@ -1,0 +1,11 @@
+{
+  "opts": {
+    "destination": "./help/"
+  },
+  "source": {
+    "include": [
+      "."
+    ],
+    "includePattern": ".+\\.ts$"
+  }
+}

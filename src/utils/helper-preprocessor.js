@@ -1,10 +1,28 @@
 'use strict';
 
-const babel = require('babel-core');
-
 module.exports = {
-  processWithBabel(src, filename, babelConfig) {
-    if (!babel.util.canCompile(filename)) {
+  transpile(src, filename, babelConfig, tsCompilerOptions) {
+    const babel = require('babel-core');
+    const tsc = require('typescript');
+    const gulpTsc = require('gulp-typescript');
+
+    const transformWithBabel = content =>
+      babel.transform(content, Object.assign({}, babelConfig, {
+        filename,
+        retainLines: true
+      })).code;
+
+    if (filename.indexOf('node_modules') !== -1) {
+      // skip node_modules
+      return src;
+    } else if (/\.tsx?$/.test(filename)) {
+      // use gulp-typescript to convert the settings for tsc
+      const tsProject = gulpTsc.createProject(Object.assign({}, tsCompilerOptions, {
+        inlineSourceMap: true
+      }));
+
+      return transformWithBabel(tsc.transpile(src, tsProject.options));
+    } else if (!babel.util.canCompile(filename)) {
       // You might use a webpack loader in your project
       // that allows you to load custom files (e.g. css, less, scss).
       // Although it is working with webpack but jest
@@ -16,13 +34,6 @@ module.exports = {
       return `module.exports = ${JSON.stringify(src)}`;
     }
 
-    if (filename.indexOf('node_modules') === -1) {
-      return babel.transform(src, Object.assign({}, babelConfig, {
-        filename,
-        retainLines: true
-      })).code;
-    }
-
-    return src;
+    return transformWithBabel(src);
   }
 };

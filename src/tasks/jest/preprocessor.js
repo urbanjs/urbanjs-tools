@@ -7,8 +7,11 @@ module.exports = {
   process(src, filename) {
     const presets = [require.resolve('babel-preset-jest')].concat(globals.babel.presets);
 
-    return preprocessor.processWithBabel(src, filename, Object.assign({}, globals.babel, {
-      presets
-    }));
+    return preprocessor.transpile(
+      src,
+      filename,
+      Object.assign({}, globals.babel, { presets }),
+      globals.typescript
+    );
   }
 };

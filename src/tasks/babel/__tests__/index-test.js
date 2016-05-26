@@ -63,4 +63,14 @@ describe('Babel task', () => {
 
     testLoggerLib(require.requireActual(`./${projectName}/dist/index.js`));
   });
+
+  pit('should be able to handle typescript source', async() => {
+    const projectName = 'typescript-source';
+    await runCommand(['gulp babel', { cwd: join(__dirname, projectName) }]);
+
+    const mapFileExists = await exists(join(__dirname, `${projectName}/dist/index.js.map`));
+    expect(mapFileExists).toBe(true);
+
+    testLoggerLib(require.requireActual(`./${projectName}/dist/index.js`));
+  });
 });

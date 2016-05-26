@@ -62,4 +62,13 @@ describe('JSDoc task', () => {
       cwd: join(__dirname, 'default-configuration')
     }])
   );
+
+  pit('should be able to handle typescript source', async() => {
+    const projectName = 'typescript-source';
+    await runCommand(['gulp jsdoc', { cwd: join(__dirname, projectName) }]);
+
+    const documentationExists = await exists(join(
+      __dirname, projectName, 'help/module-main.html'));
+    expect(documentationExists).toBe(true);
+  });
 });

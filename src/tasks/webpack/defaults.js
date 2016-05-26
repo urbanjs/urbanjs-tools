@@ -1,5 +1,6 @@
 'use strict';
 
+const helper = require('./helper-config');
 const path = require('path');
 const processCwd = process.cwd();
 const webpack = require('webpack');
@@ -30,6 +31,10 @@ module.exports = {
     new webpack.optimize.OccurenceOrderPlugin()
   ],
 
+  resolve: {
+    extensions: ['', '.js', '.ts', '.tsx']
+  },
+
   resolveLoader: {
     modulesDirectories: [// used loaders might have dependencies installed only in urbanjs
       path.join(processCwd, 'node_modules/urbanjs-tools/node_modules'),
@@ -43,6 +48,14 @@ module.exports = {
 
   module: {
     loaders: [
+      {
+        test: /[^.min]\.tsx?$/, // minified files are ignored
+        exclude: /(node_modules|bower_components|vendor|dist)/,
+        loader: helper.getTSLoader(
+          require('../../utils/global-typescript'),
+          require('../../utils/global-babel')
+        )
+      },
       {
         test: /[^.min]\.js$/, // minified files are ignored
         exclude: /(node_modules|bower_components|vendor|dist)/,

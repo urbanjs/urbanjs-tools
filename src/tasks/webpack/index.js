@@ -1,6 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
+const helper = require('./helper-config');
 const fs = require('../../utils/helper-fs');
 const npmInstall = require('../npm-install');
 const pkg = require('../../../package.json');
@@ -8,12 +9,22 @@ const configHelper = require('../../utils/helper-config.js');
 
 function buildConfig(parameters, globals) {
   const defaults = require('./defaults');
-  const babelLoader = defaults.module.loaders[0];
+  const tsLoader = defaults.module.loaders[0];
+  const babelLoader = defaults.module.loaders[1];
 
   if (globals.babel) {
     babelLoader.query = globals.babel;
   } else {
-    globals.babel = babelLoader.query; // eslint-disable-line no-param-reassign
+    globals.babel = babelLoader.query; // eslint-disable-line
+  }
+
+  if (globals.typescript) {
+    tsLoader.loader = helper.getTSLoader(globals.typescript, globals.babel);
+  } else {
+    // should come from defaults to be in sync
+    // but we would need string parse (.loader)
+    // see helper-config.js
+    globals.typescript = require('../../utils/global-typescript'); // eslint-disable-line
   }
 
   return configHelper.mergeParameters(defaults, parameters);
@@ -35,12 +46,14 @@ function logStats(stats) {
 module.exports = {
 
   dependencies: _.pick(pkg.devDependencies, [
+    'awesome-typescript-loader',
     'babel-loader',
     'babel-plugin-transform-runtime',
     'babel-preset-es2015',
     'babel-preset-react',
     'babel-preset-stage-0',
     'json-loader',
+    'typescript',
     'webpack'
   ]),
 

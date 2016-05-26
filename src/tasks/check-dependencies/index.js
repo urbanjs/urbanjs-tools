@@ -16,7 +16,15 @@ function buildConfig(parameters, globals) {
   if (globals.sourceFiles) {
     defaults.files = globals.sourceFiles;
   } else {
-    globals.sourceFiles = defaults.files; // eslint-disable-line no-param-reassign
+    globals.sourceFiles = defaults.files; // eslint-disable-line
+  }
+
+  if (!globals.babel) {
+    globals.babel = require('../../utils/global-babel'); // eslint-disable-line
+  }
+
+  if (!globals.typescript) {
+    globals.typescript = require('../../utils/global-typescript'); // eslint-disable-line
   }
 
   return configHelper.mergeParameters(defaults, parameters);
@@ -143,8 +151,11 @@ function checkMissingPackages(packageFile, files) {
 module.exports = {
 
   dependencies: _.pick(pkg.devDependencies, [
+    'babel-core',
     'babylon',
-    'depcheck'
+    'depcheck',
+    'gulp-typescript',
+    'typescript'
   ]),
 
   /**

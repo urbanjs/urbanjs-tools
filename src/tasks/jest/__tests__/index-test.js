@@ -7,7 +7,10 @@ describe('Jest task', () => {
   extendJasmineTimeout(jasmine, beforeEach, afterEach);
 
   pit('should be able to run the tests successfully', () =>
-    runCommand(['gulp jest', { cwd: join(__dirname, 'valid-project') }])
+    runCommand(['gulp jest', {
+      cwd: join(__dirname, 'valid-project'),
+      expectToContain: '1 test passed'
+    }])
   );
 
   pit('should fail if tests fail', () =>
@@ -27,6 +30,16 @@ describe('Jest task', () => {
   );
 
   pit('should use default configuration without specific parameters', () =>
-    runCommand(['gulp jest', { cwd: join(__dirname, 'default-configuration') }])
+    runCommand(['gulp jest', {
+      cwd: join(__dirname, 'default-configuration'),
+      expectToContain: '1 test passed'
+    }])
+  );
+
+  pit('should be able to handle typescript source', () =>
+    runCommand(['gulp jest', {
+      cwd: join(__dirname, 'typescript-source'),
+      expectToContain: '1 test passed'
+    }])
   );
 });

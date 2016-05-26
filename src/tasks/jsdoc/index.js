@@ -11,7 +11,11 @@ function buildConfig(parameters, globals) {
   const defaults = require('./defaults');
 
   if (!globals.babel) {
-    globals.babel = require('../../utils/global-babel'); // eslint-disable-line no-param-reassign
+    globals.babel = require('../../utils/global-babel'); // eslint-disable-line
+  }
+
+  if (!globals.typescript) {
+    globals.typescript = require('../../utils/global-typescript'); // eslint-disable-line
   }
 
   return configHelper.mergeParameters(defaults, parameters);
@@ -37,7 +41,9 @@ module.exports = {
     'babel-preset-es2015',
     'babel-preset-react',
     'babel-preset-stage-0',
-    'jsdoc'
+    'gulp-typescript',
+    'jsdoc',
+    'typescript'
   ]),
 
   /**

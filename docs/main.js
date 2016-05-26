@@ -17,9 +17,11 @@
  * @typedef {Object} GlobalConfiguration
  * @memberof module:main
  * @property {Object} babel Common babel configuration, used by:
- *                          babel, jest, jsdoc, webpack
+ *                          babel, jest, jsdoc, webpack, check-dependencies
+ * @property {Object} typescript Common typescript compiler configuration, used by:
+ *                          babel, jest, jsdoc, check-dependencies
  * @property {string|string[]} sourceFiles Common source files, used by:
- *                                         babel, eslint, jscs, check-dependencies
+ *                                         eslint, jscs, check-dependencies, check-file-names
  * @property {boolean} allowLinking Whether to allow linking globally installed packages, used by:
  *                                  npm-install
  */

@@ -24,6 +24,7 @@ function buildConfig(parameters, globals) {
 module.exports = {
 
   dependencies: _.pick(pkg.devDependencies, [
+    'gulp-if',
     'gulp-jscs',
     'jscs-jsdoc'
   ]),
@@ -57,11 +58,15 @@ module.exports = {
 
     const validate = config => {
       const jscs = require('gulp-jscs');
+      const gulpIf = require('gulp-if');
+
       return gulp.src(config.files)
-        .pipe(jscs({
-          configPath: config.configFile,
-          fix: !!config.fix
-        }))
+        .pipe(gulpIf(
+          file => !/\.tsx?/.test(file.path),
+          jscs({
+            configPath: config.configFile,
+            fix: !!config.fix
+          })))
         .pipe(jscs.reporter())
         .pipe(jscs.reporter('fail'));
     };

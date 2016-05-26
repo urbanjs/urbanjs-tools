@@ -120,6 +120,7 @@ module.exports = {
    * setGlobalConfiguration({
    *   sourceFiles: './lib/**',
    *   babel: { presets: ['es2015'] },
+   *   typescript: require('./tsconfig.json').compilerOptions
    *   allowLinking: true
    * });
    */
@@ -127,7 +128,8 @@ module.exports = {
     const knownGlobals = {
       allowLinking: true,
       babel: true,
-      sourceFiles: true
+      sourceFiles: true,
+      typescript: true
     };
 
     const unknownGlobals = Object.keys(configuration)

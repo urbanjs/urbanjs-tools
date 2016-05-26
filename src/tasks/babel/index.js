@@ -15,10 +15,8 @@ function buildConfig(parameters, globals) {
     globals.babel = defaults.babel; // eslint-disable-line no-param-reassign
   }
 
-  if (globals.sourceFiles) {
-    defaults.files = globals.sourceFiles;
-  } else {
-    globals.sourceFiles = defaults.files; // eslint-disable-line no-param-reassign
+  if (!globals.typescript) {
+    globals.typescript = require('../../utils/global-typescript'); // eslint-disable-line
   }
 
   return configHelper.mergeParameters(defaults, parameters);
@@ -35,7 +33,10 @@ module.exports = {
     'babel-preset-react',
     'babel-preset-stage-0',
     'gulp-babel',
-    'gulp-sourcemaps'
+    'gulp-if',
+    'gulp-sourcemaps',
+    'gulp-typescript',
+    'typescript'
   ]),
 
   /**
@@ -79,13 +80,26 @@ module.exports = {
       const config = buildConfig(parameters, globals);
       const sourcemaps = require('gulp-sourcemaps');
       const babel = require('gulp-babel');
+      const ts = require('typescript');
+      const gulpTs = require('gulp-typescript');
+      const gulpIf = require('gulp-if');
 
       let stream = gulp.src(config.files);
       if (config.sourcemap) {
         stream = stream.pipe(sourcemaps.init(config.sourcemap));
       }
 
+      stream = stream.pipe(gulpIf(
+        file => /\.tsx?$/.test(file.path),
+        gulpTs(Object.assign({}, globals.typescript, {
+          typescript: ts,
+          allowJs: true,
+          inlineSourceMap: true
+        })))
+      );
+
       stream = stream.pipe(babel(config.babel));
+
       if (config.sourcemap) {
         stream = stream.pipe(sourcemaps.write('.', config.sourcemap));
       }
