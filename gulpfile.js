@@ -14,7 +14,7 @@ tools.setGlobalConfiguration({
     '!**/dist/**',
     '!**/help/**',
     '!**/coverage/**',
-    '!**/__tests__/**/*-invalid.js'
+    '!**/__tests__/**/*-invalid.+(js|jsx)'
   )
 });
 

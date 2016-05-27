@@ -36,4 +36,12 @@ describe('JSCS task', () => {
       ['gulp jscs']
     ], { cwd: projectPath });
   });
+
+  pit('should allow to configre file extensions', () =>
+    runCommand(['gulp jscs', {
+      cwd: join(__dirname, 'file-extensions'),
+      expectToFail: true,
+      expectToContain: 'Illegal space before opening round brace at'
+    }])
+  );
 });

@@ -1,9 +1,6 @@
 {
   "preset": "airbnb",
   "esnext": true,
-  "fileExtensions": [
-    ".js"
-  ],
   "plugins": [
     "jscs-jsdoc"
   ],

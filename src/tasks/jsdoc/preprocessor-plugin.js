@@ -10,7 +10,7 @@ exports.handlers = {
       event.source,
       event.filename,
       globals.babel,
-      global.typescript
+      globals.typescript
     );
 
     event.source = src;// eslint-disable-line no-param-reassign

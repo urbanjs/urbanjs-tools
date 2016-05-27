@@ -36,4 +36,12 @@ describe('ESLint task', () => {
       ['gulp eslint']
     ], { cwd: projectPath });
   });
+
+  pit('should allow to configre file extensions', () =>
+    runCommand(['gulp eslint', {
+      cwd: join(__dirname, 'file-extensions'),
+      expectToFail: true,
+      expectToContain: 'space-before-function-paren'
+    }])
+  );
 });

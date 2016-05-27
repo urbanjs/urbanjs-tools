@@ -1,2 +1,1 @@
-export function valid() {
-}
+export function valid() {}

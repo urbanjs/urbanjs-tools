@@ -14,6 +14,10 @@ function isValidConfig(obj) {
 
 module.exports = {
 
+  getFileExtensionRegExp(extensions) {
+    return new RegExp(`(${extensions.map(extension => extension.replace('.', '\\.')).join('|')})$`);
+  },
+
   /**
    * Merges given configuration with defaults.
    *  - falsy value will be ignored
@@ -25,7 +29,7 @@ module.exports = {
    * @returns {Object|Array}
    * @private
    */
-  mergeParameters: function mergeParameters(defaults, configuration) {
+  mergeParameters(defaults, configuration) {
     if (!isObject(defaults)) {
       throw new Error(`Invalid arguments: defaults must be an object ${JSON.stringify(defaults)}`);
     }

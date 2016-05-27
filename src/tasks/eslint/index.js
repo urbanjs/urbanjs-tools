@@ -48,6 +48,7 @@ module.exports = {
    *   'eslint',
    *   {
     *     configFile: require('path').join(__dirname + '.eslintrc'),
+    *     extensions: ['.js'],
     *     files: require('path').join(__dirname, 'src/*.js')
     *   }
    * );
@@ -63,9 +64,10 @@ module.exports = {
     const validate = config => {
       const gulpIf = require('gulp-if');
       const eslint = require('gulp-eslint');
+
       return gulp.src(config.files)
         .pipe(gulpIf(
-          file => !/\.tsx?$/.test(file.path),
+          file => configHelper.getFileExtensionRegExp(config.extensions).test(file.path),
           eslint(_.omit(config, 'files'))
         ))
         .pipe(eslint.format())

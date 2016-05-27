@@ -44,6 +44,7 @@ module.exports = {
    *   'jscs',
    *   {
    *     configFile: require('path').join(__dirname + '.jscsrc'),
+   *     extensions: ['.js'],
    *     files: require('path').join(__dirname, 'src/*.js')
    *   }
    * );
@@ -62,7 +63,7 @@ module.exports = {
 
       return gulp.src(config.files)
         .pipe(gulpIf(
-          file => !/\.tsx?/.test(file.path),
+          file => configHelper.getFileExtensionRegExp(config.extensions).test(file.path),
           jscs({
             configPath: config.configFile,
             fix: !!config.fix
