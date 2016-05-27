@@ -37,6 +37,12 @@ module.exports = {
           alias: 'force',
           type: 'boolean',
           description: 'Remove the specified folder if exists'
+        },
+        t: {
+          alias: 'type',
+          type: 'string',
+          choices: ['js', 'javascript', 'ts', 'typescript'],
+          description: 'The type of the sourcecode'
         }
       })
       .usage('Usage: urbanjs generate -n clean-project -f');
@@ -44,10 +50,12 @@ module.exports = {
     let force;
     let projectName;
     let folderPath;
+    let isTsProject;
 
     return yargsHelper.parseArgs(yargs, args)
       .then(argv => {
         force = argv.force;
+        isTsProject = argv.type === 'ts' || argv.type === 'typescript';
         projectName = argv.name;
         folderPath = path.join(process.cwd(), projectName);
 
@@ -78,7 +86,7 @@ module.exports = {
           main: 'dist/index.js',
           scripts: pkg.scripts,
           dependencies: {
-            // based on the defaults, webpack uses babel-plugin-transform-runtime
+            // based on the defaults, babel uses babel-plugin-transform-runtime
             // so we need babel-runtime as a production dependency in our project
             'babel-runtime': pkg.devDependencies['babel-runtime']
           },
@@ -100,7 +108,7 @@ module.exports = {
           ),
 
           fs.writeFile(
-            path.join(folderPath, 'src/index.js'),
+            path.join(folderPath, `src/index.${isTsProject ? 'ts' : 'js'}`),
             '// let\'s get started...\n'
           ),
 
@@ -121,7 +129,7 @@ module.exports = {
           fs.readFile(path.join(__dirname, '__skeleton__/gitignore'))
             .then(content => fs.writeFile(path.join(folderPath, '.gitignore'), content)),
 
-          fs.readFile(path.join(__dirname, '__skeleton__/gulpfile'))
+          fs.readFile(path.join(__dirname, `__skeleton__/gulpfile-${isTsProject ? 'ts' : 'js'}`))
             .then(content => fs.writeFile(path.join(folderPath, 'gulpfile.js'), content)),
 
           fs.readFile(path.join(__dirname, '../../docs/__fixtures__/static/main.css'))

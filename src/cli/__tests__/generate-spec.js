@@ -20,7 +20,7 @@ describe('CLI - generate command', () => {
     mockFs.exists.mockClear();
     mockFs.exists.mockReturnValue(Promise.resolve(false));
     mockFs.readFile.mockClear();
-    mockFs.readFile.mockReturnValue(Promise.resolve());
+    mockFs.readFile.mockReturnValue(Promise.resolve(''));
     mockFs.writeFile.mockClear();
   });
 
@@ -140,7 +140,7 @@ describe('CLI - generate command', () => {
     });
   });
 
-  pit('fills the generates files with the correct content', () => {
+  pit('fills the generated files with the correct content', () => {
     const projectName = 'asd';
     const folderPath = path.join(process.cwd(), projectName);
 
@@ -180,7 +180,7 @@ describe('CLI - generate command', () => {
         [path.join(__dirname, '../../../.gitattributes')],
         [path.join(__dirname, '../__skeleton__/npmignore')],
         [path.join(__dirname, '../__skeleton__/gitignore')],
-        [path.join(__dirname, '../__skeleton__/gulpfile')],
+        [path.join(__dirname, '../__skeleton__/gulpfile-js')],
         [path.join(__dirname, '../../../docs/__fixtures__/static/main.css')],
         [path.join(__dirname, '../../../docs/__fixtures__/layout.html')]
       ]);
@@ -201,6 +201,18 @@ describe('CLI - generate command', () => {
         [path.join(folderPath, 'docs/__fixtures__/static/main.css'), 'docsCss'],
         [path.join(folderPath, 'docs/__fixtures__/layout.html'), 'docsLayout']
       ]);
+    });
+  });
+
+  pit('allows to generate typescript project', () => {
+    const projectName = 'asd';
+    const folderPath = path.join(process.cwd(), projectName);
+
+    return generate.run(['-n', projectName, '-f', '-t', 'typescript'], mockYargs).then(() => {
+      expect(mockFs.readFile.mock.calls[4])
+        .toEqual([path.join(__dirname, '../__skeleton__/gulpfile-ts')]);
+      expect(mockFs.writeFile.mock.calls[2][0])
+        .toEqual(path.join(folderPath, 'src/index.ts'));
     });
   });
 });

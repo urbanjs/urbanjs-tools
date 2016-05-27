@@ -1,6 +1,8 @@
 'use strict';
 
 module.exports = {
+
+  // TODO: cache
   transpile(src, filename, babelConfig, tsCompilerOptions) {
     const babel = require('babel-core');
     const tsc = require('typescript');

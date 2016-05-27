@@ -10,11 +10,7 @@ tools.initialize(gulp, {
 
   checkFileNames: true,
 
-  eslint: true,
-
   jest: true,
-
-  jscs: true,
 
   jsdoc: true,
 
@@ -22,9 +18,7 @@ tools.initialize(gulp, {
 
   retire: true,
 
-  tslint: false,
-
-  webpack: false
+  tslint: true
 });
 
 gulp.task('default', () => {
