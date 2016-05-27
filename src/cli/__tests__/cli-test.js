@@ -52,17 +52,35 @@ describe('urbanjs cli', () => {
       ['npm install', { cwd: projectFolderPath, allowToFail: true }],
 
       // test each gulp task
+      // prune after each to test the dependency installation individually
       ['gulp check-dependencies', { cwd: projectFolderPath }],
-      ['gulp check-file-names', { cwd: projectFolderPath }],
-      ['gulp eslint', { cwd: projectFolderPath }],
-      ['gulp jest', { cwd: projectFolderPath }],
-      ['gulp jscs', { cwd: projectFolderPath }],
-      ['gulp jsdoc', { cwd: projectFolderPath }],
-      ['gulp nsp', { cwd: projectFolderPath, allowToFail: true }],
-      ['gulp retire', { cwd: projectFolderPath, allowToFail: true }],
-      ['gulp babel', { cwd: projectFolderPath }],
+      ['npm prune', { cwd: projectFolderPath }],
 
-      // test the result
+      ['gulp check-file-names', { cwd: projectFolderPath }],
+      ['npm prune', { cwd: projectFolderPath }],
+
+      ['gulp eslint', { cwd: projectFolderPath }],
+      ['npm prune', { cwd: projectFolderPath }],
+
+      ['gulp jest', { cwd: projectFolderPath }],
+      ['npm prune', { cwd: projectFolderPath }],
+
+      ['gulp jscs', { cwd: projectFolderPath }],
+      ['npm prune', { cwd: projectFolderPath }],
+
+      ['gulp jsdoc', { cwd: projectFolderPath }],
+      ['npm prune', { cwd: projectFolderPath }],
+
+      ['gulp nsp', { cwd: projectFolderPath, allowToFail: true }],
+      ['npm prune', { cwd: projectFolderPath }],
+
+      ['gulp retire', { cwd: projectFolderPath, allowToFail: true }],
+      ['npm prune', { cwd: projectFolderPath }],
+
+      ['gulp babel', { cwd: projectFolderPath }],
+      ['npm prune', { cwd: projectFolderPath }],
+
+      // test the result only with the prod dependencies
       ['node dist', { cwd: projectFolderPath }]
     ])
   );
