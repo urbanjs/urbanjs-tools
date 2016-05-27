@@ -71,6 +71,9 @@ describe('Babel task', () => {
     const mapFileExists = await exists(join(__dirname, `${projectName}/dist/index.js.map`));
     expect(mapFileExists).toBe(true);
 
+    const declarationFileExists = await exists(join(__dirname, `${projectName}/dist/index.d.ts`));
+    expect(declarationFileExists).toBe(true);
+
     testLoggerLib(require.requireActual(`./${projectName}/dist/index.js`));
   });
 });

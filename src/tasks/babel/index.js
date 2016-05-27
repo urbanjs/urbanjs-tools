@@ -36,6 +36,7 @@ module.exports = {
     'gulp-if',
     'gulp-sourcemaps',
     'gulp-typescript',
+    'event-stream',
     'typescript'
   ]),
 
@@ -83,20 +84,27 @@ module.exports = {
       const ts = require('typescript');
       const gulpTs = require('gulp-typescript');
       const gulpIf = require('gulp-if');
+      const mergeStream = require('event-stream').merge;
 
       let stream = gulp.src(config.files);
       if (config.sourcemap) {
         stream = stream.pipe(sourcemaps.init(config.sourcemap));
       }
 
+      const gulpTsPipe = gulpTs(Object.assign({}, globals.typescript, {
+        typescript: ts,
+        inlineSourceMap: true
+      }));
+
       stream = stream.pipe(gulpIf(
         file => /\.tsx?$/.test(file.path),
-        gulpTs(Object.assign({}, globals.typescript, {
-          typescript: ts,
-          allowJs: true,
-          inlineSourceMap: true
-        })))
-      );
+        gulpTsPipe
+      ));
+
+      let dtsPipe;
+      if (gulpTsPipe.dts) {
+        dtsPipe = gulpTsPipe.dts.pipe(gulp.dest(config.outputPath));
+      }
 
       stream = stream.pipe(babel(config.babel));
 
@@ -105,7 +113,9 @@ module.exports = {
       }
 
       stream = stream.pipe(gulp.dest(config.outputPath));
-      return stream;
+      return dtsPipe
+        ? mergeStream(stream, dtsPipe)
+        : stream;
     });
 
     const watchTaskName = `${taskName}:watch`;

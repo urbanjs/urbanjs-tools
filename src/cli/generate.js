@@ -95,6 +95,9 @@ module.exports = {
           }
         };
         packageJSON.devDependencies[pkg.name] = `^${pkg.version}`;
+        if (isTsProject) {
+          packageJSON.typings = 'dist/index.d.ts';
+        }
 
         return Promise.all([
           fs.writeFile(

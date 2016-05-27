@@ -213,6 +213,8 @@ describe('CLI - generate command', () => {
         .toEqual([path.join(__dirname, '../__skeleton__/gulpfile-ts')]);
       expect(mockFs.writeFile.mock.calls[2][0])
         .toEqual(path.join(folderPath, 'src/index.ts'));
+      expect(JSON.parse(mockFs.writeFile.mock.calls[1][1]).typings)
+        .toEqual('dist/index.d.ts');
     });
   });
 });

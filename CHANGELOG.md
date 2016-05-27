@@ -1,14 +1,15 @@
 # Changelog
 
 ## Unreleased
-- Typescript support
-    - The tasks support typescript source from now on
-    - Introduce ```tslint``` task
-    - Introduce ```typescript``` option in the ```generate``` command
 - Introduce ```babel``` task
     - Use ```babel``` and ```babel:watch``` tasks to build your project
 - Use ```babel-runtime``` instead of ```babel-polyfill```
     https://medium.com/@jcse/clearing-up-the-babel-6-ecosystem-c7678a314bf3#.tu57xznwrŁ
+- Typescript support
+    - The tasks support typescript source from now on
+    - Introduce ```tslint``` task
+    - Introduce ```typescript``` option in the ```generate``` command
+    - ```babel``` & ```webpack``` task generates declaration files as well
 - Fix ```check-dependencies``` task
     - Handle ```files``` parameters with ```gulp``` to be consistent with the other tasks
 - Update dependencies

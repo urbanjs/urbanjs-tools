@@ -1,15 +1,19 @@
-interface LogMethod {
-  (message:string):void;
+/**
+ * Logger
+ */
+
+export interface ILogMethod {
+  (message: string): void;
 }
 
 export class Logger {
-  method:LogMethod;
+  private method: ILogMethod;
 
-  constructor(logMethod:LogMethod) {
+  constructor(logMethod: ILogMethod) {
     this.method = logMethod;
   }
 
-  log(...args:string[]) {
+  public log(...args: string[]) {
     args.forEach(this.method);
   }
 }

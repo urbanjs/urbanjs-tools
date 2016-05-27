@@ -1,3 +1,3 @@
-export async function asdify(b:number):string {
+export async function asdify(b: number): string {
   return `asd${b}`;
 }

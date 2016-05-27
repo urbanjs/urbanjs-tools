@@ -3,5 +3,7 @@
 module.exports = {
   target: 'es6',
   module: 'es6',
-  moduleResolution: 'node'
+  moduleResolution: 'node',
+  declaration: true,
+  noExternalResolve: true
 };

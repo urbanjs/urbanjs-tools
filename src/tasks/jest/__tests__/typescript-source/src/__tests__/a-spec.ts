@@ -1,5 +1,3 @@
-'use strict';
-
 import {asdify} from '../a';
 
 jest.unmock('../a');
