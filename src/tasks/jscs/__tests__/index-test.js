@@ -37,7 +37,7 @@ describe('JSCS task', () => {
     ], { cwd: projectPath });
   });
 
-  pit('should allow to configre file extensions', () =>
+  pit('should allow to configure file extensions', () =>
     runCommand(['gulp jscs', {
       cwd: join(__dirname, 'file-extensions'),
       expectToFail: true,

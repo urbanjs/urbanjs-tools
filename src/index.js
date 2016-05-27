@@ -70,6 +70,7 @@ module.exports = {
       ['npmInstall', 'npm-install'],
       ['nsp'],
       ['retire'],
+      ['tslint'],
       ['webpack']
     ].forEach(def => {
       const taskId = def[0];
@@ -95,7 +96,8 @@ module.exports = {
       'jscs',
       'eslint',
       'nsp',
-      'retire'
+      'retire',
+      'tslint'
     ]));
 
     gulp.task('pre-commit', ['analyse', 'test']);

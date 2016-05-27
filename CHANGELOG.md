@@ -3,6 +3,7 @@
 ## Unreleased
 - Typescript support
     - The tasks support typescript source from now on
+    - Introduce ```tslint``` task
 - Introduce ```babel``` task
     - Use ```babel``` and ```babel:watch``` tasks to build your project
 - Use ```babel-runtime``` instead of ```babel-polyfill```

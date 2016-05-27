@@ -27,6 +27,7 @@ tools.initialize(gulp, {
   jsdoc: false,
   nsp: true,
   retire: true,
+  tslint: false,
   webpack: false
 });
 ```

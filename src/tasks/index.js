@@ -10,6 +10,7 @@ const jsdoc = require('./jsdoc');
 const npmInstall = require('./npm-install');
 const nsp = require('./nsp');
 const retire = require('./retire');
+const tslint = require('./tslint');
 const webpack = require('./webpack');
 
 /**
@@ -28,6 +29,7 @@ const webpack = require('./webpack');
  * @property {module:tasks/npmInstall} npmInstall Dependency installer
  * @property {module:tasks/nsp} nsp Vulnerability checker
  * @property {module:tasks/retire} retire Vulnerability checker
+ * @property {module:tasks/tslint} tslint TS linter
  * @property {module:tasks/webpack} webpack Bundler
  */
 module.exports = {
@@ -41,5 +43,6 @@ module.exports = {
   npmInstall,
   nsp,
   retire,
+  tslint,
   webpack
 };

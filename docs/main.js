@@ -10,6 +10,7 @@
  * @property {module:tasks/jest.Parameters} [jest] Parameters of the jest task
  * @property {module:tasks/npmInstall.Parameters} [npmInstall] Parameters of the npmInstall task
  * @property {module:tasks/retire.Parameters} [retire] Parameters of the retire task
+ * @property {module:tasks/tslint.Parameters} [tslint] Parameters of the tslint task
  * @property {module:tasks/webpack.Parameters} [webpack] Parameters of the webpack task
  */
 
