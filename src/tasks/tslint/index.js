@@ -72,9 +72,12 @@ module.exports = {
           file => configHelper.getFileExtensionRegExp(config.extensions).test(file.path),
           tslint(tslintConfig)
         ))
-        .pipe(tslint.report('verbose', {
-          summarizeFailureOutput: true
-        }));
+        .pipe(gulpIf(
+          file => configHelper.getFileExtensionRegExp(config.extensions).test(file.path),
+          tslint.report('verbose', {
+            summarizeFailureOutput: true
+          })
+        ));
     };
 
     gulp.task(

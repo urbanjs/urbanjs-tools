@@ -17,9 +17,10 @@ module.exports = {
    *  -n or --name  - Required, sets the project & the folder name
    *                  Name can be an absolute path as well
    *  -f or --force - Removes the folder with the given name before the generation
+   *  -t or --type  - Defines the type of the sourcefiles, e.g -t typescript
    *  -h or --help  - Shows the manual
    *
-   * run(['-n', 'your-awesome-project', '-f']);
+   * run(['-n', 'your-awesome-project', '-f', '-t', 'javascript']);
    *
    * @param {string[]} args Array of the arguments
    * @param {Object} [yargs] Yargs instance to use

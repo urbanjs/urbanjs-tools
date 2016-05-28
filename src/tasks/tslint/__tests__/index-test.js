@@ -16,7 +16,7 @@ describe('TSlint task', () => {
     runCommand(['gulp tslint', {
       cwd: join(__dirname, 'global-configuration'),
       expectToFail: true,
-      expectToContain: 'missing-jsdoc'
+      expectToContain: 'no-console'
     }])
   );
 
@@ -24,7 +24,7 @@ describe('TSlint task', () => {
     runCommand(['gulp tslint', {
       cwd: join(__dirname, 'default-configuration'),
       expectToFail: true,
-      expectToContain: 'missing-jsdoc'
+      expectToContain: 'no-console'
     }])
   );
 
@@ -32,7 +32,13 @@ describe('TSlint task', () => {
     runCommand(['gulp tslint', {
       cwd: join(__dirname, 'file-extensions'),
       expectToFail: true,
-      expectToContain: 'missing-jsdoc'
+      expectToContain: 'no-console'
+    }])
+  );
+
+  pit('should be able to handle mixed sources', () =>
+    runCommand(['gulp tslint', {
+      cwd: join(__dirname, 'mixed-sources')
     }])
   );
 });
