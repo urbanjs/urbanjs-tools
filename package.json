@@ -67,6 +67,7 @@
     "gulp-if": "2.0.0",
     "gulp-jscs": "3.0.2",
     "gulp-sourcemaps": "2.0.0-alpha",
+    "gulp-spawn-mocha": "2.2.2",
     "gulp-tslint": "5.0.0",
     "gulp-typescript": "2.13.4",
     "jest-cli": "12.0.2",

@@ -38,7 +38,8 @@ tools.initialize(gulp, {
     collectCoverage: false,
     testPathIgnorePatterns: [
       '/node_modules/',
-      '/jest/__tests__/.+/'
+      '/jest/__tests__/.+/',
+      '/mocha/__tests__/.+/'
     ]
   },
 

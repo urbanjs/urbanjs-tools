@@ -5,6 +5,7 @@
     "browser": true,
     "jasmine": true,
     "jest": true,
+    "mocha": true,
     "node": true
   },
   "rules": {

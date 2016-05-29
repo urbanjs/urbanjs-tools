@@ -16,6 +16,8 @@ tools.initialize(gulp, {
 
   nsp: true,
 
+  mocha: false,
+
   retire: true,
 
   tslint: true

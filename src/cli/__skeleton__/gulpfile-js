@@ -18,6 +18,8 @@ tools.initialize(gulp, {
 
   jsdoc: true,
 
+  mocha: false,
+
   nsp: true,
 
   retire: true

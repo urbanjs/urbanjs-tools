@@ -8,5 +8,7 @@ module.exports = {
   ],
   plugins: [
     require.resolve('babel-plugin-transform-runtime')
-  ]
+  ],
+  babelrc: false,
+  ast: false
 };

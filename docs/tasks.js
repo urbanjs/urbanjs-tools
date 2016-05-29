@@ -90,6 +90,14 @@
 
 /**
  * @typedef {Object|function} Parameters
+ * @memberof module:tasks/mocha
+ * @see https://www.npmjs.com/package/gulp-mocha#api
+ *
+ * @property {string|string[]} files Paths to the test files
+ */
+
+/**
+ * @typedef {Object|function} Parameters
  * @memberof module:tasks/npmInstall
  *
  * @property {boolean} link Whether to allow linking globally installed, suitable packages.

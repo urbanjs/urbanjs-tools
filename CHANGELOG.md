@@ -10,6 +10,9 @@
     - Introduce ```tslint``` task
     - Introduce ```typescript``` option in the ```generate``` command
     - ```babel``` & ```webpack``` tasks generate declaration files as well
+- Introduce ```mocha``` & ```mocha:watch``` tasks
+    - Supports both `js` & `ts` by default
+    - The test folder for mocha is `src/test` by default
 - Introduce ```test:watch``` & ```dist:watch``` tasks
 - Fix ```check-dependencies``` task
     - Handle ```files``` parameters with ```gulp``` to be consistent with the other tasks

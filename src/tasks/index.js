@@ -7,6 +7,7 @@ const eslint = require('./eslint');
 const jest = require('./jest');
 const jscs = require('./jscs');
 const jsdoc = require('./jsdoc');
+const mocha = require('./mocha');
 const npmInstall = require('./npm-install');
 const nsp = require('./nsp');
 const retire = require('./retire');
@@ -26,6 +27,7 @@ const webpack = require('./webpack');
  * @property {module:tasks/jest} jest Unit tester
  * @property {module:tasks/jscs} jscs Code style checker
  * @property {module:tasks/jsdoc} jsdoc API documentation generator
+ * @property {module:tasks/mocha} mocha E2E tester
  * @property {module:tasks/npmInstall} npmInstall Dependency installer
  * @property {module:tasks/nsp} nsp Vulnerability checker
  * @property {module:tasks/retire} retire Vulnerability checker
@@ -40,6 +42,7 @@ module.exports = {
   jest,
   jscs,
   jsdoc,
+  mocha,
   npmInstall,
   nsp,
   retire,

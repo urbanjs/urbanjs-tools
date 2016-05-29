@@ -67,6 +67,7 @@ module.exports = {
       ['jest'],
       ['jscs'],
       ['jsdoc'],
+      ['mocha'],
       ['npmInstall', 'npm-install'],
       ['nsp'],
       ['retire'],
@@ -90,8 +91,8 @@ module.exports = {
 
     gulp.task('doc', filter(['jsdoc']));
 
-    gulp.task('test', filter(['jest']));
-    gulp.task('test:watch', filter(['jest:watch']));
+    gulp.task('test', filter(['jest', 'mocha']));
+    gulp.task('test:watch', filter(['jest:watch', 'mocha:watch']));
 
     gulp.task('analyse', filter([
       'check-dependencies',
@@ -102,6 +103,8 @@ module.exports = {
       'retire',
       'tslint'
     ]));
+
+    gulp.task('analyze', ['analyse']);
 
     gulp.task('pre-commit', ['analyse', 'test']);
 
