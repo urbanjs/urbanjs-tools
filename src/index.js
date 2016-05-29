@@ -82,13 +82,16 @@ module.exports = {
       }
     });
 
-    const filter = val => val.filter(task => existingTasks.hasOwnProperty(task));
+    const filter = val => val.filter(task =>
+      existingTasks.hasOwnProperty(task.replace(/:.+$/, '')));
 
     gulp.task('dist', filter(['webpack', 'babel']));
+    gulp.task('dist:watch', filter(['webpack:watch', 'babel:watch']));
 
     gulp.task('doc', filter(['jsdoc']));
 
     gulp.task('test', filter(['jest']));
+    gulp.task('test:watch', filter(['jest:watch']));
 
     gulp.task('analyse', filter([
       'check-dependencies',

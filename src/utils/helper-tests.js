@@ -58,7 +58,7 @@ export function extendJasmineTimeout(jasmine, setCb, restoreCb, timeout) {
   const jasmineDefaultTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
 
   setCb(() => {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = timeout || 300000; // eslint-disable-line
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = timeout || 600000; // eslint-disable-line
   });
 
   restoreCb(() => {

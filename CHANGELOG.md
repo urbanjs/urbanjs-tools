@@ -9,7 +9,8 @@
     - The tasks support typescript source from now on
     - Introduce ```tslint``` task
     - Introduce ```typescript``` option in the ```generate``` command
-    - ```babel``` & ```webpack``` task generates declaration files as well
+    - ```babel``` & ```webpack``` tasks generate declaration files as well
+- Introduce ```test:watch``` & ```dist:watch``` tasks
 - Fix ```check-dependencies``` task
     - Handle ```files``` parameters with ```gulp``` to be consistent with the other tasks
 - Update dependencies
