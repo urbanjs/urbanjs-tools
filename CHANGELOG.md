@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.8.0 (2016-05-31)
 - Introduce ```babel``` task
     - Use ```babel``` and ```babel:watch``` tasks to build your project
 - Use ```babel-runtime``` instead of ```babel-polyfill```
