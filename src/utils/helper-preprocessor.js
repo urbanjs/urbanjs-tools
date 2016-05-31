@@ -20,6 +20,7 @@ module.exports = {
     } else if (/\.tsx?$/.test(filename)) {
       // use gulp-typescript to convert the settings for tsc
       const tsProject = gulpTsc.createProject(Object.assign({}, tsCompilerOptions, {
+        typescript: tsc,
         inlineSourceMap: true,
         declaration: false
       }));
