@@ -27,7 +27,8 @@ module.exports = {
     'gulp-tslint',
     'gulp-if',
     'tslint',
-    'tslint-microsoft-contrib'
+    'tslint-microsoft-contrib',
+    'typescript'
   ]),
 
   /**
