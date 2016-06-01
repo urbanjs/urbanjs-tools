@@ -1,10 +1,12 @@
 'use strict';
 
 const _ = require('lodash');
-const configHelper = require('../../utils/helper-config.js');
+const configHelper = require('../../utils/helper-config');
 const npmInstall = require('../npm-install');
 const path = require('path');
 const pkg = require('../../../package.json');
+const streamHelper = require('../../utils/helper-stream');
+const dependencyStream = require('../../utils/helper-dependencies');
 
 function buildConfig(parameters, globals) {
   const defaults = require('./defaults');
@@ -23,13 +25,17 @@ function buildConfig(parameters, globals) {
  */
 module.exports = {
 
-  dependencies: _.pick(pkg.devDependencies, [
-    'gulp-tslint',
-    'gulp-if',
-    'tslint',
-    'tslint-microsoft-contrib',
-    'typescript'
-  ]),
+  dependencies: _.pick(
+    pkg.devDependencies,
+    [
+      'gulp-tslint',
+      'tslint',
+      'tslint-microsoft-contrib',
+      'typescript'
+    ].concat(
+      dependencyStream.streamHelper
+    )
+  ),
 
   /**
    * @function
@@ -60,7 +66,6 @@ module.exports = {
     }, globals);
 
     const validate = config => {
-      const gulpIf = require('gulp-if');
       const tslint = require('gulp-tslint');
 
       const tslintConfig = {
@@ -68,13 +73,14 @@ module.exports = {
         configuration: config.configFile
       };
 
+      const extensionRegex = configHelper.getFileExtensionRegExp(config.extensions);
       return gulp.src(config.files)
-        .pipe(gulpIf(
-          file => configHelper.getFileExtensionRegExp(config.extensions).test(file.path),
+        .pipe(streamHelper.streamIf(
+          file => extensionRegex.test(file.path),
           tslint(tslintConfig)
         ))
-        .pipe(gulpIf(
-          file => configHelper.getFileExtensionRegExp(config.extensions).test(file.path),
+        .pipe(streamHelper.streamIf(
+          file => extensionRegex.test(file.path),
           tslint.report('verbose', {
             summarizeFailureOutput: true
           })

@@ -4,7 +4,9 @@ const _ = require('lodash');
 const npmInstall = require('../npm-install');
 const path = require('path');
 const pkg = require('../../../package.json');
-const configHelper = require('../../utils/helper-config.js');
+const configHelper = require('../../utils/helper-config');
+const streamHelper = require('../../utils/helper-stream');
+const dependencyHelper = require('../../utils/helper-dependencies');
 
 function buildConfig(parameters, globals) {
   const defaults = require('./defaults');
@@ -23,11 +25,15 @@ function buildConfig(parameters, globals) {
  */
 module.exports = {
 
-  dependencies: _.pick(pkg.devDependencies, [
-    'gulp-if',
-    'gulp-jscs',
-    'jscs-jsdoc'
-  ]),
+  dependencies: _.pick(
+    pkg.devDependencies,
+    [
+      'gulp-jscs',
+      'jscs-jsdoc'
+    ].concat(
+      dependencyHelper.streamHelper
+    )
+  ),
 
   /**
    * @function
@@ -59,10 +65,9 @@ module.exports = {
 
     const validate = config => {
       const jscs = require('gulp-jscs');
-      const gulpIf = require('gulp-if');
 
       return gulp.src(config.files)
-        .pipe(gulpIf(
+        .pipe(streamHelper.streamIf(
           file => configHelper.getFileExtensionRegExp(config.extensions).test(file.path),
           jscs({
             configPath: config.configFile,

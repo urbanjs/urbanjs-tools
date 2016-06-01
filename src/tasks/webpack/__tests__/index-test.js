@@ -16,6 +16,9 @@ describe('Webpack task', () => {
       expectToContain: 'Successful compiling'
     }]);
 
+    const mapFileExists = await exists(join(__dirname, `${projectName}/dist/index.js.map`));
+    expect(mapFileExists).toBe(true);
+
     testLoggerLib(require.requireActual(`./${projectName}/dist/index.js`));
   });
 
@@ -74,6 +77,27 @@ describe('Webpack task', () => {
     const mapFileExists = await exists(join(__dirname, `${projectName}/dist/index.js.map`));
     expect(mapFileExists).toBe(true);
 
+    const declarationExists = await exists(join(__dirname, `${projectName}/dist/src/index.d.ts`));
+    expect(declarationExists).toBe(true);
+
     testLoggerLib(require.requireActual(`./${projectName}/dist/index.js`));
+  });
+
+  pit('should emit the output even if compiler throws errors', async() => {
+    const projectName = 'typescript-error';
+    await runCommand(['gulp webpack', {
+      cwd: join(__dirname, projectName),
+      expectToFail: true,
+      expectToContain: 'Type \'number\' is not assignable to type \'string\''
+    }]);
+
+    const sourceExists = await exists(join(__dirname, `${projectName}/dist/index.js`));
+    expect(sourceExists).toBe(true);
+
+    const mapFileExists = await exists(join(__dirname, `${projectName}/dist/index.js.map`));
+    expect(mapFileExists).toBe(true);
+
+    const declarationExists = await exists(join(__dirname, `${projectName}/dist/src/index.d.ts`));
+    expect(declarationExists).toBe(true);
   });
 });

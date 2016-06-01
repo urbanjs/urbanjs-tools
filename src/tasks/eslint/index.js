@@ -4,7 +4,9 @@ const _ = require('lodash');
 const npmInstall = require('../npm-install');
 const path = require('path');
 const pkg = require('../../../package.json');
-const configHelper = require('../../utils/helper-config.js');
+const configHelper = require('../../utils/helper-config');
+const streamHelper = require('../../utils/helper-stream');
+const dependencyHelper = require('../../utils/helper-dependencies');
 
 function buildConfig(parameters, globals) {
   const defaults = require('./defaults');
@@ -23,15 +25,18 @@ function buildConfig(parameters, globals) {
  */
 module.exports = {
 
-  dependencies: _.pick(pkg.devDependencies, [
-    'babel-eslint',
-    'eslint-config-airbnb',
-    'eslint-plugin-import',
-    'eslint-plugin-jsx-a11y',
-    'eslint-plugin-react',
-    'gulp-eslint',
-    'gulp-if'
-  ]),
+  dependencies: _.pick(pkg.devDependencies,
+    [
+      'babel-eslint',
+      'eslint-config-airbnb',
+      'eslint-plugin-import',
+      'eslint-plugin-jsx-a11y',
+      'eslint-plugin-react',
+      'gulp-eslint'
+    ].concat(
+      dependencyHelper.streamHelper
+    )
+  ),
 
   /**
    * @function
@@ -62,11 +67,10 @@ module.exports = {
     }, globals);
 
     const validate = config => {
-      const gulpIf = require('gulp-if');
       const eslint = require('gulp-eslint');
 
       return gulp.src(config.files)
-        .pipe(gulpIf(
+        .pipe(streamHelper.streamIf(
           file => configHelper.getFileExtensionRegExp(config.extensions).test(file.path),
           eslint(_.omit(config, 'files'))
         ))
@@ -81,7 +85,6 @@ module.exports = {
     );
 
     gulp.task(`${taskName}:fix`, [installDependenciesTaskName], (done) => {
-      const gulpIf = require('gulp-if');
       const filesByFolderPath = {};
       const config = buildConfig(parameters, globals);
 
@@ -100,7 +103,7 @@ module.exports = {
                   files: filesByFolderPath[folderPath],
                   fix: true
                 }))
-                  .pipe(gulpIf(
+                  .pipe(streamHelper.streamIf(
                     file => file.eslint && file.eslint.fixed,
                     gulp.dest(folderPath)
                   ))

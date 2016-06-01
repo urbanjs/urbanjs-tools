@@ -8,7 +8,8 @@ const npmInstall = require('../npm-install');
 const path = require('path');
 const pkg = require('../../../package.json');
 const prettyjson = require('prettyjson');
-const configHelper = require('../../utils/helper-config.js');
+const configHelper = require('../../utils/helper-config');
+const dependencyHelper = require('../../utils/helper-dependencies');
 
 function buildConfig(parameters, globals) {
   const defaults = require('./defaults');
@@ -150,13 +151,14 @@ function checkMissingPackages(packageFile, files) {
  */
 module.exports = {
 
-  dependencies: _.pick(pkg.devDependencies, [
-    'babel-core',
-    'babylon',
-    'depcheck',
-    'gulp-typescript',
-    'typescript'
-  ]),
+  dependencies: _.pick(
+    pkg.devDependencies, [
+      'babylon',
+      'depcheck'
+    ].concat(
+      dependencyHelper.transpileHelper
+    )
+  ),
 
   /**
    * @function

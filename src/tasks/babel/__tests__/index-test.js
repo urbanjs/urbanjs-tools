@@ -76,4 +76,19 @@ describe('Babel task', () => {
 
     testLoggerLib(require.requireActual(`./${projectName}/dist/index.js`));
   });
+
+  pit('should emit the output even if compiler throws errors', async() => {
+    const projectName = 'typescript-error';
+
+    await runCommand(['gulp babel', { cwd: join(__dirname, projectName) }]);
+
+    const sourceFileExists = await exists(join(__dirname, `${projectName}/dist/index.js`));
+    expect(sourceFileExists).toBe(true);
+
+    const mapFileExists = await exists(join(__dirname, `${projectName}/dist/index.js.map`));
+    expect(mapFileExists).toBe(true);
+
+    const declarationFileExists = await exists(join(__dirname, `${projectName}/dist/index.d.ts`));
+    expect(declarationFileExists).toBe(true);
+  });
 });

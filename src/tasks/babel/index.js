@@ -4,7 +4,9 @@ const _ = require('lodash');
 const del = require('del');
 const npmInstall = require('../npm-install');
 const pkg = require('../../../package.json');
-const configHelper = require('../../utils/helper-config.js');
+const configHelper = require('../../utils/helper-config');
+const streamHelper = require('../../utils/helper-stream');
+const dependencyHelper = require('../../utils/helper-dependencies');
 
 function buildConfig(parameters, globals) {
   const defaults = require('./defaults');
@@ -27,18 +29,18 @@ function buildConfig(parameters, globals) {
  */
 module.exports = {
 
-  dependencies: _.pick(pkg.devDependencies, [
-    'babel-plugin-transform-runtime',
-    'babel-preset-es2015',
-    'babel-preset-react',
-    'babel-preset-stage-0',
-    'gulp-babel',
-    'gulp-if',
-    'gulp-sourcemaps',
-    'gulp-typescript',
-    'event-stream',
-    'typescript'
-  ]),
+  dependencies: _.pick(
+    pkg.devDependencies,
+    [
+      'gulp-babel',
+      'gulp-sourcemaps',
+      'gulp-typescript',
+      'typescript'
+    ].concat(
+      dependencyHelper.streamHelper,
+      dependencyHelper.babelConfig
+    )
+  ),
 
   /**
    * @function
@@ -83,28 +85,24 @@ module.exports = {
       const babel = require('gulp-babel');
       const ts = require('typescript');
       const gulpTs = require('gulp-typescript');
-      const gulpIf = require('gulp-if');
-      const mergeStream = require('event-stream').merge;
+      const mergeStream = require('merge-stream');
 
       let stream = gulp.src(config.files);
       if (config.sourcemap) {
         stream = stream.pipe(sourcemaps.init(config.sourcemap));
       }
 
-      const gulpTsPipe = gulpTs(Object.assign({}, globals.typescript, {
+      const tsPipe = gulpTs(Object.assign({}, globals.typescript, {
         typescript: ts,
         inlineSourceMap: true
       }));
+      const dtsPipe = tsPipe.dts.pipe(gulp.dest(config.outputPath));
 
-      stream = stream.pipe(gulpIf(
+      stream = stream.pipe(streamHelper.streamIf(
         file => /\.tsx?$/.test(file.path),
-        gulpTsPipe
+        tsPipe,
+        { emitError: false }
       ));
-
-      let dtsPipe;
-      if (gulpTsPipe.dts) {
-        dtsPipe = gulpTsPipe.dts.pipe(gulp.dest(config.outputPath));
-      }
 
       stream = stream.pipe(babel(config.babel));
 
@@ -113,9 +111,7 @@ module.exports = {
       }
 
       stream = stream.pipe(gulp.dest(config.outputPath));
-      return dtsPipe
-        ? mergeStream(stream, dtsPipe)
-        : stream;
+      return mergeStream(stream, dtsPipe);
     });
 
     const watchTaskName = `${taskName}:watch`;

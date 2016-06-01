@@ -1,9 +1,11 @@
 'use strict';
 
+const _ = require('lodash');
 const fs = require('../utils/helper-fs');
 const path = require('path');
 const pkg = require('../../package.json');
 const yargsHelper = require('../utils/helper-yargs');
+const dependencyHelper = require('../utils/helper-dependencies');
 
 /**
  * @module cli/generate
@@ -86,11 +88,7 @@ module.exports = {
           private: true,
           main: 'dist/index.js',
           scripts: pkg.scripts,
-          dependencies: {
-            // based on the defaults, babel uses babel-plugin-transform-runtime
-            // so we need babel-runtime as a production dependency in our project
-            'babel-runtime': pkg.devDependencies['babel-runtime']
-          },
+          dependencies: _.pick(pkg.devDependencies, dependencyHelper.runtime),
           devDependencies: {
             gulp: pkg.devDependencies.gulp
           }

@@ -3,7 +3,7 @@
 const _ = require('lodash');
 const npmInstall = require('../npm-install');
 const pkg = require('../../../package.json');
-const configHelper = require('../../utils/helper-config.js');
+const configHelper = require('../../utils/helper-config');
 
 function buildConfig(parameters, globals) {
   const defaults = require('./defaults');
@@ -24,7 +24,7 @@ module.exports = {
 
   dependencies: _.pick(pkg.devDependencies, [
     'gulp-check-file-naming-convention',
-    'event-stream'
+    'merge-stream'
   ]),
 
   /**
@@ -53,7 +53,7 @@ module.exports = {
 
     gulp.task(taskName, [installDependenciesTaskName], () => {// eslint-disable-line
       const checkFileNamingConvention = require('gulp-check-file-naming-convention');
-      const mergeStream = require('event-stream').merge;
+      const mergeStream = require('merge-stream');
       const config = buildConfig(parameters, globals);
       const caseNames = Object.keys(config);
 

@@ -5,7 +5,8 @@ const fs = require('../../utils/helper-fs');
 const npmInstall = require('../npm-install');
 const pkg = require('../../../package.json');
 const shell = require('gulp-shell');
-const configHelper = require('../../utils/helper-config.js');
+const configHelper = require('../../utils/helper-config');
+const dependencyHelper = require('../../utils/helper-dependencies');
 
 function buildConfig(parameters, globals) {
   const defaults = require('./defaults');
@@ -35,16 +36,15 @@ function getJSDocParameters(configFilePath) {
  */
 module.exports = {
 
-  dependencies: _.pick(pkg.devDependencies, [
-    'babel-core',
-    'babel-plugin-transform-runtime',
-    'babel-preset-es2015',
-    'babel-preset-react',
-    'babel-preset-stage-0',
-    'gulp-typescript',
-    'jsdoc',
-    'typescript'
-  ]),
+  dependencies: _.pick(
+    pkg.devDependencies,
+    [
+      'jsdoc'
+    ].concat(
+      dependencyHelper.babelConfig,
+      dependencyHelper.transpileHelper
+    )
+  ),
 
   /**
    * @function

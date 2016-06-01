@@ -2,7 +2,7 @@
 
 import config from '../helper-config';
 
-jest.unmock('../helper-config.js');
+jest.unmock('../helper-config');
 
 describe('Config helper', () => {
   it('should return defaults if configuration is falsy or true', () => {

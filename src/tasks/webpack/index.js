@@ -5,7 +5,8 @@ const helper = require('./helper-config');
 const fs = require('../../utils/helper-fs');
 const npmInstall = require('../npm-install');
 const pkg = require('../../../package.json');
-const configHelper = require('../../utils/helper-config.js');
+const configHelper = require('../../utils/helper-config');
+const dependencyHelper = require('../../utils/helper-dependencies');
 
 function buildConfig(parameters, globals) {
   const defaults = require('./defaults');
@@ -45,17 +46,18 @@ function logStats(stats) {
  */
 module.exports = {
 
-  dependencies: _.pick(pkg.devDependencies, [
-    'awesome-typescript-loader',
-    'babel-loader',
-    'babel-plugin-transform-runtime',
-    'babel-preset-es2015',
-    'babel-preset-react',
-    'babel-preset-stage-0',
-    'json-loader',
-    'typescript',
-    'webpack'
-  ]),
+  dependencies: _.pick(
+    pkg.devDependencies,
+    [
+      'awesome-typescript-loader',
+      'babel-loader',
+      'json-loader',
+      'typescript',
+      'webpack'
+    ].concat(
+      dependencyHelper.babelConfig
+    )
+  ),
 
   /**
    * @function

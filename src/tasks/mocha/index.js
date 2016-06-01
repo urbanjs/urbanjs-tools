@@ -3,7 +3,8 @@
 const _ = require('lodash');
 const npmInstall = require('../npm-install');
 const pkg = require('../../../package.json');
-const configHelper = require('../../utils/helper-config.js');
+const configHelper = require('../../utils/helper-config');
+const dependencyHelper = require('../../utils/helper-dependencies');
 
 function buildConfig(parameters, globals) {
   const defaults = require('./defaults');
@@ -24,17 +25,16 @@ function buildConfig(parameters, globals) {
  */
 module.exports = {
 
-  dependencies: _.pick(pkg.devDependencies, [
-    'babel-core',
-    'babel-runtime',
-    'babel-plugin-transform-runtime',
-    'babel-preset-es2015',
-    'babel-preset-react',
-    'babel-preset-stage-0',
-    'gulp-typescript',
-    'typescript',
-    'gulp-spawn-mocha'
-  ]),
+  dependencies: _.pick(
+    pkg.devDependencies,
+    [
+      'gulp-spawn-mocha'
+    ].concat(
+      dependencyHelper.runtime,
+      dependencyHelper.babelConfig,
+      dependencyHelper.transpileHelper
+    )
+  ),
 
   /**
    * @function
