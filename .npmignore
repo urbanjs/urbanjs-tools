@@ -14,3 +14,7 @@ coverage
 # Documentation folder for JSDoc
 docs
 !docs/__fixtures__
+
+# Source folder
+src/**/__tests__
+src/test
