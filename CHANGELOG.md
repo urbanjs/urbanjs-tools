@@ -3,6 +3,7 @@
 ## Unreleased
 - Improve ```.setGlobalConfiguration()``` api
     - Accepts method as configuration, the first parameter is the current global configuration
+- Update dependencies
 
 ## 0.8.2 (2016-05-31)
 - Introduce ```babel``` task
