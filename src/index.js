@@ -5,6 +5,10 @@ const tasks = require('./tasks');
 const cliIndexCommand = require('./cli/index');
 const cliInstallDependenciesCommand = require('./cli/install-dependencies');
 const cliGenerateCommand = require('./cli/generate');
+const configHelper = require('./utils/helper-config');
+const globalBabel = require('./utils/global-babel');
+const globalTypescript = require('./utils/global-typescript');
+const globalSourceFiles = require('./utils/global-source-files');
 
 /**
  * @module main
@@ -133,6 +137,16 @@ module.exports = {
    * });
    */
   setGlobalConfiguration(configuration) {
+    configuration = configHelper.mergeParameters(// eslint-disable-line no-param-reassign
+      Object.assign({
+        allowLinking: true,
+        babel: globalBabel,
+        typescript: globalTypescript,
+        sourceFiles: globalSourceFiles
+      }, globals),
+      configuration
+    );
+
     const knownGlobals = {
       allowLinking: true,
       babel: true,

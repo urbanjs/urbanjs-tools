@@ -8,6 +8,7 @@ import yargs from 'yargs';
 
 jest.unmock('../generate.js');
 jest.unmock('../../utils/helper-yargs.js');
+jest.unmock('../../utils/helper-dependencies.js');
 jest.unmock('yargs');
 
 describe('CLI - generate command', () => {

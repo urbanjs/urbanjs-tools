@@ -2,21 +2,20 @@
 
 const gulp = require('gulp');
 const tools = require('./src');
-const globalSourceFiles = require('./src/utils/global-source-files');
 
 const unmockedModulePathPatterns = [
   'node_modules/.*',
   'utils/helper-tests.js'
 ];
 
-tools.setGlobalConfiguration({
-  sourceFiles: globalSourceFiles.concat(
+tools.setGlobalConfiguration(defaults => ({
+  sourceFiles: defaults.sourceFiles.concat(
     '!**/dist/**',
     '!**/help/**',
     '!**/coverage/**',
     '!**/__tests__/**/*-invalid.+(js|jsx)'
   )
-});
+}));
 
 tools.initialize(gulp, {
   checkDependencies: true,
@@ -47,14 +46,11 @@ tools.initialize(gulp, {
 
   jsdoc: true,
 
+  mocha: true,
+
   nsp: true,
 
   retire: true
-});
-
-tools.tasks.jest.register(gulp, 'test-unit', {
-  unmockedModulePathPatterns,
-  testPathPattern: /.*-spec\.js$/
 });
 
 gulp.task('default', ['pre-release']);

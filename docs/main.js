@@ -16,7 +16,7 @@
  */
 
 /**
- * @typedef {Object} GlobalConfiguration
+ * @typedef {Object|function} GlobalConfiguration
  * @memberof module:main
  * @property {Object} babel Common babel configuration, used by:
  *                          babel, jest, jsdoc, webpack, check-dependencies, mocha
