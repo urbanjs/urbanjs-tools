@@ -40,7 +40,7 @@ describe('urbanjs cli', () => {
     ])
   );
 
-  pit('should be able to run the tasks of the generated project', () =>
+  pit('should be able to run the tasks of the generated project (javascript)', () =>
     runCommands([
 
       // generate project
@@ -84,6 +84,45 @@ describe('urbanjs cli', () => {
       ['node dist', { cwd: projectFolderPath }]
     ])
   );
+
+  pit('should be able to run the tasks of the generated project (typescript)', () =>
+    runCommands([
+
+      // generate project
+      [`node "${urbanjsCliPath}" generate -n ${projectFolderPath} -t ts`],
+
+      // install dependencies, use the current repository as urbanjs-tools
+      ['npm link'],
+      [`npm link ${pkg.name}`, { cwd: projectFolderPath }],
+      ['npm install', { cwd: projectFolderPath, allowToFail: true }],
+
+      ['gulp tslint', { cwd: projectFolderPath }]
+    ])
+  );
+
+  pit('should be able to run the not default tasks (mocha, webpack)', async() => {
+    await runCommand([`node "${urbanjsCliPath}" generate -n ${projectFolderPath}`]);
+    await fs.writeFile(
+      path.join(projectFolderPath, 'gulpfile.js'),
+      await fs.readFile(path.join(__dirname, 'not-default-tasks/gulpfile'))
+    );
+
+    await runCommands([
+      ['npm link'],
+      [`npm link ${pkg.name}`, { cwd: projectFolderPath }],
+      ['npm install', { cwd: projectFolderPath, allowToFail: true }],
+
+      ['gulp mocha', {
+        cwd: projectFolderPath,
+        expectToFail: true,
+        expectToContain: 'cannot resolve path'
+      }],
+      ['npm prune', { cwd: projectFolderPath }],
+
+      ['gulp webpack', { cwd: projectFolderPath }],
+      ['npm prune', { cwd: projectFolderPath }]
+    ]);
+  });
 
   pit('should be able to install dependencies locally', async() => {
     await runCommands([
