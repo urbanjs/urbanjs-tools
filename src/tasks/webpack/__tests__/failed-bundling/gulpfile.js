@@ -15,7 +15,9 @@ task.register(gulp, 'webpack', {
     loaders: [{
       test: /\.js$/,
       loader: require.resolve('babel-loader'),
-      query: {}
+      query: {
+        babelrc: false
+      }
     }]
   }
 });

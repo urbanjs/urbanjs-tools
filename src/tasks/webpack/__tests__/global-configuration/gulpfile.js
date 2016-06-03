@@ -5,5 +5,7 @@ const task = require('../../index');
 
 task.dependencies = {};
 task.register(gulp, 'webpack', true, {
-  babel: {}
+  babel: {
+    babelrc: false
+  }
 });

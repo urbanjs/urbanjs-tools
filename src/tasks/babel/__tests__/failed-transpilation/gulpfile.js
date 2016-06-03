@@ -6,7 +6,9 @@ const task = require('../../index');
 
 task.dependencies = {};
 task.register(gulp, 'babel', {
-  babel: {},
+  babel: {
+    babelrc: false
+  },
   files: path.join(__dirname, 'index.js'),
   outputPath: path.join(__dirname, 'dist'),
   sourcemap: false

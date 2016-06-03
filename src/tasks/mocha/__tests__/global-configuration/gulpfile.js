@@ -6,6 +6,6 @@ const task = require('../../index');
 task.dependencies = {};
 task.register(gulp, 'mocha', true, {
   babel: {
-    presets: []
+    babelrc: false
   }
 });

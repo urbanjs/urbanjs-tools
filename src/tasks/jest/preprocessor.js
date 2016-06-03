@@ -5,7 +5,7 @@ const preprocessor = require('../../utils/helper-preprocessor');
 
 module.exports = {
   process(src, filename) {
-    const presets = [require.resolve('babel-preset-jest')].concat(globals.babel.presets);
+    const presets = [require.resolve('babel-preset-jest')].concat(globals.babel.presets || []);
 
     return preprocessor.transpile(
       src,

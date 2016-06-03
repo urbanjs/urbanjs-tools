@@ -1,14 +1,8 @@
 'use strict';
 
+const path = require('path');
+
 module.exports = {
-  presets: [
-    require.resolve('babel-preset-es2015'),
-    require.resolve('babel-preset-stage-0'),
-    require.resolve('babel-preset-react')
-  ],
-  plugins: [
-    require.resolve('babel-plugin-transform-runtime')
-  ],
   babelrc: false,
-  ast: false
+  extends: path.join(__dirname, '../../.babelrc')
 };

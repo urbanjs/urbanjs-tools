@@ -14,10 +14,7 @@ task.register(gulp, 'webpack', {
   module: {
     loaders: [{
       test: /\.js$/,
-      loader: require.resolve('babel-loader'),
-      query: {
-        presets: [require.resolve('babel-preset-es2015')]
-      }
+      loader: require.resolve('babel-loader')
     }]
   }
 });
