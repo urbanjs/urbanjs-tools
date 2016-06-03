@@ -26,8 +26,12 @@ function runJest(parameters, globals, watch) {
   const jest = require('jest-cli');
   const config = buildConfig(parameters, globals);
 
-  // coverage path cannot be set in jest currently
-  const coverageDirectoryPath = path.join(process.cwd(), 'coverage');
+  let coverageDirectoryPath = path.join(process.cwd(), 'coverage');
+  if (config.coverageDirectory) {
+    coverageDirectoryPath = path.isAbsolute(config.coverageDirectory)
+      ? config.coverageDirectory
+      : path.join(process.cwd(), config.coverageDirectory);
+  }
 
   // add globals to the environment variables of the process
   // as jest will create multiple processes to run tests in parallel

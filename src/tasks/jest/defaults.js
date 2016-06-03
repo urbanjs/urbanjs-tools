@@ -9,5 +9,6 @@ module.exports = {
   scriptPreprocessor: path.join(__dirname, 'preprocessor.js'),
   collectCoverage: true,
   moduleFileExtensions: ['js', 'json', 'ts', 'tsx'],
-  testFileExtensions: ['js', 'json', 'ts', 'tsx']
+  testPathPattern: /__tests__/,
+  testRegex: '-(test|spec)\.(js|ts|tsx)$'// eslint-disable-line no-useless-escape
 };

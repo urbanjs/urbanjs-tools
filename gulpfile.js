@@ -32,7 +32,6 @@ tools.initialize(gulp, {
   },
 
   jest: {
-    testPathPattern: /.*-(test|spec)\.js$/,
     unmockedModulePathPatterns,
     collectCoverage: false,
     testPathIgnorePatterns: [
