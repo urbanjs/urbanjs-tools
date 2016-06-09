@@ -156,6 +156,7 @@ module.exports = {
       'babylon',
       'depcheck'
     ].concat(
+      dependencyHelper.babelConfig,
       dependencyHelper.transpileHelper
     )
   ),

@@ -8,14 +8,16 @@ const unmockedModulePathPatterns = [
   'utils/helper-tests.js'
 ];
 
-tools.setGlobalConfiguration(defaults => ({
-  sourceFiles: defaults.sourceFiles.concat(
+tools.setGlobalConfiguration(defaults => {
+  defaults.sourceFiles = defaults.sourceFiles.concat(// eslint-disable-line no-param-reassign
     '!**/dist/**',
     '!**/help/**',
     '!**/coverage/**',
     '!**/__tests__/**/*-invalid.+(js|jsx)'
-  )
-}));
+  );
+
+  return defaults;
+});
 
 tools.initialize(gulp, {
   checkDependencies: true,
