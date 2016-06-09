@@ -3,6 +3,10 @@
 ## Unreleased
 - Improve ```.setGlobalConfiguration()``` api
     - Accepts method as configuration, the first parameter is the current global configuration
+    - Babel config moved to `.babelrc`
+        It can be extended just like the other configs e.g. `.eslintrc`
+- Improve ```mocha```
+    - Sourcemap support added
 - Update dependencies
 
 ## 0.8.2 (2016-05-31)

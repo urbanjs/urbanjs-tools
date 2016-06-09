@@ -28,7 +28,8 @@ module.exports = {
   dependencies: _.pick(
     pkg.devDependencies,
     [
-      'gulp-spawn-mocha'
+      'gulp-spawn-mocha',
+      'source-map-support'
     ].concat(
       dependencyHelper.runtime,
       dependencyHelper.babelConfig,

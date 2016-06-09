@@ -78,6 +78,7 @@
     "merge-stream": "1.0.0",
     "nsp": "2.4.0",
     "retire": "1.1.5",
+    "source-map-support": "0.4.0",
     "through2": "2.0.1",
     "tslint": "3.10.2",
     "tslint-microsoft-contrib": "2.0.7",

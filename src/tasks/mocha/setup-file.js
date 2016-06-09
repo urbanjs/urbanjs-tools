@@ -1,9 +1,11 @@
 'use strict';
 
-const fs = require('fs');
 const babel = require('babel-core');
-const preprocessor = require('../../utils/helper-preprocessor');
+const fs = require('fs');
 const globals = require('../../index-globals');
+const preprocessor = require('../../utils/helper-preprocessor');
+
+preprocessor.installSourceMapSupport();
 
 babel.util.canCompile.EXTENSIONS.concat('.ts', 'tsx').forEach(extension => {
   require.extensions[extension] = (module, filename) => {

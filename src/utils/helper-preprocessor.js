@@ -1,18 +1,52 @@
 'use strict';
 
-module.exports = {
+const sourceMaps = {};
+let sourceMapSupportInstalled = false;
 
-  // TODO: cache
+module.exports = {
+  installSourceMapSupport() {
+    if (sourceMapSupportInstalled) {
+      return;
+    }
+
+    const sourceMapSupport = require('source-map-support');
+    sourceMapSupport.install({
+      handleUncaughtExceptions: false,
+      retrieveSourceMap: source => {
+        const map = sourceMaps[source];
+        if (map) {
+          return {
+            url: null,
+            map
+          };
+        }
+
+        return null;
+      }
+    });
+
+    sourceMapSupportInstalled = true;
+  },
+
   transpile(src, filename, babelConfig, tsCompilerOptions) {
     const babel = require('babel-core');
     const tsc = require('typescript');
     const gulpTsc = require('gulp-typescript');
 
-    const transformWithBabel = content =>
-      babel.transform(content, Object.assign({}, babelConfig, {
+    const transformWithBabel = content => {
+      const result = babel.transform(content, Object.assign({}, babelConfig, {
         filename,
-        retainLines: true
-      })).code;
+        ast: false,
+        babelrc: false,
+        retainLines: true,
+        sourceMap: 'both',
+        inputSourceMap: sourceMaps[filename]
+      }));
+
+      sourceMaps[filename] = result.map;
+
+      return result.code;
+    };
 
     if (filename.indexOf('node_modules') !== -1) {
       // skip node_modules
@@ -21,11 +55,21 @@ module.exports = {
       // use gulp-typescript to convert the settings for tsc
       const tsProject = gulpTsc.createProject(Object.assign({}, tsCompilerOptions, {
         typescript: tsc,
-        inlineSourceMap: true,
+        sourceMap: true,
+        inlineSourceMap: false,
         declaration: false
       }));
 
-      return transformWithBabel(tsc.transpile(src, tsProject.options));
+      const result = tsc.transpileModule(src, {
+        compilerOptions: tsProject.options,
+        fileName: filename
+      });
+
+      sourceMaps[filename] = JSON.parse(result.sourceMapText);
+
+      // also use transform with babel to compile to ES5
+      // til ES6 is natively supported by most of the environments
+      return transformWithBabel(result.outputText);
     } else if (!babel.util.canCompile(filename)) {
       // You might use a webpack loader in your project
       // that allows you to load custom files (e.g. css, less, scss).

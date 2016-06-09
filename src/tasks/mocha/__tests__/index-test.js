@@ -42,4 +42,12 @@ describe('Mocha task', () => {
       expectToContain: '1 passing'
     }])
   );
+
+  pit('should retrieve correct error messages (sourceMap)', () =>
+    runCommand(['gulp mocha', {
+      cwd: join(__dirname, 'source-map-support'),
+      expectToFail: true,
+      expectToContain: 'index-test.ts:3:11'
+    }])
+  );
 });
