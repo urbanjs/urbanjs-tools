@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.0.0 (2016-06-17)
 - Improve ```.setGlobalConfiguration()``` api
     - Accepts method as configuration, the first parameter is the current global configuration
     - Babel config moved to `.babelrc`

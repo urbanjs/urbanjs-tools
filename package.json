@@ -1,6 +1,6 @@
 {
   "name": "urbanjs-tools",
-  "version": "0.8.2",
+  "version": "0.0.1",
   "description": "Common dev tools for JS projects",
   "author": "Tamas Magedli <tamas.magedli@gmail.com>",
   "contributors": [
@@ -65,7 +65,6 @@
     "gulp-babel": "6.1.2",
     "gulp-check-file-naming-convention": "0.0.2",
     "gulp-eslint": "2.0.0",
-    "gulp-if": "2.0.1",
     "gulp-jscs": "3.0.2",
     "gulp-sourcemaps": "2.0.0-alpha",
     "gulp-spawn-mocha": "2.2.2",
