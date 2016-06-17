@@ -77,6 +77,7 @@
     "json-loader": "0.5.4",
     "merge-stream": "1.0.0",
     "nsp": "2.4.0",
+    "patch-version": "0.1.1",
     "retire": "1.1.5",
     "source-map-support": "0.4.0",
     "through2": "2.0.1",
