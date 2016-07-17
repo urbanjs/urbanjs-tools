@@ -3,6 +3,13 @@
 ## Unreleased
 - Remove ```jscs``` task in favour of ```eslint```
     http://eslint.org/blog/2016/07/jscs-end-of-life
+- Update dependencies
+    Breaking changes:
+    - awesome-typescript-loader@2.0.2
+    - eslint-plugin-jsx-a11y@2.0.1 (ruleset)
+    - gulp-eslint@3.0.1 (config)
+    - gulp-tslint@6.0.1
+    - jest-cli@13.2.3
 
 ## 1.0.0 (2016-06-17)
 - Improve ```.setGlobalConfiguration()``` api

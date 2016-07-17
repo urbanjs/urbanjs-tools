@@ -15,16 +15,20 @@ function buildConfig(parameters, globals) {
 
   if (globals.babel) {
     babelLoader.query = globals.babel;
+    tsLoader.query.babelOptions = globals.babel;
   } else {
     globals.babel = babelLoader.query; // eslint-disable-line
   }
 
   if (globals.typescript) {
-    tsLoader.loader = helper.getTSLoader(globals.typescript, globals.babel);
+    tsLoader.query = helper.getTSLoader(
+      globals.typescript,
+      globals.babel
+    );
   } else {
     // should come from defaults to be in sync
-    // but we would need string parse (.loader)
-    // see helper-config.js
+    // but tsLoader.query is a mix of compiler & tsloader options
+    // see defaults.js
     globals.typescript = require('../../utils/global-typescript'); // eslint-disable-line
   }
 

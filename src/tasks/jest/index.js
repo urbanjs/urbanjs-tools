@@ -49,6 +49,8 @@ function runJest(parameters, globals, watch) {
             // on the given argv and not in the config
             testPathPattern: config.testPathPattern,
             testPathIgnorePatterns: config.testPathIgnorePatterns,
+            runInBand: config.runInBand,
+            maxWorkers: config.maxWorkers,
 
             watch: watch ? 'all' : undefined
           },

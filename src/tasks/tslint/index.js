@@ -81,9 +81,7 @@ module.exports = {
         ))
         .pipe(streamHelper.streamIf(
           file => extensionRegex.test(file.path),
-          tslint.report('verbose', {
-            summarizeFailureOutput: true
-          })
+          tslint.report({ summarizeFailureOutput: true })
         ));
     };
 

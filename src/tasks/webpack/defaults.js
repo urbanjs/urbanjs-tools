@@ -43,7 +43,10 @@ module.exports = {
   },
 
   externals: [
-    /^[a-z\-0-9].+$/ // global & npm packages are handled as externals
+    (context, request, callback) => {
+      const isSourceFile = path.isAbsolute(request) || /^\..+/.test(request);
+      callback(null, !isSourceFile);
+    }
   ],
 
   module: {
@@ -51,7 +54,8 @@ module.exports = {
       {
         test: /[^.min]\.tsx?$/, // minified files are ignored
         exclude: /(node_modules|bower_components|vendor|dist)/,
-        loader: helper.getTSLoader(
+        loader: require.resolve('awesome-typescript-loader'),
+        query: helper.getTSLoader(
           require('../../utils/global-typescript'),
           require('../../utils/global-babel')
         )

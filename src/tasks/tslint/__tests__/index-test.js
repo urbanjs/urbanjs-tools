@@ -16,7 +16,7 @@ describe('TSlint task', () => {
     runCommand(['gulp tslint', {
       cwd: join(__dirname, 'global-configuration'),
       expectToFail: true,
-      expectToContain: 'no-console'
+      expectToContain: 'function invocation disallowed: console.log'
     }])
   );
 
@@ -24,7 +24,7 @@ describe('TSlint task', () => {
     runCommand(['gulp tslint', {
       cwd: join(__dirname, 'default-configuration'),
       expectToFail: true,
-      expectToContain: 'no-console'
+      expectToContain: 'function invocation disallowed: console.log'
     }])
   );
 
@@ -32,7 +32,7 @@ describe('TSlint task', () => {
     runCommand(['gulp tslint', {
       cwd: join(__dirname, 'file-extensions'),
       expectToFail: true,
-      expectToContain: 'no-console'
+      expectToContain: 'function invocation disallowed: console.log'
     }])
   );
 
