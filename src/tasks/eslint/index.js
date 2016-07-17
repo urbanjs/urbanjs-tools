@@ -8,7 +8,7 @@ const configHelper = require('../../utils/helper-config');
 const streamHelper = require('../../utils/helper-stream');
 const dependencyHelper = require('../../utils/helper-dependencies');
 
-function buildConfig(parameters, globals) {
+function buildConfig(parameters, globals, processOptionPrefix) {
   const defaults = require('./defaults');
 
   if (globals.sourceFiles) {
@@ -17,7 +17,7 @@ function buildConfig(parameters, globals) {
     globals.sourceFiles = defaults.files; // eslint-disable-line no-param-reassign
   }
 
-  return configHelper.mergeParameters(defaults, parameters);
+  return configHelper.mergeParameters(defaults, parameters, processOptionPrefix);
 }
 
 /**
@@ -81,12 +81,12 @@ module.exports = {
     gulp.task(
       taskName,
       [installDependenciesTaskName],
-      () => validate(buildConfig(parameters, globals))
+      () => validate(buildConfig(parameters, globals, taskName))
     );
 
     gulp.task(`${taskName}:fix`, [installDependenciesTaskName], (done) => {
       const filesByFolderPath = {};
-      const config = buildConfig(parameters, globals);
+      const config = buildConfig(parameters, globals, taskName);
 
       gulp.src(config.files)
         .on('error', err => done(err))

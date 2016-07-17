@@ -71,4 +71,12 @@ describe('JSDoc task', () => {
       __dirname, projectName, 'help/module-main.html'));
     expect(documentationExists).toBe(true);
   });
+
+  pit('should support command line options', () =>
+    runCommand(['gulp jsdoc --jsdoc.configFile="jsdoc.json"', {
+      cwd: join(__dirname, 'cli-options'),
+      expectToFail: true,
+      expectToContain: 'Config file need to define the output folder'
+    }])
+  );
 });

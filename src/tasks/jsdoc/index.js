@@ -8,7 +8,7 @@ const shell = require('gulp-shell');
 const configHelper = require('../../utils/helper-config');
 const dependencyHelper = require('../../utils/helper-dependencies');
 
-function buildConfig(parameters, globals) {
+function buildConfig(parameters, globals, processOptionPrefix) {
   const defaults = require('./defaults');
 
   if (!globals.babel) {
@@ -19,7 +19,7 @@ function buildConfig(parameters, globals) {
     globals.typescript = require('../../utils/global-typescript'); // eslint-disable-line
   }
 
-  return configHelper.mergeParameters(defaults, parameters);
+  return configHelper.mergeParameters(defaults, parameters, processOptionPrefix);
 }
 
 function getJSDocParameters(configFilePath) {
@@ -75,7 +75,7 @@ module.exports = {
 
     const cleanUpTaskName = `${taskName}-clean`;
     gulp.task(cleanUpTaskName, [installDependenciesTaskName], (done) => {
-      const config = buildConfig(parameters, globals);
+      const config = buildConfig(parameters, globals, taskName);
       getJSDocParameters(config.configFile)
         .then(jsdocParameters => {
           const outputPath = _.get(jsdocParameters, 'opts.destination');
@@ -90,7 +90,7 @@ module.exports = {
     });
 
     gulp.task(taskName, [installDependenciesTaskName, cleanUpTaskName], done => {
-      const config = buildConfig(parameters, globals);
+      const config = buildConfig(parameters, globals, taskName);
       shell.task([
         `node "${config.packagePath}jsdoc.js" -c "${config.configFile}"`
       ], { quiet: true, env: { urbanJSToolGlobals: JSON.stringify(globals) } })(done);

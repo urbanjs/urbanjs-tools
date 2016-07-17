@@ -50,4 +50,11 @@ describe('Mocha task', () => {
       expectToContain: 'index-test.ts:3:11'
     }])
   );
+
+  pit('should support command line options', () =>
+    runCommand(['gulp mocha --mocha.grep="caseA"', {
+      cwd: join(__dirname, 'cli-options'),
+      expectToContain: '1 passing'
+    }])
+  );
 });

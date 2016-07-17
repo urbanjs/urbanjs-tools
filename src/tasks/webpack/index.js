@@ -8,7 +8,7 @@ const pkg = require('../../../package.json');
 const configHelper = require('../../utils/helper-config');
 const dependencyHelper = require('../../utils/helper-dependencies');
 
-function buildConfig(parameters, globals) {
+function buildConfig(parameters, globals, processOptionPrefix) {
   const defaults = require('./defaults');
   const tsLoader = defaults.module.loaders[0];
   const babelLoader = defaults.module.loaders[1];
@@ -32,7 +32,7 @@ function buildConfig(parameters, globals) {
     globals.typescript = require('../../utils/global-typescript'); // eslint-disable-line
   }
 
-  return configHelper.mergeParameters(defaults, parameters);
+  return configHelper.mergeParameters(defaults, parameters, processOptionPrefix);
 }
 
 function logStats(stats) {
@@ -90,13 +90,13 @@ module.exports = {
     const cleanUpTaskName = `${taskName}-clean`;
     gulp.task(cleanUpTaskName, [installDependenciesTaskName], (done) => {
       Promise.all(
-        [].concat(buildConfig(parameters, globals))
+        [].concat(buildConfig(parameters, globals, taskName))
           .map(webpackConfig => fs.remove(webpackConfig.output.path))
       ).then(() => done()).catch(done);
     });
 
     gulp.task(taskName, [installDependenciesTaskName, cleanUpTaskName], done => {
-      const config = buildConfig(parameters, globals);
+      const config = buildConfig(parameters, globals, taskName);
       const bundler = require('webpack')(config);
 
       bundler.run((err, stats) => {
@@ -107,7 +107,7 @@ module.exports = {
 
     const watchTaskName = `${taskName}:watch`;
     gulp.task(watchTaskName, [installDependenciesTaskName, cleanUpTaskName], () => {
-      const config = buildConfig(parameters, globals);
+      const config = buildConfig(parameters, globals, taskName);
       const bundler = require('webpack')(config);
 
       bundler.watch(200, (err, stats) => {

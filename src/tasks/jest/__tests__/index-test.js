@@ -59,4 +59,11 @@ describe('Jest task', () => {
     const fileExists = await exists(filePath);
     expect(fileExists).toBe(false);
   });
+
+  pit('should support command line options', () =>
+    runCommand(['gulp jest --jest.rootDir="src2"', {
+      cwd: join(__dirname, 'cli-options'),
+      expectToContain: '1 test passed'
+    }])
+  );
 });

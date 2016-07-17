@@ -41,4 +41,12 @@ describe('TSlint task', () => {
       cwd: join(__dirname, 'mixed-sources')
     }])
   );
+
+  pit('should support command line options', () =>
+    runCommand(['gulp tslint --tslint.files="index-invalid.ts"', {
+      cwd: join(__dirname, 'cli-options'),
+      expectToFail: true,
+      expectToContain: 'function invocation disallowed: console.log'
+    }])
+  );
 });

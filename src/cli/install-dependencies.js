@@ -49,7 +49,8 @@ module.exports = {
           description: 'Whether to log additional details during the installation'
         }
       })
-      .usage('Usage: urbanjs install-dependencies -t eslint jsdoc');
+      .usage('Usage: urbanjs install-dependencies -t eslint jsdoc')
+      .strict();
 
     return yargsHelper.parseArgs(yargs, args)
       .then(argv => Promise.all(

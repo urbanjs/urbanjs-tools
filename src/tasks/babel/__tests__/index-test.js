@@ -91,4 +91,17 @@ describe('Babel task', () => {
     const declarationFileExists = await exists(join(__dirname, `${projectName}/dist/index.d.ts`));
     expect(declarationFileExists).toBe(true);
   });
+
+  pit('should support command line options', async() => {
+    const projectName = 'cli-options';
+
+    await runCommand(['gulp babel --babel.files="index2.js"', {
+      cwd: join(__dirname, projectName)
+    }]);
+
+    const mapFileExists = await exists(join(__dirname, `${projectName}/dist/index2.js.map`));
+    expect(mapFileExists).toBe(true);
+
+    testLoggerLib(require.requireActual(`./${projectName}/dist/index2.js`));
+  });
 });

@@ -48,7 +48,8 @@ module.exports = {
           description: 'The type of the sourcecode'
         }
       })
-      .usage('Usage: urbanjs generate -n clean-project -f');
+      .usage('Usage: urbanjs generate -n clean-project -f')
+      .strict();
 
     let force;
     let projectName;

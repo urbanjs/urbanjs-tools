@@ -100,4 +100,17 @@ describe('Webpack task', () => {
     const declarationExists = await exists(join(__dirname, `${projectName}/dist/src/index.d.ts`));
     expect(declarationExists).toBe(true);
   });
+
+  pit('should support command line options', async() => {
+    const projectName = 'cli-options';
+    await runCommand(['gulp webpack --webpack.entry="./index2.js"', {
+      cwd: join(__dirname, projectName),
+      expectToContain: 'Successful compiling'
+    }]);
+
+    const mapFileExists = await exists(join(__dirname, `${projectName}/dist/index.js.map`));
+    expect(mapFileExists).toBe(true);
+
+    testLoggerLib(require.requireActual(`./${projectName}/dist/index.js`));
+  });
 });

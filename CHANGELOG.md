@@ -1,6 +1,8 @@
 # Changelog
 
 ## Unreleased
+- Support command line option in gulp tasks
+    - e.g. gulp mocha --mocha.grep="pattern"
 - Remove ```jscs``` task in favour of ```eslint```
     http://eslint.org/blog/2016/07/jscs-end-of-life
 - Update dependencies

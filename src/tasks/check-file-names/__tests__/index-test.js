@@ -43,4 +43,12 @@ describe('Check file names task', () => {
       expectToContain: 'Invalid file name at'
     }])
   );
+
+  pit('should support command line options', () =>
+    runCommand(['gulp check-file-names --check-file-names.paramCase="**"', {
+      cwd: join(__dirname, 'cli-options'),
+      expectToFail: true,
+      expectToContain: 'Invalid file name at'
+    }])
+  );
 });

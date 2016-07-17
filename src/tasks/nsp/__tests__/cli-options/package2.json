@@ -1,0 +1,7 @@
+{
+  "name": "cli-options",
+  "private": true,
+  "dependencies": {
+    "marked": "0.3.5"
+  }
+}

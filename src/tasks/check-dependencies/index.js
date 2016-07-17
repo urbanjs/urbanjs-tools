@@ -11,7 +11,7 @@ const prettyjson = require('prettyjson');
 const configHelper = require('../../utils/helper-config');
 const dependencyHelper = require('../../utils/helper-dependencies');
 
-function buildConfig(parameters, globals) {
+function buildConfig(parameters, globals, processOptionPrefix) {
   const defaults = require('./defaults');
 
   if (globals.sourceFiles) {
@@ -28,7 +28,7 @@ function buildConfig(parameters, globals) {
     globals.typescript = require('../../utils/global-typescript'); // eslint-disable-line
   }
 
-  return configHelper.mergeParameters(defaults, parameters);
+  return configHelper.mergeParameters(defaults, parameters, processOptionPrefix);
 }
 
 function show(data, title, color) {
@@ -188,7 +188,7 @@ module.exports = {
     }, globals);
 
     gulp.task(taskName, [installDependenciesTaskName], done => {
-      const config = buildConfig(parameters, globals);
+      const config = buildConfig(parameters, globals, taskName);
 
       Promise.all([
         checkOutdatedPackages(config.packageFile),

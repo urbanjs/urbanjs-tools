@@ -144,7 +144,8 @@ module.exports = {
         typescript: globalTypescript,
         sourceFiles: globalSourceFiles
       }, globals),
-      configuration
+      configuration,
+      'global'
     );
 
     const knownGlobals = {

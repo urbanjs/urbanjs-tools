@@ -6,10 +6,10 @@ const pkg = require('../../../package.json');
 const shell = require('gulp-shell');
 const configHelper = require('../../utils/helper-config');
 
-function buildConfig(parameters) {
+function buildConfig(parameters, processOptionPrefix) {
   const defaults = require('./defaults');
 
-  return configHelper.mergeParameters(defaults, parameters);
+  return configHelper.mergeParameters(defaults, parameters, processOptionPrefix);
 }
 
 /**
@@ -46,7 +46,7 @@ module.exports = {
     }, globals);
 
     gulp.task(taskName, [installDependenciesTaskName], done => {
-      const config = buildConfig(parameters);
+      const config = buildConfig(parameters, taskName);
 
       shell.task([
         `node "${config.packagePath}bin/retire" ${config.options || ''}`

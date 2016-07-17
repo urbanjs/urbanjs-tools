@@ -5,7 +5,7 @@ const npmInstall = require('../npm-install');
 const pkg = require('../../../package.json');
 const configHelper = require('../../utils/helper-config');
 
-function buildConfig(parameters, globals) {
+function buildConfig(parameters, globals, processOptionPrefix) {
   const defaults = require('./defaults');
 
   if (globals.sourceFiles) {
@@ -14,7 +14,7 @@ function buildConfig(parameters, globals) {
     globals.sourceFiles = defaults.paramCase; // eslint-disable-line no-param-reassign
   }
 
-  return configHelper.mergeParameters(defaults, parameters);
+  return configHelper.mergeParameters(defaults, parameters, processOptionPrefix);
 }
 
 /**
@@ -54,7 +54,7 @@ module.exports = {
     gulp.task(taskName, [installDependenciesTaskName], () => {// eslint-disable-line
       const checkFileNamingConvention = require('gulp-check-file-naming-convention');
       const mergeStream = require('merge-stream');
-      const config = buildConfig(parameters, globals);
+      const config = buildConfig(parameters, globals, taskName);
       const caseNames = Object.keys(config);
 
       if (caseNames.length) {

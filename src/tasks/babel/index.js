@@ -8,7 +8,7 @@ const configHelper = require('../../utils/helper-config');
 const streamHelper = require('../../utils/helper-stream');
 const dependencyHelper = require('../../utils/helper-dependencies');
 
-function buildConfig(parameters, globals) {
+function buildConfig(parameters, globals, processOptionPrefix) {
   const defaults = require('./defaults');
 
   if (globals.babel) {
@@ -21,7 +21,7 @@ function buildConfig(parameters, globals) {
     globals.typescript = require('../../utils/global-typescript'); // eslint-disable-line
   }
 
-  return configHelper.mergeParameters(defaults, parameters);
+  return configHelper.mergeParameters(defaults, parameters, processOptionPrefix);
 }
 
 /**
@@ -74,13 +74,13 @@ module.exports = {
     const cleanUpTaskName = `${taskName}-clean`;
     gulp.task(cleanUpTaskName, [installDependenciesTaskName], (done) => {
       Promise.all(
-        [].concat(buildConfig(parameters, globals))
+        [].concat(buildConfig(parameters, globals, taskName))
           .map(config => del([config.outputPath], { force: true }))
       ).then(() => done()).catch(e => done(e));
     });
 
     gulp.task(taskName, [installDependenciesTaskName, cleanUpTaskName], () => {
-      const config = buildConfig(parameters, globals);
+      const config = buildConfig(parameters, globals, taskName);
       const sourcemaps = require('gulp-sourcemaps');
       const babel = require('gulp-babel');
       const ts = require('typescript');
@@ -116,7 +116,7 @@ module.exports = {
 
     const watchTaskName = `${taskName}:watch`;
     gulp.task(watchTaskName, [installDependenciesTaskName], done => {
-      const config = buildConfig(parameters, globals);
+      const config = buildConfig(parameters, globals, taskName);
       gulp.watch(config.files, [taskName], done);
     });
   }

@@ -6,7 +6,7 @@ const pkg = require('../../../package.json');
 const configHelper = require('../../utils/helper-config');
 const dependencyHelper = require('../../utils/helper-dependencies');
 
-function buildConfig(parameters, globals) {
+function buildConfig(parameters, globals, processOptionPrefix) {
   const defaults = require('./defaults');
 
   if (!globals.babel) {
@@ -17,7 +17,7 @@ function buildConfig(parameters, globals) {
     globals.typescript = require('../../utils/global-typescript'); // eslint-disable-line
   }
 
-  return configHelper.mergeParameters(defaults, parameters);
+  return configHelper.mergeParameters(defaults, parameters, processOptionPrefix);
 }
 
 /**
@@ -62,7 +62,7 @@ module.exports = {
     }, globals);
 
     gulp.task(taskName, [installDependenciesTaskName], () => {
-      const config = buildConfig(parameters, globals);
+      const config = buildConfig(parameters, globals, taskName);
       const gulpMocha = require('gulp-spawn-mocha');
 
       // add globals to the environment variables of the process
@@ -75,7 +75,7 @@ module.exports = {
 
     const watchTaskName = `${taskName}:watch`;
     gulp.task(watchTaskName, [installDependenciesTaskName], done => {
-      const config = buildConfig(parameters, globals);
+      const config = buildConfig(parameters, globals, taskName);
       gulp.watch(config.files, [taskName], done);
     });
   }

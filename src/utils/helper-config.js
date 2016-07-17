@@ -1,6 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
+const yargsHelper = require('../utils/helper-yargs');
 
 function isObject(obj) {
   return typeof obj === 'object'
@@ -10,6 +11,16 @@ function isObject(obj) {
 
 function isValidConfig(obj) {
   return isObject(obj) || Array.isArray(obj);
+}
+
+function getProcessOptions(prefix) {
+  const yargs = yargsHelper.initYargs();
+
+  try {
+    return yargs.parse(process.argv.slice(2))[prefix] || {};
+  } catch (e) {
+    return {};
+  }
 }
 
 module.exports = {
@@ -26,32 +37,38 @@ module.exports = {
    *  - otherwise the new value will be used
    * @param {Object} defaults
    * @param {*} configuration
+   * @param {string} [processOptionPrefix]
    * @returns {Object|Array}
    * @private
    */
-  mergeParameters(defaults, configuration) {
+  mergeParameters(defaults, configuration, processOptionPrefix) {
     if (!isObject(defaults)) {
       throw new Error(`Invalid arguments: defaults must be an object ${JSON.stringify(defaults)}`);
     }
 
+    let result;
     if (!configuration || configuration === true) {
-      return defaults;
+      result = defaults;
     } else if (Array.isArray(configuration)) {
-      return configuration;
+      result = configuration;
     } else if (isObject(configuration)) {
       // using assign instead of deep merge
       // to be able to override values easily
-      return Object.assign({}, defaults, configuration);
+      result = Object.assign({}, defaults, configuration);
     } else if (typeof configuration === 'function') {
-      const result = configuration(_.cloneDeep(defaults));
+      result = configuration(_.cloneDeep(defaults));
       if (!isValidConfig(result)) {
         throw new Error(`Invalid config: ${JSON.stringify(result)}`);
       }
-
-      return result;
+    } else {
+      throw new Error(`Invalid arguments: invalid config ${JSON.stringify(configuration)}`);
     }
 
-    throw new Error(`Invalid arguments: invalid config ${JSON.stringify(configuration)}`);
+    if (processOptionPrefix && isObject(result)) {
+      result = _.merge(_.cloneDeep(result), getProcessOptions(processOptionPrefix));
+    }
+
+    return result;
   },
 
   notAvailableGulpTask(taskName) {

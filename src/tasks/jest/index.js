@@ -8,7 +8,7 @@ const pkg = require('../../../package.json');
 const configHelper = require('../../utils/helper-config');
 const dependencyHelper = require('../../utils/helper-dependencies');
 
-function buildConfig(parameters, globals) {
+function buildConfig(parameters, globals, processOptionPrefix) {
   const defaults = require('./defaults');
 
   if (!globals.babel) {
@@ -19,12 +19,12 @@ function buildConfig(parameters, globals) {
     globals.typescript = require('../../utils/global-typescript'); // eslint-disable-line
   }
 
-  return configHelper.mergeParameters(defaults, parameters);
+  return configHelper.mergeParameters(defaults, parameters, processOptionPrefix);
 }
 
-function runJest(parameters, globals, watch) {
+function runJest(parameters, globals, watch, processOptionPrefix) {
   const jest = require('jest-cli');
-  const config = buildConfig(parameters, globals);
+  const config = buildConfig(parameters, globals, processOptionPrefix);
 
   let coverageDirectoryPath = path.join(process.cwd(), 'coverage');
   if (config.coverageDirectory) {
@@ -41,19 +41,15 @@ function runJest(parameters, globals, watch) {
   return new Promise((resolve, reject) => {
     fs.remove(coverageDirectoryPath)
       .then(() => {
+        // jest-cli has a bug, it looks for these options
+        // on the given argv and not in the config
+        const argvParameterKeys = ['testPathPattern', 'runInBand', 'maxWorkers'];
+
         jest.runCLI(
-          {
-            config,
-
-            // jest-cli has a bug, it looks for these options
-            // on the given argv and not in the config
-            testPathPattern: config.testPathPattern,
-            testPathIgnorePatterns: config.testPathIgnorePatterns,
-            runInBand: config.runInBand,
-            maxWorkers: config.maxWorkers,
-
+          Object.assign({
+            config: _.omit(config, argvParameterKeys),
             watch: watch ? 'all' : undefined
-          },
+          }, _.pick(config, argvParameterKeys)),
           config.rootDir,
           success => (success ? resolve() : reject(new Error('Error: tests failed.')))
         );
@@ -104,12 +100,12 @@ module.exports = {
     }, globals);
 
     gulp.task(taskName, [installDependenciesTaskName], (done) => {
-      runJest(parameters, globals).then(done, done);
+      runJest(parameters, globals, false, taskName).then(done, done);
     });
 
     const watchTaskName = `${taskName}:watch`;
     gulp.task(watchTaskName, [installDependenciesTaskName], (done) => {
-      runJest(parameters, globals, true).then(done, done);
+      runJest(parameters, globals, true, taskName).then(done, done);
     });
   }
 };

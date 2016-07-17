@@ -29,7 +29,8 @@ module.exports = {
     yargs = yargsHelper.initYargs(yargs) // eslint-disable-line no-param-reassign
       .version(pkg.version)
       .alias('v', 'version')
-      .usage('Usage: urbanjs <command>');
+      .usage('Usage: urbanjs <command>')
+      .strict();
 
     let commandExecution = null;
     [

@@ -72,4 +72,15 @@ describe('Check dependencies task', () => {
       expectToContain: 'You might have unused dependencies:\n - del'
     }])
   );
+
+  pit('should support command line options', async() => {
+    const projectPath = 'cli-options';
+    const sourceFilePath = join(__dirname, projectPath, 'index2.js');
+
+    runCommand([`gulp check-dependencies --check-dependencies.files="${sourceFilePath}"`, {
+      cwd: join(__dirname, 'cli-options'),
+      expectToFail: true,
+      expectToContain: 'Missing dependencies:'
+    }]);
+  });
 });

@@ -44,4 +44,12 @@ describe('ESLint task', () => {
       expectToContain: 'space-before-function-paren'
     }])
   );
+
+  pit('should support command line options', () =>
+    runCommand(['gulp eslint --eslint.files="index-invalid.js"', {
+      cwd: join(__dirname, 'cli-options'),
+      expectToFail: true,
+      expectToContain: 'space-before-function-paren'
+    }])
+  );
 });

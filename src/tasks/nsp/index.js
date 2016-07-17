@@ -2,13 +2,14 @@
 
 const _ = require('lodash');
 const npmInstall = require('../npm-install');
+const path = require('path');
 const pkg = require('../../../package.json');
 const configHelper = require('../../utils/helper-config');
 
-function buildConfig(parameters) {
+function buildConfig(parameters, processOptionPrefix) {
   const defaults = require('./defaults');
 
-  return configHelper.mergeParameters(defaults, parameters);
+  return configHelper.mergeParameters(defaults, parameters, processOptionPrefix);
 }
 
 /**
@@ -48,12 +49,16 @@ module.exports = {
 
     gulp.task(taskName, [installDependenciesTaskName], (done) => {
       const nsp = require('nsp');
-      const config = buildConfig(parameters);
+      const config = buildConfig(parameters, taskName);
       let vulnerabilities = null;
       let i = 0;
 
       [].concat(config.packageFile).forEach(packageFile => {
         i++;
+
+        if (!path.isAbsolute(packageFile)) {
+          packageFile = path.join(process.cwd(), packageFile); //eslint-disable-line
+        }
 
         nsp.check({ package: packageFile }, (err, data) => {
           if (err || (data && data.length)) {

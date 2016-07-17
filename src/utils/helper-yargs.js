@@ -15,8 +15,7 @@ module.exports = {
       .exitProcess(false)
       .showHelpOnFail(false)
       .help('h')
-      .alias('h', 'help')
-      .strict();
+      .alias('h', 'help');
 
     let counter = 0;
     const baseShowHelp = yargs.showHelp;

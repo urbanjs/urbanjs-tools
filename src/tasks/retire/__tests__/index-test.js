@@ -46,4 +46,11 @@ describe('Retire task', () => {
       ['gulp retire']
     ], { cwd: join(__dirname, 'retire-cli-config') })
   );
+
+  pit('should support command line options', () =>
+    runCommands([
+      ['npm install'],
+      ['gulp retire --retire.options="--ignorefile custom-retireignore.txt"']
+    ], { cwd: join(__dirname, 'cli-options') })
+  );
 });

@@ -41,4 +41,12 @@ describe('NSP task', () => {
   pit('should be able to accept array of package files', () =>
     runCommand(['gulp nsp', { cwd: join(__dirname, 'multiple-package-file') }])
   );
+
+  pit('should support command line options', () =>
+    runCommand(['gulp nsp --nsp.packageFile="package2.json"', {
+      cwd: join(__dirname, 'cli-options'),
+      expectToFail: true,
+      expectToContain: 'marked   0.3.5'
+    }])
+  );
 });
