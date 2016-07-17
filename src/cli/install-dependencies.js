@@ -19,7 +19,7 @@ module.exports = {
    *  -v or --verbose - Whether to log additional details during the installation
    *  -h or --help    - Shows the manual
    *
-   * run(['-t', 'jscs eslint jsdoc']);
+   * run(['-t', 'eslint jsdoc']);
    *
    * @param {string[]} args Array of the arguments
    * @param {Object} [yargs] Yargs instance to use
@@ -49,7 +49,7 @@ module.exports = {
           description: 'Whether to log additional details during the installation'
         }
       })
-      .usage('Usage: urbanjs install-dependencies -t jscs eslint jsdoc');
+      .usage('Usage: urbanjs install-dependencies -t eslint jsdoc');
 
     return yargsHelper.parseArgs(yargs, args)
       .then(argv => Promise.all(

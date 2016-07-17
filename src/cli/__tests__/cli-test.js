@@ -65,9 +65,6 @@ describe('urbanjs cli', () => {
       ['gulp jest', { cwd: projectFolderPath }],
       ['npm prune', { cwd: projectFolderPath }],
 
-      ['gulp jscs', { cwd: projectFolderPath }],
-      ['npm prune', { cwd: projectFolderPath }],
-
       ['gulp jsdoc', { cwd: projectFolderPath }],
       ['npm prune', { cwd: projectFolderPath }],
 

@@ -3,7 +3,7 @@
 import installDependencies from '../install-dependencies';
 import mockNpmInstallTask from '../../tasks/npm-install';
 import mockEslintTask from '../../tasks/eslint';
-import mockJscsTask from '../../tasks/jscs';
+import mockRetireTask from '../../tasks/retire';
 import yargs from 'yargs';
 
 jest.unmock('../install-dependencies.js');
@@ -128,10 +128,10 @@ describe('CLI - install dependencies command', () => {
 
   pit('accepts multiple tasks', async() => {
     const mockInstall = mockNpmInstallTask.install.mock;
-    await installDependencies.run(['-t', 'eslint', 'jscs']);
+    await installDependencies.run(['-t', 'eslint', 'retire']);
     expect(mockInstall.calls.length).toBe(2);
     expect(mockInstall.calls[0][0]).toEqual(mockEslintTask.dependencies);
-    expect(mockInstall.calls[1][0]).toEqual(mockJscsTask.dependencies);
+    expect(mockInstall.calls[1][0]).toEqual(mockRetireTask.dependencies);
   });
 
   pit('fails if unknown task is given', async() => {

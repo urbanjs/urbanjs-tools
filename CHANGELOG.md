@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+- Remove ```jscs``` task in favour of ```eslint```
+    http://eslint.org/blog/2016/07/jscs-end-of-life
+
 ## 1.0.0 (2016-06-17)
 - Improve ```.setGlobalConfiguration()``` api
     - Accepts method as configuration, the first parameter is the current global configuration

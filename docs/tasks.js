@@ -59,14 +59,6 @@
 
 /**
  * @typedef {Object|function} Parameters
- * @memberof module:tasks/jscs
- * @property {string|string[]} files Paths of the files to check
- * @property {string[]} extensions File extensions to validate
- * @property {string} configFile The path to the jscs configuration file
- */
-
-/**
- * @typedef {Object|function} Parameters
  * @memberof module:tasks/tslint
  * @property {string|string[]} files Paths of the files to check
  * @property {string[]} extensions File extensions to validate

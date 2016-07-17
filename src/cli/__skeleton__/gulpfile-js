@@ -14,8 +14,6 @@ tools.initialize(gulp, {
 
   jest: true,
 
-  jscs: true,
-
   jsdoc: true,
 
   mocha: false,

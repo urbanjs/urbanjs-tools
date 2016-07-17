@@ -36,7 +36,7 @@ module.exports = {
 
   /**
    * Initializes the given gulp instance with the
-   *  core tasks (babel, check-file-names, eslint, jest, jscs, jsdoc, nsp, webpack) and
+   *  core tasks (babel, check-file-names, eslint, jest, jsdoc, nsp, webpack) and
    *  presets: dist, doc, test, analyze, pre-commit, pre-release
    * @param {external:gulp} gulp The gulp instance to initialize
    * @param {module:main.Configuration} configuration Configuration of the tasks,
@@ -126,7 +126,7 @@ module.exports = {
    * @example
    *
    * // Using the default configurations of tasks though slightly change the behaviour:
-   * //  - validate all files in the /lib folder by check-file-names, eslint, jscs tasks
+   * //  - validate all files in the /lib folder by check-file-names, eslint tasks
    * //  - set babel configuration for jsdoc, jest and webpack tasks
    * //  - enable npm linking from global packages during the dependency installation
    * setGlobalConfiguration({

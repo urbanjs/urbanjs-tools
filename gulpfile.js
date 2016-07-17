@@ -43,8 +43,6 @@ tools.initialize(gulp, {
     ]
   },
 
-  jscs: true,
-
   jsdoc: true,
 
   mocha: true,

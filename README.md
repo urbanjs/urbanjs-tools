@@ -23,7 +23,6 @@ tools.initialize(gulp, {
   checkFileNames: true,
   eslint: true,
   jest: true,
-  jscs: true,
   jsdoc: true,
   mocha: false,
   nsp: true,
@@ -37,14 +36,14 @@ tools.initialize(gulp, {
 
 You can run any of the gulp tasks above (e.g. ```gulp eslint```) or you can use these [presets](https://github.com/urbanjs/tools/wiki/3---Usage#available-presets):
 - `gulp test`: runs tests (```jest```, ```mocha```)
-- `gulp analyse`: analyzes the code base (```check-dependencies```, ```check-file-names```, ```jscs```, ```eslint```, ```nsp```, ```retire```)
+- `gulp analyse`: analyzes the code base (```check-dependencies```, ```check-file-names```, ```eslint```, ```nsp```, ```retire```)
 - `gulp pre-commit`: analyzes the code base and runs tests (```analyse```, ```test```)
 - `gulp doc`: generates the documentation (```jsdoc```)
 - `gulp dist`: runs the configured transpiler/bundler (```babel```, ```webpack```)
 - `gulp pre-release`: analyzes the code base, runs tests, generates documentation, and transpiles/bundles (```pre-commit```, ```doc```, ```dist```)
 
 Additionally you can use these modifiers:
-- `:fix` (`eslint`, `jscs`)
+- `:fix` (`eslint`)
 - `:watch` (`babel`, `webpack`, `mocha`, `jest`)
 
 e.g. `gulp eslint:fix` or `gulp babel:watch`

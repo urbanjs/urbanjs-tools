@@ -52,6 +52,14 @@ module.exports = {
     }
 
     throw new Error(`Invalid arguments: invalid config ${JSON.stringify(configuration)}`);
+  },
+
+  notAvailableGulpTask(taskName) {
+    return done => {
+      console.log(// eslint-disable-line no-console
+        `${taskName} is not available anymore. See changelog for further information.`);
+      done(null);
+    };
   }
 
 };

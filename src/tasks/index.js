@@ -25,7 +25,6 @@ const webpack = require('./webpack');
  * @property {module:tasks/checkFileNames} checkFileNames Validator for checking file names
  * @property {module:tasks/eslint} eslint JS linter
  * @property {module:tasks/jest} jest Unit tester
- * @property {module:tasks/jscs} jscs Code style checker
  * @property {module:tasks/jsdoc} jsdoc API documentation generator
  * @property {module:tasks/mocha} mocha E2E tester
  * @property {module:tasks/npmInstall} npmInstall Dependency installer
