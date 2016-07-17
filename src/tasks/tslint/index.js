@@ -8,7 +8,7 @@ const pkg = require('../../../package.json');
 const streamHelper = require('../../utils/helper-stream');
 const dependencyStream = require('../../utils/helper-dependencies');
 
-function buildConfig(parameters, globals,processOptionPrefix) {
+function buildConfig(parameters, globals, processOptionPrefix) {
   const defaults = require('./defaults');
 
   if (globals.sourceFiles) {
@@ -17,7 +17,7 @@ function buildConfig(parameters, globals,processOptionPrefix) {
     globals.sourceFiles = defaults.files; // eslint-disable-line no-param-reassign
   }
 
-  return configHelper.mergeParameters(defaults, parameters,processOptionPrefix);
+  return configHelper.mergeParameters(defaults, parameters, processOptionPrefix);
 }
 
 /**

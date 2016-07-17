@@ -4,7 +4,9 @@
   "description": "Common dev tools for JS projects",
   "author": "Tamas Magedli <tamas.magedli@gmail.com>",
   "contributors": [
-    "Peter Bakonyi <peter.bakonyi05@gmail.com>"
+    "Peter Bakonyi <peter.bakonyi05@gmail.com>",
+    "Peter Csala <peter.csala@logmein.com>",
+    "György Balassy <gyorgy.balassy@logmein.com>"
   ],
   "main": "./src/index.js",
   "bin": {
@@ -21,11 +23,13 @@
   },
   "license": "MIT",
   "keywords": [
+    "development",
+    "tools",
+    "standard",
     "boilerplate",
     "generate",
     "generator",
     "skeleton",
-    "development",
     "gulp"
   ],
   "repository": {
