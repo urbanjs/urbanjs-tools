@@ -21,6 +21,7 @@ tools.initialize(gulp, {
   babel: true,
   checkDependencies: true,
   checkFileNames: true,
+  conventionalChangelog: true,
   eslint: true,
   jest: true,
   jsdoc: true,
@@ -40,7 +41,8 @@ You can run any of the gulp tasks above (e.g. ```gulp eslint```) or you can use 
 - `gulp pre-commit`: analyzes the code base and runs tests (```analyse```, ```test```)
 - `gulp doc`: generates the documentation (```jsdoc```)
 - `gulp dist`: runs the configured transpiler/bundler (```babel```, ```webpack```)
-- `gulp pre-release`: analyzes the code base, runs tests, generates documentation, and transpiles/bundles (```pre-commit```, ```doc```, ```dist```)
+- `gulp changelog`: generates the documentation (```conventional-changelog```)
+- `gulp pre-release`: analyzes the code base, runs tests, generates documentation, and transpiles/bundles (```pre-commit```, ```doc```, ```dist```, ```changelog```)
 
 Additionally you can use these modifiers:
 - `:fix` (`eslint`)

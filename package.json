@@ -68,6 +68,7 @@
     "gulp": "3.9.1",
     "gulp-babel": "6.1.2",
     "gulp-check-file-naming-convention": "0.0.2",
+    "gulp-conventional-changelog": "1.1.0",
     "gulp-eslint": "3.0.1",
     "gulp-sourcemaps": "2.0.0-alpha",
     "gulp-spawn-mocha": "2.2.2",

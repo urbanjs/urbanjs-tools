@@ -3,6 +3,8 @@
  * @memberof module:main
  * @property {module:tasks/babel.Parameters} [babel] Parameters of the babel task
  * @property {module:tasks/checkFileNames.Parameters} [checkFileNames] Parameters of the checkFileNames task
+ * @property {module:tasks/checkDependencies.Parameters} [checkDependencies] Parameters of the checkDependencies task
+ * @property {module:tasks/conventionalChangelog.Parameters} [conventionalChangelog] Parameters of the conventionalChangelog task
  * @property {module:tasks/jsdoc.Parameters} [jsdoc] Parameters of the jsdoc task
  * @property {module:tasks/nsp.Parameters} [nsp] Parameters of the nsp task
  * @property {module:tasks/eslint.Parameters} [eslint] Parameters of the eslint task

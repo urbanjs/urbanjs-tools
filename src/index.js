@@ -67,6 +67,7 @@ module.exports = {
       ['babel'],
       ['checkDependencies', 'check-dependencies'],
       ['checkFileNames', 'check-file-names'],
+      ['conventionalChangelog', 'conventional-changelog'],
       ['eslint'],
       ['jest'],
       ['jscs'],
@@ -89,6 +90,8 @@ module.exports = {
 
     const filter = val => val.filter(task =>
       existingTasks.hasOwnProperty(task.replace(/:.+$/, '')));
+
+    gulp.task('changelog', filter(['conventional-changelog']));
 
     gulp.task('dist', filter(['webpack', 'babel']));
     gulp.task('dist:watch', filter(['webpack:watch', 'babel:watch']));

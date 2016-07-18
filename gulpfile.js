@@ -27,6 +27,8 @@ tools.initialize(gulp, {
     return defaults;
   },
 
+  conventionalChangelog: true,
+
   eslint: {
     rules: {
       'global-require': 0

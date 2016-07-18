@@ -3,6 +3,7 @@
 const babel = require('./babel');
 const checkDependencies = require('./check-dependencies');
 const checkFileNames = require('./check-file-names');
+const conventionalChangelog = require('./conventional-changelog');
 const eslint = require('./eslint');
 const jest = require('./jest');
 const jscs = require('./jscs');
@@ -23,6 +24,7 @@ const webpack = require('./webpack');
  *                                                              missing, unused, outdated
  *                                                              dependencies
  * @property {module:tasks/checkFileNames} checkFileNames Validator for checking file names
+ * @property {module:tasks/conventionalChangelog} conventionalChangelog Changelog generator
  * @property {module:tasks/eslint} eslint JS linter
  * @property {module:tasks/jest} jest Unit tester
  * @property {module:tasks/jsdoc} jsdoc API documentation generator
@@ -37,6 +39,7 @@ module.exports = {
   babel,
   checkDependencies,
   checkFileNames,
+  conventionalChangelog,
   eslint,
   jest,
   jscs,

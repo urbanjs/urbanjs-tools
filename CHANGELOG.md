@@ -1,6 +1,6 @@
-# Changelog
-
-## Unreleased
+<a name="Unreleased"></a>
+## Unreleased (2016-07-18)
+- Introduce ```conventional-changelog``` task & ```changelog``` preset
 - Support command line option in gulp tasks
     - e.g. gulp mocha --mocha.grep="pattern"
 - Remove ```jscs``` task in favour of ```eslint```
@@ -13,7 +13,9 @@
     - gulp-tslint@6.0.1
     - jest-cli@13.2.3
 
-## 1.0.0 (2016-06-17)
+
+<a name="1.0.0"></a>
+## [1.0.0](https://github.com/urbanjs/tools/compare/0.8.2...1.0.0) (2016-06-17)
 - Improve ```.setGlobalConfiguration()``` api
     - Accepts method as configuration, the first parameter is the current global configuration
     - Babel config moved to `.babelrc`
@@ -22,7 +24,9 @@
     - Sourcemap support added
 - Update dependencies
 
-## 0.8.2 (2016-05-31)
+
+<a name="0.8.2"></a>
+## [0.8.2](https://github.com/urbanjs/tools/compare/0.7.0...0.8.2) (2016-05-31)
 - Introduce ```babel``` task
     - Use ```babel``` and ```babel:watch``` tasks to build your project
 - Use ```babel-runtime``` instead of ```babel-polyfill```
@@ -40,7 +44,9 @@
     - Handle ```files``` parameters with ```gulp``` to be consistent with the other tasks
 - Update dependencies
 
-## 0.7.0 (2016-05-04)
+
+<a name="0.7.0"></a>
+## [0.7.0](https://github.com/urbanjs/tools/compare/0.6.3...0.7.0) (2016-05-04)
 - Improve ```parameter``` functions
     - The given ```defaults``` cannot be modified from the parameter function
 - Improve ```jest:watch``` task - use built in support
@@ -54,15 +60,21 @@
     BREAKING CHANGE:
     - ```executablePath``` is removed, use ```packagePath``` config instead
 
-## 0.6.3 (2016-04-10)
+
+<a name="0.6.3"></a>
+## [0.6.3](https://github.com/urbanjs/tools/compare/0.6.1...0.6.3) (2016-04-10)
 - Update dependencies
 - Support flow syntax in ```check-dependencies``` task
 
-## 0.6.1 (2016-03-29)
+
+<a name="0.6.1"></a>
+## [0.6.1](https://github.com/urbanjs/tools/compare/0.6.0...0.6.1) (2016-03-29)
 - Update nsp (2.2.1 fails)
 - Fix ```check-dependencies``` task
 
-## 0.6.0 (2016-03-28)
+
+<a name="0.6.0"></a>
+## [0.6.0](https://github.com/urbanjs/tools/compare/0.5.0...0.6.0) (2016-03-28)
 - Introduce ```check-dependencies``` task
 - Improve lazy dependency installation
     - Allow global installation
@@ -74,16 +86,22 @@
     - If given configuration is a function,
      the returned object won't be merged with defaults
 
-## 0.5.0 (2016-02-23)
+
+<a name="0.5.0"></a>
+## [0.5.0](https://github.com/urbanjs/tools/compare/0.4.2...0.5.0) (2016-02-23)
 - Introduce ```install-dependencies``` command
 - Add verbose parameter to ```npm-install``` task
 - Update dependencies
 - Update eslint airbnb config (6.x.x)
 
-## 0.4.2 (2016-02-19)
+
+<a name="0.4.2"></a>
+## [0.4.2](https://github.com/urbanjs/tools/compare/0.4.1...0.4.2) (2016-02-19)
 - Fix ```jest``` tasks (globals are not working in parallel mode)
 
-## 0.4.1 (2016-02-10)
+
+<a name="0.4.1"></a>
+## [0.4.1](https://github.com/urbanjs/tools/compare/0.3.3...0.4.1) (2016-02-10)
 - CLI interface is public from now on
 - Introduce ```jest:watch``` task
 - Introduce ```webpack:watch``` task
@@ -95,11 +113,15 @@
 - Defaults of the ```webpack``` has been changed
     - all of the node_modules are handled as externals not to bundle them
 
-## 0.3.3 (2016-02-04)
+
+<a name="0.3.3"></a>
+## [0.3.3](https://github.com/urbanjs/tools/compare/0.3.1...0.3.3) (2016-02-04)
 - Fix jscs:fix task
 - Fix package.json (bin path)
 
-## 0.3.1 (2016-02-04)
+
+<a name="0.3.1"></a>
+## [0.3.1](https://github.com/urbanjs/tools/compare/0.2.4...0.3.1) (2016-02-03)
 - Fix shell tasks (handle spaces in path properly)
 - Support npm 2
 - Introduce lazy dependency load
@@ -113,54 +135,74 @@
     BREAKING CHANGE:
     - specify exactly your needs in the ```.initialize()``` api
 
-## 0.2.4 (2016-01-29)
+
+<a name="0.2.4"></a>
+## [0.2.4](https://github.com/urbanjs/tools/compare/0.2.3...0.2.4) (2016-01-29)
 - Fix & ensure normalized line endings
 
-## 0.2.3 (2016-01-29)
+
+<a name="0.2.3"></a>
+## [0.2.3](https://github.com/urbanjs/tools/compare/0.2.2...0.2.3) (2016-01-28)
 - Introduce ```sourceFiles``` global setting (used by eslint, jscs and check-file-names)
 - Add JSON loader to the default webpack config
 - Enhance error logging of webpack task
 
-## 0.2.2 (2016-01-28)
+
+<a name="0.2.2"></a>
+## [0.2.2](https://github.com/urbanjs/tools/compare/0.2.1...0.2.2) (2016-01-27)
 - Use babel-preset-stage-0
 - Fix webpack task
 
-## 0.2.1 (2016-01-27)
+
+<a name="0.2.1"></a>
+## [0.2.1](https://github.com/urbanjs/tools/compare/0.2.0...0.2.1) (2016-01-27)
 - Fix eslint:fix task
 
-## 0.2.0 (2016-01-27)
+
+<a name="0.2.0"></a>
+## [0.2.0](https://github.com/urbanjs/tools/compare/0.1.11...0.2.0) (2016-01-27)
 - Enhance jscs task (extra rules for jsdoc, fix reporter)
 - Be strict in ESLint rules (no warnings)
 - Introduce jscs:fix task
 - Introduce eslint:fix task
 - Introduce retire task
 
-## 0.1.11 (2016-01-19)
+
+<a name="0.1.11"></a>
+## [0.1.11](https://github.com/urbanjs/tools/compare/0.1.10...0.1.11) (2016-01-19)
 - Fix jest coverage report
 - Fix webpack task (multiple done)
 - Enhance configuration support (eslint and jscs tasks)
 
-## 0.1.10 (2016-01-18)
+
+<a name="0.1.10"></a>
+## [0.1.10](https://github.com/urbanjs/tools/compare/0.1.8...0.1.10) (2016-01-18)
 - Introduce globals (common configurations used by multiple tasks)
 - Extended README (usage section)
 - Initialize dummy default task
 - Fix jsdoc executable path (npm v3)
 
-## 0.1.8 (2016-01-15)
+
+<a name="0.1.8"></a>
+## [0.1.8](https://github.com/urbanjs/tools/compare/0.1.7...0.1.8) (2016-01-15)
 - Allow tasks to be disabled
 - Extended API documentation
+
 
 ## 0.1.7 (2016-01-11)
 - Enhance configuration support of the webpack task
 - Add legacy decorator support to babel
 - Expose default configuration
 
+
 ## 0.1.6 (2016-01-08)
 - Proper JSDoc documentation
 - Add configuration options
 
+
 ## 0.1.5 (2016-01-08)
 - Bugfix: npm package does not contain the required files (/docs, .npmignore,. gitignore)
+
 
 ## 0.1.1 (2016-01-07)
 - First release
