@@ -3,7 +3,6 @@
 const _ = require('lodash');
 const configHelper = require('../../utils/helper-config');
 const npmInstall = require('../npm-install');
-const path = require('path');
 const pkg = require('../../../package.json');
 const streamHelper = require('../../utils/helper-stream');
 const dependencyStream = require('../../utils/helper-dependencies');
@@ -67,11 +66,9 @@ module.exports = {
 
     const validate = config => {
       const tslint = require('gulp-tslint');
-
-      const tslintConfig = {
-        rulesDirectory: path.dirname(require.resolve('tslint-microsoft-contrib')),
+      const tslintConfig = Object.assign({
         configuration: config.configFile
-      };
+      }, _.omit(config, ['configFile', 'extensions', 'files']));
 
       const extensionRegex = configHelper.getFileExtensionRegExp(config.extensions);
       return gulp.src(config.files)

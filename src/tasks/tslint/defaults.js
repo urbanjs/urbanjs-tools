@@ -6,5 +6,6 @@ module.exports = {
   configFile: path.join(__dirname, '../../../tslint.json'),
   extensions: ['.ts', 'tsx'],
   files: require('../../utils/global-source-files'),
-  formatter: 'verbose'
+  formatter: 'verbose',
+  rulesDirectory: path.dirname(require.resolve('tslint-microsoft-contrib'))
 };
