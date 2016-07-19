@@ -47,7 +47,9 @@ tools.initialize(gulp, {
 
   jsdoc: true,
 
-  mocha: true,
+  mocha: {
+    timeout: 5000
+  },
 
   nsp: true,
 
