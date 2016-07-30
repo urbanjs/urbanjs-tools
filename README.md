@@ -1,16 +1,16 @@
 # urbanjs-tools
-[![Build Status](https://travis-ci.org/urbanjs/tools.svg?branch=master)](https://travis-ci.org/urbanjs/tools)
+[![Build Status](https://travis-ci.org/urbanjs/urbanjs-tools.svg?branch=master)](https://travis-ci.org/urbanjs/urbanjs-tools)
 
 ## Usage
 
-Check the [wiki](https://github.com/urbanjs/tools/wiki) for detailed guides e.g.
-- [starting a new project](https://github.com/urbanjs/tools/wiki/3.1---How-to-start-new-project)
-- [integrating with existing project](https://github.com/urbanjs/tools/wiki/3.2---How-to-integrate-with-existing-project)
-- [configuring tasks](https://github.com/urbanjs/tools/wiki/3.3-How-to-configure-tasks)
-- [using global configuration](https://github.com/urbanjs/tools/wiki/3.4-How-to-use-globals)
-- [handling special use cases](https://github.com/urbanjs/tools/wiki/3.5---How-to-handle-special-use-cases)
-- [preinstalling dependencies](https://github.com/urbanjs/tools/wiki/3.6---How-to-preinstall-dependencies)
-- [configuring IDEs](https://github.com/urbanjs/tools/wiki/3.7---How-to-configure-the-editors)
+Check the [wiki](https://github.com/urbanjs/urbanjs-tools/wiki) for detailed guides e.g.
+- [starting a new project](https://github.com/urbanjs/urbanjs-tools/wiki/3.1---How-to-start-new-project)
+- [integrating with existing project](https://github.com/urbanjs/urbanjs-tools/wiki/3.2---How-to-integrate-with-existing-project)
+- [configuring tasks](https://github.com/urbanjs/urbanjs-tools/wiki/3.3-How-to-configure-tasks)
+- [using global configuration](https://github.com/urbanjs/urbanjs-tools/wiki/3.4-How-to-use-globals)
+- [handling special use cases](https://github.com/urbanjs/urbanjs-tools/wiki/3.5---How-to-handle-special-use-cases)
+- [preinstalling dependencies](https://github.com/urbanjs/urbanjs-tools/wiki/3.6---How-to-preinstall-dependencies)
+- [configuring IDEs](https://github.com/urbanjs/urbanjs-tools/wiki/3.7---How-to-configure-the-editors)
 
 ### Quick start
 
@@ -35,7 +35,7 @@ tools.initialize(gulp, {
 
 **And that's it, you're good to go.**
 
-You can run any of the gulp tasks above (e.g. ```gulp eslint```) or you can use these [presets](https://github.com/urbanjs/tools/wiki/3---Usage#available-presets):
+You can run any of the gulp tasks above (e.g. ```gulp eslint```) or you can use these [presets](https://github.com/urbanjs/urbanjs-tools/wiki/3---Usage#available-presets):
 - `gulp test`: runs tests (```jest```, ```mocha```)
 - `gulp analyse`: analyzes the code base (```check-dependencies```, ```check-file-names```, ```eslint```, ```nsp```, ```retire```)
 - `gulp pre-commit`: analyzes the code base and runs tests (```analyse```, ```test```)
@@ -51,7 +51,7 @@ Additionally you can use these modifiers:
 e.g. `gulp eslint:fix` or `gulp babel:watch`
 
 ## Documentation
-Check out the [wiki](https://github.com/urbanjs/tools/wiki) for guides, examples and details.
+Check out the [wiki](https://github.com/urbanjs/urbanjs-tools/wiki) for guides, examples and details.
 
 Also you can find the [API reference](http://urbanjs.github.io/tools/) here.
 
