@@ -1,8 +1,8 @@
 'use strict';
 
+import path from 'path';
 import fs from '../../utils/helper-fs';
 import { runCommand, runCommands, extendJasmineTimeout } from '../../utils/helper-tests';
-import path from 'path';
 import pkg from '../../../package.json';
 
 jest.unmock('../../utils/helper-fs');
