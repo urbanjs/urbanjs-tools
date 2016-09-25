@@ -1,12 +1,12 @@
-<a name="Unreleased"></a>
-## Unreleased (2016-07-18)
+<a name="1.1.0"></a>
+## [1.1.0](https://github.com/urbanjs/tools/compare/1.0.0...1.1.0) (2016-07-18)
 - Introduce ```conventional-changelog``` task & ```changelog``` preset
 - Support command line option in gulp tasks
     - e.g. gulp mocha --mocha.grep="pattern"
 - Remove ```jscs``` task in favour of ```eslint```
     http://eslint.org/blog/2016/07/jscs-end-of-life
 - Update dependencies
-    Be aware of the new eslint rules
+    - Be aware of the new `eslint` rules
 
 
 <a name="1.0.0"></a>
