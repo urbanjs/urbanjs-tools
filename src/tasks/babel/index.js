@@ -32,6 +32,7 @@ module.exports = {
   dependencies: _.pick(
     pkg.devDependencies,
     [
+      'babel-core',
       'gulp-babel',
       'gulp-sourcemaps',
       'gulp-typescript',
@@ -83,6 +84,7 @@ module.exports = {
       const config = buildConfig(parameters, globals, taskName);
       const sourcemaps = require('gulp-sourcemaps');
       const babel = require('gulp-babel');
+      const babelCore = require('babel-core');
       const ts = require('typescript');
       const gulpTs = require('gulp-typescript');
       const mergeStream = require('merge-stream');
@@ -104,7 +106,10 @@ module.exports = {
         { emitError: false }
       ));
 
-      stream = stream.pipe(babel(config.babel));
+      stream = stream.pipe(streamHelper.streamIf(
+        file => babelCore.util.canCompile(file.path),
+        babel(config.babel)
+      ));
 
       if (config.sourcemap) {
         stream = stream.pipe(sourcemaps.write('.', config.sourcemap));
