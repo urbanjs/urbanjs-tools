@@ -20,7 +20,7 @@ module.exports = {
     let counter = 0;
     const baseShowHelp = yargs.showHelp;
     yargs.showHelp = function showHelp() { // eslint-disable-line no-param-reassign
-      return ++counter === 1
+      return ++counter === 1 // eslint-disable-line no-plusplus
         ? baseShowHelp.apply(yargs, arguments) // eslint-disable-line prefer-rest-params
         : yargs;
     };

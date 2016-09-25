@@ -54,7 +54,7 @@ module.exports = {
       let i = 0;
 
       [].concat(config.packageFile).forEach(packageFile => {
-        i++;
+        i += 1;
 
         if (!path.isAbsolute(packageFile)) {
           packageFile = path.join(process.cwd(), packageFile); //eslint-disable-line
@@ -67,7 +67,8 @@ module.exports = {
             vulnerabilities.push(nsp.formatters.summary(err, data));
           }
 
-          if (--i === 0) {
+          i -= 1;
+          if (i === 0) {
             done(vulnerabilities && vulnerabilities.join(''));
           }
         });

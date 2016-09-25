@@ -1,7 +1,7 @@
 'use strict';
 
-import { runCommand, runCommands, extendJasmineTimeout } from '../../../utils/helper-tests';
 import { join } from 'path';
+import { runCommand, runCommands, extendJasmineTimeout } from '../../../utils/helper-tests';
 import { exists, isSymlink, remove } from '../../../utils/helper-fs';
 
 jest.unmock('../../../utils/helper-fs');
@@ -89,7 +89,7 @@ describe('NPM install task', () => {
       ['gulp npmInstall']
     ], { cwd: join(__dirname, projectName) });
 
-    const pkg = require(join(__dirname, `${projectName}/node_modules/node-uuid/package.json`));
+    const pkg = require(join(__dirname, `${projectName}/node_modules/node-uuid/package.json`)); // eslint-disable-line
     expect(pkg.version).toBe('1.4.7');
   });
 

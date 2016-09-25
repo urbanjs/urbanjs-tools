@@ -18,6 +18,13 @@
     "no-console": 2,
     "no-constant-condition": 2,
     "no-debugger": 2,
-    "strict": 0
+    "strict": 0,
+    // breaks babel-parser
+    "generator-star-spacing": 0,
+    // false alarms
+    "require-yield": 0,
+    // ?!
+    "import/prefer-default-export": 0,
+    "import/no-extraneous-dependencies": 0
   }
 }

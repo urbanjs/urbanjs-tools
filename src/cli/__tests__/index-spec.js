@@ -1,8 +1,8 @@
 'use strict';
 
+import Yargs from 'yargs/yargs';
 import index from '../index';
 import mockGenerate from '../generate';
-import Yargs from 'yargs/yargs';
 
 jest.unmock('../index.js');
 jest.unmock('../../utils/helper-yargs.js');

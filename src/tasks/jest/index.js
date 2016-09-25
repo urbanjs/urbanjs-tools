@@ -51,7 +51,7 @@ function runJest(parameters, globals, watch, processOptionPrefix) {
             watch: watch ? 'all' : undefined
           }, _.pick(config, argvParameterKeys)),
           config.rootDir,
-          success => (success ? resolve() : reject(new Error('Error: tests failed.')))
+          success => (success.success ? resolve() : reject(new Error('Error: tests failed.')))
         );
       })
       .catch(reject);

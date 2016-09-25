@@ -31,7 +31,12 @@ tools.initialize(gulp, {
 
   eslint: {
     rules: {
-      'global-require': 0
+      'no-prototype-builtins': 0,
+      'global-require': 0,
+      'arrow-parens': 0,
+      'import/no-extraneous-dependencies': 0,
+      'import/prefer-default-export': 0,
+      'import/newline-after-import': 0
     }
   },
 

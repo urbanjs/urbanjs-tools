@@ -56,7 +56,7 @@ function missing(nodeModulesPaths, packageName) {
   while (possibleNodeModulesPaths.length) {
     const packageFileAbsPath = path.join(possibleNodeModulesPaths.shift(), packageFilePath);
     if (fs.existsSync(packageFileAbsPath)) {
-      return !semver.satisfies(require(packageFileAbsPath).version, version);
+      return !semver.satisfies(require(packageFileAbsPath).version, version); // eslint-disable-line
     }
   }
 

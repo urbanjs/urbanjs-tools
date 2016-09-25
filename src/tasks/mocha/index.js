@@ -29,6 +29,8 @@ module.exports = {
     pkg.devDependencies,
     [
       'gulp-spawn-mocha',
+      'istanbul',
+      'mocha',
       'source-map-support'
     ].concat(
       dependencyHelper.runtime,

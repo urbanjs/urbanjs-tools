@@ -1,7 +1,7 @@
 'use strict';
 
-import { runCommand, extendJasmineTimeout } from '../../../utils/helper-tests';
 import { join } from 'path';
+import { runCommand, extendJasmineTimeout } from '../../../utils/helper-tests';
 
 describe('Mocha task', () => {
   extendJasmineTimeout(jasmine, beforeEach, afterEach);
@@ -25,7 +25,7 @@ describe('Mocha task', () => {
     runCommand(['gulp mocha', {
       cwd: join(__dirname, 'global-configuration'),
       expectToFail: true,
-      expectToContain: 'Unexpected token \\(4:21\\)'
+      expectToContain: 'Unexpected token'
     }])
   );
 

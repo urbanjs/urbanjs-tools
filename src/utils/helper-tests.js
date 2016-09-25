@@ -17,7 +17,7 @@ export function runCommand(command) {
           throw new Error('Expected to fail');
         }
 
-        return childProcesses.stdout;
+        return [childProcesses.stderr, childProcesses.stdout].join('\n');
       },
 
       err => {

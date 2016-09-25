@@ -69,13 +69,16 @@ module.exports = {
     const validate = config => {
       const eslint = require('gulp-eslint');
 
-      return gulp.src(config.files)
+      const stream = gulp.src(config.files)
         .pipe(streamHelper.streamIf(
           file => configHelper.getFileExtensionRegExp(config.extensions).test(file.path),
           eslint(_.omit(config, 'files'))
         ))
-        .pipe(eslint.format())
-        .pipe(eslint.failAfterError());
+        .pipe(eslint.format());
+
+      return config.fix
+        ? stream
+        : stream.pipe(eslint.failAfterError());
     };
 
     gulp.task(

@@ -1,2 +1,2 @@
-export function valid() {
+export default function valid() {
 }

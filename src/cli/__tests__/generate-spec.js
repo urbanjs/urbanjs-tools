@@ -1,10 +1,10 @@
 'use strict';
 
+import path from 'path';
+import yargs from 'yargs';
 import generate from '../generate';
 import mockFs from '../../utils/helper-fs';
-import path from 'path';
 import pkg from '../../../package.json';
-import yargs from 'yargs';
 
 jest.unmock('../generate.js');
 jest.unmock('../../utils/helper-yargs.js');

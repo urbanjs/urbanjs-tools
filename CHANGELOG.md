@@ -6,6 +6,7 @@
 - Remove ```jscs``` task in favour of ```eslint```
     http://eslint.org/blog/2016/07/jscs-end-of-life
 - Update dependencies
+    Be aware of the new eslint rules
 
 
 <a name="1.0.0"></a>

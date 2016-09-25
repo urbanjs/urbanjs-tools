@@ -1,7 +1,7 @@
 'use strict';
 
-import { runCommand, extendJasmineTimeout } from '../../../utils/helper-tests';
 import { join } from 'path';
+import { runCommand, extendJasmineTimeout } from '../../../utils/helper-tests';
 
 describe('NSP task', () => {
   extendJasmineTimeout(jasmine, beforeEach, afterEach);

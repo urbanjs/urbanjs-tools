@@ -1,7 +1,7 @@
 'use strict';
 
-import { runCommand, extendJasmineTimeout, testLoggerLib } from '../../../utils/helper-tests';
 import { join } from 'path';
+import { runCommand, extendJasmineTimeout, testLoggerLib } from '../../../utils/helper-tests';
 import { exists, writeFile } from '../../../utils/helper-fs';
 
 jest.unmock('../../../utils/helper-fs');

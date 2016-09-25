@@ -57,7 +57,7 @@ module.exports = {
         argv.tasks.map(taskName => {
           try {
             return npmInstall.install(
-              require(`../tasks/${taskName}`).dependencies,
+              require(`../tasks/${taskName}`).dependencies, // eslint-disable-line
               _.pick(argv, ['verbose', 'global', 'link'])
             );
           } catch (err) {

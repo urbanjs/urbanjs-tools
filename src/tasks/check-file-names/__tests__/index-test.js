@@ -1,7 +1,7 @@
 'use strict';
 
-import { extendJasmineTimeout, runCommand } from '../../../utils/helper-tests';
 import { join } from 'path';
+import { extendJasmineTimeout, runCommand } from '../../../utils/helper-tests';
 
 describe('Check file names task', () => {
   extendJasmineTimeout(jasmine, beforeEach, afterEach);

@@ -1,7 +1,7 @@
 'use strict';
 
-import { runCommand, extendJasmineTimeout } from '../../../utils/helper-tests';
 import { join } from 'path';
+import { runCommand, extendJasmineTimeout } from '../../../utils/helper-tests';
 
 jest.unmock('../../../utils/helper-fs');
 
@@ -16,7 +16,7 @@ describe('TSlint task', () => {
     runCommand(['gulp tslint', {
       cwd: join(__dirname, 'global-configuration'),
       expectToFail: true,
-      expectToContain: 'function invocation disallowed: console.log'
+      expectToContain: 'Calls to \'console.log\' are not allowed'
     }])
   );
 
@@ -24,7 +24,7 @@ describe('TSlint task', () => {
     runCommand(['gulp tslint', {
       cwd: join(__dirname, 'default-configuration'),
       expectToFail: true,
-      expectToContain: 'function invocation disallowed: console.log'
+      expectToContain: 'Calls to \'console.log\' are not allowed'
     }])
   );
 
@@ -32,7 +32,7 @@ describe('TSlint task', () => {
     runCommand(['gulp tslint', {
       cwd: join(__dirname, 'file-extensions'),
       expectToFail: true,
-      expectToContain: 'function invocation disallowed: console.log'
+      expectToContain: 'Calls to \'console.log\' are not allowed'
     }])
   );
 
@@ -46,7 +46,7 @@ describe('TSlint task', () => {
     runCommand(['gulp tslint --tslint.files="index-invalid.ts"', {
       cwd: join(__dirname, 'cli-options'),
       expectToFail: true,
-      expectToContain: 'function invocation disallowed: console.log'
+      expectToContain: 'Calls to \'console.log\' are not allowed'
     }])
   );
 });

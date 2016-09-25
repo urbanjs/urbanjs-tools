@@ -1,8 +1,8 @@
 'use strict';
 
+import { equal } from 'assert';
 import { setGlobalConfiguration } from '../index';
 import globals from '../index-globals';
-import { equal } from 'assert';
 
 describe('Public interface', () => {
   const originalBabelConfig = globals.babel;

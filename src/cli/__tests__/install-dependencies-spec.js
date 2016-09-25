@@ -1,10 +1,10 @@
 'use strict';
 
+import yargs from 'yargs';
 import installDependencies from '../install-dependencies';
 import mockNpmInstallTask from '../../tasks/npm-install';
 import mockEslintTask from '../../tasks/eslint';
 import mockRetireTask from '../../tasks/retire';
-import yargs from 'yargs';
 
 jest.unmock('../install-dependencies.js');
 jest.unmock('../../utils/helper-yargs.js');
