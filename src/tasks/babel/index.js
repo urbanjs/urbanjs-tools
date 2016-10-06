@@ -1,7 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
-const del = require('del');
+const fs = require('../../utils/helper-fs');
 const npmInstall = require('../npm-install');
 const pkg = require('../../../package.json');
 const configHelper = require('../../utils/helper-config');
@@ -73,11 +73,12 @@ module.exports = {
     }, globals);
 
     const cleanUpTaskName = `${taskName}-clean`;
-    gulp.task(cleanUpTaskName, [installDependenciesTaskName], (done) => {
-      Promise.all(
-        [].concat(buildConfig(parameters, globals, taskName))
-          .map(config => del([config.outputPath], { force: true }))
-      ).then(() => done()).catch(e => done(e));
+    gulp.task(cleanUpTaskName, (done) => {
+      const config = buildConfig(parameters, globals, taskName);
+      fs.remove(config.outputPath, { force: true }).then(
+        () => done(),
+        done
+      );
     });
 
     gulp.task(taskName, [installDependenciesTaskName, cleanUpTaskName], () => {

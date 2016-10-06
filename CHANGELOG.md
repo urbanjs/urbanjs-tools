@@ -1,3 +1,28 @@
+<a name="Unreleased"></a>
+## Unreleased (2016-10-08)
+- Improve ```mocha``` task
+    - Support parallel execution
+        - `maxConcurrency` option to specify the maximum number of concurrent processes
+        - `files` option accepts array of arrays of globs to specify concurrent filesets, e.g.
+            ```
+                {
+                    concurrency: 2,
+                    files: [
+                        globA,
+                        globB,
+                        [globC, globD],
+                        [globE]
+                    ]
+                }
+            ```
+            Note: 2 concurrent processes work in parallel with the option above and the third will be started once any of the 2 processes finish
+    - Support `collectCoverage` option
+        - Support `coverageFrom` options to specify source files
+        - Support `coverageDirectory` option (`coverage` by default)
+        - Support `coverageReporters` option (see [istanbul](https://www.npmjs.com/package/istanbul) for further details)
+        - Support `coverageThresholds` options (see [istanbul-threshold-checker](https://www.npmjs.com/package/istanbul-threshold-checker) for further details)
+    - Support both `test` & `tests` folders by default
+
 <a name="1.1.0"></a>
 ## [1.1.0](https://github.com/urbanjs/tools/compare/1.0.0...1.1.0) (2016-07-18)
 - Introduce ```conventional-changelog``` task & ```changelog``` preset
