@@ -22,6 +22,7 @@
         - Support `coverageReporters` option (see [istanbul](https://www.npmjs.com/package/istanbul) for further details)
         - Support `coverageThresholds` options (see [istanbul-threshold-checker](https://www.npmjs.com/package/istanbul-threshold-checker) for further details)
     - Support both `test` & `tests` folders by default
+- Update dependencies
 
 <a name="1.1.0"></a>
 ## [1.1.0](https://github.com/urbanjs/tools/compare/1.0.0...1.1.0) (2016-07-18)

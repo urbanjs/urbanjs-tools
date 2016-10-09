@@ -12,7 +12,7 @@ describe('Jest task', () => {
   pit('should be able to run the tests successfully', () =>
     runCommand(['gulp jest', {
       cwd: join(__dirname, 'valid-project'),
-      expectToContain: '1 test passed'
+      expectToContain: '1 passed, 1 total'
     }])
   );
 
@@ -35,14 +35,14 @@ describe('Jest task', () => {
   pit('should use default configuration without specific parameters', () =>
     runCommand(['gulp jest', {
       cwd: join(__dirname, 'default-configuration'),
-      expectToContain: '1 test passed'
+      expectToContain: '1 passed, 1 total'
     }])
   );
 
   pit('should be able to handle typescript source', () =>
     runCommand(['gulp jest', {
       cwd: join(__dirname, 'typescript-source'),
-      expectToContain: '1 test passed'
+      expectToContain: '1 passed, 1 total'
     }])
   );
 
@@ -53,7 +53,7 @@ describe('Jest task', () => {
     await writeFile(filePath, '');
     await runCommand(['gulp jest', {
       cwd: join(__dirname, projectName),
-      expectToContain: '1 test passed'
+      expectToContain: '1 passed, 1 total'
     }]);
 
     const fileExists = await exists(filePath);
@@ -63,7 +63,7 @@ describe('Jest task', () => {
   pit('should support command line options', () =>
     runCommand(['gulp jest --jest.rootDir="src2"', {
       cwd: join(__dirname, 'cli-options'),
-      expectToContain: '1 test passed'
+      expectToContain: '1 passed, 1 total'
     }])
   );
 });
