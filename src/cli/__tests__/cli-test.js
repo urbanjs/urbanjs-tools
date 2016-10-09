@@ -109,11 +109,16 @@ describe('urbanjs cli', () => {
       [`npm link ${pkg.name}`, { cwd: projectFolderPath }],
       ['npm install', { cwd: projectFolderPath, allowToFail: true }],
 
+      ['gulp conventional-changelog', { cwd: projectFolderPath }],
+      ['npm prune', { cwd: projectFolderPath }],
+
       ['gulp mocha', {
         cwd: projectFolderPath,
-        expectToFail: true,
-        expectToContain: 'cannot resolve path'
+        expectToContain: '0 passing'
       }],
+      ['npm prune', { cwd: projectFolderPath }],
+
+      ['gulp tslint', { cwd: projectFolderPath }],
       ['npm prune', { cwd: projectFolderPath }],
 
       ['gulp webpack', { cwd: projectFolderPath }],

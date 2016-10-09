@@ -4,7 +4,11 @@ const gulp = require('gulp');
 const tools = require('urbanjs-tools');
 
 tools.initialize(gulp, {
+  conventionalChangelog: true,
+
   mocha: true,
+
+  tslint: true,
 
   webpack: true
 });
