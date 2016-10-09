@@ -64,7 +64,7 @@
     "eslint-config-airbnb": "12.0.0",
     "eslint-plugin-import": "2.0.0",
     "eslint-plugin-jsx-a11y": "2.2.3",
-    "eslint-plugin-react": "6.3.0",
+    "eslint-plugin-react": "6.4.0",
     "fork-stream": "0.0.4",
     "gulp": "3.9.1",
     "gulp-babel": "6.1.2",

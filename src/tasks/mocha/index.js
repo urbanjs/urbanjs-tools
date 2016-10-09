@@ -59,7 +59,12 @@ function collectCoverageFromParticles(coverageOptions) {
         cb();
       }))
       .on('finish', () => {
-        const reporter = new istanbul.Reporter();
+        const reporter = new istanbul.Reporter(
+          istanbul.config.loadFile(null, {
+            reporting: { dir: coverageOptions.coverageDirectory }
+          })
+        );
+
         reporter.addAll(coverageOptions.coverageReporters);
 
         try {
@@ -125,7 +130,11 @@ function runFilesetsInParallel(filesets, runnerOptions, concurrency) {
   }(filesets));
 
   return promise
-    .then(() => collectCoverageFromParticles(runnerOptions))
+    .then(() => (
+      runnerOptions.collectCoverage
+        ? collectCoverageFromParticles(runnerOptions)
+        : null
+    ))
     .then(() => {
       if (errors.length) {
         throw errors;
