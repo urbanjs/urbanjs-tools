@@ -110,7 +110,7 @@ function runFilesetsInParallel(filesets, runnerOptions, concurrency) {
 
     if (promises.length < concurrency) {// eslint-disable-line
       const promiseIndex = promises.length;
-      const currentPromise = childProcessPromise.fork(path.join(__dirname, 'runner.js'));
+      const currentPromise = childProcessPromise.fork(path.join(__dirname, 'runner.js'), []);
 
       currentPromise.childProcess.send(Object.assign({}, runnerOptions, {
         files: remainingFilesets[0]

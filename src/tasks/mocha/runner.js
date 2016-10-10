@@ -65,6 +65,7 @@ process.on('message', (config) => {
       .forEach(file => require(file)); // eslint-disable-line
   }
 
+  let hasError = false;
   let promise = Promise.resolve();
 
   if (config.collectCoverage) {
@@ -74,7 +75,9 @@ process.on('message', (config) => {
   }
 
   promise = promise.then(() =>
-    runTests(config.files, _.omit(config, 'require'))
+    runTests(config.files, _.omit(config, 'require')).catch(() => {
+      hasError = true;
+    })
   );
 
   if (config.collectCoverage) {
@@ -90,10 +93,8 @@ process.on('message', (config) => {
     );
   }
 
-  promise
-    .then(() => process.exit(0))
-    .catch((e) => {
-      console.log(e); // eslint-disable-line
-      process.exit(1);
-    });
+  promise.then(
+    () => process.exit(hasError ? 1 : 0),
+    () => process.exit(1)
+  );
 });

@@ -6,7 +6,7 @@
         - `files` option accepts array of arrays of globs to specify concurrent filesets, e.g.
             ```
                 {
-                    concurrency: 2,
+                    maxConcurrency: 2,
                     files: [
                         globA,
                         globB,
