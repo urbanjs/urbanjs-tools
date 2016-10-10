@@ -41,8 +41,7 @@ function runJest(parameters, globals, watch, processOptionPrefix) {
   return new Promise((resolve, reject) => {
     fs.remove(coverageDirectoryPath)
       .then(() => {
-        // jest-cli has a bug, it looks for these options
-        // on the given argv and not in the config
+        // support hidden/undocumented config
         const argvParameterKeys = ['testPathPattern', 'runInBand', 'maxWorkers'];
 
         jest.runCLI(
