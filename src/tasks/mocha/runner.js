@@ -75,7 +75,8 @@ process.on('message', (config) => {
   }
 
   promise = promise.then(() =>
-    runTests(config.files, _.omit(config, 'require')).catch(() => {
+    runTests(config.files, _.omit(config, 'require')).catch((e) => {
+      console.log('' + e); // eslint-disable-line
       hasError = true;
     })
   );
