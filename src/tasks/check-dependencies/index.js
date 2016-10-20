@@ -34,10 +34,7 @@ function buildConfig(parameters, globals, processOptionPrefix) {
 function show(data, title, color) {
   if (!_.isEmpty(data)) {
     console.log(// eslint-disable-line no-console
-      `${title}\n`,
-      prettyjson.render(data, {
-        keysColor: color || 'black'
-      })
+      `${title}\n${prettyjson.render(data, { keysColor: color || 'black' })}`
     );
   }
 }
