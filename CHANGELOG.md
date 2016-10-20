@@ -1,5 +1,5 @@
-<a name="Unreleased"></a>
-## Unreleased (2016-10-08)
+<a name="1.2.0"></a>
+## [1.2.0](https://github.com/urbanjs/tools/compare/1.1.0...1.2.0) (2016-10-20)
 - Improve ```mocha``` task
     - Support parallel execution
         - `maxConcurrency` option to specify the maximum number of concurrent processes
