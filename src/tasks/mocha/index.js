@@ -32,6 +32,7 @@ function buildConfig(parameters, globals, processOptionPrefix) {
 }
 
 /**
+ * @private
  * @param {Object} coverageOptions
  * @param {boolean} coverageOptions.collectCoverage
  * @param {string|string[]} coverageOptions.coverageReporters
@@ -92,6 +93,7 @@ function collectCoverageFromParticles(coverageOptions) {
 }
 
 /**
+ * @private
  * @param {string[][]} filesets - array of glob strings arrays
  * @param {Object} runnerOptions - see runner.js
  * @param {Number} concurrency
