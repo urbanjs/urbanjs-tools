@@ -24,7 +24,7 @@ describe('Check dependencies task', () => {
       ['npm install del@2.0.0'],
       ['gulp check-dependencies', {
         expectToFail: true,
-        expectToContain: 'You have critical outdated packages:\n - del'
+        expectToContain: 'You have critical outdated packages:\n- del'
       }]
     ], { cwd: join(__dirname, 'outdated-package') })
   );
@@ -32,7 +32,7 @@ describe('Check dependencies task', () => {
   pit('should not fail if unused package found, only warning should come up', () =>
     runCommand(['gulp check-dependencies', {
       cwd: join(__dirname, 'unused-package'),
-      expectToContain: 'You might have unused dependencies:\n - del'
+      expectToContain: 'You might have unused dependencies:\n- del'
     }])
   );
 
@@ -40,7 +40,7 @@ describe('Check dependencies task', () => {
     runCommand(['gulp check-dependencies', {
       cwd: join(__dirname, 'missing-package'),
       expectToFail: true,
-      expectToContain: 'Missing dependencies:\n del'
+      expectToContain: 'Missing dependencies:\ndel'
     }])
   );
 
@@ -48,7 +48,7 @@ describe('Check dependencies task', () => {
     runCommand(['gulp check-dependencies', {
       cwd: join(__dirname, 'global-configuration'),
       expectToFail: true,
-      expectToContain: 'Missing dependencies:\n del'
+      expectToContain: 'Missing dependencies:\ndel'
     }])
   );
 
@@ -69,7 +69,7 @@ describe('Check dependencies task', () => {
   pit('should be able to handle typescript source', () =>
     runCommand(['gulp check-dependencies', {
       cwd: join(__dirname, 'typescript-source'),
-      expectToContain: 'You might have unused dependencies:\n - del'
+      expectToContain: 'You might have unused dependencies:\n- del'
     }])
   );
 
