@@ -111,18 +111,25 @@ function runFilesetsInParallel(filesets, runnerOptions, concurrency) {
     }
 
     if (promises.length < concurrency) {// eslint-disable-line
-      const promiseIndex = promises.length;
-      const currentPromise = childProcessPromise.fork(path.join(__dirname, 'runner.js'), []);
+      const outputBuffer = [];
+      const currentPromise = childProcessPromise.fork(path.join(__dirname, 'runner.js'), [], {
+        silent: true
+      });
 
+      currentPromise.childProcess.stdout.on('data', message => outputBuffer.push(message));
+      currentPromise.childProcess.stderr.on('data', message => outputBuffer.push(message));
       currentPromise.childProcess.send(Object.assign({}, runnerOptions, {
         files: remainingFilesets[0]
       }));
 
-      promises.push(
-        currentPromise
-          .catch(e => errors.push(e))
-          .then(() => promises.splice(promiseIndex, 1))
-      );
+      currentPromise
+        .catch(e => errors.push(e))
+        .then(() => {
+          console.log(outputBuffer.join('')); // eslint-disable-line
+          promises.splice(promises.indexOf(currentPromise), 1);
+        });
+
+      promises.push(currentPromise);
 
       return next(remainingFilesets.slice(1), promises);
     }

@@ -1,3 +1,8 @@
+## Unreleased
+- Fix ```mocha``` task
+    - Fix parallel execution algorithm
+    - Fix message intermixing
+
 <a name="1.2.0"></a>
 ## [1.2.0](https://github.com/urbanjs/tools/compare/1.1.0...1.2.0) (2016-10-20)
 - Improve ```mocha``` task
