@@ -41,7 +41,7 @@ function transpile(src, filename, babelConfig, tsCompilerOptions) {
     const inlineSourcemap = new Buffer(result.sourceMapText, 'binary').toString('base64');
     const codeWithInlineSourcemap = result.outputText
       .replace(/\n\/\/# sourceMappingURL[\s\S]+$/, '')
-      .concat(`\n//# sourceMappingURL=data:application/json;base64,${inlineSourcemap}`);
+      .concat('\n//# sourceMappingURL=data:application/json;base64,', inlineSourcemap);
 
     // also use transform with babel to compile to ES5
     // til ES6 is natively supported by most of the environments
@@ -55,7 +55,7 @@ function transpile(src, filename, babelConfig, tsCompilerOptions) {
     // otherwise you might encounter unexpected behavior.
     // Changing the content of these files
     // to return the raw content.
-    return `module.exports = ${JSON.stringify(src)}`;
+    return 'module.exports = '.concat(JSON.stringify(src));
   }
 
   return transformWithBabel(src);

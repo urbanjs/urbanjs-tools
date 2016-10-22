@@ -1,6 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
+const childProcess = require('child_process');
 const configHelper = require('../../utils/helper-config');
 const dependencyHelper = require('../../utils/helper-dependencies');
 const fs = require('../../utils/helper-fs');
@@ -8,6 +9,10 @@ const npmInstall = require('../npm-install');
 const os = require('os');
 const path = require('path');
 const pkg = require('../../../package.json');
+const messages = require('./messages');
+
+let numberOfMessages = 0;
+const newMessageId = () => numberOfMessages++; //eslint-disable-line
 
 function buildConfig(parameters, globals, processOptionPrefix) {
   const defaults = require('./defaults');
@@ -31,6 +36,94 @@ function buildConfig(parameters, globals, processOptionPrefix) {
   return config;
 }
 
+function createNewRunner(mochaConfig) {
+  return new Promise((resolve, reject) => {
+    let initialized = false;
+    const initMessageId = newMessageId();
+    const runner = childProcess.fork(path.join(__dirname, 'runner.js'), {
+      silent: true
+    });
+
+    let outputBuffer = [];
+    const showOutput = () => {
+      if (outputBuffer.length) {
+        console.log(outputBuffer.join('')); // eslint-disable-line
+        outputBuffer = [];
+      }
+    };
+
+    runner.stdout.on('data', message => outputBuffer.push(message));
+    runner.stderr.on('data', message => outputBuffer.push(message));
+    runner.on('message', (message) => {
+      if (message.type === messages.DONE) {
+        showOutput();
+
+        if (message.payload.target === initMessageId) {
+          initialized = true;
+          resolve(runner);
+        }
+      }
+    });
+
+    runner.on('close', () => {
+      showOutput();
+
+      if (!initialized) {
+        reject(new Error('Could not setup mocha runners.'));
+      }
+    });
+
+    runner.send({
+      id: initMessageId,
+      type: messages.INIT,
+      payload: mochaConfig
+    });
+  });
+}
+
+function closeRunner(runner, mochaConfig) {
+  return new Promise((resolve) => {
+    runner.on('close', (code) => {
+      if (code !== 0) {
+        console.log( // eslint-disable-line
+          'Coverage information could not be collected from runner.');
+        runner.send('SIGKILL');
+      }
+
+      resolve();
+    });
+
+    runner.send({
+      type: messages.CLOSE,
+      payload: mochaConfig
+    });
+  });
+}
+
+function runFileset(runner, fileset, mochaConfig) {
+  return new Promise((resolve, reject) => {
+    const messageId = newMessageId();
+    runner.on('message', (message) => {
+      if (message.type === messages.DONE && message.payload.target === messageId) {
+        if (message.payload && message.payload.hasError) {
+          reject();
+          return;
+        }
+
+        resolve();
+      }
+    });
+
+    runner.send({
+      id: messageId,
+      type: messages.WORK,
+      payload: Object.assign({}, mochaConfig, {
+        files: fileset
+      })
+    });
+  });
+}
+
 /**
  * @private
  * @param {Object} coverageOptions
@@ -50,7 +143,7 @@ function collectCoverageFromParticles(coverageOptions) {
   return new Promise((resolve, reject) => {
     const collector = new istanbul.Collector();
 
-    vfs.src(path.join(coverageOptions.coverageDirectory, '**/coverage*.json'))
+    vfs.src(path.join(coverageOptions.coverageDirectory, '_partial/**/coverage*.json'))
       .pipe(through2.obj((file, enc, cb) => {
         try {
           collector.add(JSON.parse(file.contents));
@@ -69,8 +162,12 @@ function collectCoverageFromParticles(coverageOptions) {
         reporter.addAll(coverageOptions.coverageReporters);
 
         try {
-          reporter.write(collector, true);
+          reporter.write(collector, true, () => {
+          });
         } catch (e) { // eslint-disable-line no-empty
+          // TODO: there are bugs in istanbul reporters and false alarms might happen
+          // reject(e);
+          // return;
         }
 
         if (coverageOptions.coverageThresholds) {
@@ -95,58 +192,54 @@ function collectCoverageFromParticles(coverageOptions) {
 /**
  * @private
  * @param {string[][]} filesets - array of glob strings arrays
- * @param {Object} runnerOptions - see runner.js
- * @param {Number} concurrency
+ * @param {Object} mochaConfig - see runner.js
+ * @param {number} maxConcurrency
  * @returns {Promise}
  */
-function runFilesetsInParallel(filesets, runnerOptions, concurrency) {
-  const childProcessPromise = require('child-process-promise'); // eslint-disable-line
-
-  const errors = [];
+function runFilesetsInParallel(filesets, mochaConfig, maxConcurrency) {
+  let hasError = false;
   const promises = [];
+  const whenRunners = Promise.all(
+    new Array(Math.min(filesets.length, maxConcurrency)).fill()
+      .map(() => createNewRunner(mochaConfig))
+  );
 
-  const promise = (function next(remainingFilesets) {
+  const promise = whenRunners.then(freeRunners => (function next(remainingFilesets) {
     if (remainingFilesets.length < 1) {
       return Promise.all(promises);
     }
 
-    if (promises.length < concurrency) {// eslint-disable-line
-      const outputBuffer = [];
-      const currentPromise = childProcessPromise.fork(path.join(__dirname, 'runner.js'), [], {
-        silent: true
-      });
-
-      currentPromise.childProcess.stdout.on('data', message => outputBuffer.push(message));
-      currentPromise.childProcess.stderr.on('data', message => outputBuffer.push(message));
-      currentPromise.childProcess.send(Object.assign({}, runnerOptions, {
-        files: remainingFilesets[0]
-      }));
-
-      currentPromise
-        .catch(e => errors.push(e))
+    if (freeRunners.length) {// eslint-disable-line
+      const currentRunner = freeRunners.pop();
+      const currentPromise = runFileset(currentRunner, remainingFilesets[0], mochaConfig)
+        .catch(() => {
+          hasError = true;
+        })
         .then(() => {
-          console.log(outputBuffer.join('')); // eslint-disable-line
+          freeRunners.push(currentRunner);
           promises.splice(promises.indexOf(currentPromise), 1);
         });
 
       promises.push(currentPromise);
 
-      return next(remainingFilesets.slice(1), promises);
+      return next(remainingFilesets.slice(1));
     }
 
     return Promise.race(promises)
-      .then(() => next(remainingFilesets, promises));
-  }(filesets));
+      .then(() => next(remainingFilesets));
+  }(filesets)));
 
   return promise
+    .then(() => whenRunners)
+    .then(runners => Promise.all(runners.map(runner => closeRunner(runner, mochaConfig))))
     .then(() => (
-      runnerOptions.collectCoverage
-        ? collectCoverageFromParticles(runnerOptions)
+      mochaConfig.collectCoverage
+        ? collectCoverageFromParticles(mochaConfig)
         : null
     ))
     .then(() => {
-      if (errors.length) {
-        throw errors;
+      if (hasError) {
+        throw new Error('Test(s) failed.');
       }
     });
 }
@@ -159,7 +252,6 @@ module.exports = {
   dependencies: _.pick(
     pkg.devDependencies,
     [
-      'child-process-promise',
       'gulp-mocha',
       'gulp-istanbul',
       'istanbul',
@@ -220,8 +312,8 @@ module.exports = {
       // see index-globals.js for more information
       process.env.urbanJSToolGlobals = JSON.stringify(globals);
 
-      const runnerOptions = _.omit(config, 'files', 'maxConcurrency');
-      const concurrency = config.maxConcurrency > 0
+      const mochaConfig = _.omit(config, 'files', 'maxConcurrency');
+      const maxConcurrency = config.maxConcurrency > 0
         ? config.maxConcurrency
         : os.cpus().length;
 
@@ -235,7 +327,7 @@ module.exports = {
       });
       filesets = filesets.filter(fileset => fileset.length);
 
-      runFilesetsInParallel(filesets, runnerOptions, concurrency).then(
+      runFilesetsInParallel(filesets, mochaConfig, maxConcurrency).then(
         () => done(),
         done
       );

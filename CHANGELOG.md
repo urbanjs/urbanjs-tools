@@ -1,3 +1,7 @@
+## Unreleased
+- Improve ```mocha``` task
+    - Improve parallel execution
+
 <a name="1.2.1"></a>
 ## [1.2.0](https://github.com/urbanjs/tools/compare/1.2.0...1.2.1) (2016-10-21)
 - Fix ```mocha``` task

@@ -27,8 +27,6 @@ tools.initialize(gulp, {
     return defaults;
   },
 
-  conventionalChangelog: true,
-
   eslint: {
     rules: {
       'no-prototype-builtins': 0,

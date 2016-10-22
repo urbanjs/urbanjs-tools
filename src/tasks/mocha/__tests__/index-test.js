@@ -17,6 +17,28 @@ describe('Mocha task', () => {
     }])
   );
 
+  pit('should fail if runner cannot be set up', () =>
+    runCommand(['gulp mocha', {
+      cwd: join(__dirname, 'runner-init-failure'),
+      expectToFail: true,
+      expectToContain: [
+        'Error: Invalid setup file',
+        'Error: Could not setup mocha runners.'
+      ]
+    }])
+  );
+
+  pit('should fail if runner cannot be set up 2', () =>
+    runCommand(['gulp mocha', {
+      cwd: join(__dirname, 'runner-init-failure-2'),
+      expectToFail: true,
+      expectToContain: [
+        'Error: File not found',
+        'Error: Could not setup mocha runners.'
+      ]
+    }])
+  );
+
   pit('should fail if tests fail', () =>
     runCommand(['gulp mocha', {
       cwd: join(__dirname, 'failed-test'),
@@ -88,7 +110,25 @@ describe('Mocha task', () => {
   pit('should collect coverage information (even with parallel execution)', () =>
     runCommand(['gulp mocha', {
       cwd: join(__dirname, 'coverage-information'),
-      expectToContain: 'Branches     : 100%'
+      expectToContain: [
+        'Statements   : 100% \\( 8/8 \\)',
+        'Branches     : 100% \\( 4/4 \\)',
+        'Functions    : 100% \\( 1/1 \\)',
+        'Lines        : 100% \\( 7/7 \\)'
+      ]
+    }])
+  );
+
+  pit('should collect coverage information even with failed tests', () =>
+    runCommand(['gulp mocha', {
+      cwd: join(__dirname, 'coverage-information-with-failed-test'),
+      expectToContain: [
+        'Error: Test(s) failed',
+        'Statements   : 100% \\( 8/8 \\)',
+        'Branches     : 100% \\( 4/4 \\)',
+        'Functions    : 100% \\( 1/1 \\)',
+        'Lines        : 100% \\( 7/7 \\)'
+      ]
     }])
   );
 

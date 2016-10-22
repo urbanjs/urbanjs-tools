@@ -3,6 +3,7 @@
 const _ = require('lodash');
 const globals = require('../../index-globals');
 const istanbul = require('gulp-istanbul');
+const messages = require('./messages');
 const mocha = require('gulp-mocha');
 const path = require('path');
 const preprocessor = require('../../utils/helper-preprocessor');
@@ -51,51 +52,76 @@ function runTests(src, mochaOptions) {
   });
 }
 
+// avoid overlaps
+let promise = Promise.resolve();
+
 /**
- * @param {Object} config - any native mocha options
- * @param {string|string[]} config.require
- * @param {string|string[]} config.files
- * @param {boolean} config.collectCoverage
- * @param {string|string[]} [config.coverageFrom]
- * @param {string} [config.coverageDirectory]
+ * @param {Object} message
+ * @param {string} message.type - message type
+ * @param {Object} message.payload - any native mocha options
+ * @param {string|string[]} [message.payload.require]
+ * @param {string|string[]} [message.payload.files]
+ * @param {boolean} [message.payload.collectCoverage]
+ * @param {string|string[]} [message.payload.coverageFrom]
+ * @param {string} [message.payload.coverageDirectory]
  */
-process.on('message', (config) => {
-  if (config.require) {
-    [].concat(config.require)
-      .forEach(file => require(file)); // eslint-disable-line
-  }
+process.on('message', (message) => {
+  const messageId = message.id;
+  const type = message.type;
+  const config = message.payload || {};
 
-  let hasError = false;
-  let promise = Promise.resolve();
+  if (type === messages.INIT) {
+    promise = promise
+      .then(() => {
+        if (config.require) {
+          [].concat(config.require)
+            .forEach(file => require(file)); // eslint-disable-line
+        }
 
-  if (config.collectCoverage) {
-    promise = promise.then(() =>
-      prepareSources(config.coverageFrom)
-    );
-  }
-
-  promise = promise.then(() =>
-    runTests(config.files, _.omit(config, 'require')).catch((e) => {
-      console.log('' + e); // eslint-disable-line
-      hasError = true;
-    })
-  );
-
-  if (config.collectCoverage) {
-    promise = promise.then(() =>
-      writeCoverage(config.coverageFrom, {
+        return config.collectCoverage && prepareSources(config.coverageFrom);
+      })
+      .then(
+        () => process.send({
+          type: messages.DONE,
+          payload: { target: messageId }
+        }),
+        (e) => {
+          console.log(e); // eslint-disable-line
+          process.exit(1);
+        }
+      );
+  } else if (type === messages.WORK) {
+    promise = promise
+      .then(() => runTests(config.files, _.omit(config, 'require')))
+      .then(
+        () => process.send({
+          type: messages.DONE,
+          payload: { target: messageId }
+        }),
+        (e) => {
+          console.log(e); // eslint-disable-line
+          process.send({
+            type: messages.DONE,
+            payload: { target: messageId, hasError: true }
+          });
+        }
+      );
+  } else if (type === messages.CLOSE) {
+    promise = promise
+      .then(() => config.collectCoverage && writeCoverage(config.coverageFrom, {
         reporters: ['json'],
         dir: path.join(
           config.coverageDirectory,
           '_partial',
-          `${process.pid}`
+          `${process.pid}` //eslint-disable-line
         )
-      })
-    );
+      }))
+      .then(
+        () => process.exit(0),
+        (e) => {
+          console.log(e); // eslint-disable-line
+          process.exit(1);
+        }
+      );
   }
-
-  promise.then(
-    () => process.exit(hasError ? 1 : 0),
-    () => process.exit(1)
-  );
 });

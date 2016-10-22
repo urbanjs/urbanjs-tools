@@ -32,11 +32,14 @@ export function runCommand(command) {
         return [err.message, err.stderr, err.stdout].join('\n');
       }
     )
-    .then(output => {
-      const testRegex = config.expectToContain && new RegExp(config.expectToContain);
-      if (testRegex && !testRegex.test(output)) {
-        console.log('output:\n', output); // eslint-disable-line no-console
-        throw new Error(`Expected to contain: ${config.expectToContain}`);
+    .then((output) => {
+      const patterns = [].concat(config.expectToContain || []);
+      while (patterns.length) {
+        const testRegex = new RegExp(patterns.pop());
+        if (testRegex && !testRegex.test(output)) {
+          console.log('output:\n', output); // eslint-disable-line no-console
+          throw new Error(`Expected to contain: ${config.expectToContain}`);
+        }
       }
     });
 }
