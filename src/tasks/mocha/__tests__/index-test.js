@@ -122,8 +122,9 @@ describe('Mocha task', () => {
   pit('should collect coverage information even with failed tests', () =>
     runCommand(['gulp mocha', {
       cwd: join(__dirname, 'coverage-information-with-failed-test'),
+      expectToFail: true,
       expectToContain: [
-        'Error: Test(s) failed',
+        'Error: Test\\(s\\) failed',
         'Statements   : 100% \\( 8/8 \\)',
         'Branches     : 100% \\( 4/4 \\)',
         'Functions    : 100% \\( 1/1 \\)',
