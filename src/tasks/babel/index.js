@@ -121,7 +121,7 @@ module.exports = {
     });
 
     const watchTaskName = `${taskName}:watch`;
-    gulp.task(watchTaskName, [installDependenciesTaskName], done => {
+    gulp.task(watchTaskName, [installDependenciesTaskName], (done) => {
       const config = buildConfig(parameters, globals, taskName);
       gulp.watch(config.files, [taskName], done);
     });

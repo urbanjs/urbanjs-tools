@@ -75,13 +75,13 @@ describe('CLI - generate command', () => {
       { args: ['-n', 'asd', '-e'], error: 'Unknown argument: e' },
       { args: [], error: 'Missing required argument: n' },
       { args: ['-f'], error: 'Missing required argument: n' }
-    ].forEach(options => {
+    ].forEach((options) => {
       mockYargs.reset();
       let promise = generate.run(options.args, mockYargs);
       expect(promise instanceof Promise).toBe(true);
 
       if (options.error) {
-        promise = promise.catch(err => {
+        promise = promise.catch((err) => {
           expect(err.message).toBe(options.error);
         });
       }
@@ -107,10 +107,10 @@ describe('CLI - generate command', () => {
 
   pit('fails if the given name is invalid', () =>
     Promise.all([
-      generate.run(['-n'], mockYargs).catch(err => {
+      generate.run(['-n'], mockYargs).catch((err) => {
         expect(err.message).toBe('The given name is invalid: ');
       }),
-      generate.run(['-n', ''], mockYargs).catch(err => {
+      generate.run(['-n', ''], mockYargs).catch((err) => {
         expect(err.message).toBe('The given name is invalid: ');
       })
     ])
@@ -122,7 +122,7 @@ describe('CLI - generate command', () => {
 
     mockFs.exists.mockReturnValue(Promise.resolve(true));
 
-    return generate.run(['-n', projectName], mockYargs).catch(err => {
+    return generate.run(['-n', projectName], mockYargs).catch((err) => {
       expect(err.message)
         .toBe(`The folder \`${folderPath}\` is existing. Use -f to force to delete it.`);
     });
@@ -134,7 +134,7 @@ describe('CLI - generate command', () => {
 
     mockFs.exists.mockReturnValue(Promise.resolve(true));
 
-    return generate.run(['-n', projectName, '-f'], mockYargs).catch(err => {
+    return generate.run(['-n', projectName, '-f'], mockYargs).catch((err) => {
       expect(mockFs.remove.mock.calls.length).toBe(1);
       expect(mockFs.remove.mock.calls[0]).toEqual([folderPath]);
       expect(err.message).toBe(`The folder \`${folderPath}\` is existing and cannot be deleted.`);

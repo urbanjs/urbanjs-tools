@@ -45,7 +45,7 @@ module.exports = {
       dependencies: this.dependencies
     }, globals);
 
-    gulp.task(taskName, [installDependenciesTaskName], done => {
+    gulp.task(taskName, [installDependenciesTaskName], (done) => {
       const config = buildConfig(parameters, taskName);
 
       shell.task([

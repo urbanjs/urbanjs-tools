@@ -15,7 +15,7 @@ const projectFolderPath = path.join(packageFolderPath, '../', projectName);
 describe('urbanjs cli', () => {
   extendJasmineTimeout(jasmine, beforeEach, afterEach);
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fs.remove(projectFolderPath).then(() => done(), done.fail);
   });
 
@@ -97,7 +97,7 @@ describe('urbanjs cli', () => {
     ])
   );
 
-  pit('should be able to run the not default tasks (mocha, webpack)', async() => {
+  pit('should be able to run the not default tasks (mocha, webpack)', async () => {
     await runCommand([`node "${urbanjsCliPath}" generate -n ${projectFolderPath}`]);
     await fs.writeFile(
       path.join(projectFolderPath, 'gulpfile.js'),
@@ -126,7 +126,7 @@ describe('urbanjs cli', () => {
     ]);
   });
 
-  pit('should be able to install dependencies locally', async() => {
+  pit('should be able to install dependencies locally', async () => {
     await runCommands([
       [`node "${urbanjsCliPath}" generate -n ${projectFolderPath}`],
       [`node "${urbanjsCliPath}" install-dependencies -t retire`, { cwd: projectFolderPath }]
@@ -143,7 +143,7 @@ describe('urbanjs cli', () => {
     ])
   );
 
-  pit('should be able to link globally installed dependencies', async() => {
+  pit('should be able to link globally installed dependencies', async () => {
     await runCommands([
       [`node "${urbanjsCliPath}" install-dependencies -g -t retire`],
       [`node "${urbanjsCliPath}" generate -n ${projectFolderPath}`],

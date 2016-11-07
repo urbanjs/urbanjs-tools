@@ -66,7 +66,7 @@ module.exports = {
       dependencies: this.dependencies
     }, globals);
 
-    const validate = config => {
+    const validate = (config) => {
       const eslint = require('gulp-eslint');
 
       const stream = gulp.src(config.files)

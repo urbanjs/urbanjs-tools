@@ -46,7 +46,7 @@ describe('Jest task', () => {
     }])
   );
 
-  pit('should clean the output folder automatically', async() => {
+  pit('should clean the output folder automatically', async () => {
     const projectName = 'clean-output-folder';
     const filePath = join(__dirname, `${projectName}/dist/asd.txt`);
 

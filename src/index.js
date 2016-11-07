@@ -78,7 +78,7 @@ module.exports = {
       ['retire'],
       ['tslint'],
       ['webpack']
-    ].forEach(def => {
+    ].forEach((def) => {
       const taskId = def[0];
       const taskName = def[1] || taskId;
 

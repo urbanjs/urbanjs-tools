@@ -20,7 +20,7 @@ export function runCommand(command) {
         return [childProcesses.stderr, childProcesses.stdout].join('\n');
       },
 
-      err => {
+      (err) => {
         if (!config.allowToFail && !config.expectToFail) {
           console.log(`${commandString} has failed`); // eslint-disable-line no-console
           console.log('error:\n', err.message); // eslint-disable-line no-console

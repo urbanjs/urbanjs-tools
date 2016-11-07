@@ -57,7 +57,7 @@ module.exports = {
     let isTsProject;
 
     return yargsHelper.parseArgs(yargs, args)
-      .then(argv => {
+      .then((argv) => {
         force = argv.force;
         isTsProject = argv.type === 'ts' || argv.type === 'typescript';
         projectName = argv.name;
@@ -74,7 +74,7 @@ module.exports = {
       })
       .then(() => force && fs.remove(folderPath))
       .then(() => fs.exists(folderPath))
-      .then(exists => {
+      .then((exists) => {
         if (exists) {
           throw new Error([
             `The folder \`${folderPath}\` is existing`,
@@ -152,7 +152,7 @@ module.exports = {
         console.log(// eslint-disable-line no-console
           'Project skeleton has been successfully generated.');
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(// eslint-disable-line no-console
           'Project skeleton generation has exited with error:',
           err

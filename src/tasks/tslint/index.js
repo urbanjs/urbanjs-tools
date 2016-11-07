@@ -64,7 +64,7 @@ module.exports = {
       dependencies: this.dependencies
     }, globals);
 
-    const validate = config => {
+    const validate = (config) => {
       const tslint = require('gulp-tslint');
       const tslintConfig = Object.assign({
         configuration: config.configFile

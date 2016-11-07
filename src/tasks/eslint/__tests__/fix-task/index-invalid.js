@@ -1,2 +1,2 @@
-export function method() {
+export default function method() {
 }

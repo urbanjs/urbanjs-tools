@@ -95,7 +95,7 @@ module.exports = {
       ).then(() => done()).catch(done);
     });
 
-    gulp.task(taskName, [installDependenciesTaskName, cleanUpTaskName], done => {
+    gulp.task(taskName, [installDependenciesTaskName, cleanUpTaskName], (done) => {
       const config = buildConfig(parameters, globals, taskName);
       const bundler = require('webpack')(config);
 

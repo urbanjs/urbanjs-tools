@@ -42,7 +42,7 @@ module.exports = {
   writeFile(targetPath, content) {
     return new Promise((resolve, reject) => {
       const folderPath = path.dirname(targetPath);
-      mkdir(folderPath, err => {
+      mkdir(folderPath, (err) => {
         if (err) {
           reject(`Folder cannot be created: ${folderPath}`);
           return;
@@ -51,7 +51,7 @@ module.exports = {
         fs.writeFile(
           targetPath,
           content,
-          writeErr => {
+          (writeErr) => {
             if (writeErr) {
               reject(`File cannot be written: ${targetPath}`);
               return;

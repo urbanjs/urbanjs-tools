@@ -71,13 +71,13 @@ describe('CLI - install dependencies command', () => {
       { args: ['-t', 'eslint', '-e'], error: 'Unknown argument: e' },
       { args: [], error: 'Missing required argument: t' },
       { args: ['-g'], error: 'Missing required argument: t' }
-    ].forEach(options => {
+    ].forEach((options) => {
       mockYargs.reset();
       let promise = installDependencies.run(options.args, mockYargs);
       expect(promise instanceof Promise).toBe(true);
 
       if (options.error) {
-        promise = promise.catch(err => {
+        promise = promise.catch((err) => {
           expect(err.message).toBe(options.error);
         });
       }
@@ -88,7 +88,7 @@ describe('CLI - install dependencies command', () => {
     return Promise.all(promises);
   });
 
-  pit('uses the npm install task', async() => {
+  pit('uses the npm install task', async () => {
     await installDependencies.run(['-t', 'eslint']);
 
     const mockInstall = mockNpmInstallTask.install.mock;
@@ -97,7 +97,7 @@ describe('CLI - install dependencies command', () => {
     expect(mockInstall.calls[0][1]).toEqual({ global: false, link: false, verbose: false });
   });
 
-  pit('passes the right options to the npm install task', async() => {
+  pit('passes the right options to the npm install task', async () => {
     const mockInstall = mockNpmInstallTask.install.mock;
     const options = { global: false, link: false, verbose: false };
 
@@ -126,7 +126,7 @@ describe('CLI - install dependencies command', () => {
     mockNpmInstallTask.install.mockClear();
   });
 
-  pit('accepts multiple tasks', async() => {
+  pit('accepts multiple tasks', async () => {
     const mockInstall = mockNpmInstallTask.install.mock;
     await installDependencies.run(['-t', 'eslint', 'retire']);
     expect(mockInstall.calls.length).toBe(2);
@@ -134,7 +134,7 @@ describe('CLI - install dependencies command', () => {
     expect(mockInstall.calls[1][0]).toEqual(mockRetireTask.dependencies);
   });
 
-  pit('fails if unknown task is given', async() => {
+  pit('fails if unknown task is given', async () => {
     try {
       await installDependencies.run(['-t', 'eslint2']);
       throw new Error('Expect to fail');

@@ -24,7 +24,7 @@ describe('CLI - index command', () => {
 
     const mockShowHelp = jest.genMockFunction().mockReturnValue(mockYargs);
     mockYargs.showHelp = mockShowHelp;
-    return index.run(['-h'], mockYargs).catch(err => {
+    return index.run(['-h'], mockYargs).catch((err) => {
       expect(err.message).toBe('Help');
       expect(mockShowHelp.mock.calls.length).toBe(1);
     });
@@ -96,13 +96,13 @@ describe('CLI - index command', () => {
       { args: [], error: 'Invalid argument' },
       { args: ['unknown'], error: 'Unknown argument: unknown' },
       { args: ['-u'], error: 'Unknown argument: u' }
-    ].forEach(options => {
+    ].forEach((options) => {
       mockYargs.reset();
       let promise = index.run(options.args, mockYargs);
       expect(promise instanceof Promise).toBe(true);
 
       if (options.error) {
-        promise = promise.catch(err => {
+        promise = promise.catch((err) => {
           expect(err.message).toBe(options.error);
         });
       }
@@ -116,7 +116,7 @@ describe('CLI - index command', () => {
   pit('returns the promise of the given command', () => {
     const value = { command: true };
     mockGenerate.run.mockReturnValue(Promise.resolve(value));
-    return index.run(['generate'], mockYargs).then(commandValue => {
+    return index.run(['generate'], mockYargs).then((commandValue) => {
       expect(commandValue).toBe(value);
     });
   });

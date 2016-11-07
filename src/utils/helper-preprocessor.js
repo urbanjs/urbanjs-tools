@@ -9,7 +9,7 @@ function transpile(src, filename, babelConfig, tsCompilerOptions) {
   const tsc = require('typescript');
   const gulpTsc = require('gulp-typescript');
 
-  const transformWithBabel = content => {
+  const transformWithBabel = (content) => {
     const result = babel.transform(content, Object.assign({}, babelConfig, {
       filename,
       ast: false,
@@ -70,7 +70,7 @@ module.exports = {
     const sourceMapSupport = require('source-map-support');
     sourceMapSupport.install({
       handleUncaughtExceptions: false,
-      retrieveSourceMap: source => {
+      retrieveSourceMap: (source) => {
         const map = sourceMaps[source];
         if (map) {
           return {

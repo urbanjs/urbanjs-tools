@@ -54,7 +54,7 @@ module.exports = {
 
     return yargsHelper.parseArgs(yargs, args)
       .then(argv => Promise.all(
-        argv.tasks.map(taskName => {
+        argv.tasks.map((taskName) => {
           try {
             return npmInstall.install(
               require(`../tasks/${taskName}`).dependencies, // eslint-disable-line
@@ -69,7 +69,7 @@ module.exports = {
         console.log(// eslint-disable-line no-console
           'Dependencies have been installed successfully');
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(// eslint-disable-line no-console
           'Dependencies cannot be installed:',
           err

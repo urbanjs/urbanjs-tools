@@ -72,7 +72,7 @@ module.exports = {
   },
 
   notAvailableGulpTask(taskName) {
-    return done => {
+    return (done) => {
       console.log(// eslint-disable-line no-console
         `${taskName} is not available anymore. See changelog for further information.`);
       done(null);

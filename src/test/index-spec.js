@@ -37,7 +37,7 @@ describe('Public interface', () => {
     });
 
     it('should accept method as configuration', () => {
-      setGlobalConfiguration(currentGlobals => {
+      setGlobalConfiguration((currentGlobals) => {
         equal(typeof currentGlobals, 'object');
         equal(typeof currentGlobals.babel, 'object');
 
@@ -49,7 +49,7 @@ describe('Public interface', () => {
     });
 
     it('should not allow to modify the reference of the globals in the config method', () => {
-      setGlobalConfiguration(currentGlobals => {
+      setGlobalConfiguration((currentGlobals) => {
         equal(typeof currentGlobals, 'object');
         equal(typeof currentGlobals.babel, 'object');
 

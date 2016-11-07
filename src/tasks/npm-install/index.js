@@ -77,7 +77,7 @@ function installDependencies(dependencies, options) {
   const config = options || {};
   const verbose = config.verbose;
   const runCommand = command => new Promise((resolve, reject) => {
-    shell.task([command], { quiet: !verbose, verbose })(err => {
+    shell.task([command], { quiet: !verbose, verbose })((err) => {
       if (err) {
         reject(err);
         return;
@@ -94,7 +94,7 @@ function installDependencies(dependencies, options) {
     installationPromise = installationPromise
       .then(() => {
         if (config.link) {
-          return getGlobalModulesPath().catch(e => {
+          return getGlobalModulesPath().catch((e) => {
             // it is not critical though we might want to know about it
             console.log(e); // eslint-disable-line no-console
           });
@@ -102,7 +102,7 @@ function installDependencies(dependencies, options) {
 
         return null;
       })
-      .then(globalModulesPath => {
+      .then((globalModulesPath) => {
         console.log(// eslint-disable-line no-console
           `Installing missing dependencies...\n${missingDependencies.join(' ')}`);
 
@@ -163,7 +163,7 @@ module.exports = {
     if (options && options.global) {
       promise = promise
         .then(getGlobalModulesPath)
-        .then(globalModulesPath => {
+        .then((globalModulesPath) => {
           nodeModulePaths = [globalModulesPath];
         });
     }
@@ -202,7 +202,7 @@ module.exports = {
   register(gulp, taskName, parameters, globals) {
     globals = globals || {}; // eslint-disable-line no-param-reassign
 
-    gulp.task(taskName, done => {
+    gulp.task(taskName, (done) => {
       if (!globals.hasOwnProperty('allowLinking')) {
         globals.allowLinking = true; // eslint-disable-line no-param-reassign
       }

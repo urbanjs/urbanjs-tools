@@ -7,7 +7,7 @@ const preprocessor = require('../../utils/helper-preprocessor');
 
 preprocessor.installSourceMapSupport();
 
-babel.util.canCompile.EXTENSIONS.concat('.ts', 'tsx').forEach(extension => {
+babel.util.canCompile.EXTENSIONS.concat('.ts', 'tsx').forEach((extension) => {
   require.extensions[extension] = (module, filename) => {
     module._compile(// eslint-disable-line
       preprocessor.transpile(

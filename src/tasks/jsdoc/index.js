@@ -25,7 +25,7 @@ function buildConfig(parameters, globals, processOptionPrefix) {
 function getJSDocParameters(configFilePath) {
   return fs.readFile(configFilePath)
     .then(content => JSON.parse(content))
-    .catch(e => {
+    .catch((e) => {
       console.log('Config file cannot be found/parsed'); // eslint-disable-line no-console
       throw e;
     });
@@ -77,7 +77,7 @@ module.exports = {
     gulp.task(cleanUpTaskName, [installDependenciesTaskName], (done) => {
       const config = buildConfig(parameters, globals, taskName);
       getJSDocParameters(config.configFile)
-        .then(jsdocParameters => {
+        .then((jsdocParameters) => {
           const outputPath = _.get(jsdocParameters, 'opts.destination');
           if (!outputPath) {
             throw new Error('Config file need to define the output folder');
@@ -89,7 +89,7 @@ module.exports = {
         .catch(done);
     });
 
-    gulp.task(taskName, [installDependenciesTaskName, cleanUpTaskName], done => {
+    gulp.task(taskName, [installDependenciesTaskName, cleanUpTaskName], (done) => {
       const config = buildConfig(parameters, globals, taskName);
       shell.task([
         `node "${config.packagePath}jsdoc.js" -c "${config.configFile}"`

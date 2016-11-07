@@ -9,7 +9,7 @@ jest.unmock('../../../utils/helper-fs');
 describe('JSDoc task', () => {
   extendJasmineTimeout(jasmine, beforeEach, afterEach);
 
-  pit('should be able to generate documentation', async() => {
+  pit('should be able to generate documentation', async () => {
     const projectName = 'valid-project';
     await runCommand(['gulp jsdoc', { cwd: join(__dirname, projectName) }]);
 
@@ -18,7 +18,7 @@ describe('JSDoc task', () => {
     expect(documentationExists).toBe(true);
   });
 
-  pit('should clean the output folder automatically', async() => {
+  pit('should clean the output folder automatically', async () => {
     const projectName = 'clean-output-folder';
     const filePath = join(__dirname, `${projectName}/help/asd.txt`);
 
@@ -29,7 +29,7 @@ describe('JSDoc task', () => {
     expect(fileExists).toBe(false);
   });
 
-  pit('should not fail if source input is empty', async() => {
+  pit('should not fail if source input is empty', async () => {
     await runCommand(['gulp jsdoc', {
       cwd: join(__dirname, 'missing-source-files')
     }]);
@@ -63,7 +63,7 @@ describe('JSDoc task', () => {
     }])
   );
 
-  pit('should be able to handle typescript source', async() => {
+  pit('should be able to handle typescript source', async () => {
     const projectName = 'typescript-source';
     await runCommand(['gulp jsdoc', { cwd: join(__dirname, projectName) }]);
 

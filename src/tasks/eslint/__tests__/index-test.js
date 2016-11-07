@@ -25,10 +25,10 @@ describe('ESLint task', () => {
     runCommand(['gulp eslint', { cwd: join(__dirname, 'default-configuration') }])
   );
 
-  pit('should be able to fix the fixable issues', async() => {
+  pit('should be able to fix the fixable issues', async () => {
     const projectName = 'fix-task';
     const projectPath = join(__dirname, projectName);
-    const fixableContent = 'export function method () {\n};';
+    const fixableContent = 'export default function method () {\n};';
 
     await writeFile(join(__dirname, projectName, 'index-invalid.js'), fixableContent);
     await runCommands([

@@ -53,7 +53,7 @@ module.exports = {
       let vulnerabilities = null;
       let i = 0;
 
-      [].concat(config.packageFile).forEach(packageFile => {
+      [].concat(config.packageFile).forEach((packageFile) => {
         i += 1;
 
         if (!path.isAbsolute(packageFile)) {

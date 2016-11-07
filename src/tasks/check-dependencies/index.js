@@ -61,7 +61,7 @@ function checkOutdatedPackages(packageFile) {
   let problematicDependencies;
 
   return getOutdatedPackages(packageFile)
-    .then(packages => {
+    .then((packages) => {
       // validate only installed dependencies
       outdatedPackageNames = Object.keys(packages)
         .filter(packageName => typeof packages[packageName].current !== 'undefined');
@@ -70,13 +70,13 @@ function checkOutdatedPackages(packageFile) {
       // be installed according the semver version.
       // Unless you use shrinkwrap file or fix version numbers you should update these
       // dependencies as soon as possible to avoid potential errors of the newer version.
-      problematicDependencies = outdatedPackageNames.filter(packageName => {
+      problematicDependencies = outdatedPackageNames.filter((packageName) => {
         const dependency = packages[packageName];
         return dependency.current !== dependency.wanted && dependency.wanted !== 'linked';
       });
     })
     .then(() => fs.exists(path.join(path.dirname(packageFile), 'npm-shrinkwrap.json')))
-    .then(exists => {
+    .then((exists) => {
       // shrinkwrap does not exist...
       if (!exists && problematicDependencies.length) {
         show(
@@ -125,7 +125,7 @@ function checkMissingPackages(packageFile, files) {
           reject(new Error('Unable to handle source files.'));
         }
 
-        depcheck(path.dirname(packageFile), options, stats => {
+        depcheck(path.dirname(packageFile), options, (stats) => {
           if (Object.keys(stats.missing).length) {
             show(stats.missing, 'Missing dependencies:', 'red');
             reject(new Error('missing dependencies'));
@@ -184,7 +184,7 @@ module.exports = {
       dependencies: this.dependencies
     }, globals);
 
-    gulp.task(taskName, [installDependenciesTaskName], done => {
+    gulp.task(taskName, [installDependenciesTaskName], (done) => {
       const config = buildConfig(parameters, globals, taskName);
 
       Promise.all([

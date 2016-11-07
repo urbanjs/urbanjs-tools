@@ -73,7 +73,7 @@ describe('Check dependencies task', () => {
     }])
   );
 
-  pit('should support command line options', async() => {
+  pit('should support command line options', async () => {
     const projectPath = 'cli-options';
     const sourceFilePath = join(__dirname, projectPath, 'index2.js');
 

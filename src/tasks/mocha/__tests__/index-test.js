@@ -84,7 +84,7 @@ describe('Mocha task', () => {
     }])
   );
 
-  pit('should support parallel execution', async() => {
+  pit('should support parallel execution', async () => {
     const projectPath = join(__dirname, 'parallel-execution');
 
     await runCommand(['gulp mocha', {
@@ -141,7 +141,7 @@ describe('Mocha task', () => {
     }])
   );
 
-  pit('should clean the output folder automatically', async() => {
+  pit('should clean the output folder automatically', async () => {
     const projectName = 'clean-output-folder';
     const filePath = join(__dirname, `${projectName}/dist/asd.txt`);
     const coveragePath = join(__dirname, `${projectName}/dist/coverage-final.json`);

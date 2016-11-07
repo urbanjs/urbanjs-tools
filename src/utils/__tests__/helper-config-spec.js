@@ -17,7 +17,7 @@ describe('Config helper', () => {
         undefined,
         NaN,
         true
-      ].forEach(configuration => {
+      ].forEach((configuration) => {
         expect(config.mergeParameters.call(config, defaults, configuration)).toEqual(defaults);
       });
     });
@@ -44,7 +44,7 @@ describe('Config helper', () => {
       const defaults = { a: 2 };
 
       expect(config.mergeParameters(defaults, _defaults => _defaults)).not.toBe(defaults);
-      expect(config.mergeParameters(defaults, _defaults => {
+      expect(config.mergeParameters(defaults, (_defaults) => {
         _defaults.b = 1; // eslint-disable-line no-param-reassign
         return _defaults;
       })).toEqual({ a: 2, b: 1 });
@@ -65,7 +65,7 @@ describe('Config helper', () => {
         'notempty',
         () => {
         }
-      ].forEach(defaults => {
+      ].forEach((defaults) => {
         expect(() => config.mergeParameters.call(config, defaults, {})).toThrow(
           new Error(`Invalid arguments: defaults must be an object ${JSON.stringify(defaults)}`)
         );
@@ -74,7 +74,7 @@ describe('Config helper', () => {
       [
         'notempty',
         1
-      ].forEach(configuration => {
+      ].forEach((configuration) => {
         expect(() => config.mergeParameters.call(config, {}, configuration)).toThrow(
           new Error(`Invalid arguments: invalid config ${JSON.stringify(configuration)}`)
         );
@@ -94,7 +94,7 @@ describe('Config helper', () => {
         'notempty',
         () => {
         }
-      ].forEach(returnValue => {
+      ].forEach((returnValue) => {
         const msg = `Invalid config: ${JSON.stringify(returnValue)}`;
         expect(() => config.mergeParameters.call(config, {}, () => returnValue))
           .toThrow(new Error(msg));

@@ -36,7 +36,7 @@ module.exports = {
     [
       [generate, 'generate', 'Generates a skeleton for your next project'],
       [installDependencies, 'install-dependencies', 'Installs the dependencies of the given tasks']
-    ].forEach(command => yargs.command(command[1], command[2], y => {
+    ].forEach(command => yargs.command(command[1], command[2], (y) => {
       if (args[0] !== command[1]) {
         console.log(// eslint-disable-line no-console
           `Invalid argument: ${args.join(' ')}`);
@@ -47,7 +47,7 @@ module.exports = {
       commandExecution = command[0].run(args.slice(1), y);
     }));
 
-    return yargsHelper.parseArgs(yargs, args).then(argv => {
+    return yargsHelper.parseArgs(yargs, args).then((argv) => {
       if (argv.v) {
         // yargs handles this option synchronously
         return Promise.resolve();

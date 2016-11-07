@@ -8,7 +8,7 @@ const unmockedModulePathPatterns = [
   'utils/helper-tests.js'
 ];
 
-tools.setGlobalConfiguration(defaults => {
+tools.setGlobalConfiguration((defaults) => {
   defaults.sourceFiles = defaults.sourceFiles.concat(// eslint-disable-line no-param-reassign
     '!**/dist/**',
     '!**/help/**',
@@ -22,7 +22,7 @@ tools.setGlobalConfiguration(defaults => {
 tools.initialize(gulp, {
   checkDependencies: true,
 
-  checkFileNames: defaults => {
+  checkFileNames: (defaults) => {
     defaults.paramCase.push('!src/tasks/check-file-names/__tests__/**');
     return defaults;
   },
@@ -31,10 +31,10 @@ tools.initialize(gulp, {
     rules: {
       'no-prototype-builtins': 0,
       'global-require': 0,
-      'arrow-parens': 0,
       'import/no-extraneous-dependencies': 0,
       'import/prefer-default-export': 0,
-      'import/newline-after-import': 0
+      'import/newline-after-import': 0,
+      'linebreak-style': 0
     }
   },
 

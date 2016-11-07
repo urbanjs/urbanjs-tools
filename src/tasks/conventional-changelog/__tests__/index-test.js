@@ -9,7 +9,7 @@ jest.unmock('../../../utils/helper-fs');
 describe('Conventional changelog task', () => {
   extendJasmineTimeout(jasmine, beforeEach, afterEach);
 
-  pit('should generate the changelog successfully', async() => {
+  pit('should generate the changelog successfully', async () => {
     const projectName = 'valid-project';
     const changelogFile = join(__dirname, projectName, 'CHANGELOG.md');
 
@@ -19,7 +19,7 @@ describe('Conventional changelog task', () => {
     expect(content.length > 0).toBe(true);
   });
 
-  pit('should use default configuration without specific parameters', async() => {
+  pit('should use default configuration without specific parameters', async () => {
     const projectName = 'default-configuration';
     const changelogFile = join(__dirname, projectName, 'CHANGELOG.md');
 
@@ -29,7 +29,7 @@ describe('Conventional changelog task', () => {
     expect(content.length > 0).toBe(true);
   });
 
-  pit('should support command line options', async() => {
+  pit('should support command line options', async () => {
     const projectName = 'cli-options';
     const changelogFile = join(__dirname, projectName, 'CHANGELOG2.md');
     const option = `--conventional-changelog.changelogFile="${changelogFile}"`;

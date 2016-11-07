@@ -9,7 +9,7 @@ jest.unmock('../../../utils/helper-fs');
 describe('Webpack task', () => {
   extendJasmineTimeout(jasmine, beforeEach, afterEach);
 
-  pit('should bundle the source files successfully', async() => {
+  pit('should bundle the source files successfully', async () => {
     const projectName = 'valid-project';
     await runCommand(['gulp webpack', {
       cwd: join(__dirname, projectName),
@@ -30,7 +30,7 @@ describe('Webpack task', () => {
     }])
   );
 
-  pit('should clean the output folder automatically', async() => {
+  pit('should clean the output folder automatically', async () => {
     const projectName = 'clean-output-folder';
     const filePath = join(__dirname, `${projectName}/dist/asd.txt`);
 
@@ -41,7 +41,7 @@ describe('Webpack task', () => {
     expect(fileExists).toBe(false);
   });
 
-  pit('should accept array as configuration', async() => {
+  pit('should accept array as configuration', async () => {
     const projectName = 'array-configuration';
     await runCommand(['gulp webpack', { cwd: join(__dirname, projectName) }]);
 
@@ -60,7 +60,7 @@ describe('Webpack task', () => {
     }])
   );
 
-  pit('should use default configuration without specific parameters', async() => {
+  pit('should use default configuration without specific parameters', async () => {
     const projectName = 'default-configuration';
     await runCommand(['gulp webpack', { cwd: join(__dirname, projectName) }]);
 
@@ -70,7 +70,7 @@ describe('Webpack task', () => {
     testLoggerLib(require.requireActual(`./${projectName}/dist/index.js`));
   });
 
-  pit('should be able to handle typescript source', async() => {
+  pit('should be able to handle typescript source', async () => {
     const projectName = 'typescript-source';
     await runCommand(['gulp webpack', { cwd: join(__dirname, projectName) }]);
 
@@ -83,7 +83,7 @@ describe('Webpack task', () => {
     testLoggerLib(require.requireActual(`./${projectName}/dist/index.js`));
   });
 
-  pit('should emit the output even if compiler throws errors', async() => {
+  pit('should emit the output even if compiler throws errors', async () => {
     const projectName = 'typescript-error';
     await runCommand(['gulp webpack', {
       cwd: join(__dirname, projectName),
@@ -101,7 +101,7 @@ describe('Webpack task', () => {
     expect(declarationExists).toBe(true);
   });
 
-  pit('should support command line options', async() => {
+  pit('should support command line options', async () => {
     const projectName = 'cli-options';
     await runCommand(['gulp webpack --webpack.entry="./index2.js"', {
       cwd: join(__dirname, projectName),
