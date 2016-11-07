@@ -31,7 +31,6 @@ tools.initialize(gulp, {
     rules: {
       'no-prototype-builtins': 0,
       'global-require': 0,
-      'import/no-extraneous-dependencies': 0,
       'import/prefer-default-export': 0,
       'import/newline-after-import': 0,
       'linebreak-style': 0
