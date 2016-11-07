@@ -1,4 +1,5 @@
-## Unreleased
+<a name="1.2.4"></a>
+## [1.2.4](https://github.com/urbanjs/tools/compare/1.2.1...1.2.4) (2016-11-07)
 - Improve ```mocha``` task
     - Improve parallel execution
 - Fix ```typescript``` transpile
@@ -7,7 +8,7 @@
     - Be aware of the new `eslint` rules (use `gulp eslint:fix`)
 
 <a name="1.2.1"></a>
-## [1.2.0](https://github.com/urbanjs/tools/compare/1.2.0...1.2.1) (2016-10-21)
+## [1.2.1](https://github.com/urbanjs/tools/compare/1.2.0...1.2.1) (2016-10-21)
 - Fix ```mocha``` task
     - Fix parallel execution algorithm
     - Fix message intermixing
