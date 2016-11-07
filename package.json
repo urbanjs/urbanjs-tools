@@ -1,6 +1,6 @@
 {
   "name": "urbanjs-tools",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "description": "Common dev tools for JS projects",
   "author": "Tamas Magedli <tamas.magedli@gmail.com>",
   "contributors": [
@@ -92,8 +92,5 @@
     "typescript": "2.0.3",
     "vinyl-fs": "2.4.4",
     "webpack": "1.13.2"
-  },
-  "peerDependencies": {
-    "gulp": "^3.9.1"
   }
 }
