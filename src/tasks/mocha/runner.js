@@ -83,7 +83,10 @@ process.on('message', (message) => {
       .then(
         () => process.send({
           type: messages.DONE,
-          payload: { target: messageId }
+          payload: {
+            target: messageId,
+            memoryUsage: process.memoryUsage()
+          }
         }),
         (e) => {
           console.log(e); // eslint-disable-line
@@ -96,13 +99,20 @@ process.on('message', (message) => {
       .then(
         () => process.send({
           type: messages.DONE,
-          payload: { target: messageId }
+          payload: {
+            target: messageId,
+            memoryUsage: process.memoryUsage()
+          }
         }),
         (e) => {
           console.log(e); // eslint-disable-line
           process.send({
             type: messages.DONE,
-            payload: { target: messageId, hasError: true }
+            payload: {
+              target: messageId,
+              hasError: true,
+              memoryUsage: process.memoryUsage()
+            }
           });
         }
       );

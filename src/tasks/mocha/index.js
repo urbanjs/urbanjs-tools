@@ -56,6 +56,7 @@ function createNewRunner(mochaConfig) {
     runner.stderr.on('data', message => outputBuffer.push(message));
     runner.on('message', (message) => {
       if (message.type === messages.DONE) {
+        runner.memoryUsage = message.payload.memoryUsage;
         showOutput();
 
         if (message.payload.target === initMessageId) {
@@ -85,7 +86,7 @@ function closeRunner(runner, mochaConfig) {
   return new Promise((resolve) => {
     runner.on('close', (code) => {
       if (code !== 0) {
-        console.log( // eslint-disable-line
+        console.error( // eslint-disable-line
           'Coverage information could not be collected from runner.');
         runner.send('SIGKILL');
       }
@@ -193,18 +194,17 @@ function collectCoverageFromParticles(coverageOptions) {
  * @private
  * @param {string[][]} filesets - array of glob strings arrays
  * @param {Object} mochaConfig - see runner.js
- * @param {number} maxConcurrency
+ * @param {Object} runnerOptions
+ * @param {number} runnerOptions.maxConcurrency
+ * @param {number} runnerOptions.runnerMemoryUsageLimit
  * @returns {Promise}
  */
-function runFilesetsInParallel(filesets, mochaConfig, maxConcurrency) {
+function runFilesetsInParallel(filesets, mochaConfig, runnerOptions) {
   let hasError = false;
   const promises = [];
-  const whenRunners = Promise.all(
-    new Array(Math.min(filesets.length, maxConcurrency)).fill()
-      .map(() => createNewRunner(mochaConfig))
-  );
+  const freeRunners = [];
 
-  const promise = whenRunners.then(freeRunners => (function next(remainingFilesets) {
+  const promise = (function next(remainingFilesets) {
     if (remainingFilesets.length < 1) {
       return Promise.all(promises);
     }
@@ -216,22 +216,34 @@ function runFilesetsInParallel(filesets, mochaConfig, maxConcurrency) {
           hasError = true;
         })
         .then(() => {
-          freeRunners.push(currentRunner);
+          if (!runnerOptions.runnerMemoryUsageLimit ||
+            currentRunner.memoryUsage.heapTotal < runnerOptions.runnerMemoryUsageLimit * 1e6) {
+            freeRunners.push(currentRunner);
+            return Promise.resolve();
+          }
+
+          return closeRunner(currentRunner, mochaConfig);
+        })
+        .then(() => {
           promises.splice(promises.indexOf(currentPromise), 1);
         });
 
       promises.push(currentPromise);
 
       return next(remainingFilesets.slice(1));
+    } else if ((promises.length + freeRunners.length) < runnerOptions.maxConcurrency) {
+      return createNewRunner(mochaConfig).then((newRunner) => {
+        freeRunners.push(newRunner);
+        return next(remainingFilesets);
+      });
     }
 
     return Promise.race(promises)
       .then(() => next(remainingFilesets));
-  }(filesets)));
+  }(filesets));
 
   return promise
-    .then(() => whenRunners)
-    .then(runners => Promise.all(runners.map(runner => closeRunner(runner, mochaConfig))))
+    .then(() => Promise.all(freeRunners.map(runner => closeRunner(runner, mochaConfig))))
     .then(() => (
       mochaConfig.collectCoverage
         ? collectCoverageFromParticles(mochaConfig)
@@ -313,9 +325,14 @@ module.exports = {
       process.env.urbanJSToolGlobals = JSON.stringify(globals);
 
       const mochaConfig = _.omit(config, 'files', 'maxConcurrency');
+      const runnerMemoryUsageLimit = config.runnerMemoryUsageLimit;
       const maxConcurrency = config.maxConcurrency > 0
         ? config.maxConcurrency
         : os.cpus().length;
+      const runnerOptions = {
+        runnerMemoryUsageLimit,
+        maxConcurrency
+      };
 
       let filesets = [[]];
       [].concat(config.files).forEach((glob) => {
@@ -327,7 +344,7 @@ module.exports = {
       });
       filesets = filesets.filter(fileset => fileset.length);
 
-      runFilesetsInParallel(filesets, mochaConfig, maxConcurrency).then(
+      runFilesetsInParallel(filesets, mochaConfig, runnerOptions).then(
         () => done(),
         done
       );

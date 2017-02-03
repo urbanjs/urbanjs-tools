@@ -1,4 +1,5 @@
 ## Unreleased
+- Introduce `runnerMemoryUsageLimit` options in `mocha` config
 - Introduce `setupInMemoryTranspile` method to set up in memory tanspile easily
 - Update dependencies
     `BREAKING`
