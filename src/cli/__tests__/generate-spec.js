@@ -25,7 +25,7 @@ describe('CLI - generate command', () => {
     mockFs.writeFile.mockClear();
   });
 
-  pit('accepts options yargs instance as second arguments', () => {
+  it('accepts options yargs instance as second arguments', () => {
     expect(() => {
       generate.run(['-h']);
     }).not.toThrow();
@@ -37,7 +37,7 @@ describe('CLI - generate command', () => {
     });
   });
 
-  pit('shows help if there are missing/unknown options', () => {
+  it('shows help if there are missing/unknown options', () => {
     const mockShowHelp = jest.genMockFunction().mockReturnValue(mockYargs);
     const reset = () => {
       mockYargs.reset();
@@ -66,7 +66,7 @@ describe('CLI - generate command', () => {
       });
   });
 
-  pit('returns a promise', () => {
+  it('returns a promise', () => {
     const promises = [];
 
     [
@@ -92,20 +92,20 @@ describe('CLI - generate command', () => {
     return Promise.all(promises);
   });
 
-  pit('uses process.cwd() to define the absolute path of the project', () =>
+  it('uses process.cwd() to define the absolute path of the project', () =>
     generate.run(['-n', 'projectName'], mockYargs).then(() => {
       expect(mockFs.exists.mock.calls[0]).toEqual([path.join(process.cwd(), 'projectName')]);
     })
   );
 
-  pit('accepts absolute path as project name', () => {
+  it('accepts absolute path as project name', () => {
     const absPath = path.join(__dirname, 'project');
     return generate.run(['-n', absPath], mockYargs).then(() => {
       expect(mockFs.exists.mock.calls[0]).toEqual([absPath]);
     });
   });
 
-  pit('fails if the given name is invalid', () =>
+  it('fails if the given name is invalid', () =>
     Promise.all([
       generate.run(['-n'], mockYargs).catch((err) => {
         expect(err.message).toBe('The given name is invalid: ');
@@ -116,7 +116,7 @@ describe('CLI - generate command', () => {
     ])
   );
 
-  pit('fails if the specified folder exists and force options is not used', () => {
+  it('fails if the specified folder exists and force options is not used', () => {
     const projectName = 'asd';
     const folderPath = path.join(process.cwd(), projectName);
 
@@ -128,7 +128,7 @@ describe('CLI - generate command', () => {
     });
   });
 
-  pit('fails if the specified folder cannot be deleted', () => {
+  it('fails if the specified folder cannot be deleted', () => {
     const projectName = 'asd';
     const folderPath = path.join(process.cwd(), projectName);
 
@@ -141,7 +141,7 @@ describe('CLI - generate command', () => {
     });
   });
 
-  pit('fills the generated files with the correct content', () => {
+  it('fills the generated files with the correct content', () => {
     const projectName = 'asd';
     const folderPath = path.join(process.cwd(), projectName);
 
@@ -205,7 +205,7 @@ describe('CLI - generate command', () => {
     });
   });
 
-  pit('allows to generate typescript project', () => {
+  it('allows to generate typescript project', () => {
     const projectName = 'asd';
     const folderPath = path.join(process.cwd(), projectName);
 

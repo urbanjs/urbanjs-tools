@@ -19,11 +19,11 @@ describe('urbanjs cli', () => {
     fs.remove(projectFolderPath).then(() => done(), done.fail);
   });
 
-  pit('should be able to generate new project', () =>
+  it('should be able to generate new project', () =>
     runCommand([`node "${urbanjsCliPath}" generate -n ${projectFolderPath}`])
   );
 
-  pit('should not be able to generate new project if the target folder exists', () =>
+  it('should not be able to generate new project if the target folder exists', () =>
     runCommands([
       [`node "${urbanjsCliPath}" generate -n ${projectFolderPath}`],
       [`node "${urbanjsCliPath}" generate -n ${projectFolderPath}`, {
@@ -33,14 +33,14 @@ describe('urbanjs cli', () => {
     ])
   );
 
-  pit('should be able to generate new project with -f even if the target folder exists', () =>
+  it('should be able to generate new project with -f even if the target folder exists', () =>
     runCommands([
       [`node "${urbanjsCliPath}" generate -n ${projectFolderPath}`],
       [`node "${urbanjsCliPath}" generate -f -n ${projectFolderPath}`]
     ])
   );
 
-  pit('should be able to run the tasks of the generated project (javascript)', () =>
+  it('should be able to run the tasks of the generated project (javascript)', () =>
     runCommands([
 
       // generate project
@@ -82,7 +82,7 @@ describe('urbanjs cli', () => {
     ])
   );
 
-  pit('should be able to run the tasks of the generated project (typescript)', () =>
+  it('should be able to run the tasks of the generated project (typescript)', () =>
     runCommands([
 
       // generate project
@@ -97,7 +97,7 @@ describe('urbanjs cli', () => {
     ])
   );
 
-  pit('should be able to run the not default tasks (mocha, webpack)', async () => {
+  it('should be able to run the not default tasks (mocha, webpack)', async () => {
     await runCommand([`node "${urbanjsCliPath}" generate -n ${projectFolderPath}`]);
     await fs.writeFile(
       path.join(projectFolderPath, 'gulpfile.js'),
@@ -126,7 +126,7 @@ describe('urbanjs cli', () => {
     ]);
   });
 
-  pit('should be able to install dependencies locally', async () => {
+  it('should be able to install dependencies locally', async () => {
     await runCommands([
       [`node "${urbanjsCliPath}" generate -n ${projectFolderPath}`],
       [`node "${urbanjsCliPath}" install-dependencies -t retire`, { cwd: projectFolderPath }]
@@ -136,14 +136,14 @@ describe('urbanjs cli', () => {
     expect(exists).toBe(true);
   });
 
-  pit('should be able to install dependencies globally', () =>
+  it('should be able to install dependencies globally', () =>
     runCommands([
       [`node "${urbanjsCliPath}" install-dependencies -g -t retire`],
       ['retire -n', { cwd: packageFolderPath }]
     ])
   );
 
-  pit('should be able to link globally installed dependencies', async () => {
+  it('should be able to link globally installed dependencies', async () => {
     await runCommands([
       [`node "${urbanjsCliPath}" install-dependencies -g -t retire`],
       [`node "${urbanjsCliPath}" generate -n ${projectFolderPath}`],

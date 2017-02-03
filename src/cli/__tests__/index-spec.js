@@ -17,7 +17,7 @@ describe('CLI - index command', () => {
     mockGenerate.run.mockReturnValue(Promise.resolve());
   });
 
-  pit('accepts options yargs instance as second arguments', () => {
+  it('accepts options yargs instance as second arguments', () => {
     expect(() => {
       index.run(['-v']);
     }).not.toThrow();
@@ -30,7 +30,7 @@ describe('CLI - index command', () => {
     });
   });
 
-  pit('shows help if empty or unknown command/option is given', () => {
+  it('shows help if empty or unknown command/option is given', () => {
     const mockShowHelp = jest.genMockFunction().mockReturnValue(mockYargs);
     const reset = () => {
       mockYargs.reset();
@@ -86,7 +86,7 @@ describe('CLI - index command', () => {
     expect(mockGenerate.run.mock.calls.length).toBe(1);
   });
 
-  pit('returns a promise', () => {
+  it('returns a promise', () => {
     const promises = [];
 
     [
@@ -113,7 +113,7 @@ describe('CLI - index command', () => {
     return Promise.all(promises);
   });
 
-  pit('returns the promise of the given command', () => {
+  it('returns the promise of the given command', () => {
     const value = { command: true };
     mockGenerate.run.mockReturnValue(Promise.resolve(value));
     return index.run(['generate'], mockYargs).then((commandValue) => {

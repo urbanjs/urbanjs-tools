@@ -6,6 +6,7 @@
     "export-name": false,
     "no-reference": false,
     "no-for-in-array": false,
-    "restrict-plus-operands": false
+    "restrict-plus-operands": false,
+    "linebreak-style": false
   }
 }

@@ -10,24 +10,24 @@ const dependencyHelper = require('../../utils/helper-dependencies');
 
 function buildConfig(parameters, globals, processOptionPrefix) {
   const defaults = require('./defaults');
-  const tsLoader = defaults.module.loaders[0];
-  const babelLoader = defaults.module.loaders[1];
+  const tsLoader = defaults.module.rules[0].use[0];
+  const babelLoader = defaults.module.rules[1].use[0];
 
   if (globals.babel) {
-    babelLoader.query = globals.babel;
-    tsLoader.query.babelOptions = globals.babel;
+    babelLoader.options = globals.babel;
+    tsLoader.options.babelOptions = globals.babel;
   } else {
-    globals.babel = babelLoader.query; // eslint-disable-line
+    globals.babel = babelLoader.options; // eslint-disable-line
   }
 
   if (globals.typescript) {
-    tsLoader.query = helper.getTSLoader(
+    tsLoader.options = helper.getTSLoader(
       globals.typescript,
       globals.babel
     );
   } else {
     // should come from defaults to be in sync
-    // but tsLoader.query is a mix of compiler & tsloader options
+    // but tsLoader.options is a mix of compiler & tsloader options
     // see defaults.js
     globals.typescript = require('../../utils/global-typescript'); // eslint-disable-line
   }

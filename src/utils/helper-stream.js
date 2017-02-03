@@ -21,6 +21,8 @@ module.exports = {
 
     forkStream.a.pipe(conditionStream);
 
+    // merge-stream package cannot be updated because it emits the error
+    // from conditionStream to mergedStream
     const mergedStream = mergeStream(forkStream.b, conditionStream);
     const outStream = through2.obj();
     mergedStream.pipe(outStream);

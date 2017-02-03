@@ -12,12 +12,14 @@ task.register(gulp, 'webpack', {
     libraryTarget: 'commonjs'
   },
   module: {
-    loaders: [{
+    rules: [{
       test: /\.js$/,
-      loader: require.resolve('babel-loader'),
-      query: {
-        babelrc: false
-      }
+      use: [{
+        loader: require.resolve('babel-loader'),
+        options: {
+          babelrc: false
+        }
+      }]
     }]
   }
 });

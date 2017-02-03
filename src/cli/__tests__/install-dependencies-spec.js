@@ -19,7 +19,7 @@ describe('CLI - install dependencies command', () => {
     mockNpmInstallTask.install.mockClear();
   });
 
-  pit('accepts options yargs instance as second arguments', () => {
+  it('accepts options yargs instance as second arguments', () => {
     expect(() => {
       installDependencies.run(['-h']);
     }).not.toThrow();
@@ -31,7 +31,7 @@ describe('CLI - install dependencies command', () => {
     });
   });
 
-  pit('shows help if there are missing/unknown options', () => {
+  it('shows help if there are missing/unknown options', () => {
     const mockShowHelp = jest.genMockFunction().mockReturnValue(mockYargs);
     const reset = () => {
       mockYargs.reset();
@@ -60,7 +60,7 @@ describe('CLI - install dependencies command', () => {
       });
   });
 
-  pit('returns a promise', () => {
+  it('returns a promise', () => {
     const promises = [];
 
     [
@@ -88,7 +88,7 @@ describe('CLI - install dependencies command', () => {
     return Promise.all(promises);
   });
 
-  pit('uses the npm install task', async () => {
+  it('uses the npm install task', async () => {
     await installDependencies.run(['-t', 'eslint']);
 
     const mockInstall = mockNpmInstallTask.install.mock;
@@ -97,7 +97,7 @@ describe('CLI - install dependencies command', () => {
     expect(mockInstall.calls[0][1]).toEqual({ global: false, link: false, verbose: false });
   });
 
-  pit('passes the right options to the npm install task', async () => {
+  it('passes the right options to the npm install task', async () => {
     const mockInstall = mockNpmInstallTask.install.mock;
     const options = { global: false, link: false, verbose: false };
 
@@ -126,7 +126,7 @@ describe('CLI - install dependencies command', () => {
     mockNpmInstallTask.install.mockClear();
   });
 
-  pit('accepts multiple tasks', async () => {
+  it('accepts multiple tasks', async () => {
     const mockInstall = mockNpmInstallTask.install.mock;
     await installDependencies.run(['-t', 'eslint', 'retire']);
     expect(mockInstall.calls.length).toBe(2);
@@ -134,7 +134,7 @@ describe('CLI - install dependencies command', () => {
     expect(mockInstall.calls[1][0]).toEqual(mockRetireTask.dependencies);
   });
 
-  pit('fails if unknown task is given', async () => {
+  it('fails if unknown task is given', async () => {
     try {
       await installDependencies.run(['-t', 'eslint2']);
       throw new Error('Expect to fail');

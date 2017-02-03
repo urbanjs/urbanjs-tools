@@ -9,14 +9,14 @@ jest.unmock('../../../utils/helper-fs');
 describe('Jest task', () => {
   extendJasmineTimeout(jasmine, beforeEach, afterEach);
 
-  pit('should be able to run the tests successfully', () =>
+  it('should be able to run the tests successfully', () =>
     runCommand(['gulp jest', {
       cwd: join(__dirname, 'valid-project'),
       expectToContain: '1 passed, 1 total'
     }])
   );
 
-  pit('should fail if tests fail', () =>
+  it('should fail if tests fail', () =>
     runCommand(['gulp jest', {
       cwd: join(__dirname, 'failed-test'),
       expectToFail: true,
@@ -24,7 +24,7 @@ describe('Jest task', () => {
     }])
   );
 
-  pit('should use global configuration if parameters are not defined', () =>
+  it('should use global configuration if parameters are not defined', () =>
     runCommand(['gulp jest', {
       cwd: join(__dirname, 'global-configuration'),
       expectToFail: true,
@@ -32,21 +32,21 @@ describe('Jest task', () => {
     }])
   );
 
-  pit('should use default configuration without specific parameters', () =>
+  it('should use default configuration without specific parameters', () =>
     runCommand(['gulp jest', {
       cwd: join(__dirname, 'default-configuration'),
       expectToContain: '1 passed, 1 total'
     }])
   );
 
-  pit('should be able to handle typescript source', () =>
+  it('should be able to handle typescript source', () =>
     runCommand(['gulp jest', {
       cwd: join(__dirname, 'typescript-source'),
       expectToContain: '1 passed, 1 total'
     }])
   );
 
-  pit('should clean the output folder automatically', async () => {
+  it('should clean the output folder automatically', async () => {
     const projectName = 'clean-output-folder';
     const filePath = join(__dirname, `${projectName}/dist/asd.txt`);
 
@@ -60,7 +60,7 @@ describe('Jest task', () => {
     expect(fileExists).toBe(false);
   });
 
-  pit('should support command line options', () =>
+  it('should support command line options', () =>
     runCommand(['gulp jest --jest.rootDir="src2"', {
       cwd: join(__dirname, 'cli-options'),
       expectToContain: '1 passed, 1 total'

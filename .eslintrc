@@ -19,6 +19,7 @@
     "no-constant-condition": 2,
     "no-debugger": 2,
     "strict": 0,
-    "import/no-extraneous-dependencies": 0
+    "import/no-extraneous-dependencies": 0,
+    "linebreak-style": 0
   }
 }

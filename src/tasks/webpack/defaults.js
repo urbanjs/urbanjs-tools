@@ -3,7 +3,6 @@
 const helper = require('./helper-config');
 const path = require('path');
 const processCwd = process.cwd();
-const webpack = require('webpack');
 
 module.exports = {
   entry: path.join(processCwd, 'src'),
@@ -27,16 +26,14 @@ module.exports = {
     __dirname: false
   },
 
-  plugins: [
-    new webpack.optimize.OccurenceOrderPlugin()
-  ],
+  plugins: [],
 
   resolve: {
-    extensions: ['', '.js', '.ts', '.tsx']
+    extensions: ['.js', '.ts', '.tsx']
   },
 
   resolveLoader: {
-    modulesDirectories: [// used loaders might have dependencies installed only in urbanjs
+    modules: [// used loaders might have dependencies installed only in urbanjs
       path.join(processCwd, 'node_modules/urbanjs-tools/node_modules'),
       path.join(processCwd, 'node_modules')
     ]
@@ -50,25 +47,29 @@ module.exports = {
   ],
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /[^.min]\.tsx?$/, // minified files are ignored
         exclude: /(node_modules|bower_components|vendor|dist)/,
-        loader: require.resolve('awesome-typescript-loader'),
-        query: helper.getTSLoader(
-          require('../../utils/global-typescript'),
-          require('../../utils/global-babel')
-        )
+        use: [
+          {
+            loader: require.resolve('awesome-typescript-loader'),
+            options: helper.getTSLoader(
+              require('../../utils/global-typescript'),
+              require('../../utils/global-babel')
+            )
+          }
+        ]
       },
       {
         test: /[^.min]\.js$/, // minified files are ignored
         exclude: /(node_modules|bower_components|vendor|dist)/,
-        loader: require.resolve('babel-loader'),
-        query: require('../../utils/global-babel')
-      },
-      {
-        test: /\.json$/,
-        loader: require.resolve('json-loader')
+        use: [
+          {
+            loader: require.resolve('babel-loader'),
+            options: require('../../utils/global-babel')
+          }
+        ]
       }
     ]
   }

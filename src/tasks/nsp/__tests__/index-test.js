@@ -6,11 +6,11 @@ import { runCommand, extendJasmineTimeout } from '../../../utils/helper-tests';
 describe('NSP task', () => {
   extendJasmineTimeout(jasmine, beforeEach, afterEach);
 
-  pit('should pass with secure packages', () =>
+  it('should pass with secure packages', () =>
     runCommand(['gulp nsp', { cwd: join(__dirname, 'valid-project') }])
   );
 
-  pit('should throw error with insecure packages', () =>
+  it('should throw error with insecure packages', () =>
     runCommand(['gulp nsp', {
       cwd: join(__dirname, 'package-with-vulnerability'),
       expectToFail: true,
@@ -18,7 +18,7 @@ describe('NSP task', () => {
     }])
   );
 
-  pit('should use default configuration without specific parameters', () =>
+  it('should use default configuration without specific parameters', () =>
     runCommand(['gulp nsp', {
       cwd: join(__dirname, 'default-configuration'),
       expectToFail: true,
@@ -26,11 +26,11 @@ describe('NSP task', () => {
     }])
   );
 
-  pit('should use .nsprc automatically in the project root', () =>
+  it('should use .nsprc automatically in the project root', () =>
     runCommand(['gulp nsp', { cwd: join(__dirname, 'nsprc') }])
   );
 
-  pit('should fail if nsp cannot handle the given package.json', () =>
+  it('should fail if nsp cannot handle the given package.json', () =>
     runCommand(['gulp nsp', {
       cwd: join(__dirname, 'invalid-package-file'),
       expectToFail: true,
@@ -38,11 +38,11 @@ describe('NSP task', () => {
     }])
   );
 
-  pit('should be able to accept array of package files', () =>
+  it('should be able to accept array of package files', () =>
     runCommand(['gulp nsp', { cwd: join(__dirname, 'multiple-package-file') }])
   );
 
-  pit('should support command line options', () =>
+  it('should support command line options', () =>
     runCommand(['gulp nsp --nsp.packageFile="package2.json"', {
       cwd: join(__dirname, 'cli-options'),
       expectToFail: true,

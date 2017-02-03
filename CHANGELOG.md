@@ -1,3 +1,11 @@
+## Unreleased
+- Update dependencies
+    `BREAKING`
+        - jest options (jest@18)
+        - webpack options (webpack@2)
+        - eslint rules
+        - tslint rules
+
 <a name="1.2.4"></a>
 ## [1.2.4](https://github.com/urbanjs/tools/compare/1.2.1...1.2.4) (2016-11-07)
 - Improve ```mocha``` task

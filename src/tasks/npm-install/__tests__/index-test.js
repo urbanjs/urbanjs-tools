@@ -9,7 +9,7 @@ jest.unmock('../../../utils/helper-fs');
 describe('NPM install task', () => {
   extendJasmineTimeout(jasmine, beforeEach, afterEach);
 
-  pit('should be able to install package locally', async () => {
+  it('should be able to install package locally', async () => {
     const projectName = 'installation-local';
     const packageFilePath = `${projectName}/node_modules/left-pad/package.json`;
 
@@ -20,7 +20,7 @@ describe('NPM install task', () => {
     expect(packageExists).toBe(true);
   });
 
-  pit('should be able to install package globally', async () => {
+  it('should be able to install package globally', async () => {
     const projectName = 'installation-global';
     await runCommands([
       ['npm uninstall -g node-uuid', { allowToFail: true }],
@@ -29,7 +29,7 @@ describe('NPM install task', () => {
     ]);
   });
 
-  pit('should be able to link globally installed packages', async () => {
+  it('should be able to link globally installed packages', async () => {
     const projectName = 'linking';
     const packagePath = `${projectName}/node_modules/node-uuid`;
 
@@ -43,7 +43,7 @@ describe('NPM install task', () => {
     expect(packageIsSymlink).toBe(true);
   });
 
-  pit('should link globally installed packages automatically', async () => {
+  it('should link globally installed packages automatically', async () => {
     const projectName = 'default-configuration';
     const packagePath = `${projectName}/node_modules/node-uuid`;
 
@@ -57,7 +57,7 @@ describe('NPM install task', () => {
     expect(packageIsSymlink).toBe(true);
   });
 
-  pit('should use global configuration if parameters are not defined', async () => {
+  it('should use global configuration if parameters are not defined', async () => {
     const projectName = 'global-configuration';
     const packagePath = `${projectName}/node_modules/node-uuid`;
 
@@ -71,7 +71,7 @@ describe('NPM install task', () => {
     expect(packageIsSymlink).toBe(false);
   });
 
-  pit('should debounce separate installations automatically', async () => {
+  it('should debounce separate installations automatically', async () => {
     const projectName = 'installation-throttling';
 
     await remove(join(__dirname, `${projectName}/node_modules`));
@@ -81,7 +81,7 @@ describe('NPM install task', () => {
     }]);
   });
 
-  pit('should ignore packages with unsuitable version (reinstall)', async () => {
+  it('should ignore packages with unsuitable version (reinstall)', async () => {
     const projectName = 'mismatch-version';
 
     await runCommands([
@@ -93,7 +93,7 @@ describe('NPM install task', () => {
     expect(pkg.version).toBe('1.4.7');
   });
 
-  pit('should be able to find suitable locally installed packages (skip)', async () => {
+  it('should be able to find suitable locally installed packages (skip)', async () => {
     const projectName = 'skip-locally-installed-package';
 
     await remove(join(__dirname, `${projectName}/node_modules`));

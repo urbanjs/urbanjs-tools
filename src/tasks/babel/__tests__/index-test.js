@@ -9,7 +9,7 @@ jest.unmock('../../../utils/helper-fs');
 describe('Babel task', () => {
   extendJasmineTimeout(jasmine, beforeEach, afterEach);
 
-  pit('should transpile the source code successfully', async () => {
+  it('should transpile the source code successfully', async () => {
     const projectName = 'valid-project';
     await runCommand(['gulp babel', { cwd: join(__dirname, projectName) }]);
 
@@ -19,7 +19,7 @@ describe('Babel task', () => {
     testLoggerLib(require.requireActual(`./${projectName}/dist/index.js`));
   });
 
-  pit('should fail if transpilation is not successfull', () =>
+  it('should fail if transpilation is not successfull', () =>
     runCommand(['gulp babel', {
       cwd: join(__dirname, 'failed-transpilation'),
       expectToFail: true,
@@ -27,7 +27,7 @@ describe('Babel task', () => {
     }])
   );
 
-  pit('should clean the output folder automatically', async () => {
+  it('should clean the output folder automatically', async () => {
     const projectName = 'clean-output-folder';
     const filePath = join(__dirname, `${projectName}/dist/asd.txt`);
 
@@ -38,7 +38,7 @@ describe('Babel task', () => {
     expect(fileExists).toBe(false);
   });
 
-  pit('should allow to skip sourcemap generation', async () => {
+  it('should allow to skip sourcemap generation', async () => {
     const projectName = 'skip-sourcemap';
     await runCommand(['gulp babel', { cwd: join(__dirname, projectName) }]);
 
@@ -46,7 +46,7 @@ describe('Babel task', () => {
     expect(mapFileExists).toBe(false);
   });
 
-  pit('should use global configuration if parameters are not defined', () =>
+  it('should use global configuration if parameters are not defined', () =>
     runCommand(['gulp babel', {
       cwd: join(__dirname, 'global-configuration'),
       expectToFail: true,
@@ -54,7 +54,7 @@ describe('Babel task', () => {
     }])
   );
 
-  pit('should use default configuration without specific parameters', async () => {
+  it('should use default configuration without specific parameters', async () => {
     const projectName = 'default-configuration';
     await runCommand(['gulp babel', { cwd: join(__dirname, projectName) }]);
 
@@ -64,7 +64,7 @@ describe('Babel task', () => {
     testLoggerLib(require.requireActual(`./${projectName}/dist/index.js`));
   });
 
-  pit('should be able to handle typescript source', async () => {
+  it('should be able to handle typescript source', async () => {
     const projectName = 'typescript-source';
     await runCommand(['gulp babel', { cwd: join(__dirname, projectName) }]);
 
@@ -77,7 +77,7 @@ describe('Babel task', () => {
     testLoggerLib(require.requireActual(`./${projectName}/dist/index.js`));
   });
 
-  pit('should emit the output even if compiler throws errors', async () => {
+  it('should emit the output even if compiler throws errors', async () => {
     const projectName = 'typescript-error';
 
     await runCommand(['gulp babel', { cwd: join(__dirname, projectName) }]);
@@ -92,7 +92,7 @@ describe('Babel task', () => {
     expect(declarationFileExists).toBe(true);
   });
 
-  pit('should support command line options', async () => {
+  it('should support command line options', async () => {
     const projectName = 'cli-options';
 
     await runCommand(['gulp babel --babel.files="index2.js"', {

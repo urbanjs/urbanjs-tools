@@ -8,11 +8,11 @@ jest.unmock('../../../utils/helper-fs');
 describe('TSlint task', () => {
   extendJasmineTimeout(jasmine, beforeEach, afterEach);
 
-  pit('should pass with valid source', () =>
+  it('should pass with valid source', () =>
     runCommand(['gulp tslint', { cwd: join(__dirname, 'valid-project') }])
   );
 
-  pit('should use global configuration if parameters are not defined', () =>
+  it('should use global configuration if parameters are not defined', () =>
     runCommand(['gulp tslint', {
       cwd: join(__dirname, 'global-configuration'),
       expectToFail: true,
@@ -20,7 +20,7 @@ describe('TSlint task', () => {
     }])
   );
 
-  pit('should use default configuration without specific parameters', () =>
+  it('should use default configuration without specific parameters', () =>
     runCommand(['gulp tslint', {
       cwd: join(__dirname, 'default-configuration'),
       expectToFail: true,
@@ -28,7 +28,7 @@ describe('TSlint task', () => {
     }])
   );
 
-  pit('should allow to configure file extensions', () =>
+  it('should allow to configure file extensions', () =>
     runCommand(['gulp tslint', {
       cwd: join(__dirname, 'file-extensions'),
       expectToFail: true,
@@ -36,13 +36,13 @@ describe('TSlint task', () => {
     }])
   );
 
-  pit('should be able to handle mixed sources', () =>
+  it('should be able to handle mixed sources', () =>
     runCommand(['gulp tslint', {
       cwd: join(__dirname, 'mixed-sources')
     }])
   );
 
-  pit('should support command line options', () =>
+  it('should support command line options', () =>
     runCommand(['gulp tslint --tslint.files="index-invalid.ts"', {
       cwd: join(__dirname, 'cli-options'),
       expectToFail: true,

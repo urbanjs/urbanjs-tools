@@ -11,10 +11,10 @@ task.register(gulp, 'webpack', {
     filename: 'index.js',
     libraryTarget: 'commonjs'
   },
-  module: [{
-    loaders: {
+  module: {
+    rules: [{
       test: /\.js$/,
-      loader: require.resolve('babel-loader')
-    }
-  }]
+      use: [{ loader: require.resolve('babel-loader') }]
+    }]
+  }
 });

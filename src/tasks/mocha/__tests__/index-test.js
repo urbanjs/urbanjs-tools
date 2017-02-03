@@ -10,14 +10,14 @@ jest.unmock('../../../utils/helper-fs');
 describe('Mocha task', () => {
   extendJasmineTimeout(jasmine, beforeEach, afterEach);
 
-  pit('should be able to run the tests successfully', () =>
+  it('should be able to run the tests successfully', () =>
     runCommand(['gulp mocha', {
       cwd: join(__dirname, 'valid-project'),
       expectToContain: '1 passing'
     }])
   );
 
-  pit('should fail if runner cannot be set up', () =>
+  it('should fail if runner cannot be set up', () =>
     runCommand(['gulp mocha', {
       cwd: join(__dirname, 'runner-init-failure'),
       expectToFail: true,
@@ -28,7 +28,7 @@ describe('Mocha task', () => {
     }])
   );
 
-  pit('should fail if runner cannot be set up 2', () =>
+  it('should fail if runner cannot be set up 2', () =>
     runCommand(['gulp mocha', {
       cwd: join(__dirname, 'runner-init-failure-2'),
       expectToFail: true,
@@ -39,7 +39,7 @@ describe('Mocha task', () => {
     }])
   );
 
-  pit('should fail if tests fail', () =>
+  it('should fail if tests fail', () =>
     runCommand(['gulp mocha', {
       cwd: join(__dirname, 'failed-test'),
       expectToFail: true,
@@ -47,7 +47,7 @@ describe('Mocha task', () => {
     }])
   );
 
-  pit('should use global configuration if parameters are not defined', () =>
+  it('should use global configuration if parameters are not defined', () =>
     runCommand(['gulp mocha', {
       cwd: join(__dirname, 'global-configuration'),
       expectToFail: true,
@@ -55,21 +55,21 @@ describe('Mocha task', () => {
     }])
   );
 
-  pit('should use default configuration without specific parameters', () =>
+  it('should use default configuration without specific parameters', () =>
     runCommand(['gulp mocha', {
       cwd: join(__dirname, 'default-configuration'),
       expectToContain: '1 passing'
     }])
   );
 
-  pit('should be able to handle typescript source', () =>
+  it('should be able to handle typescript source', () =>
     runCommand(['gulp mocha', {
       cwd: join(__dirname, 'typescript-source'),
       expectToContain: '1 passing'
     }])
   );
 
-  pit('should retrieve correct error messages (sourceMap)', () =>
+  it('should retrieve correct error messages (sourceMap)', () =>
     runCommand(['gulp mocha', {
       cwd: join(__dirname, 'source-map-support'),
       expectToFail: true,
@@ -77,14 +77,14 @@ describe('Mocha task', () => {
     }])
   );
 
-  pit('should support command line options', () =>
+  it('should support command line options', () =>
     runCommand(['gulp mocha --mocha.grep="caseA"', {
       cwd: join(__dirname, 'cli-options'),
       expectToContain: '1 passing'
     }])
   );
 
-  pit('should support parallel execution', async () => {
+  it('should support parallel execution', async () => {
     const projectPath = join(__dirname, 'parallel-execution');
 
     await runCommand(['gulp mocha', {
@@ -107,7 +107,7 @@ describe('Mocha task', () => {
     });
   });
 
-  pit('should collect coverage information (even with parallel execution)', () =>
+  it('should collect coverage information (even with parallel execution)', () =>
     runCommand(['gulp mocha', {
       cwd: join(__dirname, 'coverage-information'),
       expectToContain: [
@@ -119,7 +119,7 @@ describe('Mocha task', () => {
     }])
   );
 
-  pit('should collect coverage information even with failed tests', () =>
+  it('should collect coverage information even with failed tests', () =>
     runCommand(['gulp mocha', {
       cwd: join(__dirname, 'coverage-information-with-failed-test'),
       expectToFail: true,
@@ -133,7 +133,7 @@ describe('Mocha task', () => {
     }])
   );
 
-  pit('should support coverage thresholds', () =>
+  it('should support coverage thresholds', () =>
     runCommand(['gulp mocha', {
       cwd: join(__dirname, 'coverage-thresholds'),
       expectToFail: true,
@@ -141,7 +141,7 @@ describe('Mocha task', () => {
     }])
   );
 
-  pit('should clean the output folder automatically', async () => {
+  it('should clean the output folder automatically', async () => {
     const projectName = 'clean-output-folder';
     const filePath = join(__dirname, `${projectName}/dist/asd.txt`);
     const coveragePath = join(__dirname, `${projectName}/dist/coverage-final.json`);
