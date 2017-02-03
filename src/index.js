@@ -166,6 +166,13 @@ module.exports = {
     }
 
     Object.assign(globals, configuration);
-  }
+  },
 
+  /**
+   * Enables in memory transpile just like mocha/jest/babel/webpack tasks do
+   */
+  setupInMemoryTranspile() {
+    this.setGlobalConfiguration();
+    require('./tasks/mocha/setup-file');
+  }
 };
