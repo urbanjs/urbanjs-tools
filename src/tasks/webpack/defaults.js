@@ -1,20 +1,19 @@
 'use strict';
 
-const helper = require('./helper-config');
 const path = require('path');
-const processCwd = process.cwd();
 
 module.exports = {
-  entry: path.join(processCwd, 'src'),
+  cache: true,
+  context: process.cwd(),
+  entry: './src',
 
   output: {
-    path: path.join(processCwd, 'dist'),
+    path: 'dist',
     filename: 'index.js',
     libraryTarget: 'commonjs'
   },
 
   target: 'node',
-  bail: true, // quit after the first error
   devtool: 'source-map', // generate production supported source map
 
   node: {
@@ -34,8 +33,8 @@ module.exports = {
 
   resolveLoader: {
     modules: [// used loaders might have dependencies installed only in urbanjs
-      path.join(processCwd, 'node_modules/urbanjs-tools/node_modules'),
-      path.join(processCwd, 'node_modules')
+      'node_modules/urbanjs-tools/node_modules',
+      'node_modules'
     ]
   },
 
@@ -53,11 +52,12 @@ module.exports = {
         exclude: /(node_modules|bower_components|vendor|dist)/,
         use: [
           {
-            loader: require.resolve('awesome-typescript-loader'),
-            options: helper.getTSLoader(
-              require('../../utils/global-typescript'),
-              require('../../utils/global-babel')
-            )
+            loader: require.resolve('babel-loader'),
+            options: require('../../utils/global-babel')
+          },
+          {
+            loader: require.resolve('ts-loader'),
+            options: require('../../utils/global-typescript')
           }
         ]
       },

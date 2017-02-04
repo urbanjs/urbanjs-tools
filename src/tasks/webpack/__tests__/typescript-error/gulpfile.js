@@ -4,6 +4,4 @@ const gulp = require('gulp');
 const task = require('../../index');
 
 task.dependencies = {};
-task.register(gulp, 'webpack', {
-  bail: false
-});
+task.register(gulp, 'webpack', true);

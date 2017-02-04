@@ -3,6 +3,7 @@
 module.exports = {
   babelConfig: [
     'babel-plugin-transform-runtime',
+    'babel-plugin-transform-decorators-legacy',
     'babel-preset-es2015',
     'babel-preset-react',
     'babel-preset-stage-0'

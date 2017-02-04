@@ -1,7 +1,6 @@
 'use strict';
 
 const _ = require('lodash');
-const helper = require('./helper-config');
 const fs = require('../../utils/helper-fs');
 const npmInstall = require('../npm-install');
 const pkg = require('../../../package.json');
@@ -15,21 +14,14 @@ function buildConfig(parameters, globals, processOptionPrefix) {
 
   if (globals.babel) {
     babelLoader.options = globals.babel;
-    tsLoader.options.babelOptions = globals.babel;
   } else {
     globals.babel = babelLoader.options; // eslint-disable-line
   }
 
   if (globals.typescript) {
-    tsLoader.options = helper.getTSLoader(
-      globals.typescript,
-      globals.babel
-    );
+    tsLoader.options = globals.typescript;
   } else {
-    // should come from defaults to be in sync
-    // but tsLoader.options is a mix of compiler & tsloader options
-    // see defaults.js
-    globals.typescript = require('../../utils/global-typescript'); // eslint-disable-line
+    globals.typescript = tsLoader.options; // eslint-disable-line
   }
 
   return configHelper.mergeParameters(defaults, parameters, processOptionPrefix);
