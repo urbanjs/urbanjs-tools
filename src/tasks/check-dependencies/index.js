@@ -41,12 +41,7 @@ function show(data, title, color) {
 
 function getOutdatedPackages(packageFile) {
   return new Promise((resolve, reject) => {
-    exec('npm outdated --json', { cwd: path.dirname(packageFile) }, (err, stdout) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-
+    exec('npm outdated --json -qq', { cwd: path.dirname(packageFile) }, (err, stdout) => {
       try {
         resolve(stdout ? JSON.parse(stdout) : {});
       } catch (e) {

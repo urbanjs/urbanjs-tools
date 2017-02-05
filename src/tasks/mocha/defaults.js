@@ -7,7 +7,7 @@ module.exports = {
   files: path.join(processCwd, 'src/+(test|tests)/**/*.+(js|ts|tsx)'),
   require: `${path.join(__dirname, 'setup-file.js')}`,
   maxConcurrency: 0,
-  runnerMemoryUsageLimit: 0,
+  runnerMemoryUsageLimit: 0, // [bytes]
   collectCoverage: true,
   coverageReporters: ['text-summary', 'html'],
   coverageDirectory: 'coverage',

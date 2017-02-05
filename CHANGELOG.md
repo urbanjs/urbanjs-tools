@@ -3,8 +3,8 @@
 - Introduce `setupInMemoryTranspile` method to set up in memory tanspile easily
 - Update dependencies
     `BREAKING`
-        - jest options (jest@18)
-        - webpack options (webpack@2)
+        - jest (jest@18)
+        - [webpack options](https://github.com/urbanjs/urbanjs-tools/blob/master/src/tasks/webpack/defaults.js) (webpack@2)
         - eslint rules
         - tslint rules
 

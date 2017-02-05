@@ -217,7 +217,7 @@ function runFilesetsInParallel(filesets, mochaConfig, runnerOptions) {
         })
         .then(() => {
           if (!runnerOptions.runnerMemoryUsageLimit ||
-            currentRunner.memoryUsage.heapTotal < runnerOptions.runnerMemoryUsageLimit * 1e6) {
+            currentRunner.memoryUsage.heapTotal < runnerOptions.runnerMemoryUsageLimit) {
             freeRunners.push(currentRunner);
             return Promise.resolve();
           }
@@ -325,7 +325,7 @@ module.exports = {
       process.env.urbanJSToolGlobals = JSON.stringify(globals);
 
       const mochaConfig = _.omit(config, 'files', 'maxConcurrency');
-      const runnerMemoryUsageLimit = config.runnerMemoryUsageLimit;
+      const runnerMemoryUsageLimit = config.runnerMemoryUsageLimit || 0;
       const maxConcurrency = config.maxConcurrency > 0
         ? config.maxConcurrency
         : os.cpus().length;
