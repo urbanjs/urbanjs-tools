@@ -9,6 +9,7 @@ const configHelper = require('./utils/helper-config');
 const globalBabel = require('./utils/global-babel');
 const globalTypescript = require('./utils/global-typescript');
 const globalSourceFiles = require('./utils/global-source-files');
+const sequence = require('gulp-sequence');
 
 /**
  * @module main
@@ -113,9 +114,9 @@ module.exports = {
 
     gulp.task('analyze', ['analyse']);
 
-    gulp.task('pre-commit', ['analyse', 'test']);
+    gulp.task('pre-commit', sequence('analyse', 'test'));
 
-    gulp.task('pre-release', ['pre-commit', 'dist', 'doc']);
+    gulp.task('pre-release', sequence('pre-commit', ['dist', 'doc']));
   },
 
   /**
