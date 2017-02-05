@@ -94,12 +94,14 @@ module.exports = {
 
     gulp.task('changelog', filter(['conventional-changelog']));
 
-    gulp.task('dist', filter(['webpack', 'babel']));
+    const distTasks = filter(['babel', 'webpack']);
+    gulp.task('dist', distTasks.length ? sequence.apply(null, distTasks) : []);
     gulp.task('dist:watch', filter(['webpack:watch', 'babel:watch']));
 
     gulp.task('doc', filter(['jsdoc']));
 
-    gulp.task('test', filter(['jest', 'mocha']));
+    const testTasks = filter(['mocha', 'jest']);
+    gulp.task('test', testTasks.length ? sequence.apply(null, testTasks) : []);
     gulp.task('test:watch', filter(['jest:watch', 'mocha:watch']));
 
     gulp.task('analyse', filter([
