@@ -1,5 +1,5 @@
 /**
- * @typedef {Object} Configuration
+ * @typedef {Object} ConfigurationTasks
  * @memberof module:main
  * @property {module:tasks/babel.Parameters} [babel] Parameters of the babel task
  * @property {module:tasks/checkFileNames.Parameters} [checkFileNames] Parameters of the checkFileNames task
@@ -17,7 +17,22 @@
  */
 
 /**
- * @typedef {Object|function} GlobalConfiguration
+ * @typedef {Object} ConfigurationPresets
+ * @memberof module:main
+ * @property {string[]|boolean|Function} [changelog]
+ * @property {string[]|boolean|Function} [dist]
+ * @property {string[]|boolean|Function} [dist:watch]
+ * @property {string[]|boolean|Function} [test]
+ * @property {string[]|boolean|Function} [test:watch]
+ * @property {string[]|boolean|Function} [doc]
+ * @property {string[]|boolean|Function} [analyse]
+ * @property {string[]|boolean|Function} [analyze]
+ * @property {string[]|boolean|Function} [pre-commit]
+ * @property {string[]|boolean|Function} [pre-release]
+ */
+
+/**
+ * @typedef {Object|function} ConfigurationGlobals
  * @memberof module:main
  * @property {Object} babel Common babel configuration, used by:
  *                          babel, jest, jsdoc, webpack, check-dependencies, mocha

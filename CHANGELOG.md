@@ -1,4 +1,6 @@
 ## Unreleased
+- Introduce `initializePresets` & `initializeTasks` methods to have bigger control over preset configuration
+    - See [api documentation](http://urbanjs.github.io/tools/module-main.html#.initializePresets) for further details
 - Introduce `runnerMemoryUsageLimit` options in `mocha` config
 - Introduce `setupInMemoryTranspile` method to set up in memory tanspile easily
 - Update dependencies

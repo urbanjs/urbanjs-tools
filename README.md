@@ -14,7 +14,7 @@ Check the [wiki](https://github.com/urbanjs/urbanjs-tools/wiki) for detailed gui
 
 ### Quick start
 
-Initialize the necessary tasks in your gulpfile.js:
+Initialize the necessary tasks and presets in your gulpfile.js:
 ```
 const tools = require('urbanjs-tools');
 tools.initialize(gulp, {
@@ -25,11 +25,11 @@ tools.initialize(gulp, {
   eslint: true,
   jest: true,
   jsdoc: true,
-  mocha: false,
+  mocha: true,
   nsp: true,
   retire: true,
-  tslint: false,
-  webpack: false
+  tslint: true,
+  webpack: true
 });
 ```
 

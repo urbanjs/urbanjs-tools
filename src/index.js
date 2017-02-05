@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 const globals = require('./index-globals');
 const tasks = require('./tasks');
 const cliIndexCommand = require('./cli/index');
@@ -10,6 +11,26 @@ const globalBabel = require('./utils/global-babel');
 const globalTypescript = require('./utils/global-typescript');
 const globalSourceFiles = require('./utils/global-source-files');
 const sequence = require('gulp-sequence');
+
+const presets = {
+  changelog: ['conventional-changelog'],
+  dist: ['babel', 'webpack'],
+  'dist:watch': ['babel:watch', 'webpack:watch'],
+  doc: ['jsdoc'],
+  test: ['mocha', 'jest'],
+  'test:watch': ['mocha:watch', 'jest:watch'],
+  analyze: [
+    'check-dependencies',
+    'check-file-names',
+    'jscs',
+    'eslint',
+    'nsp',
+    'retire',
+    'tslint'
+  ],
+  'pre-commit': ['analyze', 'test'],
+  'pre-release': ['pre-commit', 'dist', 'doc']
+};
 
 /**
  * @module main
@@ -36,11 +57,9 @@ module.exports = {
   tasks,
 
   /**
-   * Initializes the given gulp instance with the
-   *  core tasks (babel, check-file-names, eslint, jest, jsdoc, nsp, webpack) and
-   *  presets: dist, doc, test, analyze, pre-commit, pre-release
+   * Initializes the given gulp instance with the core tasks based on the given configuration
    * @param {external:gulp} gulp The gulp instance to initialize
-   * @param {module:main.Configuration} configuration Configuration of the tasks,
+   * @param {module:main.ConfigurationTasks} configuration Configuration of the tasks,
    *                                                  true value means that defaults should be used
    *                                                  if false value is given the task won't be
    *                                                  initialized, use function to get the
@@ -48,21 +67,20 @@ module.exports = {
    * @example
    *
    * // initialize tasks (eslint with defaults, disable jest)
-   * require('urbanjs-tools').initialize(require('gulp'), {
+   * require('urbanjs-tools').initializeTasks(require('gulp'), {
    *   jest: false,
    *   eslint: true
    * }));
    *
    * // initialize tasks (overriding defaults)
-   * require('urbanjs-tools').initialize(require('gulp'), {
+   * require('urbanjs-tools').initializeTasks(require('gulp'), {
    *   jest: defaults => {
    *     return Object.assign({}, defaults, {unmockedModulePathPatterns: ['core-js/.*']})
    *   }
    * }));
    */
-  initialize(gulp, configuration) {
+  initializeTasks(gulp, configuration) {
     const config = configuration || {};
-    const existingTasks = {};
 
     [
       ['babel'],
@@ -85,40 +103,70 @@ module.exports = {
 
       if (config.hasOwnProperty(taskId) && config[taskId] !== false) {
         tasks[taskId].register(gulp, taskName, config[taskId], globals);
-        existingTasks[taskName] = true;
       }
     });
+  },
 
-    const filter = val => val.filter(task =>
-      existingTasks.hasOwnProperty(task.replace(/:.+$/, '')));
+  /**
+   * Initializes the given gulp instance with the core tasks and presets
+   * @param {external:gulp} gulp The gulp instance to initialize
+   * @param {module:main.ConfigurationPresets} configuration Configuration of the presets,
+   *                                                  true value means default tasks should be used,
+   *                                                  if false value is given the preset
+   *                                                  is initialized as a noop,
+   *                                                  use function to get the default presets
+   *                                                  as first argument
+   * @example
+   *
+   * require('urbanjs-tools').initializePresets(require('gulp'), {
+   *   changelog: false, // do not initialize this preset
+   *   analyse: true,    // initialize analyse preset with the defaults
+   *   'pre-release': defaults => defaults.concat(['extra-gulp-task']),
+   *   test: ['test-task']
+   * }));
+   */
+  initializePresets(gulp, configuration) {
+    const config = configuration || {};
+    const defaultPresetsConfig = _.mapValues(presets, val => val.filter((task) => {
+      if (!tasks.hasOwnProperty(_.camelCase(task))) {
+        return true;
+      }
 
-    gulp.task('changelog', filter(['conventional-changelog']));
+      return gulp.tasks.hasOwnProperty(task.replace(/:.+$/, ''));
+    }));
 
-    const distTasks = filter(['babel', 'webpack']);
-    gulp.task('dist', distTasks.length ? sequence.apply(null, distTasks) : []);
-    gulp.task('dist:watch', filter(['webpack:watch', 'babel:watch']));
+    Object.keys(defaultPresetsConfig).forEach((presetName) => {
+      const presetConfig = config[presetName];
 
-    gulp.task('doc', filter(['jsdoc']));
+      let presetTasks = presetConfig;
+      if (presetConfig === true) {
+        presetTasks = defaultPresetsConfig[presetName];
+      } else if (typeof presetConfig === 'function') {
+        presetTasks = presetConfig(defaultPresetsConfig[presetName]);
+      }
 
-    const testTasks = filter(['mocha', 'jest']);
-    gulp.task('test', testTasks.length ? sequence.apply(null, testTasks) : []);
-    gulp.task('test:watch', filter(['jest:watch', 'mocha:watch']));
+      gulp.task(
+        presetName,
+        presetTasks && presetTasks.length ? sequence.apply(null, presetTasks) : []
+      );
+    });
 
-    gulp.task('analyse', filter([
-      'check-dependencies',
-      'check-file-names',
-      'jscs',
-      'eslint',
-      'nsp',
-      'retire',
-      'tslint'
-    ]));
+    gulp.task('analyse', ['analyze']);
+  },
 
-    gulp.task('analyze', ['analyse']);
-
-    gulp.task('pre-commit', sequence('analyse', 'test'));
-
-    gulp.task('pre-release', sequence('pre-commit', ['dist', 'doc']));
+  /**
+   * Initializes the given gulp instance with the core tasks and presets
+   * @param {external:gulp} gulp The gulp instance to initialize
+   * @param {module:main.ConfigurationTasks|module:main.ConfigurationPresets} configuration
+   * @see initializeTasks & initializePresets methods
+   */
+  initialize(gulp, configuration) {
+    const taskNames = Object.keys(tasks);
+    module.exports.initializeTasks(gulp, _.pick(configuration, taskNames));
+    module.exports.initializePresets(gulp, _.assign(
+      _.mapValues(presets, () => true),
+      _.omit(configuration, taskNames)
+    ));
   },
 
   /**
@@ -127,7 +175,7 @@ module.exports = {
    * keep the common configurations in sync e.g. babel, sourceFiles
    * Globals are used to set up the defaults of the tasks.
    * @see module:main.globals
-   * @param {module:main.GlobalConfiguration} configuration
+   * @param {module:main.ConfigurationGlobals} configuration
    *
    * @example
    *
@@ -175,7 +223,7 @@ module.exports = {
    * Enables in memory transpile just like mocha/jest/babel/webpack tasks do
    */
   setupInMemoryTranspile() {
-    this.setGlobalConfiguration();
+    module.exports.setGlobalConfiguration();
     require('./tasks/mocha/setup-file');
   }
 };
