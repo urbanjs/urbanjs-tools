@@ -11,7 +11,7 @@ task.register(gulp, 'npmInstallA', {
 
 task.register(gulp, 'npmInstallB', {
   dependencies: {
-    'node-uuid': '1.4.7'
+    uuid: '3.0.0'
   }
 });
 

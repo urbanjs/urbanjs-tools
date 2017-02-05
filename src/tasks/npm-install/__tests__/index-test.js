@@ -23,7 +23,7 @@ describe('NPM install task', () => {
   it('should be able to install package globally', async () => {
     const projectName = 'installation-global';
     await runCommands([
-      ['npm uninstall -g node-uuid', { allowToFail: true }],
+      ['npm uninstall -g uuid', { allowToFail: true }],
       ['gulp npmInstall', { cwd: join(__dirname, projectName) }],
       ['uuid']
     ]);
@@ -31,11 +31,11 @@ describe('NPM install task', () => {
 
   it('should be able to link globally installed packages', async () => {
     const projectName = 'linking';
-    const packagePath = `${projectName}/node_modules/node-uuid`;
+    const packagePath = `${projectName}/node_modules/uuid`;
 
     await remove(join(__dirname, projectName, 'node_modules'));
     await runCommands([
-      ['npm install -g node-uuid@1.4.7'],
+      ['npm install -g uuid@3.0.0'],
       ['gulp npmInstall', { cwd: join(__dirname, projectName) }]
     ]);
 
@@ -45,11 +45,11 @@ describe('NPM install task', () => {
 
   it('should link globally installed packages automatically', async () => {
     const projectName = 'default-configuration';
-    const packagePath = `${projectName}/node_modules/node-uuid`;
+    const packagePath = `${projectName}/node_modules/uuid`;
 
     await remove(join(__dirname, projectName, 'node_modules'));
     await runCommands([
-      ['npm install -g node-uuid@1.4.7'],
+      ['npm install -g uuid@3.0.0'],
       ['gulp npmInstall', { cwd: join(__dirname, projectName) }]
     ]);
 
@@ -59,11 +59,11 @@ describe('NPM install task', () => {
 
   it('should use global configuration if parameters are not defined', async () => {
     const projectName = 'global-configuration';
-    const packagePath = `${projectName}/node_modules/node-uuid`;
+    const packagePath = `${projectName}/node_modules/uuid`;
 
     await remove(join(__dirname, projectName, 'node_modules'));
     await runCommands([
-      ['npm install -g node-uuid@1.4.7'],
+      ['npm install -g uuid@3.0.0'],
       ['gulp npmInstall', { cwd: join(__dirname, projectName) }]
     ]);
 
@@ -77,7 +77,7 @@ describe('NPM install task', () => {
     await remove(join(__dirname, `${projectName}/node_modules`));
     await runCommand(['gulp npmInstall', {
       cwd: join(__dirname, projectName),
-      expectToContain: 'Installing missing dependencies...\nleft-pad@1.1.0 node-uuid@1.4.7'
+      expectToContain: 'Installing missing dependencies...\nleft-pad@1.1.0 uuid@3.0.0'
     }]);
   });
 
@@ -89,8 +89,8 @@ describe('NPM install task', () => {
       ['gulp npmInstall']
     ], { cwd: join(__dirname, projectName) });
 
-    const pkg = require(join(__dirname, `${projectName}/node_modules/node-uuid/package.json`)); // eslint-disable-line
-    expect(pkg.version).toBe('1.4.7');
+    const pkg = require(join(__dirname, `${projectName}/node_modules/uuid/package.json`)); // eslint-disable-line
+    expect(pkg.version).toBe('3.0.0');
   });
 
   it('should be able to find suitable locally installed packages (skip)', async () => {
