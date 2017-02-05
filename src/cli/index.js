@@ -44,7 +44,13 @@ module.exports = {
         throw new Error('Invalid argument');
       }
 
-      commandExecution = command[0].run(args.slice(1), y);
+      // yargs@6.6 introduced the frozen hack, sigh...
+      // (look for .freeze & .unfreeze methods in yargs.js)
+      // so we cannot parse args synchronously during another parsing process
+      // even if we use a different yargs instance
+      // solution: Promise.resolve
+      commandExecution = Promise.resolve()
+        .then(() => command[0].run(args.slice(1), y));
     }));
 
     return yargsHelper.parseArgs(yargs, args).then((argv) => {

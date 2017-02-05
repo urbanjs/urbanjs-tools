@@ -21,7 +21,7 @@ describe('CLI - install dependencies command', () => {
 
   it('accepts options yargs instance as second arguments', () => {
     expect(() => {
-      installDependencies.run(['-h']);
+      installDependencies.run(['-h']).catch(() => {});
     }).not.toThrow();
 
     const mockShowHelp = jest.genMockFunction().mockReturnValue(mockYargs);

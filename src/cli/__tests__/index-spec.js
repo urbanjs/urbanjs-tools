@@ -78,12 +78,17 @@ describe('CLI - index command', () => {
     // mock showHelp not to log anything
     mockYargs.showHelp = jest.genMockFunction().mockReturnValue(mockYargs);
 
-    index.run([], mockYargs);
-    expect(mockGenerate.run.mock.calls.length).toBe(0);
-
-    mockYargs.reset();
-    index.run(['generate'], mockYargs);
-    expect(mockGenerate.run.mock.calls.length).toBe(1);
+    return index.run([], mockYargs).then(
+      () => {
+        throw new Error('should not pass');
+      },
+      () => expect(mockGenerate.run.mock.calls.length).toBe(0)
+    ).then(() => {
+      mockYargs.reset();
+      return index.run(['generate'], mockYargs).then(() => {
+        expect(mockGenerate.run.mock.calls.length).toBe(1);
+      });
+    });
   });
 
   it('returns a promise', () => {
