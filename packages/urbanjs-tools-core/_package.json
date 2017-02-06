@@ -1,0 +1,22 @@
+{
+  "name": "@tamasmagedli/urbanjs-tools-core",
+  "version": "0.1.0",
+  "description": "Helpers of urbanjs tools",
+  "main": "./dist",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "prepublish": "gulp pre-release"
+  },
+  "dependencies": {
+    "@types/babel-core": "*",
+    "@types/gulp-typescript": "*",
+    "@types/yargs": "*",
+    "babel-runtime": "*",
+    "lodash": "*",
+    "inversify": "*"
+  },
+  "devDependencies": {
+    "gulp": "*",
+    "urbanjs-tools": "*"
+  }
+}

@@ -1,7 +1,0 @@
-{
-  "name": "valid-project",
-  "private": true,
-  "dependencies": {
-    "left-pad": "1.1.0"
-  }
-}

@@ -7,6 +7,8 @@
     "no-reference": false,
     "no-for-in-array": false,
     "restrict-plus-operands": false,
-    "linebreak-style": false
+    "linebreak-style": false,
+    "no-reserved-keywords": false,
+    "ordered-imports": false
   }
 }

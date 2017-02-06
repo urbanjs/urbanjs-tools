@@ -1,0 +1,37 @@
+{
+  "name": "@tamasmagedli/urbanjs-tools-cli",
+  "version": "0.1.0",
+  "description": "Command line interface of urbanjs tools",
+  "keywords": [
+    "development",
+    "tools",
+    "standard",
+    "boilerplate",
+    "generate",
+    "generator",
+    "skeleton",
+    "urbanjs-cli",
+    "gulp"
+  ],
+  "main": "./dist",
+  "typings": "./dist/index.d.ts",
+  "bin": {
+    "urbanjs": "./bin"
+  },
+  "scripts": {
+    "prepublish": "gulp pre-release"
+  },
+  "dependencies": {
+    "@tamasmagedli/urbanjs-tools-core": "*",
+    "babel-runtime": "*",
+    "del": "*",
+    "inversify": "*",
+    "mkdirp": "*",
+    "reflect-metadata": "*",
+    "yargs": "*"
+  },
+  "devDependencies": {
+    "gulp": "*",
+    "urbanjs-tools": "*"
+  }
+}

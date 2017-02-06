@@ -1,0 +1,41 @@
+{
+  "name": "@tamasmagedli/urbanjs-tools",
+  "version": "0.1.0",
+  "description": "Common dev tools for NPM packages",
+  "keywords": [
+    "development",
+    "tools",
+    "standard",
+    "gulp",
+    "nsp",
+    "retire",
+    "eslint",
+    "tslint",
+    "webpack",
+    "mocha",
+    "jest",
+    "jsdoc",
+    "conventional-changelog",
+    "dependencies",
+    "convention",
+    "babel"
+  ],
+  "main": "./dist",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "prepublish": "gulp pre-release"
+  },
+  "dependencies": {
+    "@tamasmagedli/urbanjs-tools-core": "*",
+    "babel-runtime": "*",
+    "inversify": "*",
+    "gulp-sequence": "*",
+    "reflect-metadata": "*",
+    "yargs": "*"
+  },
+  "devDependencies": {
+    "@tamasmagedli/urbanjs-tool-retire": "*",
+    "gulp": "*",
+    "urbanjs-tools": "*"
+  }
+}

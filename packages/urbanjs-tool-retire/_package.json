@@ -1,0 +1,20 @@
+{
+  "name": "@tamasmagedli/urbanjs-tool-retire",
+  "version": "0.1.0",
+  "description": "Urbanjs tool to check dependencies for vulnerability issues",
+  "main": "./dist",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "prepublish": "gulp pre-release"
+  },
+  "dependencies": {
+    "@tamasmagedli/urbanjs-tools-core": "*",
+    "babel-runtime": "*",
+    "inversify": "*",
+    "retire": "*"
+  },
+  "devDependencies": {
+    "gulp": "*",
+    "urbanjs-tools": "*"
+  }
+}

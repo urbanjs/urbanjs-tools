@@ -7,6 +7,10 @@ node_js:
   - '6' # LTS
   - '4' # LTS
 
+cache:
+  directories:
+  - node_modules
+
 env:
   # node 4 likes the G++ v4.8 compiler
   - CXX=g++-4.8
@@ -27,18 +31,4 @@ install:
   - npm install
 
 script:
-  - npm run pre-release
-
-before_deploy:
-  - "./node_modules/.bin/patch-version"
-
-deploy:
-  - provider: npm
-    skip_cleanup: true
-    email: tamas.magedli@gmail.com
-    api_key:
-      secure: otjsqaJKuh1uFj1VLr4sZwakyTg2UW4a+R399wvIwCeOX/iwwOIZeJQKkg4da7F2SCWuZ963WK7yRL1ydvzUkw2UKiJWYdpwIrKr9yy0pJ6Tc2dETN5QJy6mF8qNTxE35SJvWipkoQefigjrWIe1wdclyNVch2Izup/Ed6cclqAJgQG145TPKBi0tmEb1HiJ7i/lL59kKfqGm9MrLmgbhDTDg3MpnK7X0OsgV8MT9QyHbfRXoQYmo0PEIFfBeRbVFcohytC4heaN5l4H8CKf19lOfZkNKml5OPpEqKZ/RPR7fphdVjeIUyaLrkPdojdyTGuBJlW0SCzOCkB/eLhqX2GcNMb3HaTF/TXxdHZ8TWXxL2fa7Xr2TGm1ugggZMU/edC5IHyo2Lqh5j+dd9oZgBlcfGga2gewfBzn8art++0kraNYjlnJqCos3ZD5sp7VgxY+sfm5pCIW06GOio9IwTsiqtHTAQFFS0R6gUQbjgHQemKziRP5CHBnPoFpNloojW4cethj/56xn2hiLIkF8Q5hlSNPp6wfWsp1Hnhvs5fAexIkvTijxJGTO6L8p0EyypwX84qedXHo8dAflR+f6S+87osmVHUam/IG5NkYLU8UuLhNDIIyUBAQoREvZbTPx06Yj6HjbRJWKr7kbMro8MLmZ7g4VyXvFyudcdpUvfw=
-    on:
-      branch: master
-      tags: true
-      node: 6
+  - npm run prepublish
