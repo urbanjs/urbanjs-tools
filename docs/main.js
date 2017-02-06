@@ -25,7 +25,6 @@
  * @property {string[]|boolean|Function} [test]
  * @property {string[]|boolean|Function} [test:watch]
  * @property {string[]|boolean|Function} [doc]
- * @property {string[]|boolean|Function} [analyse]
  * @property {string[]|boolean|Function} [analyze]
  * @property {string[]|boolean|Function} [pre-commit]
  * @property {string[]|boolean|Function} [pre-release]
