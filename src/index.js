@@ -127,6 +127,7 @@ module.exports = {
    */
   initializePresets(gulp, configuration) {
     const config = configuration || {};
+    const currentSequence = sequence.use(gulp);
     const defaultPresetsConfig = _.mapValues(presets, val => val.filter((task) => {
       if (!tasks.hasOwnProperty(_.camelCase(task))) {
         return true;
@@ -147,7 +148,7 @@ module.exports = {
 
       gulp.task(
         presetName,
-        presetTasks && presetTasks.length ? sequence.apply(null, presetTasks) : []
+        presetTasks && presetTasks.length ? currentSequence.apply(null, presetTasks) : []
       );
     });
 
