@@ -92,7 +92,7 @@
     "ts-loader": "2.0.0",
     "tslint": "4.4.2",
     "tslint-microsoft-contrib": "4.0.0",
-    "typescript": "2.1.5",
+    "typescript": "2.1.6",
     "vinyl-fs": "2.4.4",
     "webpack": "2.2.1"
   }

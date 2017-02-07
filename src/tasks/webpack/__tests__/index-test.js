@@ -22,13 +22,19 @@ describe('Webpack task', () => {
     testLoggerLib(require.requireActual(`./${projectName}/dist/index.js`));
   });
 
-  it('should fail if bundling is not successfull', () =>
-    runCommand(['gulp webpack', {
-      cwd: join(__dirname, 'failed-bundling'),
-      expectToFail: true,
+  it('should emit the output even if compiler throws errors (syntax error)', async () => {
+    const projectName = 'failed-bundling';
+    await runCommand(['gulp webpack', {
+      cwd: join(__dirname, projectName),
       expectToContain: 'Unexpected token'
-    }])
-  );
+    }]);
+
+    const sourceExists = await exists(join(__dirname, `${projectName}/dist/index.js`));
+    expect(sourceExists).toBe(true);
+
+    const mapFileExists = await exists(join(__dirname, `${projectName}/dist/index.js.map`));
+    expect(mapFileExists).toBe(true);
+  });
 
   it('should clean the output folder automatically', async () => {
     const projectName = 'clean-output-folder';
@@ -55,7 +61,6 @@ describe('Webpack task', () => {
   it('should use global configuration if parameters are not defined', () =>
     runCommand(['gulp webpack', {
       cwd: join(__dirname, 'global-configuration'),
-      expectToFail: true,
       expectToContain: 'Unexpected token'
     }])
   );
@@ -84,7 +89,6 @@ describe('Webpack task', () => {
     const projectName = 'typescript-error';
     await runCommand(['gulp webpack', {
       cwd: join(__dirname, projectName),
-      expectToFail: true,
       expectToContain: 'Type \'1\' is not assignable to type \'string\''
     }]);
 

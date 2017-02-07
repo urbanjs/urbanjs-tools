@@ -45,7 +45,7 @@ module.exports = {
   dependencies: _.pick(
     pkg.devDependencies,
     [
-      'awesome-typescript-loader',
+      'ts-loader',
       'babel-loader',
       'json-loader',
       'typescript',
@@ -93,7 +93,7 @@ module.exports = {
 
       bundler.run((err, stats) => {
         logStats(stats);
-        done(err || (stats.hasErrors() ? new Error('There were errors while compiling') : null));
+        done(err);
       });
     });
 
