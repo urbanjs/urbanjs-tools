@@ -30,5 +30,5 @@ gulp.task('generate-versions-file', [], (done) => {
 
 
 tools.initializePresets(gulp, {
-  'pre-release': defaults => ['generate-versions-file', ...defaults]
+  'pre-release': defaults => ['generate-versions-file'].concat(defaults)
 });

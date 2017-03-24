@@ -9,8 +9,11 @@ import {
   IToolParameters,
   ICLIService,
   TYPE_SERVICE_LOGGER,
-  TYPE_SERVICE_CLI_SERVICE
+  TYPE_SERVICE_CLI_SERVICE,
+  ITraceService,
+  TYPE_SERVICE_TRACE
 } from '../types';
+import {track} from '../decorators';
 
 @injectable()
 export class ConfigService implements IConfigService {
@@ -18,9 +21,11 @@ export class ConfigService implements IConfigService {
   private cliService: ICLIService;
 
   constructor(@inject(TYPE_SERVICE_LOGGER) loggerService: ILoggerService,
-              @inject(TYPE_SERVICE_CLI_SERVICE) cliService: ICLIService) {
+              @inject(TYPE_SERVICE_CLI_SERVICE) cliService: ICLIService,
+              @inject(TYPE_SERVICE_TRACE) traceService: ITraceService) {
     this.loggerService = loggerService;
     this.cliService = cliService;
+    traceService.track(this);
   }
 
   /**
@@ -30,6 +35,7 @@ export class ConfigService implements IConfigService {
    *  - a simple object will be merged
    *  - otherwise the new value will be used
    */
+  @track()
   public mergeParameters<T extends IToolParameters>(defaults: T,
                                                     parameters: T|boolean,
                                                     cliOptionPrefix?: string) {

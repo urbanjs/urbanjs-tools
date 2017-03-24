@@ -4,8 +4,11 @@ import {
   CLIServiceOptions,
   ICLIService,
   ILoggerService,
-  TYPE_SERVICE_LOGGER
+  TYPE_SERVICE_LOGGER,
+  ITraceService,
+  TYPE_SERVICE_TRACE
 } from '../types';
+import {track} from '../decorators';
 
 export const TYPE_DRIVER_YARGS = Symbol('TYPE_DRIVER_YARGS');
 
@@ -15,13 +18,15 @@ export class YargsCLIService implements ICLIService {
   private loggerService: ILoggerService;
 
   constructor(@inject(TYPE_DRIVER_YARGS) yargsDriver: () => IYargs,
-              @inject(TYPE_SERVICE_LOGGER) loggerService: ILoggerService) {
+              @inject(TYPE_SERVICE_LOGGER) loggerService: ILoggerService,
+              @inject(TYPE_SERVICE_TRACE) traceService: ITraceService) {
     this.loggerService = loggerService;
     this.yargsDriver = yargsDriver;
+    traceService.track(this);
   }
 
+  @track()
   public parseArgs(rawArgs: string[], options: CLIServiceOptions) {
-    this.loggerService.debug('YargsService.parseArgs', JSON.stringify(rawArgs));
     const yargs = this.createYargs(options);
 
     try {
@@ -32,8 +37,8 @@ export class YargsCLIService implements ICLIService {
     }
   }
 
+  @track()
   public showHelp(options: CLIServiceOptions) {
-    this.loggerService.debug('YargsService.showHelp');
     const yargs = this.createYargs(options);
 
     // yargs parses automatically the processArgs

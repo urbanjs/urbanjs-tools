@@ -30,7 +30,7 @@ export const tools: {[key: string]: IRegistrableGulpTool} = new Proxy({}, {
         toolService.initializeTool(container, toolName, taskName, parameters);
       } catch (e) {
         if (!(e instanceof UrbanjsToolsError)) {
-          loggerService.error('Unexpected error', e);
+          loggerService.error('Unexpected error\n', e);
         }
 
         throw e;

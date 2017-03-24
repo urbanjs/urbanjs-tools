@@ -6,7 +6,8 @@ import {
   TYPE_SERVICE_FILE_SYSTEM,
   TYPE_SERVICE_CONFIG,
   TYPE_SERVICE_SHELL,
-  TYPE_SERVICE_TASK
+  TYPE_SERVICE_TASK,
+  TYPE_SERVICE_TRACE
 }from './types';
 import {
   ConfigService,
@@ -14,7 +15,8 @@ import {
   GulpTaskService,
   ConsoleLoggerService,
   FileSystemService,
-  YargsCLIService
+  YargsCLIService,
+  TraceService
 }from './services';
 
 export const container = new Container();
@@ -31,3 +33,4 @@ container.bind(TYPE_SERVICE_FILE_SYSTEM).to(FileSystemService).inSingletonScope(
 container.bind(TYPE_SERVICE_CONFIG).to(ConfigService).inSingletonScope();
 container.bind(TYPE_SERVICE_SHELL).to(ShellService).inSingletonScope();
 container.bind(TYPE_SERVICE_TASK).to(GulpTaskService).inSingletonScope();
+container.bind(TYPE_SERVICE_TRACE).to(TraceService).inSingletonScope();

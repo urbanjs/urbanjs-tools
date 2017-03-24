@@ -3,9 +3,10 @@ import {readFile, stat, writeFile} from 'fs';
 import {dirname} from 'path';
 import {
   IFileSystemService,
-  ILoggerService,
-  TYPE_SERVICE_LOGGER
+  ITraceService,
+  TYPE_SERVICE_TRACE
 } from '../types';
+import {track} from '../decorators';
 
 export const TYPE_DRIVER_MKDIRP = Symbol('TYPE_DRIVER_MKDIRP');
 export const TYPE_DRIVER_DEL = Symbol('TYPE_DRIVER_DEL');
@@ -15,18 +16,18 @@ export type Mkdirp = (path: string, cb: Function) => Promise<void>;
 
 @injectable()
 export class FileSystemService implements IFileSystemService {
-  private loggerService: ILoggerService;
   private mkdirp: Mkdirp;
   private del: Del;
 
-  constructor(@inject(TYPE_SERVICE_LOGGER) loggerService: ILoggerService,
-              @inject(TYPE_DRIVER_MKDIRP) @optional() mkdirp: Mkdirp,
-              @inject(TYPE_DRIVER_DEL) @optional() del: Del) {
-    this.loggerService = loggerService;
+  constructor(@inject(TYPE_DRIVER_MKDIRP) @optional() mkdirp: Mkdirp,
+              @inject(TYPE_DRIVER_DEL) @optional() del: Del,
+              @inject(TYPE_SERVICE_TRACE) traceService: ITraceService) {
     this.mkdirp = mkdirp;
     this.del = del;
+    traceService.track(this);
   }
 
+  @track()
   public async remove(targetPath: string): Promise<void> {
     if (!this.del) {
       throw new Error('TYPE_DRIVER_DEL is not assigned to the container.');
@@ -35,12 +36,14 @@ export class FileSystemService implements IFileSystemService {
     await this.del(targetPath, {force: true});
   }
 
+  @track()
   public exists(targetPath: string): Promise<boolean> {
     return new Promise((resolve) => {
       stat(targetPath, err => resolve(!err));
     });
   }
 
+  @track()
   public readFile(filePath: string): Promise<string> {
     return new Promise((resolve, reject) => {
       readFile(
@@ -58,6 +61,7 @@ export class FileSystemService implements IFileSystemService {
     });
   }
 
+  @track()
   public async writeFile(filePath: string, content: string): Promise<void> {
     if (!this.mkdirp) {
       throw new Error('TYPE_DRIVER_MKDIRP is not assigned to the container.');

@@ -28,6 +28,7 @@
   "dependencies": {
     "@tamasmagedli/urbanjs-tools-core": "*",
     "babel-runtime": "*",
+    "chalk": "*",
     "inversify": "*",
     "gulp-sequence": "*",
     "reflect-metadata": "*",

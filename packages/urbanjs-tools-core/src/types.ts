@@ -8,6 +8,9 @@ export const TYPE_SERVICE_SHELL = Symbol('TYPE_SERVICE_SHELL');
 export const TYPE_SERVICE_CONFIG = Symbol('TYPE_SERVICE_CONFIG');
 export const TYPE_SERVICE_TASK = Symbol('TYPE_SERVICE_TASK');
 export const TYPE_SERVICE_CLI_SERVICE = Symbol('TYPE_SERVICE_CLI_SERVICE');
+export const TYPE_SERVICE_TRACE = Symbol('TYPE_SERVICE_TRACE');
+
+export type Constructor<T> = new(...args: any[]) => T; //tslint:disable-line
 
 export type CLIServiceOptions = {
   messages: {
@@ -46,13 +49,17 @@ export type LoggerConfig = {
   warning: boolean;
 };
 
-export type LogMessage = string|Object;
+export type LogMessage = any; //tslint:disable-line
 
 export interface ILoggerService {
-  debug(msg: LogMessage, ...extraMsgs: LogMessage[]): void;
-  error(msg: LogMessage, ...extraMsgs: LogMessage[]): void;
-  info(msg: LogMessage, ...extraMsgs: LogMessage[]): void;
-  warn(msg: LogMessage, ...extraMsgs: LogMessage[]): void;
+  debug(...msgs: LogMessage[]): void;
+  error(...msgs: LogMessage[]): void;
+  info(...msgs: LogMessage[]): void;
+  warn(...msgs: LogMessage[]): void;
+}
+
+export interface ITraceService {
+  track(target: Object): void;
 }
 
 export type GlobalConfiguration = {

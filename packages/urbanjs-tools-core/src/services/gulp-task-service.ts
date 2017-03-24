@@ -1,9 +1,12 @@
 import {inject, injectable} from 'inversify';
+import {track} from '../decorators';
 import {
   ILoggerService,
   ITaskService,
   TaskDependencies,
-  TYPE_SERVICE_LOGGER
+  TYPE_SERVICE_LOGGER,
+  TYPE_SERVICE_TRACE,
+  ITraceService
 } from '../types';
 
 export const TYPE_DRIVER_GULP = Symbol('TYPE_DRIVER_GULP');
@@ -25,14 +28,16 @@ export class GulpTaskService implements ITaskService {
 
   constructor(@inject(TYPE_SERVICE_LOGGER) loggerService: ILoggerService,
               @inject(TYPE_DRIVER_GULP) gulp: IGulp,
-              @inject(TYPE_DRIVER_GULP_SEQUENCE) gulpSequence: IGulpSequence) {
-    this.loggerService = loggerService;
+              @inject(TYPE_DRIVER_GULP_SEQUENCE) gulpSequence: IGulpSequence,
+              @inject(TYPE_SERVICE_TRACE) traceService: ITraceService) {
     this.gulp = gulp;
     this.gulpSequence = gulpSequence.use(this.gulp);
+    this.loggerService = loggerService;
+    traceService.track(this);
   }
 
+  @track()
   public addTask(taskName: string, dependencies: TaskDependencies, handler: Function) {
-    this.loggerService.debug('GulpTaskService.addTask -', 'adding task', taskName);
     this.gulp.task(
       taskName,
       dependencies.length ? this.gulpSequence.apply(null, dependencies) : [],
