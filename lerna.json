@@ -8,11 +8,6 @@
       "ignore": [
         "*"
       ]
-    },
-    "bootstrap": {
-      "ignore": [
-        "urbanjs-tools"
-      ]
     }
   },
   "version": "independent"

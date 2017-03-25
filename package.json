@@ -34,7 +34,7 @@
     "reflect-metadata": "^0.1.10",
     "through2": "2.0.3",
     "typescript": "2.1.6",
-    "urbanjs-tools": "2.0.0-beta2",
+    "urbanjs-tools": "2.0.0-beta3",
     "yargs": "6.6.0"
   }
 }
