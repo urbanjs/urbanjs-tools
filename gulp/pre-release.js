@@ -2,9 +2,10 @@
 
 const gulp = require('gulp');
 const tools = require('urbanjs-tools');
+const tsCompilerOptions = require('../tsconfig.json').compilerOptions;
 
 tools.setGlobalConfiguration(defaults => Object.assign(defaults, {
-  typescript: require('../tsconfig.json').compilerOptions
+  typescript: tsCompilerOptions
 }));
 
 tools.initializeTasks(gulp, {

@@ -11,8 +11,7 @@
     "node": ">=4.2.3"
   },
   "scripts": {
-    "prepublish": "gulp pre-release",
-    "postinstall": "urbanjs install-dependencies -t babel check-dependencies check-file-names mocha nsp retire tslint"
+    "postinstall": "urbanjs install-dependencies -t babel check-dependencies check-file-names eslint mocha nsp retire tslint"
   },
   "devDependencies": {
     "@types/babel-core": "^6.7.14",

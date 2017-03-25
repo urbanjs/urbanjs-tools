@@ -9,14 +9,15 @@ function applyVersions(dependencies) {
   return Object.keys(dependencies || {}).reduce((acc, depName) => {
     const urbanjsPackageName = (depName.match(/urbanjs-tools(-.+)$/) || [])[0];
 
+    let version = dependencies[depName];
     if (urbanjsPackageName) {
-      acc[depName] = require(`../packages/${urbanjsPackageName}/_package.json`).version;
+      const rawPackageFile = `../packages/${urbanjsPackageName}/_package.json`;
+      version = require(rawPackageFile).version; // eslint-disable-line
     } else if (pkg.devDependencies[depName]) {
-      acc[depName] = pkg.devDependencies[depName];
-    } else {
-      acc[depName] = dependencies[depName];
+      version = pkg.devDependencies[depName];
     }
 
+    acc[depName] = version; // eslint-disable-line no-param-reassign
     return acc;
   }, {});
 }
@@ -33,12 +34,12 @@ gulp.task('generate-package-files', [], () =>
       rawPkg.dependencies = applyVersions(rawPkg.dependencies);
       rawPkg.devDependencies = applyVersions(rawPkg.devDependencies);
 
-      file.contents = new Buffer(JSON.stringify(rawPkg));
-      file.path = path.format(Object.assign(path.parse(file.path), {
-        base: 'package.json'
+      cb(null, Object.assign(file, {
+        contents: new Buffer(JSON.stringify(rawPkg)),
+        path: path.format(Object.assign(path.parse(file.path), {
+          base: 'package.json'
+        }))
       }));
-
-      cb(null, file);
     }))
     .pipe(gulp.dest('./packages'))
 );
