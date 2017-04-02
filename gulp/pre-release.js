@@ -40,13 +40,11 @@ tools.initializeTasks(gulp, {
 tools.tasks.babel.register(gulp, 'babel:dev', true, { typescript: tsCompilerOptions });
 
 tools.tasks.mocha.register(gulp, 'test-e2e', defaults => ({
-  files: [
-    ...readdir.readSync(
-      'tests',
-      ['*-tests.ts'],
-      readdir.ABSOLUTE_PATHS
-    ).map(file => [file])
-  ],
+  files: readdir.readSync(
+    'tests',
+    ['*-tests.ts'],
+    readdir.ABSOLUTE_PATHS
+  ).map(file => [file]),
   require: [
     defaults.require,
     path.join(__dirname, 'mocha-environment.js')

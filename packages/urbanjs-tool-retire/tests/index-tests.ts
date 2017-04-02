@@ -31,7 +31,7 @@ describe('Retire task', () => {
       ['npm install'],
       ['gulp retire', {
         expectToFail: true,
-        expectToContain: 'marked 0.3.5 has known vulnerabilities'
+        expectToLog: 'marked 0.3.5 has known vulnerabilities'
       }]
     ];
 
@@ -45,7 +45,7 @@ describe('Retire task', () => {
       ['npm install'],
       ['gulp retire', {
         expectToFail: true,
-        expectToContain: 'marked 0.3.5 has known vulnerabilities'
+        expectToLog: 'marked 0.3.5 has known vulnerabilities'
       }]
     ];
 

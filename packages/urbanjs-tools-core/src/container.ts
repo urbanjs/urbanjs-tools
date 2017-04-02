@@ -17,9 +17,11 @@ import {
   FileSystemService,
   YargsCLIService,
   TraceService,
-  TYPE_DRIVER_CHILD_PROCESS
+  TYPE_DRIVER_CHILD_PROCESS,
+  TYPE_DRIVER_FS
 }from './services';
 import * as childProcess from 'child_process';
+import * as fs from 'fs';
 
 export const container = new Container();
 
@@ -30,6 +32,7 @@ container.bind(TYPE_CONFIG_LOGGER).toConstantValue({
   info: true
 });
 container.bind(TYPE_DRIVER_CHILD_PROCESS).toConstantValue(childProcess);
+container.bind(TYPE_DRIVER_FS).toConstantValue(fs);
 container.bind(TYPE_SERVICE_CLI_SERVICE).to(YargsCLIService).inSingletonScope();
 container.bind(TYPE_SERVICE_LOGGER).to(ConsoleLoggerService).inSingletonScope();
 container.bind(TYPE_SERVICE_FILE_SYSTEM).to(FileSystemService).inSingletonScope();

@@ -4,7 +4,10 @@ import {
   TYPE_DRIVER_GULP,
   ILoggerService,
   IToolParameters,
-  TYPE_SERVICE_LOGGER
+  IConfigService,
+  TYPE_SERVICE_LOGGER,
+  TYPE_SERVICE_CONFIG,
+  GlobalConfiguration
 } from '@tamasmagedli/urbanjs-tools-core';
 import {container} from './container';
 import {
@@ -15,6 +18,7 @@ import {UrbanjsToolsError} from './errors';
 
 const loggerService = container.get<ILoggerService>(TYPE_SERVICE_LOGGER);
 const toolService = container.get<IToolService>(TYPE_TOOL_SERVICE);
+const configService = container.get<IConfigService>(TYPE_SERVICE_CONFIG);
 
 export {container};
 
@@ -60,6 +64,5 @@ export const setupInMemoryTranspile = () => {
   throw new Error('Not implemented yet');
 };
 
-export const setGlobalConfiguration = () => {
-  throw new Error('Not implemented yet');
-};
+export const getGlobalConfiguration = (): GlobalConfiguration => configService.getGlobalConfiguration();
+export const setGlobalConfiguration = (configuration) => configService.setGlobalConfiguration(configuration);

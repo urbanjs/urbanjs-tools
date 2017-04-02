@@ -35,62 +35,6 @@ const presets = {
 module.exports = {
 
   /**
-   * @type {module:tasks}
-   */
-  tasks,
-
-  /**
-   * Initializes the given gulp instance with the core tasks based on the given configuration
-   * @param {external:gulp} gulp The gulp instance to initialize
-   * @param {module:main.ConfigurationTasks} configuration Configuration of the tasks,
-   *                                                  true value means that defaults should be used
-   *                                                  if false value is given the task won't be
-   *                                                  initialized, use function to get the
-   *                                                  defaults as first argument
-   * @example
-   *
-   * // initialize tasks (eslint with defaults, disable jest)
-   * require('urbanjs-tools').initializeTasks(require('gulp'), {
-   *   jest: false,
-   *   eslint: true
-   * }));
-   *
-   * // initialize tasks (overriding defaults)
-   * require('urbanjs-tools').initializeTasks(require('gulp'), {
-   *   jest: defaults => {
-   *     return Object.assign({}, defaults, {unmockedModulePathPatterns: ['core-js/.*']})
-   *   }
-   * }));
-   */
-  initializeTasks(gulp, configuration) {
-    const config = configuration || {};
-
-    [
-      ['babel'],
-      ['checkDependencies', 'check-dependencies'],
-      ['checkFileNames', 'check-file-names'],
-      ['conventionalChangelog', 'conventional-changelog'],
-      ['eslint'],
-      ['jest'],
-      ['jscs'],
-      ['jsdoc'],
-      ['mocha'],
-      ['npmInstall', 'npm-install'],
-      ['nsp'],
-      ['retire'],
-      ['tslint'],
-      ['webpack']
-    ].forEach((def) => {
-      const taskId = def[0];
-      const taskName = def[1] || taskId;
-
-      if (config.hasOwnProperty(taskId) && config[taskId] !== false) {
-        tasks[taskId].register(gulp, taskName, config[taskId], globals);
-      }
-    });
-  },
-
-  /**
    * Initializes the given gulp instance with the core tasks and presets
    * @param {external:gulp} gulp The gulp instance to initialize
    * @param {module:main.ConfigurationPresets} configuration Configuration of the presets,
@@ -151,56 +95,6 @@ module.exports = {
       _.mapValues(presets, () => true),
       _.omit(configuration, taskNames)
     ));
-  },
-
-  /**
-   * Overwrites global configurations
-   * Globals are used by multiple tasks. This settings allows you to
-   * keep the common configurations in sync e.g. babel, sourceFiles
-   * Globals are used to set up the defaults of the tasks.
-   * @see module:main.globals
-   * @param {module:main.ConfigurationGlobals} configuration
-   *
-   * @example
-   *
-   * // Using the default configurations of tasks though slightly change the behaviour:
-   * //  - validate all files in the /lib folder by check-file-names, eslint tasks
-   * //  - set babel configuration for jsdoc, jest and webpack tasks
-   * //  - enable npm linking from global packages during the dependency installation
-   * setGlobalConfiguration({
-   *   sourceFiles: './lib/**',
-   *   babel: { presets: ['es2015'] },
-   *   typescript: require('./tsconfig.json').compilerOptions
-   *   allowLinking: true
-   * });
-   */
-  setGlobalConfiguration(configuration) {
-    configuration = configHelper.mergeParameters(// eslint-disable-line no-param-reassign
-      Object.assign({
-        allowLinking: true,
-        babel: globalBabel,
-        typescript: globalTypescript,
-        sourceFiles: globalSourceFiles
-      }, globals),
-      configuration,
-      'global'
-    );
-
-    const knownGlobals = {
-      allowLinking: true,
-      babel: true,
-      sourceFiles: true,
-      typescript: true
-    };
-
-    const unknownGlobals = Object.keys(configuration)
-      .filter(key => !knownGlobals.hasOwnProperty(key));
-
-    if (unknownGlobals.length) {
-      throw new Error(`Unknown globals: ${unknownGlobals.join(', ')}`);
-    }
-
-    Object.assign(globals, configuration);
   },
 
   /**

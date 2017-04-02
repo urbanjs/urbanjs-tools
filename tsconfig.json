@@ -6,6 +6,7 @@
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "allowJs": true,
     "types": [
       "node",
       "mocha",

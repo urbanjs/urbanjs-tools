@@ -1,5 +1,5 @@
 import {TransformOptions as BabelTransformOptions} from '@types/babel-core';
-import {Params as TSCompilerOptions} from '@types/gulp-typescript';
+import {Params as BaseTSCompilerOptions} from '@types/gulp-typescript';
 
 export const TYPE_CONFIG_LOGGER = Symbol('TYPE_CONFIG_LOGGER');
 export const TYPE_SERVICE_LOGGER = Symbol('TYPE_SERVICE_LOGGER');
@@ -63,13 +63,17 @@ export interface ITraceService {
   track(target: Object): void;
 }
 
+export type TSCompilerOptions = BaseTSCompilerOptions & { extends?: string };
+
+export {BabelTransformOptions};
+
 export type GlobalConfiguration = {
   typescript: TSCompilerOptions;
   babel: BabelTransformOptions;
   sourceFiles: string[];
 };
 
-export type IToolParameters = { [key: string]: string | number | boolean };
+export type IToolParameters = { [key: string]: string | number | boolean | Object };
 
 export interface ITool<T extends IToolParameters> {
   register(taskName: string, parameters: T): void;
@@ -103,4 +107,5 @@ export interface IConfigService {
                                              parameters: T,
                                              cliOptionPrefix?: string): T;
   getGlobalConfiguration(): GlobalConfiguration;
+  setGlobalConfiguration(configuration: GlobalConfiguration): void;
 }

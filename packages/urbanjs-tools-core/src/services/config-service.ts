@@ -3,6 +3,7 @@ import {
   cloneDeep,
   merge
 }from 'lodash';
+import {join} from 'path';
 import {
   IConfigService,
   ILoggerService,
@@ -11,7 +12,8 @@ import {
   TYPE_SERVICE_LOGGER,
   TYPE_SERVICE_CLI_SERVICE,
   ITraceService,
-  TYPE_SERVICE_TRACE
+  TYPE_SERVICE_TRACE,
+  GlobalConfiguration
 } from '../types';
 import {track} from '../decorators';
 
@@ -19,6 +21,7 @@ import {track} from '../decorators';
 export class ConfigService implements IConfigService {
   private loggerService: ILoggerService;
   private cliService: ICLIService;
+  private globals: GlobalConfiguration;
 
   constructor(@inject(TYPE_SERVICE_LOGGER) loggerService: ILoggerService,
               @inject(TYPE_SERVICE_CLI_SERVICE) cliService: ICLIService,
@@ -26,15 +29,60 @@ export class ConfigService implements IConfigService {
     this.loggerService = loggerService;
     this.cliService = cliService;
     traceService.track(this);
+
+    this.globals = {
+      typescript: {
+        extends: join(__dirname, '../../../../tsconfig.json')
+      },
+      babel: {
+        babelrc: false,
+        extends: join(__dirname, '../../../../.babelrc')
+      },
+      sourceFiles: [
+        '!**/+(node_modules|bower_components|vendor|dist)/**/*',
+        'bin/**/*.js',
+        'src/**/*.+(js|ts|tsx)',
+        'gulp/**/*.js',
+        'gulpfile.js'
+      ].map(globPath => `${globPath[0] === '!' ? '!' : ''}${join(process.cwd(), globPath.replace(/^!/, ''))}`)
+    };
+
+    // allow overwriting globals by environment variables
+    // useful for shell tasks where globals need to be shared
+    if (process.env.urbanJSToolGlobals) {
+      Object.assign(this.globals, JSON.parse(process.env.urbanJSToolGlobals));
+    }
+  }
+
+  @track()
+  public setGlobalConfiguration(configuration: GlobalConfiguration) {
+    configuration = this.mergeParameters(
+      this.globals,
+      configuration,
+      'global'
+    );
+
+    const knownGlobals = {
+      allowLinking: true,
+      babel: true,
+      sourceFiles: true,
+      typescript: true
+    };
+
+    const unknownGlobals = Object.keys(configuration)
+      .filter(key => !knownGlobals.hasOwnProperty(key));
+
+    if (unknownGlobals.length) {
+      this.loggerService.error(`Unknown globals: ${unknownGlobals.join(', ')}`);
+      throw new Error('Invalid arguments');
+    }
+
+    this.globals = Object.assign({}, this.globals, configuration);
   }
 
   @track()
   public getGlobalConfiguration() {
-    return {
-      typescript: {},
-      babel: {},
-      sourceFiles: []
-    };
+    return this.globals;
   }
 
   /**

@@ -29,6 +29,7 @@
     "@tamasmagedli/urbanjs-tools-core": "*",
     "babel-runtime": "*",
     "chalk": "*",
+    "del": "*",
     "inversify": "*",
     "gulp-sequence": "*",
     "reflect-metadata": "*",
@@ -36,7 +37,6 @@
   },
   "devDependencies": {
     "@tamasmagedli/urbanjs-tool-retire": "*",
-    "gulp": "*",
-    "urbanjs-tools": "*"
+    "@tamasmagedli/urbanjs-tool-babel": "*"
   }
 }

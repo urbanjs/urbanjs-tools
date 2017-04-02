@@ -9,14 +9,11 @@
   },
   "dependencies": {
     "@tamasmagedli/urbanjs-tools-core": "*",
-    "@tamasmagedli/urbanjs-tools": "*",
     "babel-runtime": "*",
     "inversify": "*",
     "retire": "*"
   },
   "devDependencies": {
-    "gulp": "*",
-    "urbanjs-tools": "*",
-    "yargs": "*"
+    "@tamasmagedli/urbanjs-tools": "*"
   }
 }

@@ -9,6 +9,7 @@
     "restrict-plus-operands": false,
     "linebreak-style": false,
     "no-reserved-keywords": false,
-    "ordered-imports": false
+    "ordered-imports": false,
+    "max-line-length": false
   }
 }

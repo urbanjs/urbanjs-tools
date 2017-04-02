@@ -1,5 +1,4 @@
 import {inject, injectable, optional} from 'inversify';
-import {readFile, stat, writeFile} from 'fs';
 import {dirname} from 'path';
 import {
   IFileSystemService,
@@ -10,20 +9,29 @@ import {track} from '../decorators';
 
 export const TYPE_DRIVER_MKDIRP = Symbol('TYPE_DRIVER_MKDIRP');
 export const TYPE_DRIVER_DEL = Symbol('TYPE_DRIVER_DEL');
+export const TYPE_DRIVER_FS = Symbol('TYPE_DRIVER_FS');
 
 export type Del = (path: string, options: { force: boolean }) => Promise<void>;
 export type Mkdirp = (path: string, cb: Function) => Promise<void>;
+export type Fs = {
+  readFile(filePath: string, encoding: string, cb: Function): void;
+  writeFile(filePath: string, content: string, cb: Function): void;
+  stat(targetPath: string, cb: Function): void;
+};
 
 @injectable()
 export class FileSystemService implements IFileSystemService {
   private mkdirp: Mkdirp;
   private del: Del;
+  private fs: Fs;
 
   constructor(@inject(TYPE_DRIVER_MKDIRP) @optional() mkdirp: Mkdirp,
               @inject(TYPE_DRIVER_DEL) @optional() del: Del,
+              @inject(TYPE_DRIVER_FS) @optional() fs: Fs,
               @inject(TYPE_SERVICE_TRACE) traceService: ITraceService) {
     this.mkdirp = mkdirp;
     this.del = del;
+    this.fs = fs;
     traceService.track(this);
   }
 
@@ -38,15 +46,23 @@ export class FileSystemService implements IFileSystemService {
 
   @track()
   public exists(targetPath: string): Promise<boolean> {
+    if (!this.fs) {
+      throw new Error('TYPE_DRIVER_FS is not assigned to the container.');
+    }
+
     return new Promise((resolve) => {
-      stat(targetPath, err => resolve(!err));
+      this.fs.stat(targetPath, err => resolve(!err));
     });
   }
 
   @track()
   public readFile(filePath: string): Promise<string> {
+    if (!this.fs) {
+      throw new Error('TYPE_DRIVER_FS is not assigned to the container.');
+    }
+
     return new Promise((resolve, reject) => {
-      readFile(
+      this.fs.readFile(
         filePath,
         'utf8',
         (err, content: string) => {
@@ -66,6 +82,9 @@ export class FileSystemService implements IFileSystemService {
     if (!this.mkdirp) {
       throw new Error('TYPE_DRIVER_MKDIRP is not assigned to the container.');
     }
+    if (!this.fs) {
+      throw new Error('TYPE_DRIVER_FS is not assigned to the container.');
+    }
 
     await new Promise((resolve, reject) => {
       const folderPath = dirname(filePath);
@@ -75,7 +94,7 @@ export class FileSystemService implements IFileSystemService {
           return;
         }
 
-        writeFile(
+        this.fs.writeFile(
           filePath,
           content,
           (writeErr) => {

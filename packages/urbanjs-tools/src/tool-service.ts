@@ -47,14 +47,14 @@ export class ToolService implements IToolService {
       this.loggerService.debug('ToolService.getTool', `loading ${packageName}`);
       return this.getToolConstructorFromModule(require(packageName)); //tslint:disable-line
     } catch (e) {
-      this.loggerService.debug('ToolService.getTool', 'tool not found', name);
+      this.loggerService.debug('ToolService.getTool', 'tool not found', name, e);
     }
 
     try {
       this.loggerService.debug('ToolService.getTool', `loading ${name}`);
       return this.getToolConstructorFromModule(require(name)); //tslint:disable-line
     } catch (e) {
-      this.loggerService.error(`Tool was not found: ${name}. Please install ${packageName}.`);
+      this.loggerService.error(`Tool was not found: ${name}. Please install ${packageName}.`, e);
       throw new NotFoundTool();
     }
   }
