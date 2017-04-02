@@ -14,7 +14,6 @@ export const TYPE_DRIVER_CHALK = Symbol('TYPE_DRIVER_CHALK');
 
 export type Colorizer = (str: string) => string;
 export interface IChalk {
-  reset: Colorizer;
   green: Colorizer;
   yellow: Colorizer;
   red: Colorizer;
@@ -55,7 +54,7 @@ export class ConsoleLoggerService implements ILoggerService {
 
   public info(...msgs: LogMessage[]) {
     if (this.loggerConfig.info) {
-      const messages = msgs.map(val => this.formatValue(val, 'reset'));
+      const messages = msgs.map(val => this.formatValue(val, 'green'));
       console.info(messages[0], ...messages.slice(1)); //tslint:disable-line no-console
     }
   }

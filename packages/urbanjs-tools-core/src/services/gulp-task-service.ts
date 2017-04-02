@@ -13,7 +13,8 @@ export const TYPE_DRIVER_GULP = Symbol('TYPE_DRIVER_GULP');
 export const TYPE_DRIVER_GULP_SEQUENCE = Symbol('TYPE_DRIVER_GULP_SEQUENCE');
 
 export interface IGulp {
-  task(taskName: string, dependencies: string[], handler?: Function);
+  task(taskName: string, dependencies: string[], cb: (done?: Function) => void);
+  start(taskName: string, cb: (err: Error) => void);
 }
 
 export interface IGulpSequence {
@@ -41,7 +42,21 @@ export class GulpTaskService implements ITaskService {
     this.gulp.task(
       taskName,
       dependencies.length ? this.gulpSequence.apply(null, dependencies) : [],
-      handler
+      async () => await handler()
+    );
+  }
+
+  @track()
+  public async runTask(taskName: string) {
+    await new Promise((resolve, reject) =>
+      this.gulp.start(taskName, (err) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+
+        resolve();
+      })
     );
   }
 }

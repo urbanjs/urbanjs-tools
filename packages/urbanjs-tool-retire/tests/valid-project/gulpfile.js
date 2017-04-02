@@ -2,9 +2,8 @@
 
 const gulp = require('gulp');
 const path = require('path');
-const task = require('../../index');
+const tools = require('@tamasmagedli/urbanjs-tools');
 
-task.dependencies = {};
-task.register(gulp, 'retire', {
+tools.tasks.retire.register(gulp, 'retire', {
   packagePath: path.join(require.resolve('retire'), '../../')
 });

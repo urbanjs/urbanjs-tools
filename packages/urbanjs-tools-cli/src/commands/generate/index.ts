@@ -99,7 +99,7 @@ export class GenerateCommand implements ICommand {
     try {
       const urbanjsVersions = require('../../../versions.json'); //tslint:disable-line
       const packageFilePath = join(__dirname, `./templates/package-${isTsProject ? 'ts' : 'js'}.txt`);
-      const rawPackageJSON: {devDependencies: {}} = JSON.parse(await this.fileSystemService.readFile(packageFilePath));
+      const rawPackageJSON: { devDependencies: {} } = JSON.parse(await this.fileSystemService.readFile(packageFilePath));
       const packageJSON = {
         name: projectName,
         ...rawPackageJSON,

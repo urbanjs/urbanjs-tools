@@ -24,7 +24,7 @@ export class DefaultCommand implements ICommand {
   private cliService: ICLIService;
   private cliServiceOptions: CLIServiceOptions;
   private loggerService: ILoggerService;
-  private commands: {[key: string]: ICommand};
+  private commands: { [key: string]: ICommand };
 
   constructor(@inject(TYPE_SERVICE_CLI_SERVICE) cliService: ICLIService,
               @inject(TYPE_SERVICE_LOGGER) loggerService: ILoggerService,

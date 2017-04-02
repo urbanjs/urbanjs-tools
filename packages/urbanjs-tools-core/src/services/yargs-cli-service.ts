@@ -80,8 +80,11 @@ export class YargsCLIService implements ICLIService {
           {}
         )
       )
-      .usage(options.messages.usage)
-      .strict();
+      .usage(options.messages.usage);
+
+    if (!options.allowUnknown) {
+      yargs.strict();
+    }
 
     options.commands.forEach(command => {
       yargs.command(command.name, command.description);

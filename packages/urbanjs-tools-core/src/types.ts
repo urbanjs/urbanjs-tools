@@ -13,6 +13,7 @@ export const TYPE_SERVICE_TRACE = Symbol('TYPE_SERVICE_TRACE');
 export type Constructor<T> = new(...args: any[]) => T; //tslint:disable-line
 
 export type CLIServiceOptions = {
+  allowUnknown?: boolean;
   messages: {
     usage: string;
   };
@@ -31,7 +32,7 @@ export type CLIServiceOptions = {
 };
 
 export interface ICLIService {
-  parseArgs<T extends {[key: string]: string|number|boolean}>(args: string[], options: CLIServiceOptions): T;
+  parseArgs<T extends { [key: string]: string | number | boolean }>(args: string[], options: CLIServiceOptions): T;
   showHelp(options: CLIServiceOptions): void;
 }
 
@@ -68,24 +69,38 @@ export type GlobalConfiguration = {
   sourceFiles: string[];
 };
 
-export type IToolParameters = {[key: string]: string|number|boolean};
+export type IToolParameters = { [key: string]: string | number | boolean };
 
 export interface ITool<T extends IToolParameters> {
   register(taskName: string, parameters: T): void;
 }
 
+export type ShellCommandOptions = {
+  cwd?: string;
+  env?: Object;
+  allowToFail?: boolean;
+  expectToFail?: boolean;
+  expectToLog?: RegExp | string | (RegExp | string)[];
+};
+
+export type ShellCommandResult = void;
+
 export interface IShellService {
-  execute(command: string): Promise<void>;
+  runCommand(command: string, options?: ShellCommandOptions): Promise<ShellCommandResult>;
+  runCommandsInSequence(commands: (string | ShellCommandOptions)[],
+                        options?: ShellCommandOptions): Promise<ShellCommandResult[]>;
 }
 
-export type TaskDependencies = (string|string[])[];
+export type TaskDependencies = (string | string[])[];
 
 export interface ITaskService {
-  addTask(taskName: string, dependencies: TaskDependencies, handler?: Function): void;
+  addTask(taskName: string, dependencies: TaskDependencies, handler?: () => Promise<void>): void;
+  runTask(taskName: string): Promise<void>;
 }
 
 export interface IConfigService {
   mergeParameters<T extends IToolParameters>(defaults: T,
                                              parameters: T,
                                              cliOptionPrefix?: string): T;
+  getGlobalConfiguration(): GlobalConfiguration;
 }

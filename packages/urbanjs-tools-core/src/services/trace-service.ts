@@ -15,7 +15,7 @@ export class TraceService implements ITraceService {
     this.loggerService = loggerService;
   }
 
-  public track(target: {name: string}) {
+  public track(target: { name: string }) {
     const prototype = Object.getPrototypeOf(target);
     const className = prototype.constructor.name;
     const createDebugger = (prefix: LogMessage) => (...args: LogMessage[]) => this.loggerService.debug(prefix, ...args);

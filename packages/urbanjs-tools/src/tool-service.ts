@@ -59,7 +59,7 @@ export class ToolService implements IToolService {
     }
   }
 
-  private getToolConstructorFromModule<T extends IToolParameters>(module?: {Tool?: Constructor<ITool<T>>}): Constructor<ITool<T>> {
+  private getToolConstructorFromModule<T extends IToolParameters>(module?: { Tool?: Constructor<ITool<T>> }): Constructor<ITool<T>> {
     // TODO tslint:disable-line
     // add a more robust solution to find the constructor of a package
     return module && module.Tool;

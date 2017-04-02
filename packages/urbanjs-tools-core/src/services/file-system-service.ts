@@ -11,7 +11,7 @@ import {track} from '../decorators';
 export const TYPE_DRIVER_MKDIRP = Symbol('TYPE_DRIVER_MKDIRP');
 export const TYPE_DRIVER_DEL = Symbol('TYPE_DRIVER_DEL');
 
-export type Del = (path: string, options: {force: boolean}) => Promise<void>;
+export type Del = (path: string, options: { force: boolean }) => Promise<void>;
 export type Mkdirp = (path: string, cb: Function) => Promise<void>;
 
 @injectable()

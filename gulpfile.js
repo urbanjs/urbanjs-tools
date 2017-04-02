@@ -11,6 +11,8 @@ tools.initializeTasks(gulp, {
   eslint: defaults => Object.assign(defaults, {
     files: defaults.files.concat([
       'packages/**/*.js',
+      '!packages/**/coverage/**/*',
+      '!packages/**/dist/**/*',
       '!packages/urbanjs-tools/legacy/**'
     ])
   }),
@@ -19,11 +21,11 @@ tools.initializeTasks(gulp, {
 });
 
 gulp.task('pre-release', sequence(
+  'generate-package-files',
+  'bootstrap',
   'retire',
   'nsp',
-  'eslint',
-  'generate-package-files',
-  'bootstrap'
+  'eslint'
 ));
 
 gulp.task('default', ['pre-release']);

@@ -9,6 +9,7 @@ pids
 *.seed
 __tests__/**/*.md
 packages/**/package.json
+!packages/**/tests/**/package.json
 packages/urbanjs-tools-cli/versions.json
 
 # Build folder

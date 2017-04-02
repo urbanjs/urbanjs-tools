@@ -28,6 +28,15 @@ export class ConfigService implements IConfigService {
     traceService.track(this);
   }
 
+  @track()
+  public getGlobalConfiguration() {
+    return {
+      typescript: {},
+      babel: {},
+      sourceFiles: []
+    };
+  }
+
   /**
    * Merges given configuration with defaults.
    *  - falsy value will be ignored
@@ -37,33 +46,38 @@ export class ConfigService implements IConfigService {
    */
   @track()
   public mergeParameters<T extends IToolParameters>(defaults: T,
-                                                    parameters: T|boolean,
+                                                    parameters: T | boolean,
                                                     cliOptionPrefix?: string) {
-
     if (!this.isObject(defaults)) {
-      throw new Error(`Invalid arguments: defaults must be an object ${JSON.stringify(defaults)}`);
+      this.loggerService.error(`Invalid arguments: defaults must be an object ${JSON.stringify(defaults)}`);
+      throw new Error('Invalid arguments');
     }
 
     let result;
     if (!parameters || parameters === true) {
       result = defaults;
     } else if (Array.isArray(parameters)) {
-      result = parameters;
+      result = parameters.map(value => Object.assign({}, defaults, value));
     } else if (this.isObject(parameters)) {
-      // using assign instead of deep merge
-      // to be able to override values easily
       result = Object.assign({}, defaults, parameters);
     } else if (typeof parameters === 'function') {
       result = parameters(cloneDeep(defaults));
       if (!this.isValidConfig(result)) {
-        throw new Error(`Invalid config: ${JSON.stringify(result)}`);
+        this.loggerService.error(`Invalid result from config function: ${JSON.stringify(result)}`);
+        throw new Error('Invalid config');
       }
     } else {
-      throw new Error(`Invalid arguments: invalid config ${JSON.stringify(parameters)}`);
+      this.loggerService.error(`Invalid arguments: invalid parameters ${JSON.stringify(parameters)}`);
+      throw new Error('Invalid arguments');
     }
 
-    if (cliOptionPrefix && this.isObject(result)) {
-      result = merge(cloneDeep(result), this.getProcessOptions(cliOptionPrefix));
+    if (cliOptionPrefix) {
+      const cliOptions = this.getCLIOptions(cliOptionPrefix);
+      if (this.isObject(result)) {
+        result = merge(cloneDeep(result), cliOptions);
+      } else if (Array.isArray(result)) {
+        result = result.map(value => merge(cloneDeep(value), cliOptions));
+      }
     }
 
     return result;
@@ -77,10 +91,13 @@ export class ConfigService implements IConfigService {
     return this.isObject(obj) || Array.isArray(obj);
   }
 
-  private getProcessOptions(prefix: string): Object {
+  private getCLIOptions(prefix: string): Object {
     try {
+      // TODO: tslint:disable-line
+      // process.argv should be injectable
       const rawArgs = process.argv.slice(2);
       const options = {
+        allowUnknown: true,
         messages: {usage: ''},
         options: [],
         commands: []

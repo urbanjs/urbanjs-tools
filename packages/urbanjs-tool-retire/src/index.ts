@@ -37,15 +37,16 @@ export class Tool implements ITool<RetireConfig> {
 
   @track()
   public register(taskName: string, parameters: RetireConfig) {
-    this.taskService.addTask(taskName, [], async() => {
+    this.taskService.addTask(taskName, [], async () => {
       this.loggerService.debug('running task', taskName);
 
       try {
         const config = this.configService.mergeParameters<RetireConfig>(defaults, parameters, taskName);
         const command = `node "${config.packagePath}bin/retire" ${config.options || ''}`;
-        await this.shellService.execute(command);
+        await this.shellService.runCommand(command);
       } catch (e) {
         this.loggerService.error(`Unexpected error in ${taskName}`, e);
+        throw e;
       }
     });
   }

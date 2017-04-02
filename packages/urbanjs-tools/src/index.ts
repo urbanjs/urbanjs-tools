@@ -16,11 +16,13 @@ import {UrbanjsToolsError} from './errors';
 const loggerService = container.get<ILoggerService>(TYPE_SERVICE_LOGGER);
 const toolService = container.get<IToolService>(TYPE_TOOL_SERVICE);
 
+export {container};
+
 export interface IRegistrableGulpTool {
   register(gulp: IGulp, taskName: string, parameters: IToolParameters): void;
 }
 
-export const tools: {[key: string]: IRegistrableGulpTool} = new Proxy({}, {
+export const tools: { [key: string]: IRegistrableGulpTool } = new Proxy({}, {
   get: (target: Object, toolName: string) => ({
     register: (gulp: IGulp, taskName: string, parameters: IToolParameters) => {
       container.snapshot();
