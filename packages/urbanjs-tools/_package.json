@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "@tamasmagedli/urbanjs-tool-retire": "*",
-    "@tamasmagedli/urbanjs-tool-babel": "*"
+    "@tamasmagedli/urbanjs-tool-babel": "*",
+    "gulp": "*"
   }
 }

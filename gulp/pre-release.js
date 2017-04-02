@@ -4,7 +4,7 @@ const gulp = require('gulp');
 const path = require('path');
 const readdir = require('readdir');
 const tools = require('urbanjs-tools');
-const tsCompilerOptions = require('../tsconfig.json').compilerOptions;
+const tsCompilerOptions = require('../packages/urbanjs-tools/tsconfig.json').compilerOptions;
 
 tools.setGlobalConfiguration(defaults => Object.assign(defaults, {
   typescript: tsCompilerOptions

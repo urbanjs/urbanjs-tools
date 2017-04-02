@@ -1,16 +1,3 @@
 {
-  "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "declaration": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowJs": true,
-    "types": [
-      "node",
-      "mocha",
-      "reflect-metadata"
-    ]
-  }
+  "extends": "packages/urbanjs-tools/tsconfig.json"
 }

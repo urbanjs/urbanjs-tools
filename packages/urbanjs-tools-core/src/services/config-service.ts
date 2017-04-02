@@ -3,7 +3,6 @@ import {
   cloneDeep,
   merge
 }from 'lodash';
-import {join} from 'path';
 import {
   IConfigService,
   ILoggerService,
@@ -31,20 +30,9 @@ export class ConfigService implements IConfigService {
     traceService.track(this);
 
     this.globals = {
-      typescript: {
-        extends: join(__dirname, '../../../../tsconfig.json')
-      },
-      babel: {
-        babelrc: false,
-        extends: join(__dirname, '../../../../.babelrc')
-      },
-      sourceFiles: [
-        '!**/+(node_modules|bower_components|vendor|dist)/**/*',
-        'bin/**/*.js',
-        'src/**/*.+(js|ts|tsx)',
-        'gulp/**/*.js',
-        'gulpfile.js'
-      ].map(globPath => `${globPath[0] === '!' ? '!' : ''}${join(process.cwd(), globPath.replace(/^!/, ''))}`)
+      typescript: {},
+      babel: {},
+      sourceFiles: []
     };
 
     // allow overwriting globals by environment variables
@@ -141,7 +129,7 @@ export class ConfigService implements IConfigService {
 
   private getCLIOptions(prefix: string): Object {
     try {
-      // TODO: tslint:disable-line
+      // TODO
       // process.argv should be injectable
       const rawArgs = process.argv.slice(2);
       const options = {

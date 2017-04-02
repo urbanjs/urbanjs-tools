@@ -10,6 +10,7 @@
     "linebreak-style": false,
     "no-reserved-keywords": false,
     "ordered-imports": false,
-    "max-line-length": false
+    "max-line-length": false,
+    "no-suspicious-comment": false
   }
 }

@@ -49,7 +49,7 @@ export class DefaultCommand implements ICommand {
       }]
     };
 
-    // TODO: tslint:disable-line
+    // TODO
     // consider using a multiInject argument to get all commands and
     // make urbanjs-tools-cli pluginable
     this.commands = {

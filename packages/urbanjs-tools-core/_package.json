@@ -14,5 +14,8 @@
     "babel-runtime": "*",
     "lodash": "*",
     "inversify": "*"
+  },
+  "devDependencies": {
+    "gulp": "*"
   }
 }

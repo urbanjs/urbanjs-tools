@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import {join} from 'path';
 import {
   IGulp,
   TYPE_DRIVER_GULP,
@@ -19,6 +20,23 @@ import {UrbanjsToolsError} from './errors';
 const loggerService = container.get<ILoggerService>(TYPE_SERVICE_LOGGER);
 const toolService = container.get<IToolService>(TYPE_TOOL_SERVICE);
 const configService = container.get<IConfigService>(TYPE_SERVICE_CONFIG);
+
+configService.setGlobalConfiguration({
+  typescript: {
+    extends: join(__dirname, '../tsconfig.json')
+  },
+  babel: {
+    babelrc: false,
+    extends: join(__dirname, '../.babelrc')
+  },
+  sourceFiles: [
+    '!**/+(node_modules|bower_components|vendor|dist)/**/*',
+    'bin/**/*.js',
+    'src/**/*.+(js|ts|tsx)',
+    'gulp/**/*.js',
+    'gulpfile.js'
+  ].map(globPath => `${globPath[0] === '!' ? '!' : ''}${join(process.cwd(), globPath.replace(/^!/, ''))}`)
+});
 
 export {container};
 
