@@ -66,7 +66,6 @@ export const getTool = (toolName: string): IRegistrableGulpTool => ({
 export const tools: { [key: string]: IRegistrableGulpTool } = global.hasOwnProperty('Proxy')
   ? new Proxy({}, {get: (target: Object, toolName: string) => getTool(toolName)})
 
-  // TODO
   // Proxy is not support in node@4, add partial backward compatible solution
   : <{ [key: string]: IRegistrableGulpTool }>['babel', 'retire']
     .reduce((acc: Object, toolName: string) => ({...acc, [toolName]: getTool(toolName)}), {});

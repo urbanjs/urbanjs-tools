@@ -9,6 +9,9 @@ const tools = require('urbanjs-tools');
 
 tools.initializeTasks(gulp, {
   eslint: defaults => Object.assign(defaults, {
+    rules: {
+      'import/no-unresolved': 0
+    },
     files: defaults.files.concat([
       'packages/**/*.js',
       '!packages/**/coverage/**/*',
