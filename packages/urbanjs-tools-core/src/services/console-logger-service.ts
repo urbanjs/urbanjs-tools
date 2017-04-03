@@ -12,6 +12,11 @@ function to2Digits(number: number): string {
 
 export const TYPE_DRIVER_CHALK = Symbol('TYPE_DRIVER_CHALK');
 
+const COLOR_DEBUG = 'gray';
+const COLOR_INFO = 'green';
+const COLOR_WARN = 'yellow';
+const COLOR_ERROR = 'red';
+
 export type Colorizer = (str: string) => string;
 export interface IChalk {
   green: Colorizer;
@@ -28,9 +33,12 @@ export class ConsoleLoggerService implements ILoggerService {
   constructor(@inject(TYPE_CONFIG_LOGGER) loggerConfig: LoggerConfig,
               @inject(TYPE_DRIVER_CHALK) @optional() chalk: IChalk) {
     this.loggerConfig = loggerConfig;
-    this.chalk = chalk || <IChalk>new Proxy({}, {
-        get: () => (str: string) => str
-      });
+    this.chalk = chalk;
+
+    if (!this.chalk) {
+      this.chalk = <IChalk>[COLOR_DEBUG, COLOR_ERROR, COLOR_INFO, COLOR_WARN]
+        .reduce((acc, key) => ({...acc, [key]: (str: string) => str}), {});
+    }
   }
 
   public debug(...msgs: LogMessage[]) {
@@ -38,30 +46,30 @@ export class ConsoleLoggerService implements ILoggerService {
       const now = new Date();
 
       let prefix = `${to2Digits(now.getHours())}:${to2Digits(now.getMinutes())}:${to2Digits(now.getSeconds())}`;
-      prefix = `[${this.formatValue(prefix, 'gray')}]`;
+      prefix = `[${this.formatValue(prefix, COLOR_DEBUG)}]`;
 
-      const messages = msgs.map(val => this.formatValue(val, 'gray'));
+      const messages = msgs.map(val => this.formatValue(val, COLOR_DEBUG));
       console.log(prefix, messages[0], ...messages.slice(1)); //tslint:disable-line no-console
     }
   }
 
   public error(...msgs: LogMessage[]) {
     if (this.loggerConfig.error) {
-      const messages = msgs.map(val => this.formatValue(val, 'red'));
+      const messages = msgs.map(val => this.formatValue(val, COLOR_ERROR));
       console.error(messages[0], ...messages.slice(1)); //tslint:disable-line no-console
     }
   }
 
   public info(...msgs: LogMessage[]) {
     if (this.loggerConfig.info) {
-      const messages = msgs.map(val => this.formatValue(val, 'green'));
+      const messages = msgs.map(val => this.formatValue(val, COLOR_INFO));
       console.info(messages[0], ...messages.slice(1)); //tslint:disable-line no-console
     }
   }
 
   public warn(...msgs: LogMessage[]) {
     if (this.loggerConfig.warning) {
-      const messages = msgs.map(val => this.formatValue(val, 'yellow'));
+      const messages = msgs.map(val => this.formatValue(val, COLOR_WARN));
       console.warn(messages[0], ...messages.slice(1)); //tslint:disable-line no-console
     }
   }

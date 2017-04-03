@@ -39,7 +39,7 @@ tools.initializeTasks(gulp, {
 
 tools.tasks.babel.register(gulp, 'babel:dev', true, { typescript: tsCompilerOptions });
 
-tools.tasks.mocha.register(gulp, 'test-e2e', defaults => ({
+tools.tasks.mocha.register(gulp, 'test-e2e', defaults => Object.assign({}, defaults, {
   files: readdir.readSync(
     'tests',
     ['*-tests.ts'],

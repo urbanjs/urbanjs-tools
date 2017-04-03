@@ -12,3 +12,5 @@ export class Logger {
     args.forEach(this.method);
   }
 }
+
+export default Logger;

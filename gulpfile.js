@@ -22,10 +22,10 @@ tools.initializeTasks(gulp, {
 
 gulp.task('pre-release', sequence(
   'generate-package-files',
-  'bootstrap',
   'retire',
   'nsp',
-  'eslint'
+  'eslint',
+  'bootstrap'
 ));
 
 gulp.task('default', ['pre-release']);

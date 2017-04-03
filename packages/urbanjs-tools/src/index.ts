@@ -44,26 +44,32 @@ export interface IRegistrableGulpTool {
   register(gulp: IGulp, taskName: string, parameters: IToolParameters): void;
 }
 
-export const tools: { [key: string]: IRegistrableGulpTool } = new Proxy({}, {
-  get: (target: Object, toolName: string) => ({
-    register: (gulp: IGulp, taskName: string, parameters: IToolParameters) => {
-      container.snapshot();
+export const getTool = (toolName: string): IRegistrableGulpTool => ({
+  register: (gulp: IGulp, taskName: string, parameters: IToolParameters) => {
+    container.snapshot();
 
-      try {
-        container.bind(TYPE_DRIVER_GULP).toConstantValue(gulp);
-        toolService.initializeTool(container, toolName, taskName, parameters);
-      } catch (e) {
-        if (!(e instanceof UrbanjsToolsError)) {
-          loggerService.error('Unexpected error\n', e);
-        }
-
-        throw e;
-      } finally {
-        container.restore();
+    try {
+      container.bind(TYPE_DRIVER_GULP).toConstantValue(gulp);
+      toolService.initializeTool(container, toolName, taskName, parameters);
+    } catch (e) {
+      if (!(e instanceof UrbanjsToolsError)) {
+        loggerService.error('Unexpected error\n', e);
       }
+
+      throw e;
+    } finally {
+      container.restore();
     }
-  })
+  }
 });
+
+export const tools: { [key: string]: IRegistrableGulpTool } = global.hasOwnProperty('Proxy')
+  ? new Proxy({}, {get: (target: Object, toolName: string) => getTool(toolName)})
+
+  // TODO
+  // Proxy is not support in node@4, add partial backward compatible solution
+  : <{ [key: string]: IRegistrableGulpTool }>['babel', 'retire']
+    .reduce((acc: Object, toolName: string) => ({...acc, [toolName]: getTool(toolName)}), {});
 
 export const tasks = tools;
 
@@ -83,4 +89,5 @@ export const setupInMemoryTranspile = () => {
 };
 
 export const getGlobalConfiguration = (): GlobalConfiguration => configService.getGlobalConfiguration();
+
 export const setGlobalConfiguration = (configuration) => configService.setGlobalConfiguration(configuration);
