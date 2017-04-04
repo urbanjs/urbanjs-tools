@@ -1,5 +1,5 @@
 {
-  "name": "valid2",
+  "name": "multi-package-file",
   "private": true,
   "dependencies": {
     "left-pad": "1.1.0"

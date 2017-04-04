@@ -1,0 +1,7 @@
+{
+  "name": "default-configuration",
+  "private": true,
+  "dependencies": {
+    "marked": "0.3.5"
+  }
+}
