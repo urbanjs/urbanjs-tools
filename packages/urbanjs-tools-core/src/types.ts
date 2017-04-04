@@ -9,6 +9,7 @@ export const TYPE_SERVICE_CONFIG = Symbol('TYPE_SERVICE_CONFIG');
 export const TYPE_SERVICE_TASK = Symbol('TYPE_SERVICE_TASK');
 export const TYPE_SERVICE_CLI_SERVICE = Symbol('TYPE_SERVICE_CLI_SERVICE');
 export const TYPE_SERVICE_TRACE = Symbol('TYPE_SERVICE_TRACE');
+export const TYPE_TOOL = Symbol('TYPE_TOOL');
 
 export type Constructor<T> = new(...args: any[]) => T; //tslint:disable-line
 

@@ -29,7 +29,6 @@
     "@tamasmagedli/urbanjs-tools-core": "*",
     "babel-runtime": "*",
     "chalk": "*",
-    "del": "*",
     "inversify": "*",
     "gulp-sequence": "*",
     "reflect-metadata": "*",

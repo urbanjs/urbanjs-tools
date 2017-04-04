@@ -1,10 +1,9 @@
-import {inject, injectable, Container} from 'inversify';
+import {inject, injectable, Container, ContainerModule} from 'inversify';
 import {
   ILoggerService,
   TYPE_SERVICE_LOGGER,
   IToolParameters,
-  ITool,
-  Constructor
+  ITool
 } from '@tamasmagedli/urbanjs-tools-core';
 import {NotFoundTool} from './errors';
 import {
@@ -12,6 +11,7 @@ import {
   TYPE_CONFIG_TOOL_PREFIX
 } from './types';
 import {
+  TYPE_TOOL,
   ITraceService,
   TYPE_SERVICE_TRACE,
   track
@@ -35,33 +35,29 @@ export class ToolService implements IToolService {
                                                    toolName: string,
                                                    taskName: string,
                                                    parameters: T) {
-    const type = Symbol(toolName);
-    container.bind(type).to(this.getTool<T>(toolName));
-    container.get<ITool<T>>(type).register(taskName, parameters);
+    const containerModule = this.getToolContainerModule(toolName);
+
+    container.load(containerModule);
+    container.get<ITool<T>>(TYPE_TOOL).register(taskName, parameters);
+    container.unload(containerModule);
   }
 
-  private getTool<T extends IToolParameters>(name: string): Constructor<ITool<T>> {
+  private getToolContainerModule(name: string): ContainerModule {
     const packageName = `${this.toolPrefix}${name}`;
 
     try {
-      this.loggerService.debug('ToolService.getTool', `loading ${packageName}`);
-      return this.getToolConstructorFromModule(require(packageName)); //tslint:disable-line
+      this.loggerService.debug('ToolService.getToolContainerModule', `loading ${packageName}`);
+      return require(packageName).default; //tslint:disable-line
     } catch (e) {
-      this.loggerService.debug('ToolService.getTool', 'tool not found', name, e);
+      this.loggerService.debug('ToolService.getToolContainerModule', 'tool not found', name, e);
     }
 
     try {
-      this.loggerService.debug('ToolService.getTool', `loading ${name}`);
-      return this.getToolConstructorFromModule(require(name)); //tslint:disable-line
+      this.loggerService.debug('ToolService.getToolContainerModule', `loading ${name}`);
+      return require(name).default; //tslint:disable-line
     } catch (e) {
       this.loggerService.error(`Tool was not found: ${name}. Please install ${packageName}.`, e);
       throw new NotFoundTool();
     }
-  }
-
-  private getToolConstructorFromModule<T extends IToolParameters>(module?: { Tool?: Constructor<ITool<T>> }): Constructor<ITool<T>> {
-    // TODO
-    // add a more robust solution to find the constructor of a package
-    return module && module.Tool;
   }
 }

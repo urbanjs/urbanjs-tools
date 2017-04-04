@@ -18,6 +18,7 @@
     "@tamasmagedli/urbanjs-tools-core": "*",
     "babel-core": "*",
     "babel-runtime": "*",
+    "del": "*",
     "duplexify": "*",
     "fork-stream": "*",
     "gulp": "*",

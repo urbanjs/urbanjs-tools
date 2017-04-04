@@ -1,11 +1,9 @@
 import {Container} from 'inversify';
 import * as yargs from 'yargs/yargs';
 import * as chalk from 'chalk';
-import * as del from 'del';
 import * as gulpSequence from 'gulp-sequence';
 import {
   container as coreContainer,
-  TYPE_DRIVER_DEL,
   TYPE_DRIVER_YARGS,
   TYPE_DRIVER_GULP_SEQUENCE,
   TYPE_DRIVER_CHALK
@@ -21,7 +19,6 @@ import {
 export const container = new Container();
 container.parent = coreContainer;
 
-container.bind(TYPE_DRIVER_DEL).toConstantValue(del);
 container.bind(TYPE_DRIVER_CHALK).toConstantValue(chalk);
 container.bind(TYPE_DRIVER_YARGS).toConstantValue(yargs);
 container.bind(TYPE_DRIVER_GULP_SEQUENCE).toConstantValue(gulpSequence);
