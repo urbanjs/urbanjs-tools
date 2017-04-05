@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@tamasmagedli/urbanjs-tool-babel": "*",
+    "@tamasmagedli/urbanjs-tool-check-file-names": "*",
     "@tamasmagedli/urbanjs-tool-nsp": "*",
     "@tamasmagedli/urbanjs-tool-retire": "*",
     "gulp": "*"

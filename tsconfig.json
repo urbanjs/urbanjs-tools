@@ -1,3 +1,10 @@
 {
-  "extends": "packages/urbanjs-tools/tsconfig.json"
+  "extends": "packages/urbanjs-tools/tsconfig.json",
+  "compilerOptions": {
+    "types": [
+      "node",
+      "mocha",
+      "reflect-metadata"
+    ]
+  }
 }

@@ -30,15 +30,3 @@
  * @property {string[]|boolean|Function} [pre-release]
  */
 
-/**
- * @typedef {Object|function} ConfigurationGlobals
- * @memberof module:main
- * @property {Object} babel Common babel configuration, used by:
- *                          babel, jest, jsdoc, webpack, check-dependencies, mocha
- * @property {Object} typescript Common typescript compiler configuration, used by:
- *                          babel, jest, jsdoc, check-dependencies, mocha
- * @property {string|string[]} sourceFiles Common source files, used by:
- *                                         eslint, check-dependencies, check-file-names
- * @property {boolean} allowLinking Whether to allow linking globally installed packages, used by:
- *                                  npm-install
- */
