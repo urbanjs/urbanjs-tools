@@ -122,7 +122,13 @@ export class Babel implements ITool<BabelConfig> {
       }
 
       stream = stream.pipe(gulp.dest(config.outputPath));
-      return mergeStream(stream, dtsPipe);
+
+      await new Promise((resolve, reject) => {
+        mergeStream(stream, dtsPipe)
+          .on('data', () => true)
+          .on('end', () => resolve())
+          .on('error', (err) => reject(err));
+      });
     });
 
     const watchTaskName = `${taskName}:watch`;

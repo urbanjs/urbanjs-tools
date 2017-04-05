@@ -29,6 +29,7 @@
     "gulp": "3.9.1",
     "gulp-babel": "6.1.2",
     "gulp-check-file-naming-convention": "0.0.2",
+    "gulp-conventional-changelog": "1.1.0",
     "gulp-sequence": "0.4.6",
     "gulp-shell": "0.6.3",
     "gulp-sourcemaps": "1.11.0",

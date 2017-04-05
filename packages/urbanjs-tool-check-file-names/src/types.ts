@@ -1,5 +1,3 @@
-export const TYPE_TOOL_CHECK_FILE_NAMES = Symbol('TYPE_TOOL_CHECK_FILE_NAMES');
-
 export type CheckFileNamesConfig = {
   upperCase?: string | string[];
   upperCaseFirst?: string | string[];

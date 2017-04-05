@@ -2,10 +2,9 @@
 
 const gulp = require('gulp');
 const path = require('path');
-const task = require('../../index');
+const tools = require('@tamasmagedli/urbanjs-tools');
 
-task.dependencies = {};
-task.register(gulp, 'conventional-changelog', {
+tools.tasks['conventional-changelog'].register(gulp, 'conventional-changelog', {
   changelogFile: path.join(__dirname, 'CHANGELOG.md'),
   outputPath: __dirname
 });

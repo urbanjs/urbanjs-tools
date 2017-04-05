@@ -1,10 +1,13 @@
 {
-  "name": "@tamasmagedli/urbanjs-tool-check-file-names",
+  "name": "@tamasmagedli/urbanjs-tool-conventional-changelog",
   "version": "0.1.0",
-  "description": "Urbanjs tool to help preserving the naming conventions of the source files",
+  "description": "Urbanjs tool to help preserving the convention of commit messages",
   "keywords": [
-    "check file names",
-    "naming convention"
+    "commit",
+    "commit message",
+    "naming convention",
+    "angular style guide",
+    "conventional changelog"
   ],
   "main": "./dist",
   "typings": "./dist/index.d.ts",
@@ -16,10 +19,11 @@
     "babel-runtime": "*",
     "inversify": "*",
     "gulp": "*",
-    "gulp-check-file-naming-convention": "*"
+    "gulp-conventional-changelog": "*"
   },
   "devDependencies": {
     "@tamasmagedli/urbanjs-tools": "*",
+    "mkdirp": "*",
     "yargs": "*"
   }
 }

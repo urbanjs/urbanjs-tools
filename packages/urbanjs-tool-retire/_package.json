@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@tamasmagedli/urbanjs-tools": "*",
-    "gulp": "*"
+    "gulp": "*",
+    "yargs": "*"
   }
 }

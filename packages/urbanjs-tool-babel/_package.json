@@ -32,6 +32,8 @@
     "inversify": "*"
   },
   "devDependencies": {
-    "@tamasmagedli/urbanjs-tools": "*"
+    "@tamasmagedli/urbanjs-tools": "*",
+    "mkdirp": "*",
+    "yargs": "*"
   }
 }

@@ -7,19 +7,6 @@
 
 /**
  * @typedef {Object|function} Parameters
- * @memberof module:tasks/conventionalChangelog
- * @property {string} changelogFile Path of the changelog.md file
- * @property {string} outputPath Output path
- * @property {Object} [conventionalChangelog] Conventional changelog options
- * @property {Object} [context] The conventional-changelog options
- * @property {Object} [gitRawCommits] The git-raw commits options
- * @property {Object} [conventionalCommitsParser] The conventional-commits-parser options
- * @property {Object} [conventionalChangelogWriter] The conventional-changelog-writer options
- * @see https://github.com/conventional-changelog/conventional-changelog#api
- */
-
-/**
- * @typedef {Object|function} Parameters
  * @memberof module:tasks/eslint
  * @description ESLint configuration object, can contain any options of the eslint cli engine.
  * @see http://eslint.org/docs/developer-guide/nodejs-api#cliengine

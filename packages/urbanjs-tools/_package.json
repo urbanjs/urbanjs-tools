@@ -15,7 +15,7 @@
     "mocha",
     "jest",
     "jsdoc",
-    "conventional-changelog",
+    "conventional changelog",
     "dependencies",
     "convention",
     "babel"
@@ -37,6 +37,7 @@
   "devDependencies": {
     "@tamasmagedli/urbanjs-tool-babel": "*",
     "@tamasmagedli/urbanjs-tool-check-file-names": "*",
+    "@tamasmagedli/urbanjs-tool-conventional-changelog": "*",
     "@tamasmagedli/urbanjs-tool-nsp": "*",
     "@tamasmagedli/urbanjs-tool-retire": "*",
     "gulp": "*"

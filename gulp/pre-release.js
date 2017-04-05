@@ -7,7 +7,8 @@ const tools = require('urbanjs-tools');
 const tsCompilerOptions = require('../packages/urbanjs-tools/tsconfig.json').compilerOptions;
 
 tools.setGlobalConfiguration(defaults => Object.assign(defaults, {
-  typescript: tsCompilerOptions
+  typescript: tsCompilerOptions,
+  sourceFiles: ['tests/**/*-tests.ts'].concat(defaults.sourceFiles)
 }));
 
 tools.initializeTasks(gulp, {
