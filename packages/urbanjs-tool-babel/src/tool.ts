@@ -1,22 +1,20 @@
 import {inject, injectable} from 'inversify';
 import * as babelCore from 'babel-core';
-import * as duplexify from 'duplexify';
-import * as ForkStream from 'fork-stream';
 import * as gulp from 'gulp';
 import * as babel from 'gulp-babel';
 import * as sourcemaps from 'gulp-sourcemaps';
 import * as gulpTs from 'gulp-typescript';
 import {omit} from 'lodash';
-import * as mergeStream from 'merge-stream';
-import * as through2 from 'through2';
 import * as ts from 'typescript';
 import {
   ITool,
   IConfigService,
   ILoggerService,
   ITaskService,
+  IStreamService,
   IFileSystemService,
   TYPE_SERVICE_CONFIG,
+  TYPE_SERVICE_STREAM,
   TYPE_SERVICE_FILE_SYSTEM,
   TYPE_SERVICE_LOGGER,
   TYPE_SERVICE_TASK,
@@ -27,44 +25,25 @@ import {
 import {defaults} from './defaults';
 import {BabelConfig} from './types';
 
-function streamIf(condition: (file: { path: string }) => boolean, conditionStream: NodeJS.ReadableStream, options?: { ignoreError?: boolean }) {
-  const forkStream = new ForkStream({
-    classifier: (file, cb) => cb(null, condition(file))
-  });
-
-  forkStream.a.pipe(conditionStream);
-
-  // merge-stream package cannot be updated because it emits the error
-  // from conditionStream to mergedStream
-  const mergedStream = mergeStream(forkStream.b, conditionStream);
-  const outStream = through2.obj();
-  mergedStream.pipe(outStream);
-
-  const duplexStream = duplexify.obj(forkStream, outStream);
-
-  if (!options.ignoreError) {
-    conditionStream.on('error', err => duplexStream.emit('error', err));
-  }
-
-  return duplexStream;
-}
-
 @injectable()
 export class Babel implements ITool<BabelConfig> {
   private configService: IConfigService;
   private taskService: ITaskService;
   private loggerService: ILoggerService;
   private fsService: IFileSystemService;
+  private streamService: IStreamService;
 
   constructor(@inject(TYPE_SERVICE_CONFIG) configService: IConfigService,
               @inject(TYPE_SERVICE_TASK) taskService: ITaskService,
               @inject(TYPE_SERVICE_LOGGER) loggerService: ILoggerService,
               @inject(TYPE_SERVICE_FILE_SYSTEM) fsService: IFileSystemService,
+              @inject(TYPE_SERVICE_STREAM) streamService: IStreamService,
               @inject(TYPE_SERVICE_TRACE) traceService: ITraceService) {
     this.loggerService = loggerService;
     this.configService = configService;
     this.taskService = taskService;
     this.fsService = fsService;
+    this.streamService = streamService;
     traceService.track(this);
   }
 
@@ -101,21 +80,21 @@ export class Babel implements ITool<BabelConfig> {
       });
       const dtsPipe = tsPipe.dts.pipe(gulp.dest(config.outputPath));
 
-      stream = stream.pipe(streamIf(
-        file => /\.tsx?$/.test(file.path),
+      stream = stream.pipe(this.streamService.streamIf(
+        (file: { path: string }) => /\.tsx?$/.test(file.path),
         tsPipe,
         {ignoreError: config.emitOnError !== false}
       ));
 
-      stream = stream.pipe(streamIf(
-        file => babelCore.util.canCompile(file.path),
+      stream = stream.pipe(this.streamService.streamIf(
+        (file: { path: string }) => babelCore.util.canCompile(file.path),
         babel(config.babel),
         {ignoreError: config.emitOnError !== false}
       ));
 
       if (config.sourcemap !== false) {
-        stream = stream.pipe(streamIf(
-          file => babelCore.util.canCompile(file.path),
+        stream = stream.pipe(this.streamService.streamIf(
+          (file: { path: string }) => babelCore.util.canCompile(file.path),
           sourcemaps.write('.', config.sourcemap || {}),
           {ignoreError: config.emitOnError !== false}
         ));
@@ -124,7 +103,7 @@ export class Babel implements ITool<BabelConfig> {
       stream = stream.pipe(gulp.dest(config.outputPath));
 
       await new Promise((resolve, reject) => {
-        mergeStream(stream, dtsPipe)
+        this.streamService.mergeStreams(stream, dtsPipe)
           .on('data', () => true)
           .on('end', () => resolve())
           .on('error', (err) => reject(err));

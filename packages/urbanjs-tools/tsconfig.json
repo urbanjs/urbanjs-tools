@@ -5,6 +5,11 @@
     "moduleResolution": "node",
     "declaration": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "types": [
+      "node",
+      "mocha",
+      "reflect-metadata"
+    ]
   }
 }

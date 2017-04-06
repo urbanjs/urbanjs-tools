@@ -17,16 +17,6 @@
 
 /**
  * @typedef {Object|function} Parameters
- * @memberof module:tasks/tslint
- * @property {string|string[]} files Paths of the files to check
- * @property {string[]} extensions File extensions to validate
- * @property {string} configFile The path to the tslint configuration file
- * @property {string} [formatter] TSLint formatter
- * @see https://github.com/panuhorsmalahti/gulp-tslint#all-default-tslint-options
- */
-
-/**
- * @typedef {Object|function} Parameters
  * @memberof module:tasks/jsdoc
  * @property {string} configFile The path to the jsdoc configuration file
  * @property {string} packagePath The path to jsdoc package

@@ -43,6 +43,8 @@
     "readdir": "0.0.13",
     "reflect-metadata": "^0.1.10",
     "through2": "2.0.3",
+    "tslint": "4.4.2",
+    "tslint-microsoft-contrib": "4.0.0",
     "typescript": "2.1.6",
     "urbanjs-tools": "2.0.0-beta3",
     "yargs": "6.6.0"

@@ -1,0 +1,13 @@
+{
+  "extends": "tslint-microsoft-contrib/recommended_ruleset",
+  "rules": {
+    "missing-jsdoc": false,
+    "no-relative-imports": false,
+    "export-name": false,
+    "no-reference": false,
+    "no-for-in-array": false,
+    "restrict-plus-operands": false,
+    "linebreak-style": false,
+    "no-reserved-keywords": false
+  }
+}

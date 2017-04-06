@@ -1,0 +1,33 @@
+{
+  "name": "@tamasmagedli/urbanjs-tool-tslint",
+  "version": "0.1.0",
+  "description": "Urbanjs tool to lint typescript",
+  "keywords": [
+    "tslint",
+    "linter",
+    "code standard",
+    "code style"
+  ],
+  "main": "./dist",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "prepublish": "gulp pre-release"
+  },
+  "dependencies": {
+    "@tamasmagedli/urbanjs-tools-core": "*",
+    "babel-runtime": "*",
+    "duplexify": "*",
+    "fork-stream": "*",
+    "gulp-tslint": "*",
+    "inversify": "*",
+    "merge-stream": "*",
+    "through2": "*",
+    "tslint": "*",
+    "tslint-microsoft-contrib": "*"
+  },
+  "devDependencies": {
+    "@tamasmagedli/urbanjs-tools": "*",
+    "gulp": "*",
+    "yargs": "*"
+  }
+}

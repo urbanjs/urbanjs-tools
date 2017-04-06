@@ -7,7 +7,8 @@ import {
   TYPE_SERVICE_CONFIG,
   TYPE_SERVICE_SHELL,
   TYPE_SERVICE_TASK,
-  TYPE_SERVICE_TRACE
+  TYPE_SERVICE_TRACE,
+  TYPE_SERVICE_STREAM
 }from './types';
 import {
   ConfigService,
@@ -18,7 +19,8 @@ import {
   YargsCLIService,
   TraceService,
   TYPE_DRIVER_CHILD_PROCESS,
-  TYPE_DRIVER_FS
+  TYPE_DRIVER_FS,
+  StreamService
 }from './services';
 import * as childProcess from 'child_process';
 import * as fs from 'fs';
@@ -40,3 +42,4 @@ container.bind(TYPE_SERVICE_CONFIG).to(ConfigService).inSingletonScope();
 container.bind(TYPE_SERVICE_SHELL).to(ShellService).inSingletonScope();
 container.bind(TYPE_SERVICE_TASK).to(GulpTaskService).inSingletonScope();
 container.bind(TYPE_SERVICE_TRACE).to(TraceService).inSingletonScope();
+container.bind(TYPE_SERVICE_STREAM).to(StreamService).inSingletonScope();

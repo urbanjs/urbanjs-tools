@@ -9,6 +9,7 @@ export const TYPE_SERVICE_CONFIG = Symbol('TYPE_SERVICE_CONFIG');
 export const TYPE_SERVICE_TASK = Symbol('TYPE_SERVICE_TASK');
 export const TYPE_SERVICE_CLI_SERVICE = Symbol('TYPE_SERVICE_CLI_SERVICE');
 export const TYPE_SERVICE_TRACE = Symbol('TYPE_SERVICE_TRACE');
+export const TYPE_SERVICE_STREAM = Symbol('TYPE_SERVICE_STREAM');
 export const TYPE_TOOL = Symbol('TYPE_TOOL');
 
 export type Constructor<T> = new(...args: any[]) => T; //tslint:disable-line
@@ -62,6 +63,13 @@ export interface ILoggerService {
 
 export interface ITraceService {
   track(target: Object): void;
+}
+
+export interface IStreamService {
+  mergeStreams(streamA: NodeJS.ReadWriteStream, streamB: NodeJS.ReadWriteStream): NodeJS.ReadWriteStream;
+  streamIf<T extends Object>(predicate: (input: T) => boolean,
+                             stream: NodeJS.ReadWriteStream,
+                             options: { ignoreError: boolean });
 }
 
 export type TSCompilerOptions = BaseTSCompilerOptions & { extends?: string };
