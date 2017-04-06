@@ -1,9 +1,9 @@
 {
-  "name": "@tamasmagedli/urbanjs-tool-tslint",
+  "name": "@tamasmagedli/urbanjs-tool-eslint",
   "version": "0.1.0",
-  "description": "Urbanjs tool to lint typescript",
+  "description": "Urbanjs tool to lint javascript",
   "keywords": [
-    "tslint",
+    "eslint",
     "linter",
     "code standard",
     "code style"
@@ -16,18 +16,22 @@
   "dependencies": {
     "@tamasmagedli/urbanjs-tools-core": "*",
     "babel-runtime": "*",
+    "babel-eslint": "*",
     "duplexify": "*",
-    "fork-stream": "*",
+    "eslint-config-airbnb": "*",
+    "eslint-plugin-import": "*",
+    "eslint-plugin-react": "*",
+    "eslint-plugin-jsx-a11y": "*",
     "gulp": "*",
-    "gulp-tslint": "*",
+    "gulp-eslint": "*",
+    "fork-stream": "*",
     "inversify": "*",
     "merge-stream": "*",
-    "through2": "*",
-    "tslint": "*",
-    "tslint-microsoft-contrib": "*"
+    "through2": "*"
   },
   "devDependencies": {
     "@tamasmagedli/urbanjs-tools": "*",
+    "mkdirp": "*",
     "yargs": "*"
   }
 }

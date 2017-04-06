@@ -1,7 +1,7 @@
 import {inject, injectable} from 'inversify';
 import tslint, {PluginOptions} from 'gulp-tslint';
 import * as gulp from 'gulp';
-import {extname}from 'path';
+import {extname} from 'path';
 import {
   ITool,
   IConfigService,
@@ -58,7 +58,7 @@ export class Tslint implements ITool<TslintConfig> {
     });
   }
 
-  private validate(config: TslintConfig): Promise<void> {
+  private async validate(config: TslintConfig): Promise<void> {
     const tslintConfig: PluginOptions = {
       configuration: config.configFile,
       ...config,
@@ -69,16 +69,21 @@ export class Tslint implements ITool<TslintConfig> {
 
     const isTsFile = (file: { path: string }) => config.extensions.indexOf(extname(file.path)) !== -1;
 
-    return gulp.src(config.files)
-      .pipe(this.streamService.streamIf(
-        isTsFile,
-        <NodeJS.ReadWriteStream>tslint(tslintConfig),
-        {ignoreError: false}
-      ))
-      .pipe(this.streamService.streamIf(
-        isTsFile,
-        <NodeJS.ReadWriteStream>tslint.report({summarizeFailureOutput: true}),
-        {ignoreError: false}
-      ));
+    await new Promise((resolve, reject) => {
+      gulp.src(config.files)
+        .pipe(this.streamService.streamIf(
+          isTsFile,
+          <NodeJS.ReadWriteStream>tslint(tslintConfig),
+          {ignoreError: false}
+        ))
+        .pipe(this.streamService.streamIf(
+          isTsFile,
+          <NodeJS.ReadWriteStream>tslint.report({summarizeFailureOutput: true}),
+          {ignoreError: false}
+        ))
+        .on('data', () => true)
+        .on('end', () => resolve())
+        .on('error', (err) => reject(err));
+    });
   }
 }

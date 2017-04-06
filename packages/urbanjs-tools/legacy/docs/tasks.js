@@ -7,16 +7,6 @@
 
 /**
  * @typedef {Object|function} Parameters
- * @memberof module:tasks/eslint
- * @description ESLint configuration object, can contain any options of the eslint cli engine.
- * @see http://eslint.org/docs/developer-guide/nodejs-api#cliengine
- * @property {string|string[]} files Paths of the files to check
- * @property {string[]} extensions File extensions to validate
- * @property {string} configFile The path to the eslint configuration file
- */
-
-/**
- * @typedef {Object|function} Parameters
  * @memberof module:tasks/jsdoc
  * @property {string} configFile The path to the jsdoc configuration file
  * @property {string} packagePath The path to jsdoc package

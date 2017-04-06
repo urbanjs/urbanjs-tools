@@ -1,10 +1,9 @@
 'use strict';
 
 const gulp = require('gulp');
-const task = require('../../index');
+const tools = require('@tamasmagedli/urbanjs-tools');
 
-task.dependencies = {};
-task.register(gulp, 'eslint', {
+tools.tasks.eslint.register(gulp, 'eslint', {
   configFile: '.eslintrc',
   files: '**/*',
   extensions: ['.jsx']

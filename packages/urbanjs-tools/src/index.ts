@@ -67,8 +67,15 @@ export const tools: { [key: string]: IRegistrableGulpTool } = global.hasOwnPrope
   ? new Proxy({}, {get: (target: Object, toolName: string) => getTool(toolName)})
 
   // Proxy is not supported in node@4, add partial backward compatible solution
-  : <{ [key: string]: IRegistrableGulpTool }>['babel', 'retire', 'nsp', 'check-file-names', 'conventional-changelog', 'tslint']
-    .reduce((acc: Object, toolName: string) => ({...acc, [toolName]: getTool(toolName)}), {});
+  : <{ [key: string]: IRegistrableGulpTool }>[
+    'babel',
+    'retire',
+    'nsp',
+    'check-file-names',
+    'conventional-changelog',
+    'tslint',
+    'eslint'
+  ].reduce((acc: Object, toolName: string) => ({...acc, [toolName]: getTool(toolName)}), {});
 
 export const tasks = tools;
 

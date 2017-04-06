@@ -14,6 +14,7 @@ tools.initializeTasks(gulp, {
     },
     files: defaults.files.concat([
       'packages/**/*.js',
+      '!packages/**/*-invalid.js',
       '!packages/**/coverage/**/*',
       '!packages/**/dist/**/*',
       '!packages/urbanjs-tools/legacy/**'
