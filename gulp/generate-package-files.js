@@ -7,7 +7,7 @@ const pkg = require('../package.json');
 
 function applyVersions(dependencies) {
   return Object.keys(dependencies || {}).reduce((acc, depName) => {
-    const urbanjsPackageName = (depName.match(/urbanjs-tools(-.+)$/) || [])[0];
+    const urbanjsPackageName = (depName.match(/@tamasmagedli\/(urbanjs-tools?(-.+)?)$/) || [])[1];
 
     let version = dependencies[depName];
     if (urbanjsPackageName) {
@@ -15,6 +15,8 @@ function applyVersions(dependencies) {
       version = require(rawPackageFile).version; // eslint-disable-line
     } else if (pkg.devDependencies[depName]) {
       version = pkg.devDependencies[depName];
+    } else if (version === '*') {
+      throw new Error(`Missing dependency ${depName}`);
     }
 
     acc[depName] = version; // eslint-disable-line no-param-reassign

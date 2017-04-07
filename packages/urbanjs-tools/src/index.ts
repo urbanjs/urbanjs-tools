@@ -31,6 +31,7 @@ configService.setGlobalConfiguration({
   },
   sourceFiles: [
     '!**/+(node_modules|bower_components|vendor|dist)/**/*',
+    '!**/*.min.js',
     'bin/**/*.js',
     'src/**/*.+(js|ts|tsx)',
     'gulp/**/*.js',
@@ -82,7 +83,7 @@ export const tasks = tools;
 
 export const initializeTools = (gulp: IGulp, parametersByToolName: Object) => {
   Object.keys(parametersByToolName).forEach(toolName => {
-    tools[toolName].register(gulp, toolName, parametersByToolName[toolName]);
+    getTool(toolName).register(gulp, toolName, parametersByToolName[toolName]);
   });
 };
 

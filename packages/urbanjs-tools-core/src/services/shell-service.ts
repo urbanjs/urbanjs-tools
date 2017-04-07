@@ -51,7 +51,7 @@ export class ShellService implements IShellService {
       options
     );
 
-    await new Promise((resolve, reject) => {
+    return await new Promise((resolve, reject) => {
       this.loggerService.debug('running command', command, options);
       this.childProcessDriver.exec(command, <ChildProcessOptions>options, (err, stdout, stderr) => {
         this.loggerService.debug('err', err);
@@ -86,7 +86,7 @@ export class ShellService implements IShellService {
           }
         }
 
-        resolve();
+        resolve({stdout, stderr});
       });
     });
   }

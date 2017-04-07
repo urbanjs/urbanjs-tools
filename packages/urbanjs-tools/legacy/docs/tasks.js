@@ -1,12 +1,5 @@
 /**
  * @typedef {Object|function} Parameters
- * @memberof module:tasks/checkDependencies
- * @property {string|string[]} [files] Paths of the files to check
- * @property {string} packageFile Path of the package.json file or files
- */
-
-/**
- * @typedef {Object|function} Parameters
  * @memberof module:tasks/jsdoc
  * @property {string} configFile The path to the jsdoc configuration file
  * @property {string} packagePath The path to jsdoc package

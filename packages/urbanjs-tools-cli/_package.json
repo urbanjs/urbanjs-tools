@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "gulp": "*",
-    "urbanjs-tools": "*",
-    "through2": "*"
+    "through2": "*",
+    "urbanjs-tools": "*"
   }
 }

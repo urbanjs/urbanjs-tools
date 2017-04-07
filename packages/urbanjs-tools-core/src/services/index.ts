@@ -6,3 +6,4 @@ export * from './shell-service';
 export * from './yargs-cli-service';
 export * from './trace-service';
 export * from './stream-service';
+export * from './transpile-service';

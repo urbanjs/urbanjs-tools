@@ -10,6 +10,7 @@ export const TYPE_SERVICE_TASK = Symbol('TYPE_SERVICE_TASK');
 export const TYPE_SERVICE_CLI_SERVICE = Symbol('TYPE_SERVICE_CLI_SERVICE');
 export const TYPE_SERVICE_TRACE = Symbol('TYPE_SERVICE_TRACE');
 export const TYPE_SERVICE_STREAM = Symbol('TYPE_SERVICE_STREAM');
+export const TYPE_SERVICE_TRANSPILE = Symbol('TYPE_SERVICE_TRANSPILE');
 export const TYPE_TOOL = Symbol('TYPE_TOOL');
 
 export type Constructor<T> = new(...args: any[]) => T; //tslint:disable-line
@@ -96,7 +97,7 @@ export type ShellCommandOptions = {
   expectToLog?: RegExp | string | (RegExp | string)[];
 };
 
-export type ShellCommandResult = void;
+export type ShellCommandResult = { stdout: string, stderr: string };
 
 export interface IShellService {
   runCommand(command: string, options?: ShellCommandOptions): Promise<ShellCommandResult>;
@@ -117,4 +118,9 @@ export interface IConfigService {
                                              cliOptionPrefix?: string): T;
   getGlobalConfiguration(): GlobalConfiguration;
   setGlobalConfiguration(configuration: GlobalConfiguration): void;
+}
+
+export interface ITranspileService {
+  transpile(content: string, filename: string): string;
+  installSourceMapSupport();
 }

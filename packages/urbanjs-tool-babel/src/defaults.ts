@@ -6,6 +6,7 @@ const processCwd = process.cwd();
 export const defaults: BabelConfig = {
   files: [
     'src/**/*',
+    '!src/**/*.min.js',
     '!src/**/+(node_modules|bower_components|vendor|dist)/**/*',
     '!src/**/__tests__/**',
     '!src/**/test/**',

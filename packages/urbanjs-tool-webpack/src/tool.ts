@@ -81,7 +81,7 @@ export class Webpack implements ITool<WebpackConfig> {
           await Promise.all([].concat(config).map(itemConfig => this.fsService.remove(itemConfig.output.path)));
         }
 
-        await new Promise(() => {
+        await new Promise(() => { //tslint:disable-line
           webpack([].concat(config).map(itemConfig => omit(itemConfig, 'clean'))).watch(200, (err, stats) => {
             this.logStats(stats);
 

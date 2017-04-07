@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "dependencies": {
+    "del": "2.2.0"
+  }
+}

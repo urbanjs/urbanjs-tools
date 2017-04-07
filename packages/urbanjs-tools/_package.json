@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@tamasmagedli/urbanjs-tool-babel": "*",
+    "@tamasmagedli/urbanjs-tool-check-dependencies": "*",
     "@tamasmagedli/urbanjs-tool-check-file-names": "*",
     "@tamasmagedli/urbanjs-tool-conventional-changelog": "*",
     "@tamasmagedli/urbanjs-tool-eslint": "*",
