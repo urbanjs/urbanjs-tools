@@ -16,7 +16,7 @@ import {
   IStreamService,
   TYPE_SERVICE_STREAM
 } from '@tamasmagedli/urbanjs-tools-core';
-import {defaults} from './defaults';
+import {getDefaults} from './defaults';
 import {EslintConfig} from './types';
 
 @injectable()
@@ -44,12 +44,8 @@ export class Eslint implements ITool<EslintConfig> {
       this.loggerService.debug('running task', taskName);
 
       try {
-        const extendedDefaults = {
-          ...defaults,
-          files: this.configService.getGlobalConfiguration().sourceFiles
-        };
-
-        const config = this.configService.mergeParameters<EslintConfig>(extendedDefaults, parameters, taskName);
+        const defaults = getDefaults(this.configService.getGlobalConfiguration());
+        const config = this.configService.mergeParameters<EslintConfig>(defaults, parameters, taskName);
 
         await new Promise((resolve, reject) => {
           this.validate(config)
@@ -67,12 +63,8 @@ export class Eslint implements ITool<EslintConfig> {
       this.loggerService.debug('running task', `${taskName}:fix`);
 
       try {
-        const extendedDefaults = {
-          ...defaults,
-          files: this.configService.getGlobalConfiguration().sourceFiles
-        };
-
-        const config = this.configService.mergeParameters<EslintConfig>(extendedDefaults, parameters, taskName);
+        const defaults = getDefaults(this.configService.getGlobalConfiguration());
+        const config = this.configService.mergeParameters<EslintConfig>(defaults, parameters, taskName);
 
         await new Promise((resolve, reject) => {
           const filesByFolderPath = {};

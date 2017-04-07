@@ -42,6 +42,7 @@
     "@tamasmagedli/urbanjs-tool-nsp": "*",
     "@tamasmagedli/urbanjs-tool-retire": "*",
     "@tamasmagedli/urbanjs-tool-tslint": "*",
+    "@tamasmagedli/urbanjs-tool-webpack": "*",
     "gulp": "*"
   }
 }

@@ -74,7 +74,8 @@ export const tools: { [key: string]: IRegistrableGulpTool } = global.hasOwnPrope
     'check-file-names',
     'conventional-changelog',
     'tslint',
-    'eslint'
+    'eslint',
+    'webpack'
   ].reduce((acc: Object, toolName: string) => ({...acc, [toolName]: getTool(toolName)}), {});
 
 export const tasks = tools;

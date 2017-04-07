@@ -16,7 +16,7 @@ import {
   IStreamService,
   TYPE_SERVICE_STREAM
 } from '@tamasmagedli/urbanjs-tools-core';
-import {defaults} from './defaults';
+import {getDefaults} from './defaults';
 import {TslintConfig} from './types';
 
 @injectable()
@@ -44,12 +44,8 @@ export class Tslint implements ITool<TslintConfig> {
       this.loggerService.debug('running task', taskName);
 
       try {
-        const extendedDefaults = {
-          ...defaults,
-          files: this.configService.getGlobalConfiguration().sourceFiles
-        };
-
-        const config = this.configService.mergeParameters<TslintConfig>(extendedDefaults, parameters, taskName);
+        const defaults = getDefaults(this.configService.getGlobalConfiguration());
+        const config = this.configService.mergeParameters<TslintConfig>(defaults, parameters, taskName);
         await this.validate(config);
       } catch (e) {
         this.loggerService.error(`Unexpected error in ${taskName}`, e);

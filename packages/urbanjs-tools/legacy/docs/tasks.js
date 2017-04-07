@@ -35,9 +35,3 @@
  * @property {Object} [coverageThresholds.global]
  * @property {Object} [coverageThresholds.each]
  */
-
-/**
- * @typedef {Object|Object[]|function} Parameters
- * @memberof module:tasks/webpack
- * @see https://webpack.github.io/docs/configuration.html
- */
