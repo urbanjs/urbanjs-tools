@@ -72,7 +72,11 @@ export class CheckDependencies implements ITool<CheckDependenciesConfig> {
 
   private async checkOutdatedPackages(config: CheckDependenciesConfig) {
     const packageFile = config.packageFile;
-    const output = await this.shellService.runCommand('npm outdated --json -qq', {cwd: dirname(packageFile)});
+    const output = await this.shellService.runCommand('npm outdated --json -qq', {
+      cwd: dirname(packageFile),
+      allowToFail: true
+    });
+
     const packages = output.stdout ? JSON.parse(output.stdout) : {};
 
     // validate only installed dependencies

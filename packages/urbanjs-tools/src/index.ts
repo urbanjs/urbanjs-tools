@@ -71,6 +71,7 @@ export const tools: { [key: string]: IRegistrableGulpTool } = global.hasOwnPrope
   : <{ [key: string]: IRegistrableGulpTool }>[
     'babel',
     'retire',
+    'mocha',
     'nsp',
     'check-file-names',
     'conventional-changelog',

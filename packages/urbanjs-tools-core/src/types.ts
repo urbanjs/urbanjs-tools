@@ -1,5 +1,6 @@
 import {TransformOptions as BabelTransformOptions} from '@types/babel-core';
 import {Params as BaseTSCompilerOptions} from '@types/gulp-typescript';
+import {ChildProcess} from 'child_process';
 
 export const TYPE_CONFIG_LOGGER = Symbol('TYPE_CONFIG_LOGGER');
 export const TYPE_SERVICE_LOGGER = Symbol('TYPE_SERVICE_LOGGER');
@@ -89,17 +90,20 @@ export interface ITool<T extends IToolParameters> {
   register(taskName: string, parameters: T): void;
 }
 
-export type ShellCommandOptions = {
-  cwd?: string;
-  env?: Object;
+export type ChildProcessOptions = { env?: Object, cwd?: string };
+export type ShellCommandOptions = ChildProcessOptions & {
   allowToFail?: boolean;
   expectToFail?: boolean;
   expectToLog?: RegExp | string | (RegExp | string)[];
+};
+export type ForkProcessOptions = ChildProcessOptions & {
+  silent?: boolean;
 };
 
 export type ShellCommandResult = { stdout: string, stderr: string };
 
 export interface IShellService {
+  forkProcess(modulePath: string, args?: string[], options?: ForkProcessOptions): ChildProcess;
   runCommand(command: string, options?: ShellCommandOptions): Promise<ShellCommandResult>;
   runCommandsInSequence(commands: (string | ShellCommandOptions)[],
                         options?: ShellCommandOptions): Promise<ShellCommandResult[]>;

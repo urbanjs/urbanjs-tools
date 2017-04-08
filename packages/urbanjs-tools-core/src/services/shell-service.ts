@@ -1,4 +1,5 @@
 import {inject, injectable} from 'inversify';
+import {ChildProcess} from 'child_process';
 import {
   ILoggerService,
   IShellService,
@@ -7,19 +8,17 @@ import {
   TYPE_SERVICE_TRACE,
   IConfigService,
   TYPE_SERVICE_CONFIG,
-  ShellCommandOptions
+  ShellCommandOptions,
+  ForkProcessOptions,
+  ChildProcessOptions
 } from '../types';
 import {track} from '../decorators';
 
 export const TYPE_DRIVER_CHILD_PROCESS = Symbol('TYPE_DRIVER_CHILD_PROCESS');
 
-export type ChildProcessOptions = {
-  env: Object,
-  cwd: string
-};
-
 export interface IChildProcessDriver {
-  exec(command: string, options: ChildProcessOptions, callback: Function): Promise<void>;
+  exec(command: string, options: ChildProcessOptions, callback: Function): void;
+  fork(modulePath: string, args?: string[], options?: ForkProcessOptions): ChildProcess;
 }
 
 @injectable()
@@ -39,21 +38,20 @@ export class ShellService implements IShellService {
   }
 
   @track()
-  public async runCommand(command: string, options?: ShellCommandOptions) {
-    options = Object.assign(
-      {
-        env: {
-          ...process.env,
-          URBANJS_DEBUG: process.env.URBANJS_DEBUG,
-          urbanJSToolGlobals: JSON.stringify(this.configService.getGlobalConfiguration())
-        }
-      },
-      options
-    );
+  public forkProcess(modulePath: string, args?: string[], options?: ForkProcessOptions = {}) {
+    return this.childProcessDriver.fork(modulePath, args, {
+      ...this.getChildProcessOptions(options),
+      silent: options.silent
+    });
+  }
+
+  @track()
+  public async runCommand(command: string, options?: ShellCommandOptions = {}) {
+    const childProcessOptions: ChildProcessOptions = this.getChildProcessOptions(<ChildProcessOptions>options);
 
     return await new Promise((resolve, reject) => {
       this.loggerService.debug('running command', command, options);
-      this.childProcessDriver.exec(command, <ChildProcessOptions>options, (err, stdout, stderr) => {
+      this.childProcessDriver.exec(command, childProcessOptions, (err, stdout, stderr) => {
         this.loggerService.debug('err', err);
         this.loggerService.debug('stdout', stdout);
         this.loggerService.debug('stderr', stderr);
@@ -81,7 +79,7 @@ export class ShellService implements IShellService {
           this.loggerService.debug('output expect to contain:', testRegex);
 
           if (testRegex && !testRegex.test(output)) {
-            this.loggerService.error('output does not contain', testRegex, output);
+            this.loggerService.error('output does not contain', testRegex.toString(), output);
             throw new Error('Invalid output');
           }
         }
@@ -101,5 +99,17 @@ export class ShellService implements IShellService {
     }
 
     return results;
+  }
+
+  private getChildProcessOptions(options: ChildProcessOptions = {}) {
+    return {
+      env: {
+        ...process.env,
+        URBANJS_DEBUG: process.env.URBANJS_DEBUG,
+        urbanJSToolGlobals: JSON.stringify(this.configService.getGlobalConfiguration()),
+        ...(options.env || {})
+      },
+      cwd: options.cwd
+    };
   }
 }

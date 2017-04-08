@@ -12,19 +12,3 @@
  *
  * @property {string} rootDir Configuration of the jest
  */
-
-/**
- * @typedef {Object|function} Parameters
- * @memberof module:tasks/mocha
- * @see https://www.npmjs.com/package/gulp-mocha#api
- *
- * @property {string|string[]} files Paths to the test files
- * @property {number} maxConcurrency
- * @property {boolean} [collectCoverage]
- * @property {string|string[]} [coverageFrom]
- * @property {string} [coverageDirectory]
- * @property {string[]} [coverageReporters]
- * @property {Object} [coverageThresholds]
- * @property {Object} [coverageThresholds.global]
- * @property {Object} [coverageThresholds.each]
- */

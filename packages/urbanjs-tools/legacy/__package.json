@@ -2,10 +2,6 @@
   "dependencies": {
     "babel-preset-jest": "18.0.0",
     "child-process-promise": "2.2.0",
-    "gulp-istanbul": "1.1.1",
-    "gulp-mocha": "3.0.1",
-    "istanbul": "0.4.5",
-    "istanbul-threshold-checker": "0.2.1",
     "jest-cli": "18.1.0",
     "jsdoc": "3.4.3",
     "sinon": "1.17.7",

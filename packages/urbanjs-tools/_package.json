@@ -40,6 +40,7 @@
     "@tamasmagedli/urbanjs-tool-check-file-names": "*",
     "@tamasmagedli/urbanjs-tool-conventional-changelog": "*",
     "@tamasmagedli/urbanjs-tool-eslint": "*",
+    "@tamasmagedli/urbanjs-tool-mocha": "*",
     "@tamasmagedli/urbanjs-tool-nsp": "*",
     "@tamasmagedli/urbanjs-tool-retire": "*",
     "@tamasmagedli/urbanjs-tool-tslint": "*",
