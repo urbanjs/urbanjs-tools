@@ -66,6 +66,7 @@ export class ConfigService implements IConfigService {
     }
 
     this.globals = Object.assign({}, this.globals, configuration);
+    process.env.urbanJSToolGlobals = JSON.stringify(this.globals);
   }
 
   @track()

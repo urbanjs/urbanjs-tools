@@ -22,9 +22,7 @@ const toolService = container.get<IToolService>(TYPE_TOOL_SERVICE);
 const configService = container.get<IConfigService>(TYPE_SERVICE_CONFIG);
 
 configService.setGlobalConfiguration({
-  typescript: {
-    extends: join(__dirname, '../tsconfig.json')
-  },
+  typescript: require('../tsconfig.json').compilerOptions, //tslint:disable-line
   babel: {
     babelrc: false,
     extends: join(__dirname, '../.babelrc')

@@ -1,63 +1,98 @@
 'use strict';
 
 const gulp = require('gulp');
+const gulpSequence = require('gulp-sequence');
+const gulpTs = require('gulp-typescript');
 const path = require('path');
 const readdir = require('readdir');
-const tools = require('urbanjs-tools');
 const tsCompilerOptions = require('../packages/urbanjs-tools/tsconfig.json').compilerOptions;
 
-tools.setGlobalConfiguration(defaults => Object.assign(defaults, {
-  typescript: tsCompilerOptions,
-  sourceFiles: ['tests/**/*-tests.ts'].concat(defaults.sourceFiles)
-}));
+gulp.task('babel', () =>
+  gulp.src(path.join(process.cwd(), 'src/**/*.ts'))
+    .pipe(gulpTs(tsCompilerOptions))
+    .pipe(gulp.dest('dist/'))
+);
 
-tools.initializeTasks(gulp, {
-  babel: {
-    files: [
-      'src/**/*.+(js|ts|tsx|txt)',
-      '!src/tests/**',
-      '!src/**/*-tests.ts'
-    ]
+let tools;
+
+[
+  () => {
+    tools = require('../packages/urbanjs-tools'); // eslint-disable-line
   },
 
-  checkDependencies: true,
+  () => {
+    tools.getTool('check-dependencies').register(gulp, 'check-dependencies', true);
+  },
 
-  checkFileNames: true,
+  () => {
+    tools.getTool('check-file-names').register(gulp, 'check-file-names', true);
+  },
 
-  mocha: defaults => Object.assign({}, defaults, {
-    files: ['src/**/*-tests.ts'],
-    require: [
-      defaults.require,
-      path.join(__dirname, 'mocha-environment.js')
-    ],
-    collectCoverage: false
-  }),
+  () => {
+    tools.getTool('eslint').register(gulp, 'eslint', defaults => Object.assign({}, defaults, {
+      rules: {
+        'import/no-unresolved': 0
+      },
+      files: defaults.files.concat([
+        'tests/**/*.js',
+        '!**/*-invalid.js',
+        '!**/coverage/**/*',
+        '!**/dist/**/*',
+        '!legacy/**'
+      ])
+    }));
+  },
 
-  tslint: {
-    configFile: '../../tslint.json'
+  () => {
+    tools.getTool('mocha').register(gulp, 'test', {
+      files: ['src/**/*-tests.ts'],
+      require: path.join(__dirname, 'mocha-environment.js'),
+      collectCoverage: false
+    });
+  },
+
+  () => {
+    tools.getTool('mocha').register(gulp, 'test-e2e', {
+      files: readdir.readSync(
+        'tests',
+        ['*-tests.ts'],
+        readdir.ABSOLUTE_PATHS
+      ).map(file => [file]),
+      require: path.join(__dirname, 'mocha-environment.js'),
+      collectCoverage: false,
+      timeout: 50000
+    });
+  },
+
+  () => {
+    tools.getTool('nsp').register(gulp, 'nsp', true);
+  },
+
+  () => {
+    tools.getTool('retire').register(gulp, 'retire', true);
+  },
+
+  () => {
+    tools.getTool('tslint').register(gulp, 'tslint', {
+      configFile: '../../tslint.json'
+    });
+  }
+].forEach((item) => {
+  try {
+    process.env.URBANJS_SILENT = 'true';
+    item();
+  } catch (e) {
+    // ignore
+  } finally {
+    delete process.env.URBANJS_SILENT;
   }
 });
 
-tools.tasks.babel.register(gulp, 'babel:dev', true, { typescript: tsCompilerOptions });
-
-tools.tasks.mocha.register(gulp, 'test-e2e', defaults => Object.assign({}, defaults, {
-  files: readdir.readSync(
-    'tests',
-    ['*-tests.ts'],
-    readdir.ABSOLUTE_PATHS
-  ).map(file => [file]),
-  require: [
-    defaults.require,
-    path.join(__dirname, 'mocha-environment.js')
-  ],
-  collectCoverage: false,
-  timeout: 50000
-}));
-
-tools.initializePresets(gulp, {
-  dist: true,
-  test: true,
-  analyze: true,
-  'pre-commit': true,
-  'pre-release': defaults => defaults.concat('test-e2e')
-});
+gulp.task('pre-release', gulpSequence(
+  'check-dependencies',
+  'check-file-names',
+  'eslint',
+  'test',
+  'tslint',
+  'test-e2e'
+));

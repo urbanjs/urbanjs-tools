@@ -3,7 +3,7 @@ import * as yargs from 'yargs/yargs';
 import * as del from 'del';
 import * as mkdirp from 'mkdirp';
 import {
-  container as coreContainer,
+  containerModule as core,
   TYPE_DRIVER_YARGS,
   TYPE_DRIVER_DEL,
   TYPE_DRIVER_MKDIRP
@@ -21,7 +21,7 @@ import {
 const CLI_VERSION = require('../_package.json').version; //tslint:disable-line
 
 export const container = new Container();
-container.parent = coreContainer;
+container.load(core);
 
 container.bind(TYPE_DRIVER_YARGS).toConstantValue(yargs);
 container.bind(TYPE_DRIVER_DEL).toConstantValue(del);

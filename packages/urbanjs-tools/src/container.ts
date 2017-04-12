@@ -3,7 +3,7 @@ import * as yargs from 'yargs/yargs';
 import * as chalk from 'chalk';
 import * as gulpSequence from 'gulp-sequence';
 import {
-  container as coreContainer,
+  containerModule as core,
   TYPE_DRIVER_YARGS,
   TYPE_DRIVER_GULP_SEQUENCE,
   TYPE_DRIVER_CHALK
@@ -17,7 +17,7 @@ import {
 } from './tool-service';
 
 export const container = new Container();
-container.parent = coreContainer;
+container.load(core);
 
 container.bind(TYPE_DRIVER_CHALK).toConstantValue(chalk);
 container.bind(TYPE_DRIVER_YARGS).toConstantValue(yargs);

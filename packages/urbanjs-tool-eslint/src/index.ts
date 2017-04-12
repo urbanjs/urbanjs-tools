@@ -12,7 +12,7 @@ import {
 } from '@tamasmagedli/urbanjs-tools-core';
 import {Eslint} from './tool';
 
-export default new ContainerModule((bind: interfaces.Bind) => { //tslint:disable-line
+export const containerModule = new ContainerModule((bind: interfaces.Bind) => {
   bind(TYPE_DRIVER_THROUGH2).toConstantValue(through2);
   bind(TYPE_DRIVER_DUPLEXIFY).toConstantValue(duplexify);
   bind(TYPE_DRIVER_MERGE_STREAM).toConstantValue(mergeStream);

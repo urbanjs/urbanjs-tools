@@ -85,7 +85,6 @@ export class TranspileService implements ITranspileService {
     this.sourceMapSupportInstalled = true;
   }
 
-  @track()
   public transpile(content: string, filename: string) {
     // TODO: should be configurable via globals
     const ignorePatterns: RegExp[] = [

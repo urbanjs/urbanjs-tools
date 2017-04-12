@@ -1,4 +1,4 @@
-import {Container} from 'inversify';
+import {ContainerModule, interfaces} from 'inversify';
 import {
   TYPE_SERVICE_CLI_SERVICE,
   TYPE_CONFIG_LOGGER,
@@ -27,22 +27,22 @@ import {
 import * as childProcess from 'child_process';
 import * as fs from 'fs';
 
-export const container = new Container();
-
-container.bind(TYPE_CONFIG_LOGGER).toConstantValue({
-  debug: process.env.URBANJS_DEBUG === 'true',
-  error: true,
-  warning: true,
-  info: true
+export const containerModule = new ContainerModule((bind: interfaces.Bind) => {
+  bind(TYPE_CONFIG_LOGGER).toConstantValue({
+    debug: process.env.URBANJS_SILENT !== 'true' && process.env.URBANJS_DEBUG === 'true',
+    error: process.env.URBANJS_SILENT !== 'true',
+    warning: process.env.URBANJS_SILENT !== 'true',
+    info: process.env.URBANJS_SILENT !== 'true'
+  });
+  bind(TYPE_DRIVER_CHILD_PROCESS).toConstantValue(childProcess);
+  bind(TYPE_DRIVER_FS).toConstantValue(fs);
+  bind(TYPE_SERVICE_CLI_SERVICE).to(YargsCLIService).inSingletonScope();
+  bind(TYPE_SERVICE_LOGGER).to(ConsoleLoggerService).inSingletonScope();
+  bind(TYPE_SERVICE_FILE_SYSTEM).to(FileSystemService).inSingletonScope();
+  bind(TYPE_SERVICE_CONFIG).to(ConfigService).inSingletonScope();
+  bind(TYPE_SERVICE_SHELL).to(ShellService).inSingletonScope();
+  bind(TYPE_SERVICE_TASK).to(GulpTaskService).inSingletonScope();
+  bind(TYPE_SERVICE_TRACE).to(TraceService).inSingletonScope();
+  bind(TYPE_SERVICE_STREAM).to(StreamService).inSingletonScope();
+  bind(TYPE_SERVICE_TRANSPILE).to(TranspileService).inSingletonScope();
 });
-container.bind(TYPE_DRIVER_CHILD_PROCESS).toConstantValue(childProcess);
-container.bind(TYPE_DRIVER_FS).toConstantValue(fs);
-container.bind(TYPE_SERVICE_CLI_SERVICE).to(YargsCLIService).inSingletonScope();
-container.bind(TYPE_SERVICE_LOGGER).to(ConsoleLoggerService).inSingletonScope();
-container.bind(TYPE_SERVICE_FILE_SYSTEM).to(FileSystemService).inSingletonScope();
-container.bind(TYPE_SERVICE_CONFIG).to(ConfigService).inSingletonScope();
-container.bind(TYPE_SERVICE_SHELL).to(ShellService).inSingletonScope();
-container.bind(TYPE_SERVICE_TASK).to(GulpTaskService).inSingletonScope();
-container.bind(TYPE_SERVICE_TRACE).to(TraceService).inSingletonScope();
-container.bind(TYPE_SERVICE_STREAM).to(StreamService).inSingletonScope();
-container.bind(TYPE_SERVICE_TRANSPILE).to(TranspileService).inSingletonScope();

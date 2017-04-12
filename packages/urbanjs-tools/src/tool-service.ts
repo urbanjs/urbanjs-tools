@@ -3,19 +3,17 @@ import {
   ILoggerService,
   TYPE_SERVICE_LOGGER,
   IToolParameters,
-  ITool
+  ITool,
+  TYPE_TOOL,
+  ITraceService,
+  TYPE_SERVICE_TRACE,
+  track
 } from '@tamasmagedli/urbanjs-tools-core';
 import {NotFoundTool} from './errors';
 import {
   IToolService,
   TYPE_CONFIG_TOOL_PREFIX
 } from './types';
-import {
-  TYPE_TOOL,
-  ITraceService,
-  TYPE_SERVICE_TRACE,
-  track
-} from '@tamasmagedli/urbanjs-tools-core';
 
 @injectable()
 export class ToolService implements IToolService {
@@ -47,14 +45,14 @@ export class ToolService implements IToolService {
 
     try {
       this.loggerService.debug('ToolService.getToolContainerModule', `loading ${packageName}`);
-      return require(packageName).default; //tslint:disable-line
+      return require(packageName).containerModule; //tslint:disable-line
     } catch (e) {
       this.loggerService.debug('ToolService.getToolContainerModule', 'tool not found', name, e);
     }
 
     try {
       this.loggerService.debug('ToolService.getToolContainerModule', `loading ${name}`);
-      return require(name).default; //tslint:disable-line
+      return require(name).containerModule; //tslint:disable-line
     } catch (e) {
       this.loggerService.error(`Tool was not found: ${name}. Please install ${packageName}.`, e);
       throw new NotFoundTool();

@@ -1,3 +1,4 @@
+import {Container} from 'inversify';
 import {readFileSync} from 'fs';
 import * as babelCore from 'babel-core';
 import * as gulpTypescript from 'gulp-typescript';
@@ -5,7 +6,7 @@ import * as typescript from 'typescript';
 import * as sourceMapSupport from 'source-map-support';
 import * as yargs from 'yargs';
 import {
-  container,
+  containerModule as core,
   ITranspileService,
   TYPE_DRIVER_YARGS,
   TYPE_DRIVER_BABEL_CORE,
@@ -15,13 +16,16 @@ import {
   TYPE_SERVICE_TRANSPILE
 } from '@tamasmagedli/urbanjs-tools-core';
 
+export const container = new Container();
+container.load(core);
+
 container.bind(TYPE_DRIVER_YARGS).toConstantValue(yargs);
 container.bind(TYPE_DRIVER_BABEL_CORE).toConstantValue(babelCore);
 container.bind(TYPE_DRIVER_GULP_TYPESCRIPT).toConstantValue(gulpTypescript);
 container.bind(TYPE_DRIVER_TYPESCRIPT).toConstantValue(typescript);
 container.bind(TYPE_DRIVER_SOURCE_MAP_SUPPORT).toConstantValue(sourceMapSupport);
 
-export const transpileService = container.get<ITranspileService>(TYPE_SERVICE_TRANSPILE);
+const transpileService = container.get<ITranspileService>(TYPE_SERVICE_TRANSPILE);
 transpileService.installSourceMapSupport();
 
 babelCore.util.canCompile.EXTENSIONS.concat('.ts', 'tsx').forEach((extension) => {

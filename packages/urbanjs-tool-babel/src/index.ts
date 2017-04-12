@@ -14,7 +14,7 @@ import {
 } from '@tamasmagedli/urbanjs-tools-core';
 import {Babel} from './tool';
 
-export default new ContainerModule((bind: interfaces.Bind) => { //tslint:disable-line
+export const containerModule = new ContainerModule((bind: interfaces.Bind) => {
   bind(TYPE_DRIVER_DEL).toConstantValue(del);
   bind(TYPE_DRIVER_THROUGH2).toConstantValue(through2);
   bind(TYPE_DRIVER_DUPLEXIFY).toConstantValue(duplexify);

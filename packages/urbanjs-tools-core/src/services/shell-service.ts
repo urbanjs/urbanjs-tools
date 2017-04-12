@@ -38,7 +38,7 @@ export class ShellService implements IShellService {
   }
 
   @track()
-  public forkProcess(modulePath: string, args?: string[], options?: ForkProcessOptions = {}) {
+  public forkProcess(modulePath: string, args: string[] = [], options: ForkProcessOptions = {}) {
     return this.childProcessDriver.fork(modulePath, args, {
       ...this.getChildProcessOptions(options),
       silent: options.silent
@@ -46,7 +46,7 @@ export class ShellService implements IShellService {
   }
 
   @track()
-  public async runCommand(command: string, options?: ShellCommandOptions = {}) {
+  public async runCommand(command: string, options: ShellCommandOptions = {}) {
     const childProcessOptions: ChildProcessOptions = this.getChildProcessOptions(<ChildProcessOptions>options);
 
     return await new Promise((resolve, reject) => {

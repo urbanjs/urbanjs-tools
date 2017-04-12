@@ -4,31 +4,16 @@ require('./gulp/generate-package-files');
 require('./gulp/bootstrap');
 
 const gulp = require('gulp');
-const sequence = require('gulp-sequence');
-const tools = require('urbanjs-tools');
+const gulpSequence = require('gulp-sequence');
+const gulpShell = require('gulp-shell');
 
-tools.initializeTasks(gulp, {
-  eslint: defaults => Object.assign(defaults, {
-    rules: {
-      'import/no-unresolved': 0
-    },
-    files: defaults.files.concat([
-      'packages/**/*.js',
-      '!packages/**/*-invalid.js',
-      '!packages/**/coverage/**/*',
-      '!packages/**/dist/**/*',
-      '!packages/urbanjs-tools/legacy/**'
-    ])
-  }),
-  retire: true,
-  nsp: true
+gulp.task('bootstrap:transpile', (done) => {
+  gulpShell.task(['node_modules/.bin/lerna exec gulp babel'])(done);
 });
 
-gulp.task('pre-release', sequence(
+gulp.task('pre-release', gulpSequence(
   'generate-package-files',
-  'retire',
-  'nsp',
-  'eslint',
+  'bootstrap:transpile',
   'bootstrap'
 ));
 

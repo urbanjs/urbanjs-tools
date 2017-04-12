@@ -6,15 +6,17 @@ import {join} from 'path';
 import * as through2 from 'through2';
 import * as gulp from 'gulp';
 import {
-  container,
+  TYPE_SERVICE_TRANSPILE,
   TYPE_SERVICE_LOGGER,
-  ILoggerService
+  ILoggerService,
+  ITranspileService
 } from '@tamasmagedli/urbanjs-tools-core';
 import * as messages from './messages';
 import {Message, MochaOptions, RunnerMessage} from './types';
-import {transpileService} from './setup-file';
+import {container} from './setup-file';
 
 const loggerService = container.get<ILoggerService>(TYPE_SERVICE_LOGGER);
+const transpileService = container.get<ITranspileService>(TYPE_SERVICE_TRANSPILE);
 
 function prepareSources(src: string | string[]) {
   return new Promise((resolve, reject) => {

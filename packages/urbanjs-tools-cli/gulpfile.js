@@ -5,7 +5,6 @@ require('../../gulp/pre-release');
 const gulp = require('gulp');
 const fs = require('fs');
 const through2 = require('through2');
-const tools = require('urbanjs-tools');
 
 gulp.task('generate-versions-file', [], (done) => {
   const packages = [
@@ -29,6 +28,5 @@ gulp.task('generate-versions-file', [], (done) => {
 });
 
 
-tools.initializePresets(gulp, {
-  'pre-release': defaults => ['generate-versions-file'].concat(defaults)
-});
+gulp.tasks['pre-release-origin'] = gulp.tasks['pre-release'];
+gulp.task('pre-release', ['pre-release-origin', 'generate-versions-file']);

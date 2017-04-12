@@ -1,9 +1,10 @@
+import {Container} from 'inversify';
 import {join} from 'path';
 import * as yargs from 'yargs';
 import * as mkdirp from 'mkdirp';
 import * as expect from 'assert';
 import {
-  container,
+  containerModule as core,
   IShellService,
   IFileSystemService,
   TYPE_SERVICE_SHELL,
@@ -27,6 +28,8 @@ describe('Babel task', () => {
   let fsService: IFileSystemService;
 
   before(() => {
+    const container = new Container();
+    container.load(core);
     container.bind(TYPE_DRIVER_YARGS).toConstantValue(yargs);
     container.bind(TYPE_DRIVER_MKDIRP).toConstantValue(mkdirp);
     shellService = container.get<IShellService>(TYPE_SERVICE_SHELL);

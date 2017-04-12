@@ -12,7 +12,7 @@ import {
 } from '@tamasmagedli/urbanjs-tools-core';
 import {CheckDependencies} from './tool';
 
-export default new ContainerModule((bind: interfaces.Bind) => { //tslint:disable-line
+export const containerModule = new ContainerModule((bind: interfaces.Bind) => {
   bind(TYPE_DRIVER_BABEL_CORE).toConstantValue(babelCore);
   bind(TYPE_DRIVER_GULP_TYPESCRIPT).toConstantValue(gulpTypescript);
   bind(TYPE_DRIVER_TYPESCRIPT).toConstantValue(typescript);

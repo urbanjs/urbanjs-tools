@@ -1,7 +1,8 @@
+import {Container} from 'inversify';
 import {join} from 'path';
 import * as yargs from 'yargs';
 import {
-  container,
+  containerModule as core,
   IShellService,
   TYPE_SERVICE_SHELL,
   TYPE_DRIVER_YARGS
@@ -11,6 +12,8 @@ describe('Nsp task', () => {
   let shellService: IShellService;
 
   before(() => {
+    const container = new Container();
+    container.load(core);
     container.bind(TYPE_DRIVER_YARGS).toConstantValue(yargs);
     shellService = container.get<IShellService>(TYPE_SERVICE_SHELL);
   });
