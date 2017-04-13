@@ -33,7 +33,7 @@ gulp.task('bootstrap:transpile', (done) => {
 
     const current = remainingPackages[0];
     const options = { cwd: path.join(__dirname, 'packages', current) };
-    const commands = ['node_modules/.bin/gulp babel'];
+    const commands = ['../../node_modules/.bin/gulp babel'];
 
     gulpShell.task(commands, options)(() => next(remainingPackages.slice(1)));
   }(packages));
