@@ -1,23 +1,56 @@
 'use strict';
 
+const del = require('del');
 const gulp = require('gulp');
+const fs = require('fs');
+const gulpBabel = require('gulp-babel');
 const gulpSequence = require('gulp-sequence');
+const gulpSourcemaps = require('gulp-sourcemaps');
 const gulpTs = require('gulp-typescript');
+const mergeStream = require('merge-stream');
 const path = require('path');
 const readdir = require('readdir');
-const tsCompilerOptions = require('../packages/urbanjs-tools/tsconfig.json').compilerOptions;
+const ts = require('typescript');
+const through2 = require('through2');
 
-gulp.task('babel', () =>
-  gulp.src(path.join(process.cwd(), 'src/**/*.ts'))
-    .pipe(gulpTs(tsCompilerOptions))
-    .pipe(gulp.dest('dist/'))
-);
+const tsCompilerOptions = require('../packages/urbanjs-tools/tsconfig.json').compilerOptions;
+const babelOptions = JSON.parse(fs.readFileSync(path.join(__dirname, '../packages/urbanjs-tools/.babelrc')));
+
+gulp.task('babel', () => {
+  const processCwd = process.cwd();
+  const outputFolder = path.join(processCwd, 'dist');
+
+  del.sync(outputFolder, { force: true });
+
+  let stream = gulp.src(path.join(processCwd, 'src/**/*.ts'));
+  stream = stream.pipe(gulpSourcemaps.init({ loadMaps: true }));
+
+  const tsPipe = gulpTs(Object.assign({}, tsCompilerOptions, {
+    typescript: ts,
+    inlineSourceMap: true
+  }));
+  const dtsPipe = tsPipe.dts.pipe(gulp.dest('dist/'));
+
+  stream = stream.pipe(tsPipe);
+  stream = stream.pipe(through2.obj((file, enc, cb) => {
+    cb(null, /\.js$/.test(file.path) ? file : null);
+  }));
+  stream = stream.pipe(gulpBabel(babelOptions));
+  stream = stream.pipe(gulpSourcemaps.write('.'));
+  stream = stream.pipe(gulp.dest('dist/'));
+
+  return mergeStream(stream, dtsPipe);
+});
 
 let tools;
 
 [
   () => {
+    delete process.env.URBANJS_SILENT;
     tools = require('../packages/urbanjs-tools'); // eslint-disable-line
+    tools.setGlobalConfiguration(defaults => Object.assign({}, defaults, {
+      sourceFiles: ['tests/index-tests.ts'].concat(defaults.sourceFiles)
+    }));
   },
 
   () => {

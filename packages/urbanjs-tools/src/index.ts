@@ -71,6 +71,7 @@ export const tools: { [key: string]: IRegistrableGulpTool } = global.hasOwnPrope
     'retire',
     'mocha',
     'nsp',
+    'check-dependencies',
     'check-file-names',
     'conventional-changelog',
     'tslint',

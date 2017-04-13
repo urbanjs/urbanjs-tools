@@ -18,10 +18,12 @@
   "dependencies": {
     "@tamasmagedli/urbanjs-tools-core": "*",
     "@types/webpack": "*",
+    "babel-loader": "*",
     "babel-runtime": "*",
     "del": "*",
     "inversify": "*",
     "lodash": "*",
+    "ts-loader": "*",
     "webpack": "*"
   },
   "devDependencies": {

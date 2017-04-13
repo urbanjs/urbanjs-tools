@@ -13,7 +13,10 @@ tools.tasks.webpack.register(gulp, 'webpack', {
   module: {
     rules: [{
       test: /\.js$/,
-      use: [{ loader: require.resolve('babel-loader') }]
+      use: [{
+        loader: require.resolve('babel-loader'),
+        options: { presets: ['babel-preset-es2015'] }
+      }]
     }]
   }
 });
