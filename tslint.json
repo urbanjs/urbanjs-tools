@@ -1,9 +1,21 @@
 {
-  "extends": "./packages/urbanjs-tool-tslint/tslint.json",
+  "extends": [
+    "./packages/urbanjs-tool-tslint/tslint.json"
+  ],
   "rules": {
     "ordered-imports": false,
     "max-line-length": false,
-    "no-suspicious-comment": false,
-    "import-name": false
+    "trailing-comma": false,
+    "object-literal-sort-keys": false,
+    "interface-over-type-literal": false,
+    "array-type": false,
+    "ban-types": false,
+    "arrow-parens": false,
+    "comment-format": false,
+    "member-ordering": false,
+    "no-angle-bracket-type-assertion": false,
+    "whitespace": false,
+    "callable-types": false,
+    "max-classes-per-file": false
   }
 }

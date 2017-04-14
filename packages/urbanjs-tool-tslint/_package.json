@@ -23,8 +23,7 @@
     "inversify": "*",
     "merge-stream": "*",
     "through2": "*",
-    "tslint": "*",
-    "tslint-microsoft-contrib": "*"
+    "tslint": "*"
   },
   "devDependencies": {
     "@tamasmagedli/urbanjs-tools": "*",

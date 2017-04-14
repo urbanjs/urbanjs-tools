@@ -6,8 +6,8 @@ import {
   LoggerConfig
 } from '../types';
 
-function to2Digits(number: number): string {
-  return `0${number}`.slice(-2);
+function to2Digits(value: number): string {
+  return `0${value}`.slice(-2);
 }
 
 export const TYPE_DRIVER_CHALK = Symbol('TYPE_DRIVER_CHALK');

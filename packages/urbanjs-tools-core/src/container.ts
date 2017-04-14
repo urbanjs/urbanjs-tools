@@ -10,7 +10,7 @@ import {
   TYPE_SERVICE_TRACE,
   TYPE_SERVICE_STREAM,
   TYPE_SERVICE_TRANSPILE
-}from './types';
+} from './types';
 import {
   TranspileService,
   ConfigService,
@@ -23,7 +23,7 @@ import {
   TYPE_DRIVER_CHILD_PROCESS,
   TYPE_DRIVER_FS,
   StreamService
-}from './services';
+} from './services';
 import * as childProcess from 'child_process';
 import * as fs from 'fs';
 

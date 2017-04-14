@@ -1,6 +1,9 @@
 ## Unreleased
+- Update dependencies
+    - Remove tslint-microsoft-contrib ruleset from tslint task
+    - Use tslint:recommended ruleset within tslint task
 - Introduce monolith repository concept
-    - Get rid of lazy dependency install 
+    - Get rid of lazy dependency install
 - Introduce `initializePresets` & `initializeTasks` methods to have bigger control over preset configuration
     - See [api documentation](http://urbanjs.github.io/tools/module-main.html#.initializePresets) for further details
 - Introduce `runnerMemoryUsageLimit` options in `mocha` config

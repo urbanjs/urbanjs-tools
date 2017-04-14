@@ -1,13 +1,16 @@
 {
-  "extends": "tslint-microsoft-contrib/recommended_ruleset",
+  "lintOptions": {
+    "typeCheck": false
+  },
+  "extends": [
+    "tslint:latest"
+  ],
   "rules": {
-    "missing-jsdoc": false,
-    "no-relative-imports": false,
-    "export-name": false,
-    "no-reference": false,
-    "no-for-in-array": false,
-    "restrict-plus-operands": false,
-    "linebreak-style": false,
-    "no-reserved-keywords": false
+    "quotemark": [
+      true,
+      "single",
+      "jsx-double",
+      "avoid-escape"
+    ]
   }
 }

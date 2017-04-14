@@ -7,7 +7,6 @@ export function getDefaults(globals: GlobalConfiguration): TslintConfig {
     files: globals.sourceFiles,
     configFile: join(__dirname, '../tslint.json'),
     extensions: ['.ts', 'tsx'],
-    formatter: 'verbose',
-    rulesDirectory: dirname(require.resolve('tslint-microsoft-contrib'))
+    formatter: 'verbose'
   };
 }

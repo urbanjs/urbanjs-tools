@@ -27,6 +27,10 @@ gulp.task('generate-versions-file', [], (done) => {
     });
 });
 
+gulp.task('copy-templates', () =>
+  gulp.src('src/**/*.txt')
+    .pipe(gulp.dest('dist'))
+);
 
 gulp.tasks['pre-release-origin'] = gulp.tasks['pre-release'];
-gulp.task('pre-release', ['pre-release-origin', 'generate-versions-file']);
+gulp.task('pre-release', ['pre-release-origin', 'generate-versions-file', 'copy-templates']);

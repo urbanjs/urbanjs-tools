@@ -26,7 +26,13 @@ export class TraceService implements ITraceService {
         const oldMethod = target[propertyName];
 
         target[propertyName] = function tracked(...args: any[]) {//tslint:disable-line
-          debug('called with', ...args.reduce((acc, item) => acc.concat('\n', item), []));
+          const messages = ['called'];
+          if (args.length) {
+            messages.push('with');
+            messages.push(...args.reduce((acc, item) => acc.concat('\n', item), []));
+          }
+
+          debug(...messages);
           return oldMethod.apply(this, args);
         };
       }

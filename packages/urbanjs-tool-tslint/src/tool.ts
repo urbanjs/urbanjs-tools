@@ -69,12 +69,12 @@ export class Tslint implements ITool<TslintConfig> {
       gulp.src(config.files)
         .pipe(this.streamService.streamIf(
           isTsFile,
-          <NodeJS.ReadWriteStream>tslint(tslintConfig),
+          tslint(tslintConfig) as NodeJS.ReadWriteStream,
           {ignoreError: false}
         ))
         .pipe(this.streamService.streamIf(
           isTsFile,
-          <NodeJS.ReadWriteStream>tslint.report({summarizeFailureOutput: true}),
+          tslint.report({summarizeFailureOutput: true}) as NodeJS.ReadWriteStream,
           {ignoreError: false}
         ))
         .on('data', () => true)

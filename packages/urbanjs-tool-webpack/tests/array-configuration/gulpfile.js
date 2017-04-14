@@ -1,13 +1,16 @@
 'use strict';
 
 const gulp = require('gulp');
+const path = require('path');
 const tools = require('@tamasmagedli/urbanjs-tools');
+
+const processCwd = process.cwd();
 
 tools.tasks.webpack.register(gulp, 'webpack', [
   {
     entry: './index.js',
     output: {
-      path: './dist',
+      path: path.join(processCwd, './dist'),
       filename: 'index.js',
       libraryTarget: 'commonjs'
     }
@@ -15,7 +18,7 @@ tools.tasks.webpack.register(gulp, 'webpack', [
   {
     entry: './index.js',
     output: {
-      path: './dist',
+      path: path.join(processCwd, './dist'),
       filename: 'index2.js',
       libraryTarget: 'commonjs'
     }

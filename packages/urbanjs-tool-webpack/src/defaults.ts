@@ -1,16 +1,18 @@
 import {WebpackConfig} from './types';
-import {isAbsolute} from 'path';
+import {isAbsolute, join} from 'path';
 import {GlobalConfiguration} from '@tamasmagedli/urbanjs-tools-core';
 
 export function getDefaults(globals: GlobalConfiguration): WebpackConfig {
+  const processCwd = process.cwd();
+
   return {
     clean: true,
     cache: true,
-    context: process.cwd(),
+    context: processCwd,
     entry: './src',
 
     output: {
-      path: 'dist',
+      path: join(processCwd, 'dist'),
       filename: 'index.js',
       libraryTarget: 'commonjs'
     },

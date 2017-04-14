@@ -2,7 +2,7 @@ import {inject, injectable} from 'inversify';
 import {
   cloneDeep,
   merge
-}from 'lodash';
+} from 'lodash';
 import {
   IConfigService,
   ILoggerService,
