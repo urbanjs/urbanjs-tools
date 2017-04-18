@@ -1,43 +1,72 @@
-import {inject, injectable, Container, ContainerModule} from 'inversify';
 import {
+  inject,
+  injectable,
+  Container,
+  ContainerModule
+} from 'inversify';
+import {
+  IGulp,
   ILoggerService,
-  TYPE_SERVICE_LOGGER,
-  IToolParameters,
-  ITool,
-  TYPE_TOOL,
   ITraceService,
+  ITool,
+  TYPE_DRIVER_GULP,
+  TYPE_SERVICE_LOGGER,
   TYPE_SERVICE_TRACE,
+  TYPE_TOOL,
+  ToolConfiguration,
   track
 } from '@tamasmagedli/urbanjs-tools-core';
-import {NotFoundTool} from './errors';
+import {
+  NotFoundTool
+} from './errors';
 import {
   IToolService,
-  TYPE_CONFIG_TOOL_PREFIX
+  TYPE_CONFIG_TOOL_PREFIX,
+  TYPE_BASE_TOOL_CONTAINER,
+  IRegistrableGulpTool
 } from './types';
+import {
+  UrbanjsToolsError
+} from './errors';
 
 @injectable()
 export class ToolService implements IToolService {
   private loggerService: ILoggerService;
   private toolPrefix: string;
+  private baseToolContainer: Container;
 
   constructor(@inject(TYPE_SERVICE_LOGGER) loggerService: ILoggerService,
               @inject(TYPE_SERVICE_TRACE) traceService: ITraceService,
-              @inject(TYPE_CONFIG_TOOL_PREFIX) toolPrefix: string) {
+              @inject(TYPE_CONFIG_TOOL_PREFIX) toolPrefix: string,
+              @inject(TYPE_BASE_TOOL_CONTAINER) baseToolContainer: Container) {
     this.toolPrefix = toolPrefix;
     this.loggerService = loggerService;
+    this.baseToolContainer = baseToolContainer;
     traceService.track(this);
   }
 
   @track()
-  public initializeTool<T extends IToolParameters>(container: Container,
-                                                   toolName: string,
-                                                   taskName: string,
-                                                   parameters: T) {
-    const containerModule = this.getToolContainerModule(toolName);
+  public getTool(toolName: string): IRegistrableGulpTool {
+    return {
+      register: <T>(gulp: IGulp, taskName: string, parameters: ToolConfiguration<T>) => {
+        try {
+          const containerModule = this.getToolContainerModule(toolName);
 
-    container.load(containerModule);
-    container.get<ITool<T>>(TYPE_TOOL).register(taskName, parameters);
-    container.unload(containerModule);
+          const container = new Container();
+          container.parent = this.baseToolContainer;
+          container.bind(TYPE_DRIVER_GULP).toConstantValue(gulp);
+
+          container.load(containerModule);
+          container.get<ITool<T>>(TYPE_TOOL).register(taskName, parameters);
+        } catch (e) {
+          if (!(e instanceof UrbanjsToolsError)) {
+            this.loggerService.error('Unexpected error\n', e);
+          }
+
+          throw e;
+        }
+      }
+    };
   }
 
   private getToolContainerModule(name: string): ContainerModule {

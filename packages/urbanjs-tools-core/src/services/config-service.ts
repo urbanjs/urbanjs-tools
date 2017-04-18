@@ -6,13 +6,14 @@ import {
 import {
   IConfigService,
   ILoggerService,
-  IToolParameters,
+  ToolParameters,
   ICLIService,
   TYPE_SERVICE_LOGGER,
   TYPE_SERVICE_CLI_SERVICE,
   ITraceService,
   TYPE_SERVICE_TRACE,
-  GlobalConfiguration
+  GlobalConfiguration,
+  ToolConfiguration
 } from '../types';
 import {track} from '../decorators';
 
@@ -43,7 +44,7 @@ export class ConfigService implements IConfigService {
   }
 
   @track()
-  public setGlobalConfiguration(configuration: GlobalConfiguration) {
+  public setGlobalConfiguration(configuration: ToolConfiguration<GlobalConfiguration>) {
     configuration = this.mergeParameters(
       this.globals,
       configuration,
@@ -74,17 +75,10 @@ export class ConfigService implements IConfigService {
     return this.globals;
   }
 
-  /**
-   * Merges given configuration with defaults.
-   *  - falsy value will be ignored
-   *  - function will be called, it should return a valid configuration
-   *  - a simple object will be merged
-   *  - otherwise the new value will be used
-   */
   @track()
-  public mergeParameters<T extends IToolParameters>(defaults: T,
-                                                    parameters: T | boolean,
-                                                    cliOptionPrefix?: string) {
+  public mergeParameters<T extends ToolParameters>(defaults: T,
+                                                   parameters: ToolConfiguration<T>,
+                                                   cliOptionPrefix?: string) {
     if (!this.isObject(defaults)) {
       this.loggerService.error(`Invalid arguments: defaults must be an object ${JSON.stringify(defaults)}`);
       throw new Error('Invalid arguments');

@@ -13,6 +13,7 @@ export const TYPE_DRIVER_GULP = Symbol('TYPE_DRIVER_GULP');
 export const TYPE_DRIVER_GULP_SEQUENCE = Symbol('TYPE_DRIVER_GULP_SEQUENCE');
 
 export interface IGulp {
+  tasks: Object;
   task(taskName: string, dependenciesOrCb: string[] | Function, cb?: Function);
   start(taskName: string, cb: (err: Error) => void);
 }

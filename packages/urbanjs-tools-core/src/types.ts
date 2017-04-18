@@ -84,10 +84,12 @@ export type GlobalConfiguration = {
   sourceFiles: string[];
 };
 
-export type IToolParameters = { [key: string]: string | number | boolean | Object };
+export type ToolParameters = { [key: string]: any }; //tslint:disable-line
 
-export interface ITool<T extends IToolParameters> {
-  register(taskName: string, parameters: T): void;
+export type ToolConfiguration<T extends ToolParameters> = boolean | T | ((defaults: T) => T);
+
+export interface ITool<T extends ToolParameters> {
+  register(taskName: string, parameters: ToolConfiguration<T>): void;
 }
 
 export type ChildProcessOptions = { env?: Object, cwd?: string };
@@ -117,11 +119,11 @@ export interface ITaskService {
 }
 
 export interface IConfigService {
-  mergeParameters<T extends IToolParameters>(defaults: T,
-                                             parameters: T,
-                                             cliOptionPrefix?: string): T;
+  mergeParameters<T extends ToolParameters>(defaults: T,
+                                            parameters: ToolConfiguration<T>,
+                                            cliOptionPrefix?: string): T;
   getGlobalConfiguration(): GlobalConfiguration;
-  setGlobalConfiguration(configuration: GlobalConfiguration): void;
+  setGlobalConfiguration(configuration: ToolConfiguration<GlobalConfiguration>): void;
 }
 
 export interface ITranspileService {
