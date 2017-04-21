@@ -22,8 +22,10 @@ import {
 import {
   IToolService,
   TYPE_CONFIG_TOOL_PREFIX,
-  TYPE_BASE_TOOL_CONTAINER,
-  IRegistrableGulpTool
+  TYPE_DRIVER_REQUIRE,
+  TYPE_FACTORY_TOOL_CONTAINER,
+  IRegistrableGulpTool,
+  IRequireDriver, ToolContainerFactory
 } from './types';
 import {
   UrbanjsToolsError
@@ -33,27 +35,29 @@ import {
 export class ToolService implements IToolService {
   private loggerService: ILoggerService;
   private toolPrefix: string;
-  private baseToolContainer: Container;
+  private requireDriver: IRequireDriver;
+  private containerFactory: ToolContainerFactory;
 
   constructor(@inject(TYPE_SERVICE_LOGGER) loggerService: ILoggerService,
               @inject(TYPE_SERVICE_TRACE) traceService: ITraceService,
               @inject(TYPE_CONFIG_TOOL_PREFIX) toolPrefix: string,
-              @inject(TYPE_BASE_TOOL_CONTAINER) baseToolContainer: Container) {
+              @inject(TYPE_DRIVER_REQUIRE) requireDriver: IRequireDriver,
+              @inject(TYPE_FACTORY_TOOL_CONTAINER) containerFactory: ToolContainerFactory) {
     this.toolPrefix = toolPrefix;
+    this.requireDriver = requireDriver;
     this.loggerService = loggerService;
-    this.baseToolContainer = baseToolContainer;
+    this.containerFactory = containerFactory;
     traceService.track(this);
   }
 
   @track()
   public getTool(toolName: string): IRegistrableGulpTool {
+    const containerModule = this.getToolContainerModule(toolName);
+
     return {
       register: <T>(gulp: IGulp, taskName: string, parameters: ToolConfiguration<T>) => {
         try {
-          const containerModule = this.getToolContainerModule(toolName);
-
-          const container = new Container();
-          container.parent = this.baseToolContainer;
+          const container = this.containerFactory();
           container.bind(TYPE_DRIVER_GULP).toConstantValue(gulp);
 
           container.load(containerModule);
@@ -69,19 +73,20 @@ export class ToolService implements IToolService {
     };
   }
 
-  private getToolContainerModule(name: string): ContainerModule {
+  public getToolContainerModule(name: string): ContainerModule {
+    const logPrefix = 'ToolService.getToolContainerModule';
     const packageName = `${this.toolPrefix}${name}`;
 
     try {
-      this.loggerService.debug('ToolService.getToolContainerModule', `loading ${packageName}`);
-      return require(packageName).containerModule; //tslint:disable-line
+      this.loggerService.debug(logPrefix, `loading ${packageName}`);
+      return this.requireDriver.require<{ containerModule: ContainerModule }>(packageName).containerModule;
     } catch (e) {
-      this.loggerService.debug('ToolService.getToolContainerModule', 'tool not found', name, e);
+      this.loggerService.debug(logPrefix, 'tool not found', name, e);
     }
 
     try {
-      this.loggerService.debug('ToolService.getToolContainerModule', `loading ${name}`);
-      return require(name).containerModule; //tslint:disable-line
+      this.loggerService.debug(logPrefix, `loading ${name}`);
+      return this.requireDriver.require<{ containerModule: ContainerModule }>(name).containerModule;
     } catch (e) {
       this.loggerService.error(`Tool was not found: ${name}. Please install ${packageName}.`, e);
       throw new NotFoundTool();

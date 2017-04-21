@@ -1,13 +1,22 @@
+import {Container} from 'inversify';
 import {
   IGulp,
   ToolParameters,
-  ToolConfiguration, GlobalConfiguration
+  ToolConfiguration,
+  GlobalConfiguration
 } from '@tamasmagedli/urbanjs-tools-core';
 
 export const TYPE_TOOL_SERVICE = Symbol('TYPE_TOOL_SERVICE');
-export const TYPE_BASE_TOOL_CONTAINER = Symbol('TYPE_BASE_TOOL_CONTAINER');
 export const TYPE_CONFIG_TOOL_PREFIX = Symbol('TYPE_CONFIG_TOOL_PREFIX');
+export const TYPE_DRIVER_REQUIRE = Symbol('TYPE_DRIVER_REQUIRE');
+export const TYPE_FACTORY_TOOL_CONTAINER = Symbol('TYPE_FACTORY_TOOL_CONTAINER');
 export const TYPE_API = Symbol('TYPE_API');
+
+export interface IRequireDriver {
+  require<T>(name: string): T;
+}
+
+export type ToolContainerFactory = () => Container;
 
 export interface IRegistrableGulpTool {
   register<T>(gulp: IGulp, taskName: string, parameters: ToolConfiguration<T>): void;

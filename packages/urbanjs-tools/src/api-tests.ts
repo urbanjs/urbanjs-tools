@@ -1,5 +1,5 @@
 import * as expect from 'assert';
-import {stub, spy} from 'sinon';
+import {spy} from 'sinon';
 import {Api} from './api';
 import {IApi} from './types';
 
