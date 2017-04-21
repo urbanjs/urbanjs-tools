@@ -4,7 +4,6 @@
     "child-process-promise": "2.2.0",
     "jest-cli": "18.1.0",
     "jsdoc": "3.4.3",
-    "sinon": "1.17.7",
     "vinyl-fs": "2.4.4"
   }
 }

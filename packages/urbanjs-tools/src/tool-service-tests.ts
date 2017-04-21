@@ -11,7 +11,7 @@ describe('tool service', () => {
   let toolServiceMock;
   let loggerServiceMock;
   let traceServiceMock;
-  let requireModuleMock;
+  let requireDriverMock;
   let toolContainerMock;
   let toolPrefix;
   let toolService;
@@ -38,12 +38,12 @@ describe('tool service', () => {
       track: spy()
     };
 
-    requireModuleMock = {
+    requireDriverMock = {
       require: spy()
     };
 
     toolPrefix = 'tool-prefix';
-    toolService = new ToolService(loggerServiceMock, traceServiceMock, toolPrefix, requireModuleMock, () => toolContainerMock);
+    toolService = new ToolService(loggerServiceMock, traceServiceMock, toolPrefix, requireDriverMock, () => toolContainerMock);
   });
 
   describe('.getToolContainerModule()', () => {
@@ -52,7 +52,7 @@ describe('tool service', () => {
       const toolName = 'toolName';
 
       beforeEach(() => {
-        requireModuleMock.require = spy((name: string) => {
+        requireDriverMock.require = spy((name: string) => {
           if (name === `${toolPrefix}${toolName}`) {
             return toolModule;
           }
@@ -62,7 +62,7 @@ describe('tool service', () => {
 
       it('returns `containerModule` from module', () => {
         const containerModule = toolService.getToolContainerModule(toolName);
-        expect.equal(requireModuleMock.require.calledWith(`${toolPrefix}${toolName}`), true);
+        expect.equal(requireDriverMock.require.calledWith(`${toolPrefix}${toolName}`), true);
         expect.equal(containerModule, toolModule.containerModule);
       });
     });
@@ -72,7 +72,7 @@ describe('tool service', () => {
       const toolName = 'toolName';
 
       beforeEach(() => {
-        requireModuleMock.require = spy((name: string) => {
+        requireDriverMock.require = spy((name: string) => {
           if (name === toolName) {
             return toolModule;
           }
@@ -82,15 +82,15 @@ describe('tool service', () => {
 
       it('returns `containerModule` from module', () => {
         const containerModule = toolService.getToolContainerModule(toolName);
-        expect.equal(requireModuleMock.require.calledWith(`${toolPrefix}${toolName}`), true);
-        expect.equal(requireModuleMock.require.calledWith(toolName), true);
+        expect.equal(requireDriverMock.require.calledWith(`${toolPrefix}${toolName}`), true);
+        expect.equal(requireDriverMock.require.calledWith(toolName), true);
         expect.equal(containerModule, toolModule.containerModule);
       });
     });
 
     context('when module of the tool cannot be found either with or without the tool prefix', () => {
       beforeEach(() => {
-        requireModuleMock.require = spy(() => {
+        requireDriverMock.require = spy(() => {
           throw new Error('not found');
         });
       });

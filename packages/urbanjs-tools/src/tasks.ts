@@ -1,5 +1,6 @@
 export const toolNameByTaskName = {
   'babel': 'babel',
+  'tsc': 'babel',
   'retire': 'retire',
   'mocha': 'mocha',
   'nsp': 'nsp',

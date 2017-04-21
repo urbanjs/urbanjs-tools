@@ -79,9 +79,9 @@ export type TSCompilerOptions = BaseTSCompilerOptions & { extends?: string };
 export {BabelTransformOptions};
 
 export type GlobalConfiguration = {
-  typescript: TSCompilerOptions;
-  babel: BabelTransformOptions;
-  sourceFiles: string[];
+  typescript?: TSCompilerOptions;
+  babel?: BabelTransformOptions;
+  sourceFiles?: string[];
 };
 
 export type ToolParameters = { [key: string]: any }; //tslint:disable-line

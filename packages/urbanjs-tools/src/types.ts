@@ -5,6 +5,7 @@ import {
   ToolConfiguration,
   GlobalConfiguration
 } from '@tamasmagedli/urbanjs-tools-core';
+import * as webpack from 'webpack';
 
 export const TYPE_TOOL_SERVICE = Symbol('TYPE_TOOL_SERVICE');
 export const TYPE_CONFIG_TOOL_PREFIX = Symbol('TYPE_CONFIG_TOOL_PREFIX');
@@ -31,9 +32,9 @@ export type PresetConfig = (string | string[])[] | boolean | Function;
 export interface IApi {
   initialize(gulp: IGulp, config: { [key: string]: PresetConfig | ToolConfiguration<any> }): void;
   initializePreset(gulp: IGulp, presetName: string, config: PresetConfig): void;
-  initializePresets(gulp: IGulp, configsByPresetName: PresetConfig): void;
+  initializePresets(gulp: IGulp, configsByPresetName: { [key: string]: PresetConfig }): void;
   initializeTask<T>(gulp: IGulp, toolName: string, parameters: ToolConfiguration<T>): void;
-  initializeTasks(gulp: IGulp, parametersByToolName: Object): void;
+  initializeTasks(gulp: IGulp, parametersByToolName: { [key: string]: ToolConfiguration<any> }): void;
   getTool(toolName): IRegistrableGulpTool;
   setGlobalConfiguration(configuration: ToolConfiguration<GlobalConfiguration>);
   getGlobalConfiguration(): GlobalConfiguration;

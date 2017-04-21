@@ -10,3 +10,6 @@ inherits(UrbanjsToolsError, Error);
 
 export class NotFoundTool extends UrbanjsToolsError {
 }
+
+export class InvalidUsage extends UrbanjsToolsError {
+}

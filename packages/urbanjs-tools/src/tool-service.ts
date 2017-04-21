@@ -1,7 +1,6 @@
 import {
   inject,
   injectable,
-  Container,
   ContainerModule
 } from 'inversify';
 import {
