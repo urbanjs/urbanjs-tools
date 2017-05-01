@@ -4,7 +4,7 @@ export const presets: { [key: string]: string[] } = {
   'dist:watch': ['babel:watch', 'webpack:watch'],
   'doc': [],
   'test': ['mocha'],
-  'test:watch': ['mocha:watch', 'jest:watch'],
+  'test:watch': ['mocha:watch'],
   'analyze': [
     'check-dependencies',
     'check-file-names',

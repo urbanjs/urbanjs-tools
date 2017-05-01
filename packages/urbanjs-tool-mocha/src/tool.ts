@@ -177,8 +177,8 @@ export class Mocha implements ITool<MochaConfig> {
     });
   }
 
-  private runFileset(runner: Runner, fileset: string[], mochaConfig: MochaOptions) {
-    return new Promise((resolve, reject) => {
+  private async runFileset(runner: Runner, fileset: string[], mochaConfig: MochaOptions) {
+    await new Promise((resolve, reject) => {
       const messageId = this.getNewMessageId();
       runner.on('message', (message: RunnerMessage) => {
         if (message.type === messages.MESSAGE_DONE && message.payload.target === messageId) {
@@ -202,8 +202,8 @@ export class Mocha implements ITool<MochaConfig> {
     });
   }
 
-  private collectCoverageFromParticles(coverageOptions: CoverageOptions) {
-    return new Promise((resolve, reject) => {
+  private async collectCoverageFromParticles(coverageOptions: CoverageOptions) {
+    await new Promise((resolve, reject) => {
       const collector = new istanbul.Collector();
 
       gulp.src(join(coverageOptions.coverageDirectory, '_partial/**/coverage*.json'))

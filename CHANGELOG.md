@@ -1,20 +1,16 @@
 ## Unreleased
-- Update dependencies
-    - Remove tslint-microsoft-contrib ruleset from tslint task
-    - Use tslint:recommended ruleset within tslint task
-- Introduce monolith repository concept
-    - Get rid of lazy dependency install
 - Introduce `initializePresets` & `initializeTasks` methods to have bigger control over preset configuration
-    - See [api documentation](http://urbanjs.github.io/tools/module-main.html#.initializePresets) for further details
 - Introduce `runnerMemoryUsageLimit` options in `mocha` config
 - Introduce `setupInMemoryTranspile` method to set up in memory tanspile easily
+- `BREAKING` Get rid of lazy dependency install
+- `BREAKING` Remove jest task
 - Update dependencies
-    `BREAKING`
-        - jest is removed
+    - `BREAKING`
+        - Remove tslint-microsoft-contrib ruleset from tslint task
+        - Use tslint:recommended ruleset within tslint task
         - [webpack options](https://github.com/urbanjs/urbanjs-tools/blob/master/src/tasks/webpack/defaults.js) (webpack@2)
         - eslint rules
         - tslint rules
-        - no more lazy dependency install
 
 <a name="1.2.4"></a>
 ## [1.2.4](https://github.com/urbanjs/tools/compare/1.2.1...1.2.4) (2016-11-07)
