@@ -66,7 +66,7 @@ export class ConfigService implements IConfigService {
       throw new Error('Invalid arguments');
     }
 
-    this.globals = Object.assign({}, this.globals, configuration);
+    this.globals = configuration;
     process.env.urbanJSToolGlobals = JSON.stringify(this.globals);
   }
 

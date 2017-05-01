@@ -1,5 +1,3 @@
-import {TransformOptions as BabelTransformOptions} from '@types/babel-core';
-import {Params as BaseTSCompilerOptions} from '@types/gulp-typescript';
 import {ChildProcess} from 'child_process';
 
 export const TYPE_CONFIG_LOGGER = Symbol('TYPE_CONFIG_LOGGER');
@@ -74,10 +72,8 @@ export interface IStreamService {
                              options: { ignoreError: boolean });
 }
 
-export type TSCompilerOptions = BaseTSCompilerOptions & { extends?: string };
-
-export {BabelTransformOptions};
-
+export type TSCompilerOptions = Object & { extends?: string };
+export type BabelTransformOptions = Object;
 export type GlobalConfiguration = {
   typescript?: TSCompilerOptions;
   babel?: BabelTransformOptions;

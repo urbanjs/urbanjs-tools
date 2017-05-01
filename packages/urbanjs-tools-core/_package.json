@@ -8,14 +8,13 @@
     "prepublish": "gulp pre-release"
   },
   "dependencies": {
-    "@types/babel-core": "*",
-    "@types/gulp-typescript": "*",
     "@types/yargs": "*",
     "babel-runtime": "*",
     "lodash": "*",
     "inversify": "*"
   },
   "devDependencies": {
-    "gulp": "*"
+    "gulp": "*",
+    "sinon": "*"
   }
 }
