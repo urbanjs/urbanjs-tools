@@ -1,22 +1,18 @@
 'use strict';
 
 const gulp = require('gulp');
-const tools = require('urbanjs-tools');
+const tools = require('@tamasmagedli/urbanjs-tools');
 
 tools.initialize(gulp, {
   babel: true,
 
-  checkDependencies: true,
+  'check-dependencies': true,
 
-  checkFileNames: true,
+  'check-file-names': true,
 
-  conventionalChangelog: true,
+  'conventional-changelog': true,
 
   eslint: true,
-
-  jest: false,
-
-  jsdoc: true,
 
   mocha: true,
 

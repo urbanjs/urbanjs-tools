@@ -10,10 +10,11 @@
 - Introduce `setupInMemoryTranspile` method to set up in memory tanspile easily
 - Update dependencies
     `BREAKING`
-        - jest (jest@18)
+        - jest is removed
         - [webpack options](https://github.com/urbanjs/urbanjs-tools/blob/master/src/tasks/webpack/defaults.js) (webpack@2)
         - eslint rules
         - tslint rules
+        - no more lazy dependency install
 
 <a name="1.2.4"></a>
 ## [1.2.4](https://github.com/urbanjs/tools/compare/1.2.1...1.2.4) (2016-11-07)

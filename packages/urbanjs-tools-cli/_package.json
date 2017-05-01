@@ -33,6 +33,17 @@
   "devDependencies": {
     "gulp": "*",
     "through2": "*",
-    "sinon": "*"
+    "sinon": "*",
+    "@tamasmagedli/urbanjs-tools": "*",
+    "@tamasmagedli/urbanjs-tool-babel": "*",
+    "@tamasmagedli/urbanjs-tool-check-dependencies": "*",
+    "@tamasmagedli/urbanjs-tool-check-file-names": "*",
+    "@tamasmagedli/urbanjs-tool-conventional-changelog": "*",
+    "@tamasmagedli/urbanjs-tool-eslint": "*",
+    "@tamasmagedli/urbanjs-tool-mocha": "*",
+    "@tamasmagedli/urbanjs-tool-nsp": "*",
+    "@tamasmagedli/urbanjs-tool-retire": "*",
+    "@tamasmagedli/urbanjs-tool-tslint": "*",
+    "@tamasmagedli/urbanjs-tool-webpack": "*"
   }
 }

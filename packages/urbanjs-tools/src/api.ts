@@ -60,6 +60,7 @@ export class Api implements IApi {
       Object.defineProperty(this.tasks, taskName, {
         enumerable: true,
         get() {
+          loggerService.warn('.tasks property will be removed in the next major version. Please use .initializeTasks or .initializePresets methods instead.');
           return toolService.getTool(toolNameByTaskName[taskName]);
         }
       });
@@ -145,20 +146,14 @@ export class Api implements IApi {
 
   @track()
   public initialize(gulp: IGulp, config: { [key: string]: PresetConfig | ToolConfiguration<any> }) {
-    this.loggerService.warn('.initialize method will be deprecated in the next major version. Please use .initializeTasks or .initializePresets methods instead.');
+    this.loggerService.warn('.initialize method will be removed in the next major version. Please use .initializeTasks or .initializePresets methods instead.');
 
     Object.keys(config).forEach((taskOrPresetName: string) => {
       const parameters = config[taskOrPresetName];
 
-      let tool: IRegistrableGulpTool;
-      try {
-        tool = this.toolService.getTool(taskOrPresetName);
-      } catch (e) {
-        // ignore error
-      }
-
-      if (tool) {
-        tool.register(gulp, taskOrPresetName, parameters);
+      if (toolNameByTaskName.hasOwnProperty(taskOrPresetName)) {
+        const toolName = toolNameByTaskName[taskOrPresetName];
+        this.toolService.getTool(toolName).register(gulp, toolName, parameters);
       } else {
         this.initializePreset(gulp, taskOrPresetName, <PresetConfig>parameters);
       }

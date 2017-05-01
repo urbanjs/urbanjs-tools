@@ -69,6 +69,13 @@ describe('api', () => {
       expect.deepEqual(Object.keys(api.tasks), Object.keys(toolNameByTaskName));
     });
 
+    it('warns about the deprecation', () => {
+      toolServiceMock.getTool = spy(() => true);
+      expect.equal(api.tasks.babel, true);
+      const expectedDeprecationMessage = '.tasks property will be removed in the next major version. Please use .initializeTasks or .initializePresets methods instead.';
+      expect.equal(loggerServiceMock.warn.calledWith(expectedDeprecationMessage), true);
+    });
+
     it('tasks are registrable gulp tool getters', () => {
       Object.keys(toolNameByTaskName).forEach(taskName => {
         const tool = {register: spy()};
@@ -301,11 +308,11 @@ describe('api', () => {
   describe('.initialize()', () => {
     it('warns about the deprecation', () => {
       api.initialize(gulpMock, {});
-      const expectedDeprecationMessage = '.initialize method will be deprecated in the next major version. Please use .initializeTasks or .initializePresets methods instead.';
+      const expectedDeprecationMessage = '.initialize method will be removed in the next major version. Please use .initializeTasks or .initializePresets methods instead.';
       expect.equal(loggerServiceMock.warn.calledWith(expectedDeprecationMessage), true);
     });
 
-    context('when config contains a key which defines a tool', () => {
+    context('when config contains a key which defines a task', () => {
       let tool;
       let initializePreset;
       beforeEach(() => {
@@ -314,8 +321,8 @@ describe('api', () => {
         api.initializePreset = initializePreset = spy();
       });
 
-      it('handles the key as a tool and registers it', () => {
-        const toolName = 'tool';
+      it('handles the key as a task and registers it', () => {
+        const toolName = 'babel';
         const toolConfig = {};
         api.initialize(gulpMock, {[toolName]: toolConfig});
 
@@ -325,7 +332,7 @@ describe('api', () => {
       });
     });
 
-    context('when config contains a key which does not define a tool', () => {
+    context('when config contains a key which does not define a task', () => {
       let error;
       let initializePreset;
       beforeEach(() => {
@@ -341,7 +348,7 @@ describe('api', () => {
         const presetConfig = [];
         api.initialize(gulpMock, {[presetName]: presetConfig});
 
-        expect.equal(toolServiceMock.getTool.calledWith(presetName), true);
+        expect.equal(toolServiceMock.getTool.called, false);
         expect.equal(initializePreset.calledWith(gulpMock, presetName, presetConfig), true);
       });
     });

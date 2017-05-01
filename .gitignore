@@ -12,6 +12,7 @@ packages/**/package.json
 !packages/**/tests/**/package.json
 packages/urbanjs-tools-cli/versions.json
 .retire-cache
+temp
 
 # Build folder
 dist
