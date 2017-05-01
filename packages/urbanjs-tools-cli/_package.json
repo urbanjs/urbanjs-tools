@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "gulp": "*",
-    "through2": "*"
+    "through2": "*",
+    "sinon": "*"
   }
 }

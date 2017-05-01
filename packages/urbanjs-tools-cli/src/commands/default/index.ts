@@ -12,6 +12,7 @@ import {
   TYPE_CONFIG_VERSION
 } from '../../types';
 import {InvalidUsageError} from '../../errors';
+import {config} from './config';
 
 type ArgsOptions = {
   help: boolean;
@@ -33,21 +34,7 @@ export class DefaultCommand implements ICommand {
     this.loggerService = loggerService;
     this.cliVersion = cliVersion;
     this.cliService = cliService;
-    this.cliServiceOptions = {
-      messages: {
-        usage: 'Usage: urbanjs <command>'
-      },
-      options: [{
-        name: 'v',
-        aliases: ['version'],
-        description: 'Version',
-        type: 'boolean'
-      }],
-      commands: [{
-        name: 'generate',
-        description: 'Generates a new project skeleton'
-      }]
-    };
+    this.cliServiceOptions = config;
 
     // TODO
     // consider using a multiInject argument to get all commands and

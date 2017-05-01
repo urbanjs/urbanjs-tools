@@ -68,16 +68,16 @@ export class GenerateCommand implements ICommand {
     const force = args.force;
     const isTsProject = args.type === 'ts' || args.type === 'typescript';
     let projectName = args.name;
-    let folderPath = join(process.cwd(), projectName);
-
-    if (projectName && isAbsolute(projectName)) {
-      folderPath = projectName;
-      projectName = basename(projectName);
-    }
 
     if (!projectName) {
       this.loggerService.error(`The given name is invalid: ${args.name}`);
       throw new InvalidUsageError();
+    }
+
+    let folderPath = join(process.cwd(), projectName);
+    if (isAbsolute(projectName)) {
+      folderPath = projectName;
+      projectName = basename(projectName);
     }
 
     this.loggerService.debug('GenerateCommand.run', `folderPath: ${folderPath}`);
@@ -114,11 +114,6 @@ export class GenerateCommand implements ICommand {
 
       await Promise.all([
         this.fileSystemService.writeFile(
-          join(folderPath, 'docs/main.js'),
-          '// write here your custom jsdoc documentation...\n'
-        ),
-
-        this.fileSystemService.writeFile(
           join(folderPath, 'package.json'),
           JSON.stringify(packageJSON, null, '  ')
         ),
@@ -135,12 +130,12 @@ export class GenerateCommand implements ICommand {
 
         this.fileSystemService.writeFile(
           join(folderPath, '.editorconfig'),
-          await this.fileSystemService.readFile(join(__dirname, '../../../../../.editorconfig'))
+          await this.fileSystemService.readFile(join(__dirname, 'templates/editorconfig.txt'))
         ),
 
         this.fileSystemService.writeFile(
           join(folderPath, '.gitattributes'),
-          await this.fileSystemService.readFile(join(__dirname, '../../../../../.gitattributes'))
+          await this.fileSystemService.readFile(join(__dirname, 'templates/gitattributes.txt'))
         ),
 
         this.fileSystemService.writeFile(
@@ -156,17 +151,22 @@ export class GenerateCommand implements ICommand {
         this.fileSystemService.writeFile(
           join(folderPath, 'gulpfile.js'),
           await this.fileSystemService.readFile(join(__dirname, `templates/gulpfile-${isTsProject ? 'ts' : 'js'}.txt`))
-        ),
-
-        this.fileSystemService.writeFile(
-          join(folderPath, 'docs/__fixtures__/static/main.css'),
-          await this.fileSystemService.readFile(join(__dirname, 'templates/jsdoc-main-css.txt'))
-        ),
-
-        this.fileSystemService.writeFile(
-          join(folderPath, 'docs/__fixtures__/layout.html'),
-          await this.fileSystemService.readFile(join(__dirname, 'templates/jsdoc-layout-html.txt'))
         )
+
+        // this.fileSystemService.writeFile(
+        //   join(folderPath, 'docs/main.js'),
+        //   '// write here your custom jsdoc documentation...\n'
+        // ),
+        //
+        // this.fileSystemService.writeFile(
+        //   join(folderPath, 'docs/__fixtures__/static/main.css'),
+        //   await this.fileSystemService.readFile(join(__dirname, 'templates/jsdoc-main-css.txt'))
+        // ),
+        //
+        // this.fileSystemService.writeFile(
+        //   join(folderPath, 'docs/__fixtures__/layout.html'),
+        //   await this.fileSystemService.readFile(join(__dirname, 'templates/jsdoc-layout-html.txt'))
+        // )
       ]);
 
       this.loggerService.info('Project skeleton has been successfully generated.');
