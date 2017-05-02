@@ -1,5 +1,5 @@
 {
-  "name": "@tamasmagedli/urbanjs-tools-cli",
+  "name": "urbanjs-tools-cli",
   "version": "0.1.0",
   "description": "Command line interface of urbanjs tools",
   "keywords": [
@@ -22,7 +22,7 @@
     "prepublish": "gulp pre-release"
   },
   "dependencies": {
-    "@tamasmagedli/urbanjs-tools-core": "*",
+    "urbanjs-tools-core": "*",
     "babel-runtime": "*",
     "del": "*",
     "inversify": "*",
@@ -34,16 +34,16 @@
     "gulp": "*",
     "through2": "*",
     "sinon": "*",
-    "@tamasmagedli/urbanjs-tools": "*",
-    "@tamasmagedli/urbanjs-tool-babel": "*",
-    "@tamasmagedli/urbanjs-tool-check-dependencies": "*",
-    "@tamasmagedli/urbanjs-tool-check-file-names": "*",
-    "@tamasmagedli/urbanjs-tool-conventional-changelog": "*",
-    "@tamasmagedli/urbanjs-tool-eslint": "*",
-    "@tamasmagedli/urbanjs-tool-mocha": "*",
-    "@tamasmagedli/urbanjs-tool-nsp": "*",
-    "@tamasmagedli/urbanjs-tool-retire": "*",
-    "@tamasmagedli/urbanjs-tool-tslint": "*",
-    "@tamasmagedli/urbanjs-tool-webpack": "*"
+    "urbanjs-tools": "*",
+    "urbanjs-tool-babel": "*",
+    "urbanjs-tool-check-dependencies": "*",
+    "urbanjs-tool-check-file-names": "*",
+    "urbanjs-tool-conventional-changelog": "*",
+    "urbanjs-tool-eslint": "*",
+    "urbanjs-tool-mocha": "*",
+    "urbanjs-tool-nsp": "*",
+    "urbanjs-tool-retire": "*",
+    "urbanjs-tool-tslint": "*",
+    "urbanjs-tool-webpack": "*"
   }
 }

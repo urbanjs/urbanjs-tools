@@ -4,7 +4,7 @@ import * as index from './index';
 import {container} from './container';
 import {ICommand, TYPE_COMMAND_DEFAULT} from './types';
 import {InvalidUsageError} from './errors';
-import {ILoggerService, TYPE_SERVICE_LOGGER} from '@tamasmagedli/urbanjs-tools-core';
+import {ILoggerService, TYPE_SERVICE_LOGGER} from 'urbanjs-tools-core';
 
 describe('index', () => {
   beforeEach(() => {

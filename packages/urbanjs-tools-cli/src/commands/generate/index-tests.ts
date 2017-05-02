@@ -73,7 +73,7 @@ describe('cli', () => {
         const rawPackageFile = {
           test: 'test',
           devDependencies: {
-            '@tamasmagedli/urbanjs-tool-babel': '*',
+            'urbanjs-tool-babel': '*',
             'random': '^1.0.0'
           }
         };
@@ -119,7 +119,7 @@ describe('cli', () => {
               name: projectName,
               test: 'test',
               devDependencies: {
-                '@tamasmagedli/urbanjs-tool-babel': urbanjsVersions['@tamasmagedli/urbanjs-tool-babel'],
+                'urbanjs-tool-babel': urbanjsVersions['urbanjs-tool-babel'],
                 'random': '^1.0.0'
               }
             }, null, '  ')

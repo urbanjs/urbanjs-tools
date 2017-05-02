@@ -10,7 +10,7 @@ import {
   TYPE_SERVICE_LOGGER,
   ILoggerService,
   ITranspileService
-} from '@tamasmagedli/urbanjs-tools-core';
+} from 'urbanjs-tools-core';
 import * as messages from './messages';
 import {Message, MochaOptions, RunnerMessage} from './types';
 import {container} from './setup-file';

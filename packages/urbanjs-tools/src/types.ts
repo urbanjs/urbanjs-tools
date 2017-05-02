@@ -4,7 +4,7 @@ import {
   ToolParameters,
   ToolConfiguration,
   GlobalConfiguration
-} from '@tamasmagedli/urbanjs-tools-core';
+} from 'urbanjs-tools-core';
 import * as webpack from 'webpack';
 
 export const TYPE_TOOL_SERVICE = Symbol('TYPE_TOOL_SERVICE');

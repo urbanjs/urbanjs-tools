@@ -6,7 +6,7 @@ import {
   IShellService,
   TYPE_SERVICE_SHELL,
   TYPE_DRIVER_YARGS
-} from '@tamasmagedli/urbanjs-tools-core';
+} from 'urbanjs-tools-core';
 
 describe('Retire task', () => {
   let shellService: IShellService;

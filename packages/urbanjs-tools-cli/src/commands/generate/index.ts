@@ -8,7 +8,7 @@ import {
   TYPE_SERVICE_CLI_SERVICE,
   TYPE_SERVICE_LOGGER,
   TYPE_SERVICE_FILE_SYSTEM
-} from '@tamasmagedli/urbanjs-tools-core';
+} from 'urbanjs-tools-core';
 import {ICommand} from '../../types';
 import {InvalidUsageError, CLIError} from '../../errors';
 import {help, options} from './config';

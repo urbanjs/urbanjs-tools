@@ -11,7 +11,7 @@ import {
   TYPE_DRIVER_YARGS,
   TYPE_DRIVER_MKDIRP,
   TYPE_SERVICE_FILE_SYSTEM
-} from '@tamasmagedli/urbanjs-tools-core';
+} from 'urbanjs-tools-core';
 
 function testLogger(loggerPath: string) {
   delete require.cache[require.resolve(loggerPath)];

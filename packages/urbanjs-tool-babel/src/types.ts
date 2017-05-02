@@ -1,4 +1,4 @@
-import {BabelTransformOptions} from '@tamasmagedli/urbanjs-tools-core';
+import {BabelTransformOptions} from 'urbanjs-tools-core';
 
 export type BabelConfig = {
   files: string | string[] | string[][];

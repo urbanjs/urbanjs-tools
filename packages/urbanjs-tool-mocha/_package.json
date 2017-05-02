@@ -1,5 +1,5 @@
 {
-  "name": "@tamasmagedli/urbanjs-tool-mocha",
+  "name": "urbanjs-tool-mocha",
   "version": "0.1.0",
   "description": "Urbanjs tool to run tests",
   "keywords": [
@@ -15,7 +15,7 @@
     "prepublish": "gulp pre-release"
   },
   "dependencies": {
-    "@tamasmagedli/urbanjs-tools-core": "*",
+    "urbanjs-tools-core": "*",
     "babel-core": "*",
     "babel-runtime": "*",
     "del": "*",
@@ -34,7 +34,7 @@
     "yargs": "*"
   },
   "devDependencies": {
-    "@tamasmagedli/urbanjs-tools": "*",
+    "urbanjs-tools": "*",
     "mkdirp": "*"
   }
 }

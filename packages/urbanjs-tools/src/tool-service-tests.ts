@@ -1,7 +1,7 @@
 import {Container, ContainerModule, interfaces} from 'inversify';
 import * as expect from 'assert';
 import {spy} from 'sinon';
-import {TYPE_DRIVER_GULP, TYPE_TOOL} from '@tamasmagedli/urbanjs-tools-core';
+import {TYPE_DRIVER_GULP, TYPE_TOOL} from 'urbanjs-tools-core';
 import {ToolService} from './tool-service';
 import {NotFoundTool} from './errors';
 import {IRegistrableGulpTool} from './types';

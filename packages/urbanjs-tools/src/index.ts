@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import {IConfigService, TYPE_SERVICE_CONFIG} from '@tamasmagedli/urbanjs-tools-core';
+import {IConfigService, TYPE_SERVICE_CONFIG} from 'urbanjs-tools-core';
 import {container} from './container';
 import {globals} from './globals';
 import {IApi, TYPE_API} from './types';

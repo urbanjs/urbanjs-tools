@@ -1,6 +1,6 @@
 import * as expect from 'assert';
 import {spy} from 'sinon';
-import {GlobalConfiguration} from '@tamasmagedli/urbanjs-tools-core';
+import {GlobalConfiguration} from 'urbanjs-tools-core';
 import {Api} from './api';
 import {InvalidUsage} from './errors';
 import {toolNameByTaskName} from './tasks';

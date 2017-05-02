@@ -1,5 +1,5 @@
 {
-  "name": "@tamasmagedli/urbanjs-tool-eslint",
+  "name": "urbanjs-tool-eslint",
   "version": "0.1.0",
   "description": "Urbanjs tool to lint javascript",
   "keywords": [
@@ -14,7 +14,7 @@
     "prepublish": "gulp pre-release"
   },
   "dependencies": {
-    "@tamasmagedli/urbanjs-tools-core": "*",
+    "urbanjs-tools-core": "*",
     "babel-runtime": "*",
     "babel-eslint": "*",
     "duplexify": "*",
@@ -32,7 +32,7 @@
     "through2": "*"
   },
   "devDependencies": {
-    "@tamasmagedli/urbanjs-tools": "*",
+    "urbanjs-tools": "*",
     "mkdirp": "*",
     "yargs": "*"
   }

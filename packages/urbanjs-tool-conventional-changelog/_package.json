@@ -1,5 +1,5 @@
 {
-  "name": "@tamasmagedli/urbanjs-tool-conventional-changelog",
+  "name": "urbanjs-tool-conventional-changelog",
   "version": "0.1.0",
   "description": "Urbanjs tool to help preserving the convention of commit messages",
   "keywords": [
@@ -15,14 +15,14 @@
     "prepublish": "gulp pre-release"
   },
   "dependencies": {
-    "@tamasmagedli/urbanjs-tools-core": "*",
+    "urbanjs-tools-core": "*",
     "babel-runtime": "*",
     "inversify": "*",
     "gulp": "*",
     "gulp-conventional-changelog": "*"
   },
   "devDependencies": {
-    "@tamasmagedli/urbanjs-tools": "*",
+    "urbanjs-tools": "*",
     "mkdirp": "*",
     "yargs": "*"
   }

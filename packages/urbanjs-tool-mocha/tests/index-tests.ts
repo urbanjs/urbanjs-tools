@@ -11,7 +11,7 @@ import {
   TYPE_SERVICE_FILE_SYSTEM,
   TYPE_DRIVER_YARGS,
   TYPE_DRIVER_MKDIRP
-} from '@tamasmagedli/urbanjs-tools-core';
+} from 'urbanjs-tools-core';
 
 describe('Mocha task', () => {
   let shellService: IShellService;

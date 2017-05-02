@@ -11,7 +11,7 @@ import {
   TYPE_DRIVER_DUPLEXIFY,
   TYPE_DRIVER_FORK_STREAM,
   TYPE_DRIVER_MERGE_STREAM
-} from '@tamasmagedli/urbanjs-tools-core';
+} from 'urbanjs-tools-core';
 import {Babel} from './tool';
 
 export const containerModule = new ContainerModule((bind: interfaces.Bind) => {

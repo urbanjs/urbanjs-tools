@@ -1,6 +1,6 @@
 import {WebpackConfig} from './types';
 import {isAbsolute, join} from 'path';
-import {GlobalConfiguration} from '@tamasmagedli/urbanjs-tools-core';
+import {GlobalConfiguration} from 'urbanjs-tools-core';
 
 export function getDefaults(globals: GlobalConfiguration): WebpackConfig {
   const processCwd = process.cwd();

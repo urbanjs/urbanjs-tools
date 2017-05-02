@@ -1,6 +1,6 @@
 import {join} from 'path';
 import {EslintConfig} from './types';
-import {GlobalConfiguration} from '@tamasmagedli/urbanjs-tools-core';
+import {GlobalConfiguration} from 'urbanjs-tools-core';
 
 export function getDefaults(globals: GlobalConfiguration): EslintConfig {
   return {

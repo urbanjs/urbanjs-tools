@@ -12,7 +12,7 @@ import {
   TYPE_DRIVER_MKDIRP,
   TYPE_SERVICE_FILE_SYSTEM,
   TYPE_DRIVER_DEL
-} from '@tamasmagedli/urbanjs-tools-core';
+} from 'urbanjs-tools-core';
 
 describe('cli', () => {
   const urbanjsCliPath = join(__dirname, '../bin');
@@ -71,8 +71,8 @@ describe('cli', () => {
       ['gulp conventional-changelog', {cwd: projectFolderPath}],
       ['gulp eslint', {cwd: projectFolderPath}],
       ['gulp mocha', {cwd: projectFolderPath}],
-      ['gulp nsp', {cwd: projectFolderPath, allowToFail: true}],
-      ['gulp retire', {cwd: projectFolderPath, allowToFail: true}],
+      ['gulp nsp', {cwd: projectFolderPath}],
+      ['gulp retire', {cwd: projectFolderPath}],
     ]);
   });
 
@@ -85,8 +85,8 @@ describe('cli', () => {
       ['gulp check-file-names', {cwd: projectFolderPath}],
       ['gulp conventional-changelog', {cwd: projectFolderPath}],
       ['gulp mocha', {cwd: projectFolderPath}],
-      ['gulp nsp', {cwd: projectFolderPath, allowToFail: true}],
-      ['gulp retire', {cwd: projectFolderPath, allowToFail: true}],
+      ['gulp nsp', {cwd: projectFolderPath}],
+      ['gulp retire', {cwd: projectFolderPath}],
       ['gulp tslint', {cwd: projectFolderPath}]
     ]);
   });

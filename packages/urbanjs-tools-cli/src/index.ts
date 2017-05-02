@@ -3,7 +3,7 @@ import {container} from './container';
 import {
   ILoggerService,
   TYPE_SERVICE_LOGGER
-} from '@tamasmagedli/urbanjs-tools-core';
+} from 'urbanjs-tools-core';
 import {
   ICommand,
   TYPE_COMMAND_DEFAULT

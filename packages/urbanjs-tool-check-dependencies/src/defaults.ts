@@ -1,4 +1,4 @@
-import {GlobalConfiguration} from '@tamasmagedli/urbanjs-tools-core';
+import {GlobalConfiguration} from 'urbanjs-tools-core';
 import {join} from 'path';
 import {CheckDependenciesConfig} from './types';
 

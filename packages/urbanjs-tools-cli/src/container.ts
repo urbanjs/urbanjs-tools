@@ -7,7 +7,7 @@ import {
   TYPE_DRIVER_YARGS,
   TYPE_DRIVER_DEL,
   TYPE_DRIVER_MKDIRP
-} from '@tamasmagedli/urbanjs-tools-core';
+} from 'urbanjs-tools-core';
 import {
   DefaultCommand,
   GenerateCommand

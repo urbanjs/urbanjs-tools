@@ -1,5 +1,5 @@
 {
-  "name": "@tamasmagedli/urbanjs-tool-nsp",
+  "name": "urbanjs-tool-nsp",
   "version": "0.1.0",
   "description": "Urbanjs tool to check dependencies for vulnerability issues",
   "keywords": [
@@ -13,13 +13,13 @@
     "prepublish": "gulp pre-release"
   },
   "dependencies": {
-    "@tamasmagedli/urbanjs-tools-core": "*",
+    "urbanjs-tools-core": "*",
     "babel-runtime": "*",
     "inversify": "*",
     "nsp": "*"
   },
   "devDependencies": {
-    "@tamasmagedli/urbanjs-tools": "*",
+    "urbanjs-tools": "*",
     "gulp": "*",
     "yargs": "*"
   }

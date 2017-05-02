@@ -14,7 +14,7 @@ import {
   TYPE_TOOL,
   ToolConfiguration,
   track
-} from '@tamasmagedli/urbanjs-tools-core';
+} from 'urbanjs-tools-core';
 import {
   NotFoundTool
 } from './errors';

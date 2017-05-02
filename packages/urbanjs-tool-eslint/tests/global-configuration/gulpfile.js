@@ -1,7 +1,7 @@
 'use strict';
 
 const gulp = require('gulp');
-const tools = require('@tamasmagedli/urbanjs-tools');
+const tools = require('urbanjs-tools');
 
 tools.setGlobalConfiguration({
   sourceFiles: 'index-invalid.js'

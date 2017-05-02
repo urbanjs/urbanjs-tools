@@ -7,7 +7,7 @@ const pkg = require('../package.json');
 
 function applyVersions(dependencies) {
   return Object.keys(dependencies || {}).reduce((acc, depName) => {
-    const urbanjsPackageName = (depName.match(/@tamasmagedli\/(urbanjs-tools?(-.+)?)$/) || [])[1];
+    const urbanjsPackageName = (depName.match(/urbanjs-tools?(-.+)?$/) || [])[0];
 
     let version = dependencies[depName];
     if (urbanjsPackageName) {

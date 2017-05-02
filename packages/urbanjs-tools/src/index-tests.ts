@@ -3,7 +3,7 @@ import {spy} from 'sinon';
 import {container} from './container';
 import {globals} from './globals';
 import {IApi, TYPE_API} from './types';
-import {TYPE_SERVICE_CONFIG, IConfigService} from '@tamasmagedli/urbanjs-tools-core';
+import {TYPE_SERVICE_CONFIG, IConfigService} from 'urbanjs-tools-core';
 import indexFromImport from './index';
 
 describe('index', () => {

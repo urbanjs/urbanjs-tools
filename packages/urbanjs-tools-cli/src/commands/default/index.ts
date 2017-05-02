@@ -5,7 +5,7 @@ import {
   CLIServiceOptions,
   TYPE_SERVICE_LOGGER,
   TYPE_SERVICE_CLI_SERVICE
-} from '@tamasmagedli/urbanjs-tools-core';
+} from 'urbanjs-tools-core';
 import {
   ICommand,
   TYPE_COMMAND_GENERATE,

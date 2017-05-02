@@ -15,7 +15,7 @@ import {
   TYPE_SERVICE_TRACE,
   IFileSystemService,
   TYPE_SERVICE_FILE_SYSTEM
-} from '@tamasmagedli/urbanjs-tools-core';
+} from 'urbanjs-tools-core';
 import {getDefaults} from './defaults';
 import {WebpackConfig} from './types';
 

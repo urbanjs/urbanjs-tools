@@ -14,7 +14,7 @@ import {
   TYPE_DRIVER_TYPESCRIPT,
   TYPE_DRIVER_SOURCE_MAP_SUPPORT,
   TYPE_SERVICE_TRANSPILE
-} from '@tamasmagedli/urbanjs-tools-core';
+} from 'urbanjs-tools-core';
 
 export const container = new Container();
 container.load(core);

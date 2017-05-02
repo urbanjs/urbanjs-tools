@@ -1,5 +1,5 @@
 {
-  "name": "@tamasmagedli/urbanjs-tools-core",
+  "name": "urbanjs-tools-core",
   "version": "0.1.0",
   "description": "Helpers of urbanjs tools",
   "main": "./dist",

@@ -21,7 +21,7 @@ import {
   track,
   ITraceService,
   TYPE_SERVICE_TRACE
-} from '@tamasmagedli/urbanjs-tools-core';
+} from 'urbanjs-tools-core';
 import {getDefaults} from './defaults';
 import {CheckDependenciesConfig} from './types';
 

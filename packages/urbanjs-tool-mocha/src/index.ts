@@ -3,7 +3,7 @@ import * as del from 'del';
 import {
   TYPE_TOOL,
   TYPE_DRIVER_DEL
-} from '@tamasmagedli/urbanjs-tools-core';
+} from 'urbanjs-tools-core';
 import {Mocha} from './tool';
 
 export const containerModule = new ContainerModule((bind: interfaces.Bind) => {

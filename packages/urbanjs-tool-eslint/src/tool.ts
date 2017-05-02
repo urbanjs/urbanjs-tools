@@ -15,7 +15,7 @@ import {
   TYPE_SERVICE_TRACE,
   IStreamService,
   TYPE_SERVICE_STREAM
-} from '@tamasmagedli/urbanjs-tools-core';
+} from 'urbanjs-tools-core';
 import {getDefaults} from './defaults';
 import {EslintConfig} from './types';
 

@@ -7,7 +7,7 @@ import {
   TYPE_DRIVER_YARGS,
   TYPE_DRIVER_GULP_SEQUENCE,
   TYPE_DRIVER_CHALK
-} from '@tamasmagedli/urbanjs-tools-core';
+} from 'urbanjs-tools-core';
 import {
   TYPE_TOOL_SERVICE,
   TYPE_CONFIG_TOOL_PREFIX,
@@ -25,7 +25,7 @@ container.bind(TYPE_DRIVER_REQUIRE).toConstantValue({require});
 container.bind(TYPE_DRIVER_CHALK).toConstantValue(chalk);
 container.bind(TYPE_DRIVER_YARGS).toConstantValue(yargs);
 container.bind(TYPE_DRIVER_GULP_SEQUENCE).toConstantValue(gulpSequence);
-container.bind(TYPE_CONFIG_TOOL_PREFIX).toConstantValue('@tamasmagedli/urbanjs-tool-');
+container.bind(TYPE_CONFIG_TOOL_PREFIX).toConstantValue('urbanjs-tool-');
 container.bind(TYPE_TOOL_SERVICE).to(ToolService).inSingletonScope();
 container.bind(TYPE_API).to(Api).inSingletonScope();
 

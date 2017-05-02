@@ -13,7 +13,7 @@ import {
   track,
   IGulpSequence,
   TYPE_DRIVER_GULP_SEQUENCE
-} from '@tamasmagedli/urbanjs-tools-core';
+} from 'urbanjs-tools-core';
 import {
   IToolService,
   TYPE_TOOL_SERVICE,

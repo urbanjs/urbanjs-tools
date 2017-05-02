@@ -1,5 +1,5 @@
 {
-  "name": "@tamasmagedli/urbanjs-tools",
+  "name": "urbanjs-tools",
   "version": "0.1.0",
   "description": "Common dev tools for NPM packages",
   "keywords": [
@@ -27,7 +27,7 @@
     "prepublish": "gulp pre-release"
   },
   "dependencies": {
-    "@tamasmagedli/urbanjs-tools-core": "*",
+    "urbanjs-tools-core": "*",
     "babel-plugin-transform-decorators-legacy": "*",
     "babel-plugin-transform-runtime": "*",
     "babel-preset-es2015": "*",
@@ -41,16 +41,16 @@
     "yargs": "*"
   },
   "devDependencies": {
-    "@tamasmagedli/urbanjs-tool-babel": "*",
-    "@tamasmagedli/urbanjs-tool-check-dependencies": "*",
-    "@tamasmagedli/urbanjs-tool-check-file-names": "*",
-    "@tamasmagedli/urbanjs-tool-conventional-changelog": "*",
-    "@tamasmagedli/urbanjs-tool-eslint": "*",
-    "@tamasmagedli/urbanjs-tool-mocha": "*",
-    "@tamasmagedli/urbanjs-tool-nsp": "*",
-    "@tamasmagedli/urbanjs-tool-retire": "*",
-    "@tamasmagedli/urbanjs-tool-tslint": "*",
-    "@tamasmagedli/urbanjs-tool-webpack": "*",
+    "urbanjs-tool-babel": "*",
+    "urbanjs-tool-check-dependencies": "*",
+    "urbanjs-tool-check-file-names": "*",
+    "urbanjs-tool-conventional-changelog": "*",
+    "urbanjs-tool-eslint": "*",
+    "urbanjs-tool-mocha": "*",
+    "urbanjs-tool-nsp": "*",
+    "urbanjs-tool-retire": "*",
+    "urbanjs-tool-tslint": "*",
+    "urbanjs-tool-webpack": "*",
     "gulp": "*",
     "sinon": "*"
   }

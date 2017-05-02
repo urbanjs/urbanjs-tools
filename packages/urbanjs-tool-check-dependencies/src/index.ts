@@ -9,7 +9,7 @@ import {
   TYPE_DRIVER_GULP_TYPESCRIPT,
   TYPE_DRIVER_TYPESCRIPT,
   TYPE_DRIVER_BABEL_CORE
-} from '@tamasmagedli/urbanjs-tools-core';
+} from 'urbanjs-tools-core';
 import {CheckDependencies} from './tool';
 
 export const containerModule = new ContainerModule((bind: interfaces.Bind) => {
