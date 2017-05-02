@@ -117,33 +117,11 @@ export class TranspileService implements ITranspileService {
 
   private transpileWithoutCache(content: string, filename: string) {
     if (/\.tsx?$/.test(filename)) {
-      // use gulp-typescript to convert the settings for tsc
-      const tsProject = this.gulpTypescript.createProject({
-        ...this.configService.getGlobalConfiguration().typescript,
-        typescript: this.typescript,
-        sourceMap: false,
-        inlineSourceMap: true,
-        inlineSources: true,
-        declaration: false
-      });
-
-      const result = this.typescript.transpileModule(content, {
-        compilerOptions: tsProject.options,
-        fileName: filename
-      });
-
-      const inlineSourcemap = new Buffer(result.sourceMapText, 'binary').toString('base64');
-      const codeWithInlineSourcemap = result.outputText
-        .replace(/\n\/\/# sourceMappingURL[\s\S]+$/, '')
-        .concat('\n//# sourceMappingURL=data:application/json;base64,', inlineSourcemap);
-
-      // also use transform with babel to compile to ES5
-      // til ES6 is natively supported by most of the environments
-      return this.transformWithBabel(codeWithInlineSourcemap, filename);
+      content = this.transformWithTsc(content, filename);
     } else if (!this.babelCore.util.canCompile(filename)) {
       // You might use a webpack loader in your project
       // that allows you to load custom files (e.g. css, less, scss).
-      // Although it is working with webpack but jest
+      // Although it is working with bundler but others
       // don't know how to handle these files.
       // You should never use these files unmocked
       // otherwise you might encounter unexpected behavior.
@@ -155,9 +133,44 @@ export class TranspileService implements ITranspileService {
     return this.transformWithBabel(content, filename);
   }
 
+  private transformWithTsc(content: string, filename: string) {
+    const compilerOptions = this.configService.getGlobalConfiguration().typescript;
+
+    if (compilerOptions === false) {
+      return content;
+    }
+
+    const tsProject = this.gulpTypescript.createProject({
+      ...compilerOptions,
+      typescript: this.typescript,
+      sourceMap: false,
+      inlineSourceMap: true,
+      inlineSources: true,
+      declaration: false
+    });
+
+    const result = this.typescript.transpileModule(content, {
+      compilerOptions: tsProject.options,
+      fileName: filename
+    });
+
+    this.sourceMaps[filename] = JSON.parse(result.sourceMapText);
+
+    const inlineSourcemap = new Buffer(result.sourceMapText, 'binary').toString('base64');
+    return result.outputText
+      .replace(/\n\/\/# sourceMappingURL[\s\S]+$/, '')
+      .concat('\n//# sourceMappingURL=data:application/json;base64,', inlineSourcemap);
+  }
+
   private transformWithBabel(content: string, filename: string) {
+    const babelOptions = this.configService.getGlobalConfiguration().babel;
+
+    if (babelOptions === false) {
+      return content;
+    }
+
     const result = this.babelCore.transform(content, {
-      ...this.configService.getGlobalConfiguration().babel,
+      ...babelOptions,
       filename,
       ast: false,
       babelrc: false,

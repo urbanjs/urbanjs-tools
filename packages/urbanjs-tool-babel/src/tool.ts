@@ -69,41 +69,50 @@ export class Babel implements ITool<BabelConfig> {
       }
 
       let tsConfig = this.configService.getGlobalConfiguration().typescript;
-      if (tsConfig.extends) {
-        tsConfig = gulpTs.createProject(tsConfig.extends, omit(tsConfig, 'extends')).config.compilerOptions;
-      }
+      let dtsPipe;
+      if (tsConfig !== false) {
+        if (tsConfig.extends) {
+          tsConfig = gulpTs.createProject(tsConfig.extends, omit(tsConfig, 'extends')).config.compilerOptions;
+        }
 
-      const tsPipe = gulpTs({
-        ...tsConfig,
-        typescript: ts,
-        inlineSourceMap: true
-      });
-      const dtsPipe = tsPipe.dts.pipe(gulp.dest(config.outputPath));
+        const tsPipe = gulpTs({
+          ...tsConfig,
+          typescript: ts,
+          inlineSourceMap: true
+        });
+        dtsPipe = tsPipe.dts.pipe(gulp.dest(config.outputPath));
 
-      stream = stream.pipe(this.streamService.streamIf(
-        (file: { path: string }) => /\.tsx?$/.test(file.path),
-        tsPipe,
-        {ignoreError: config.emitOnError !== false}
-      ));
-
-      stream = stream.pipe(this.streamService.streamIf(
-        (file: { path: string }) => babelCore.util.canCompile(file.path),
-        babel(config.babel),
-        {ignoreError: config.emitOnError !== false}
-      ));
-
-      if (config.sourcemap !== false) {
         stream = stream.pipe(this.streamService.streamIf(
-          (file: { path: string }) => babelCore.util.canCompile(file.path),
-          sourcemaps.write('.', config.sourcemap || {}),
+          (file: { path: string }) => /\.tsx?$/.test(file.path),
+          tsPipe,
           {ignoreError: config.emitOnError !== false}
         ));
+      }
+
+      if (config.babel !== false) {
+        stream = stream.pipe(this.streamService.streamIf(
+          (file: { path: string }) => babelCore.util.canCompile(file.path),
+          babel(config.babel),
+          {ignoreError: config.emitOnError !== false}
+        ));
+
+        if (config.sourcemap !== false) {
+          stream = stream.pipe(this.streamService.streamIf(
+            (file: { path: string }) => babelCore.util.canCompile(file.path),
+            sourcemaps.write('.', config.sourcemap || {}),
+            {ignoreError: config.emitOnError !== false}
+          ));
+        }
       }
 
       stream = stream.pipe(gulp.dest(config.outputPath));
 
       await new Promise((resolve, reject) => {
-        this.streamService.mergeStreams(stream, dtsPipe)
+        if (dtsPipe) {
+          stream = this.streamService.mergeStreams(stream, dtsPipe);
+        }
+
+        stream
           .on('data', () => true)
           .on('end', () => resolve())
           .on('error', (err) => reject(err));
