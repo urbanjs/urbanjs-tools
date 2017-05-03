@@ -5,6 +5,28 @@ import {GlobalConfiguration} from 'urbanjs-tools-core';
 export function getDefaults(globals: GlobalConfiguration): WebpackConfig {
   const processCwd = process.cwd();
 
+  const jsLoaders = [];
+  const tsLoaders = [];
+
+  if (globals.babel !== false) {
+    const babelLoader = {
+      loader: require.resolve('babel-loader'),
+      options: globals.babel
+    };
+
+    tsLoaders.push(babelLoader);
+    jsLoaders.push(babelLoader);
+  }
+
+  if (globals.typescript !== false) {
+    tsLoaders.push({
+      loader: require.resolve('ts-loader'),
+      options: {
+        compilerOptions: globals.typescript
+      }
+    });
+  }
+
   return {
     clean: true,
     cache: true,
@@ -54,28 +76,12 @@ export function getDefaults(globals: GlobalConfiguration): WebpackConfig {
         {
           test: /[^.min]\.tsx?$/, // minified files are ignored
           exclude: /(node_modules|bower_components|vendor|dist)/,
-          use: [
-            {
-              loader: require.resolve('babel-loader'),
-              options: globals.babel
-            },
-            {
-              loader: require.resolve('ts-loader'),
-              options: {
-                compilerOptions: globals.typescript
-              }
-            }
-          ]
+          use: tsLoaders
         },
         {
           test: /[^.min]\.js$/, // minified files are ignored
           exclude: /(node_modules|bower_components|vendor|dist)/,
-          use: [
-            {
-              loader: require.resolve('babel-loader'),
-              options: globals.babel
-            }
-          ]
+          use: jsLoaders
         }
       ]
     }
