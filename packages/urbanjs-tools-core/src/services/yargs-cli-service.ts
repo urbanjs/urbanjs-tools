@@ -10,7 +10,7 @@ import {
 } from '../types';
 import {track} from '../decorators';
 
-export const TYPE_DRIVER_YARGS = Symbol('TYPE_DRIVER_YARGS');
+export const TYPE_DRIVER_YARGS = 'TYPE_DRIVER_YARGS';
 
 @injectable()
 export class YargsCLIService implements ICLIService {

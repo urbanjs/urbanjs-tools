@@ -9,8 +9,8 @@ import {
   ITraceService
 } from '../types';
 
-export const TYPE_DRIVER_GULP = Symbol('TYPE_DRIVER_GULP');
-export const TYPE_DRIVER_GULP_SEQUENCE = Symbol('TYPE_DRIVER_GULP_SEQUENCE');
+export const TYPE_DRIVER_GULP = 'TYPE_DRIVER_GULP';
+export const TYPE_DRIVER_GULP_SEQUENCE = 'TYPE_DRIVER_GULP_SEQUENCE';
 
 export interface IGulp {
   tasks: Object;

@@ -18,7 +18,7 @@ import {
   TYPE_COMMAND_GENERATE
 } from './types';
 
-const CLI_VERSION = require('../_package.json').version; //tslint:disable-line
+const CLI_VERSION = require('../package.json').version; //tslint:disable-line
 
 export const container = new Container();
 container.load(core);

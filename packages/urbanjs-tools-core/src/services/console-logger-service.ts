@@ -10,7 +10,7 @@ function to2Digits(value: number): string {
   return `0${value}`.slice(-2);
 }
 
-export const TYPE_DRIVER_CHALK = Symbol('TYPE_DRIVER_CHALK');
+export const TYPE_DRIVER_CHALK = 'TYPE_DRIVER_CHALK';
 
 const COLOR_DEBUG = 'gray';
 const COLOR_INFO = 'green';

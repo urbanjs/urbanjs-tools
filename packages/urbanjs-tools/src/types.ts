@@ -5,13 +5,12 @@ import {
   ToolConfiguration,
   GlobalConfiguration
 } from 'urbanjs-tools-core';
-import * as webpack from 'webpack';
 
-export const TYPE_TOOL_SERVICE = Symbol('TYPE_TOOL_SERVICE');
-export const TYPE_CONFIG_TOOL_PREFIX = Symbol('TYPE_CONFIG_TOOL_PREFIX');
-export const TYPE_DRIVER_REQUIRE = Symbol('TYPE_DRIVER_REQUIRE');
-export const TYPE_FACTORY_TOOL_CONTAINER = Symbol('TYPE_FACTORY_TOOL_CONTAINER');
-export const TYPE_API = Symbol('TYPE_API');
+export const TYPE_TOOL_SERVICE = 'TYPE_TOOL_SERVICE';
+export const TYPE_CONFIG_TOOL_PREFIX = 'TYPE_CONFIG_TOOL_PREFIX';
+export const TYPE_DRIVER_REQUIRE = 'TYPE_DRIVER_REQUIRE';
+export const TYPE_FACTORY_TOOL_CONTAINER = 'TYPE_FACTORY_TOOL_CONTAINER';
+export const TYPE_API = 'TYPE_API';
 
 export interface IRequireDriver {
   require<T>(name: string): T;

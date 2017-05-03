@@ -6,10 +6,10 @@ import {
 } from '../types';
 import {track} from '../decorators';
 
-export const TYPE_DRIVER_THROUGH2 = Symbol('TYPE_DRIVER_THROUGH2');
-export const TYPE_DRIVER_FORK_STREAM = Symbol('TYPE_DRIVER_FORK_STREAM');
-export const TYPE_DRIVER_DUPLEXIFY = Symbol('TYPE_DRIVER_DUPLEXIFY');
-export const TYPE_DRIVER_MERGE_STREAM = Symbol('TYPE_DRIVER_MERGE_STREAM');
+export const TYPE_DRIVER_THROUGH2 = 'TYPE_DRIVER_THROUGH2';
+export const TYPE_DRIVER_FORK_STREAM = 'TYPE_DRIVER_FORK_STREAM';
+export const TYPE_DRIVER_DUPLEXIFY = 'TYPE_DRIVER_DUPLEXIFY';
+export const TYPE_DRIVER_MERGE_STREAM = 'TYPE_DRIVER_MERGE_STREAM';
 
 export type Through2 = {
   obj(): NodeJS.ReadWriteStream;

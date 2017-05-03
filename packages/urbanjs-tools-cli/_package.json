@@ -1,6 +1,6 @@
 {
   "name": "urbanjs-tools-cli",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Command line interface of urbanjs tools",
   "keywords": [
     "development",
@@ -16,7 +16,7 @@
   "main": "./dist",
   "typings": "./dist/index.d.ts",
   "bin": {
-    "urbanjs": "./bin"
+    "urbanjs": "./bin/index.js"
   },
   "scripts": {
     "prepublish": "gulp pre-release"

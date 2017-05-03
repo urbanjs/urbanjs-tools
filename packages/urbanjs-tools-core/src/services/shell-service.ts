@@ -14,7 +14,7 @@ import {
 } from '../types';
 import {track} from '../decorators';
 
-export const TYPE_DRIVER_CHILD_PROCESS = Symbol('TYPE_DRIVER_CHILD_PROCESS');
+export const TYPE_DRIVER_CHILD_PROCESS = 'TYPE_DRIVER_CHILD_PROCESS';
 
 export interface IChildProcessDriver {
   exec(command: string, options: ChildProcessOptions, callback: Function): void;

@@ -10,10 +10,10 @@ import {
   ITranspileService
 } from '../types';
 
-export const TYPE_DRIVER_SOURCE_MAP_SUPPORT = Symbol('TYPE_DRIVER_SOURCE_MAP_SUPPORT');
-export const TYPE_DRIVER_BABEL_CORE = Symbol('TYPE_DRIVER_BABEL_CORE');
-export const TYPE_DRIVER_GULP_TYPESCRIPT = Symbol('TYPE_DRIVER_GULP_TYPESCRIPT');
-export const TYPE_DRIVER_TYPESCRIPT = Symbol('TYPE_DRIVER_TYPESCRIPT');
+export const TYPE_DRIVER_SOURCE_MAP_SUPPORT = 'TYPE_DRIVER_SOURCE_MAP_SUPPORT';
+export const TYPE_DRIVER_BABEL_CORE = 'TYPE_DRIVER_BABEL_CORE';
+export const TYPE_DRIVER_GULP_TYPESCRIPT = 'TYPE_DRIVER_GULP_TYPESCRIPT';
+export const TYPE_DRIVER_TYPESCRIPT = 'TYPE_DRIVER_TYPESCRIPT';
 
 export type SourceMapSupport = {
   install(options: { handleUncaughtExceptions: boolean, retrieveSourceMap: Function }): void;

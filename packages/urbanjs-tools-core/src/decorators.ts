@@ -1,4 +1,4 @@
-export const TAG_TRACK = Symbol('TAG_TRACK');
+export const TAG_TRACK = 'TAG_TRACK';
 
 export function track() {
   return (target: Object, propertyKey: string, descriptor: PropertyDescriptor) => {

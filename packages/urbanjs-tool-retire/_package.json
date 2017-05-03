@@ -1,6 +1,6 @@
 {
   "name": "urbanjs-tool-retire",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Urbanjs tool to check dependencies for vulnerability issues",
   "keywords": [
     "security",

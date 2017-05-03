@@ -1,16 +1,16 @@
 import {ChildProcess} from 'child_process';
 
-export const TYPE_CONFIG_LOGGER = Symbol('TYPE_CONFIG_LOGGER');
-export const TYPE_SERVICE_LOGGER = Symbol('TYPE_SERVICE_LOGGER');
-export const TYPE_SERVICE_FILE_SYSTEM = Symbol('TYPE_SERVICE_FILE_SYSTEM');
-export const TYPE_SERVICE_SHELL = Symbol('TYPE_SERVICE_SHELL');
-export const TYPE_SERVICE_CONFIG = Symbol('TYPE_SERVICE_CONFIG');
-export const TYPE_SERVICE_TASK = Symbol('TYPE_SERVICE_TASK');
-export const TYPE_SERVICE_CLI_SERVICE = Symbol('TYPE_SERVICE_CLI_SERVICE');
-export const TYPE_SERVICE_TRACE = Symbol('TYPE_SERVICE_TRACE');
-export const TYPE_SERVICE_STREAM = Symbol('TYPE_SERVICE_STREAM');
-export const TYPE_SERVICE_TRANSPILE = Symbol('TYPE_SERVICE_TRANSPILE');
-export const TYPE_TOOL = Symbol('TYPE_TOOL');
+export const TYPE_CONFIG_LOGGER = 'TYPE_CONFIG_LOGGER';
+export const TYPE_SERVICE_LOGGER = 'TYPE_SERVICE_LOGGER';
+export const TYPE_SERVICE_FILE_SYSTEM = 'TYPE_SERVICE_FILE_SYSTEM';
+export const TYPE_SERVICE_SHELL = 'TYPE_SERVICE_SHELL';
+export const TYPE_SERVICE_CONFIG = 'TYPE_SERVICE_CONFIG';
+export const TYPE_SERVICE_TASK = 'TYPE_SERVICE_TASK';
+export const TYPE_SERVICE_CLI_SERVICE = 'TYPE_SERVICE_CLI_SERVICE';
+export const TYPE_SERVICE_TRACE = 'TYPE_SERVICE_TRACE';
+export const TYPE_SERVICE_STREAM = 'TYPE_SERVICE_STREAM';
+export const TYPE_SERVICE_TRANSPILE = 'TYPE_SERVICE_TRANSPILE';
+export const TYPE_TOOL = 'TYPE_TOOL';
 
 export type Constructor<T> = new(...args: any[]) => T; //tslint:disable-line
 

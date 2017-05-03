@@ -7,9 +7,9 @@ import {
 } from '../types';
 import {track} from '../decorators';
 
-export const TYPE_DRIVER_MKDIRP = Symbol('TYPE_DRIVER_MKDIRP');
-export const TYPE_DRIVER_DEL = Symbol('TYPE_DRIVER_DEL');
-export const TYPE_DRIVER_FS = Symbol('TYPE_DRIVER_FS');
+export const TYPE_DRIVER_MKDIRP = 'TYPE_DRIVER_MKDIRP';
+export const TYPE_DRIVER_DEL = 'TYPE_DRIVER_DEL';
+export const TYPE_DRIVER_FS = 'TYPE_DRIVER_FS';
 
 export type Del = (path: string, options: { force: boolean }) => Promise<void>;
 export type Mkdirp = (path: string, cb: Function) => Promise<void>;
