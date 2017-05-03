@@ -94,7 +94,7 @@ let tools;
       ).map(file => [file]),
       require: path.join(__dirname, 'mocha-environment.js'),
       collectCoverage: false,
-      timeout: 50000
+      timeout: 80000
     });
   },
 

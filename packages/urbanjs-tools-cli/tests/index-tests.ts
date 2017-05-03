@@ -74,6 +74,8 @@ describe('cli', () => {
       ['gulp mocha', {cwd: projectFolderPath}],
       ['gulp nsp', {cwd: projectFolderPath}],
       ['gulp retire', {cwd: projectFolderPath}],
+
+      ['gulp pre-release', {cwd: projectFolderPath}]
     ]);
   });
 
@@ -88,7 +90,9 @@ describe('cli', () => {
       ['gulp mocha', {cwd: projectFolderPath}],
       ['gulp nsp', {cwd: projectFolderPath}],
       ['gulp retire', {cwd: projectFolderPath}],
-      ['gulp tslint', {cwd: projectFolderPath}]
+      ['gulp tslint', {cwd: projectFolderPath}],
+
+      ['gulp pre-release', {cwd: projectFolderPath}]
     ]);
   });
 });

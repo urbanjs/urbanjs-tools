@@ -112,7 +112,7 @@ export class GenerateCommand implements ICommand {
         )
       };
 
-      await Promise.all([
+      const promises = [
         this.fileSystemService.writeFile(
           join(folderPath, 'package.json'),
           JSON.stringify(packageJSON, null, '  ')
@@ -167,7 +167,16 @@ export class GenerateCommand implements ICommand {
           join(folderPath, 'docs/__fixtures__/layout.html'),
           await this.fileSystemService.readFile(join(__dirname, 'templates/jsdoc-layout-html.txt'))
         )
-      ]);
+      ];
+
+      if (isTsProject) {
+        promises.push(this.fileSystemService.writeFile(
+          join(folderPath, 'tsconfig.json'),
+          JSON.stringify({extends: './node_modules/urbanjs-tools/tsconfig.json'})
+        ));
+      }
+
+      await Promise.all(promises);
 
       this.loggerService.info('Project skeleton has been successfully generated.');
     } catch (err) {

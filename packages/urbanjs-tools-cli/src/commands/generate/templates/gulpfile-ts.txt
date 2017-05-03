@@ -4,7 +4,7 @@ const gulp = require('gulp');
 const tools = require('urbanjs-tools');
 
 tools.initialize(gulp, {
-  'babel': true,
+  babel: true,
 
   'check-dependencies': true,
 
@@ -12,17 +12,17 @@ tools.initialize(gulp, {
 
   'conventional-changelog': true,
 
-  'eslint': false,
+  eslint: false,
 
-  'mocha': true,
+  mocha: true,
 
-  'nsp': true,
+  nsp: true,
 
-  'retire': true,
+  retire: true,
 
-  'tslint': true,
+  tslint: true,
 
-  'webpack': false
+  webpack: false
 });
 
 gulp.task('default', () => {

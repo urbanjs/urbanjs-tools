@@ -25,21 +25,10 @@ describe('config service', () => {
   });
 
   describe('.mergeParameters()', () => {
-    context('when parameters is falsy or true', () => {
+    context('when parameters is true', () => {
       it('returns defaults', () => {
         const defaults = {a: 1};
-
-        [
-          0,
-          '',
-          false,
-          null,
-          undefined,
-          NaN,
-          true
-        ].forEach((configuration) => {
-          expect.equal(configService.mergeParameters(defaults, configuration), defaults);
-        });
+        expect.equal(configService.mergeParameters(defaults, true), defaults);
       });
     });
 
@@ -114,7 +103,13 @@ describe('config service', () => {
 
       [
         'notempty',
-        1
+        1,
+        0,
+        '',
+        false,
+        null,
+        undefined,
+        NaN
       ].forEach((configuration) => {
         expect.throws(
           () => configService.mergeParameters({}, configuration),

@@ -85,7 +85,7 @@ export class ConfigService implements IConfigService {
     }
 
     let result;
-    if (!parameters || parameters === true) {
+    if (parameters === true) {
       result = defaults;
     } else if (Array.isArray(parameters)) {
       result = parameters.map(value => Object.assign({}, defaults, value));

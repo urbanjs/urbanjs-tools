@@ -320,7 +320,7 @@ describe('api', () => {
       expect.equal(toolServiceMock.getTool.called, false);
 
       Object.keys(presets).forEach(presetName => {
-        expect.equal(api.initializePreset.calledWith(gulpMock, presetName, presets[presetName]), true);
+        expect.equal(api.initializePreset.calledWith(gulpMock, presetName, true), true);
       });
     });
 

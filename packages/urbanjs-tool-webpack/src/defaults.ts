@@ -61,7 +61,9 @@ export function getDefaults(globals: GlobalConfiguration): WebpackConfig {
             },
             {
               loader: require.resolve('ts-loader'),
-              options: globals.typescript
+              options: {
+                compilerOptions: globals.typescript
+              }
             }
           ]
         },

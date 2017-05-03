@@ -8,7 +8,6 @@ export const presets: { [key: string]: string[] } = {
   'analyze': [
     'check-dependencies',
     'check-file-names',
-    'jscs',
     'eslint',
     'nsp',
     'retire',

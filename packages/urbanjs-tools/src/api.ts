@@ -148,12 +148,18 @@ export class Api implements IApi {
   public initialize(gulp: IGulp, config: { [key: string]: PresetConfig | ToolConfiguration<any> }) {
     this.loggerService.warn('.initialize method will be removed in the next major version. Please use .initializeTasks or .initializePresets methods instead.');
 
-    const presetConfigsByPresetName = {...presets};
+    const presetConfigsByPresetName = Object.keys(presets).reduce((acc, presetName) => ({
+      ...acc,
+      [presetName]: true
+    }), {});
 
     Object.keys(config).forEach((taskOrPresetName: string) => {
       const parameters = config[taskOrPresetName];
+      const isTool = toolNameByTaskName.hasOwnProperty(taskOrPresetName);
 
-      if (toolNameByTaskName.hasOwnProperty(taskOrPresetName)) {
+      if (parameters === false) {
+        delete presetConfigsByPresetName[taskOrPresetName];
+      } else if (isTool) {
         const toolName = toolNameByTaskName[taskOrPresetName];
         this.toolService.getTool(toolName).register(gulp, toolName, parameters);
       } else {
