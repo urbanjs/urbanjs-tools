@@ -307,9 +307,21 @@ describe('api', () => {
 
   describe('.initialize()', () => {
     it('warns about the deprecation', () => {
+      api.initializePreset = spy();
       api.initialize(gulpMock, {});
       const expectedDeprecationMessage = '.initialize method will be removed in the next major version. Please use .initializeTasks or .initializePresets methods instead.';
       expect.equal(loggerServiceMock.warn.calledWith(expectedDeprecationMessage), true);
+    });
+
+    it('initializes all default presets automatically', () => {
+      api.initializePreset = spy();
+      api.initialize(gulpMock, {});
+
+      expect.equal(toolServiceMock.getTool.called, false);
+
+      Object.keys(presets).forEach(presetName => {
+        expect.equal(api.initializePreset.calledWith(gulpMock, presetName, presets[presetName]), true);
+      });
     });
 
     context('when config contains a key which defines a task', () => {
@@ -328,7 +340,6 @@ describe('api', () => {
 
         expect.equal(toolServiceMock.getTool.calledWith(toolName), true);
         expect.equal(tool.register.calledWith(gulpMock, toolName, toolConfig), true);
-        expect.equal(initializePreset.called, false);
       });
     });
 
@@ -345,6 +356,15 @@ describe('api', () => {
 
       it('handles the key as a preset and registers it', () => {
         const presetName = 'preset';
+        const presetConfig = [];
+        api.initialize(gulpMock, {[presetName]: presetConfig});
+
+        expect.equal(toolServiceMock.getTool.called, false);
+        expect.equal(initializePreset.calledWith(gulpMock, presetName, presetConfig), true);
+      });
+
+      it('overwrites the existing preset config', () => {
+        const presetName = 'doc';
         const presetConfig = [];
         api.initialize(gulpMock, {[presetName]: presetConfig});
 

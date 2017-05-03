@@ -148,6 +148,8 @@ export class Api implements IApi {
   public initialize(gulp: IGulp, config: { [key: string]: PresetConfig | ToolConfiguration<any> }) {
     this.loggerService.warn('.initialize method will be removed in the next major version. Please use .initializeTasks or .initializePresets methods instead.');
 
+    const presetConfigsByPresetName = {...presets};
+
     Object.keys(config).forEach((taskOrPresetName: string) => {
       const parameters = config[taskOrPresetName];
 
@@ -155,8 +157,12 @@ export class Api implements IApi {
         const toolName = toolNameByTaskName[taskOrPresetName];
         this.toolService.getTool(toolName).register(gulp, toolName, parameters);
       } else {
-        this.initializePreset(gulp, taskOrPresetName, <PresetConfig>parameters);
+        presetConfigsByPresetName[taskOrPresetName] = parameters;
       }
+    });
+
+    Object.keys(presetConfigsByPresetName).forEach((presetName: string) => {
+      this.initializePreset(gulp, presetName, <PresetConfig>presetConfigsByPresetName[presetName]);
     });
   }
 }
