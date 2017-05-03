@@ -18,6 +18,7 @@ gulp.task('bootstrap:transpile', (done) => {
     'urbanjs-tool-check-file-names',
     'urbanjs-tool-conventional-changelog',
     'urbanjs-tool-eslint',
+    'urbanjs-tool-jsdoc',
     'urbanjs-tool-mocha',
     'urbanjs-tool-nsp',
     'urbanjs-tool-retire',

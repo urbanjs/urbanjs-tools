@@ -2,7 +2,7 @@ export const presets: { [key: string]: string[] } = {
   'changelog': ['conventional-changelog'],
   'dist': ['babel', 'webpack'],
   'dist:watch': ['babel:watch', 'webpack:watch'],
-  'doc': [],
+  'doc': ['jsdoc'],
   'test': ['mocha'],
   'test:watch': ['mocha:watch'],
   'analyze': [

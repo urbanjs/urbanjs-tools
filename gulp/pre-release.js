@@ -69,6 +69,7 @@ let tools;
       files: defaults.files.concat([
         'tests/**/*.js',
         '!**/*-invalid.js',
+        '!**/help/**/*',
         '!**/coverage/**/*',
         '!**/dist/**/*',
         '!legacy/**'

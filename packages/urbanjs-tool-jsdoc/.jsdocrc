@@ -22,7 +22,7 @@
     "excludePattern": "(^|\\/|\\\\)_"
   },
   "plugins": [
-    "./src/tasks/jsdoc/preprocessor-plugin"
+    "./dist/preprocessor-plugin"
   ],
   "templates": {
     "cleverLinks": true,

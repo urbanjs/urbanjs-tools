@@ -101,6 +101,14 @@ describe('cli', () => {
           gulpfile: {
             path: join(__dirname, 'templates/gulpfile-js.txt'),
             content: 'gulpfile'
+          },
+          docsMainCSS: {
+            path: join(__dirname, 'templates/jsdoc-main-css.txt'),
+            content: 'docsMainCSS'
+          },
+          docsLayout: {
+            path: join(__dirname, 'templates/jsdoc-layout-html.txt'),
+            content: 'docsLayout'
           }
         };
 
@@ -151,6 +159,18 @@ describe('cli', () => {
           {
             path: join(folderPath, 'gulpfile.js'),
             content: readResults.gulpfile.content
+          },
+          {
+            path: join(folderPath, 'docs/main.js'),
+            content: '// write here your custom jsdoc documentation...\n'
+          },
+          {
+            path: join(folderPath, 'docs/__fixtures__/static/main.css'),
+            content: readResults.docsMainCSS.content
+          },
+          {
+            path: join(folderPath, 'docs/__fixtures__/layout.html'),
+            content: readResults.docsLayout.content
           }
         ].forEach((item) => {
           expect.equal(fileSystemServiceMock.writeFile.calledWith(item.path, item.content), true, JSON.stringify(item));

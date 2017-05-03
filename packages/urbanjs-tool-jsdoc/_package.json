@@ -1,0 +1,33 @@
+{
+  "name": "urbanjs-tool-jsdoc",
+  "version": "0.1.0",
+  "description": "Urbanjs tool to generate documentation based on jsdoc comments",
+  "keywords": [
+    "jsdoc",
+    "documentation",
+    "api"
+  ],
+  "main": "./dist",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "prepublish": "gulp pre-release"
+  },
+  "dependencies": {
+    "urbanjs-tools-core": "*",
+    "babel-runtime": "*",
+    "babel-core": "*",
+    "del": "*",
+    "inversify": "*",
+    "jsdoc": "*",
+    "gulp": "*",
+    "gulp-typescript": "*",
+    "mkdirp": "*",
+    "reflect-metadata": "*",
+    "source-map-support": "*",
+    "typescript": "*"
+  },
+  "devDependencies": {
+    "urbanjs-tools": "*",
+    "yargs": "*"
+  }
+}

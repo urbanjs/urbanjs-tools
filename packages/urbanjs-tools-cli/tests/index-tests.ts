@@ -70,6 +70,7 @@ describe('cli', () => {
       ['gulp check-file-names', {cwd: projectFolderPath}],
       ['gulp conventional-changelog', {cwd: projectFolderPath}],
       ['gulp eslint', {cwd: projectFolderPath}],
+      ['gulp jsdoc', {cwd: projectFolderPath}],
       ['gulp mocha', {cwd: projectFolderPath}],
       ['gulp nsp', {cwd: projectFolderPath}],
       ['gulp retire', {cwd: projectFolderPath}],

@@ -9,6 +9,6 @@
     "includePattern": ".+\\.js$"
   },
   "plugins": [
-    "../../preprocessor-plugin"
+    "../../dist/preprocessor-plugin"
   ]
 }

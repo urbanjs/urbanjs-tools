@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import {Container} from 'inversify';
-import {readFileSync} from 'fs';
 import * as babelCore from 'babel-core';
 import * as gulpTypescript from 'gulp-typescript';
 import * as typescript from 'typescript';
@@ -27,13 +26,11 @@ container.bind(TYPE_DRIVER_TYPESCRIPT).toConstantValue(typescript);
 container.bind(TYPE_DRIVER_SOURCE_MAP_SUPPORT).toConstantValue(sourceMapSupport);
 
 const transpileService = container.get<ITranspileService>(TYPE_SERVICE_TRANSPILE);
-transpileService.installSourceMapSupport();
 
-babelCore.util.canCompile.EXTENSIONS.concat('.ts', 'tsx').forEach((extension) => {
-  require.extensions[extension] = (module, filename) => {
-    module._compile(
-      transpileService.transpile(readFileSync(filename, 'utf8'), filename),
-      filename
-    );
-  };
-});
+export const handlers = {
+  beforeParse(event) {
+    const src = transpileService.transpile(event.source, event.filename);
+    event.source = src;
+    return src;
+  }
+};

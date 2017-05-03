@@ -2,10 +2,9 @@
 
 const gulp = require('gulp');
 const path = require('path');
-const task = require('../../index');
+const tools = require('urbanjs-tools');
 
-task.dependencies = {};
-task.register(gulp, 'jsdoc', {
+tools.tasks.jsdoc.register(gulp, 'jsdoc', {
   configFile: path.join(__dirname, 'jsdoc.json'),
   packagePath: path.join(require.resolve('jsdoc/jsdoc'), '../')
-}, { babel: require('../../../../utils/global-babel') });
+});

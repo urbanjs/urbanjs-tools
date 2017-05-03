@@ -10,6 +10,7 @@ export const toolNameByTaskName = {
   'checkFileNames': 'check-file-names',
   'conventional-changelog': 'conventional-changelog',
   'conventionalChangelog': 'conventional-changelog',
+  'jsdoc': 'jsdoc',
   'tslint': 'tslint',
   'eslint': 'eslint',
   'webpack': 'webpack'

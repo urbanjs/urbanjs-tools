@@ -151,22 +151,22 @@ export class GenerateCommand implements ICommand {
         this.fileSystemService.writeFile(
           join(folderPath, 'gulpfile.js'),
           await this.fileSystemService.readFile(join(__dirname, `templates/gulpfile-${isTsProject ? 'ts' : 'js'}.txt`))
-        )
+        ),
 
-        // this.fileSystemService.writeFile(
-        //   join(folderPath, 'docs/main.js'),
-        //   '// write here your custom jsdoc documentation...\n'
-        // ),
-        //
-        // this.fileSystemService.writeFile(
-        //   join(folderPath, 'docs/__fixtures__/static/main.css'),
-        //   await this.fileSystemService.readFile(join(__dirname, 'templates/jsdoc-main-css.txt'))
-        // ),
-        //
-        // this.fileSystemService.writeFile(
-        //   join(folderPath, 'docs/__fixtures__/layout.html'),
-        //   await this.fileSystemService.readFile(join(__dirname, 'templates/jsdoc-layout-html.txt'))
-        // )
+        this.fileSystemService.writeFile(
+          join(folderPath, 'docs/main.js'),
+          '// write here your custom jsdoc documentation...\n'
+        ),
+
+        this.fileSystemService.writeFile(
+          join(folderPath, 'docs/__fixtures__/static/main.css'),
+          await this.fileSystemService.readFile(join(__dirname, 'templates/jsdoc-main-css.txt'))
+        ),
+
+        this.fileSystemService.writeFile(
+          join(folderPath, 'docs/__fixtures__/layout.html'),
+          await this.fileSystemService.readFile(join(__dirname, 'templates/jsdoc-layout-html.txt'))
+        )
       ]);
 
       this.loggerService.info('Project skeleton has been successfully generated.');
