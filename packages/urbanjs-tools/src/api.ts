@@ -69,7 +69,7 @@ export class Api implements IApi {
 
   @track()
   public setupInMemoryTranspile() {
-    const mochaToolPackageName = `${this.toolPrefix}-mocha`;
+    const mochaToolPackageName = `${this.toolPrefix}mocha`;
     try {
       this.requireDriver.require(`${mochaToolPackageName}/dist/setup-file`);
     } catch (e) {
