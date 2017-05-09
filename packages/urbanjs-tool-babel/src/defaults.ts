@@ -1,18 +1,20 @@
 import {join} from 'path';
 import {BabelConfig} from './types';
+import {GlobalConfiguration} from 'urbanjs-tools-core';
 
 const processCwd = process.cwd();
+const addProcessCwd = globPath => `${globPath[0] === '!' ? '!' : ''}${join(processCwd, globPath.replace(/^!/, ''))}`;
 
-export const defaults: BabelConfig = {
-  files: [
-    'src/**/*',
-    '!src/**/*.min.js',
-    '!src/**/+(node_modules|bower_components|vendor|dist)/**/*',
-    '!src/**/__tests__/**',
-    '!src/**/test/**',
-    '!src/**/tests/**',
-    '!src/**/*-tests.+(js|ts|tsx)'
-  ].map(globPath => `${globPath[0] === '!' ? '!' : ''}${join(processCwd, globPath.replace(/^!/, ''))}`),
-  outputPath: join(processCwd, 'dist'),
-  clean: true
-};
+export function getDefaults(globals: GlobalConfiguration): BabelConfig {
+  return {
+    files: []
+      .concat([
+        'src/**/*',
+        '!src/**/+(test|tests)/**',
+        '!src/**/*-+(test|tests).+(js|ts|tsx)'
+      ].map(addProcessCwd))
+      .concat(globals.ignoredSourceFiles.map(globPath => `!${globPath}`)),
+    outputPath: join(processCwd, 'dist'),
+    clean: true
+  };
+}

@@ -16,5 +16,5 @@ coverage
 docs
 
 # Source folder
-src/**/__tests__
 src/test
+src/tests

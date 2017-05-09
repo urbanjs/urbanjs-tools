@@ -27,6 +27,7 @@
     "istanbul": "*",
     "istanbul-threshold-checker": "*",
     "lodash": "*",
+    "minimatch": "*",
     "reflect-metadata": "*",
     "source-map-support": "*",
     "through2": "*",

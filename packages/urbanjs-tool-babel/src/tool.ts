@@ -22,7 +22,7 @@ import {
   ITraceService,
   TYPE_SERVICE_TRACE
 } from 'urbanjs-tools-core';
-import {defaults} from './defaults';
+import {getDefaults} from './defaults';
 import {BabelConfig} from './types';
 
 @injectable()
@@ -50,10 +50,11 @@ export class Babel implements ITool<BabelConfig> {
   @track()
   public register(taskName: string, parameters: BabelConfig) {
     this.taskService.addTask(taskName, [], async () => {
+      const globals = this.configService.getGlobalConfiguration();
       const config = this.configService.mergeParameters<BabelConfig>(
         {
-          ...defaults,
-          babel: this.configService.getGlobalConfiguration().babel
+          ...getDefaults(globals),
+          babel: globals.babel
         },
         parameters,
         taskName
@@ -68,7 +69,7 @@ export class Babel implements ITool<BabelConfig> {
         stream = stream.pipe(sourcemaps.init(config.sourcemap));
       }
 
-      let tsConfig = this.configService.getGlobalConfiguration().typescript;
+      let tsConfig = globals.typescript;
       let dtsPipe;
       if (tsConfig !== false) {
         if (tsConfig.extends) {
@@ -121,7 +122,8 @@ export class Babel implements ITool<BabelConfig> {
 
     const watchTaskName = `${taskName}:watch`;
     this.taskService.addTask(watchTaskName, [], async () => {
-      const config = this.configService.mergeParameters<BabelConfig>(defaults, parameters, taskName);
+      const globals = this.configService.getGlobalConfiguration();
+      const config = this.configService.mergeParameters<BabelConfig>(getDefaults(globals), parameters, taskName);
       gulp.watch(config.files, () => this.taskService.runTask(taskName));
     });
   }

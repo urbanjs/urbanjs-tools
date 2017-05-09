@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import {Container} from 'inversify';
 import * as babelCore from 'babel-core';
 import * as gulpTypescript from 'gulp-typescript';
+import * as minimatch from 'minimatch';
 import * as typescript from 'typescript';
 import * as sourceMapSupport from 'source-map-support';
 import * as yargs from 'yargs';
@@ -13,6 +14,7 @@ import {
   TYPE_DRIVER_GULP_TYPESCRIPT,
   TYPE_DRIVER_TYPESCRIPT,
   TYPE_DRIVER_SOURCE_MAP_SUPPORT,
+  TYPE_DRIVER_MINIMATCH,
   TYPE_SERVICE_TRANSPILE
 } from 'urbanjs-tools-core';
 
@@ -24,6 +26,7 @@ container.bind(TYPE_DRIVER_BABEL_CORE).toConstantValue(babelCore);
 container.bind(TYPE_DRIVER_GULP_TYPESCRIPT).toConstantValue(gulpTypescript);
 container.bind(TYPE_DRIVER_TYPESCRIPT).toConstantValue(typescript);
 container.bind(TYPE_DRIVER_SOURCE_MAP_SUPPORT).toConstantValue(sourceMapSupport);
+container.bind(TYPE_DRIVER_MINIMATCH).toConstantValue(minimatch);
 
 const transpileService = container.get<ITranspileService>(TYPE_SERVICE_TRANSPILE);
 

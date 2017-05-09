@@ -22,6 +22,7 @@
     "inversify": "*",
     "gulp": "*",
     "gulp-typescript": "*",
+    "minimatch": "*",
     "prettyjson": "*",
     "source-map-support": "*",
     "typescript": "*"

@@ -78,6 +78,7 @@ export type GlobalConfiguration = {
   typescript?: TSCompilerOptions;
   babel?: BabelTransformOptions;
   sourceFiles?: string[];
+  readonly ignoredSourceFiles?: string[];
 };
 
 export type ToolParameters = { [key: string]: any }; //tslint:disable-line

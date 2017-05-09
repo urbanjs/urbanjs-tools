@@ -14,6 +14,7 @@ export const TYPE_DRIVER_SOURCE_MAP_SUPPORT = 'TYPE_DRIVER_SOURCE_MAP_SUPPORT';
 export const TYPE_DRIVER_BABEL_CORE = 'TYPE_DRIVER_BABEL_CORE';
 export const TYPE_DRIVER_GULP_TYPESCRIPT = 'TYPE_DRIVER_GULP_TYPESCRIPT';
 export const TYPE_DRIVER_TYPESCRIPT = 'TYPE_DRIVER_TYPESCRIPT';
+export const TYPE_DRIVER_MINIMATCH = 'TYPE_DRIVER_MINIMATCH';
 
 export type SourceMapSupport = {
   install(options: { handleUncaughtExceptions: boolean, retrieveSourceMap: Function }): void;
@@ -32,6 +33,10 @@ export type GulpTypescript = {
   createProject(options: Object): { options: Object };
 };
 
+export type Minimatch = {
+  (filePath: string, pattern: string): boolean;
+};
+
 @injectable()
 export class TranspileService implements ITranspileService {
   private loggerService: ILoggerService;
@@ -40,6 +45,7 @@ export class TranspileService implements ITranspileService {
   private babelCore: BabelCore;
   private typescript: Typescript;
   private gulpTypescript: GulpTypescript;
+  private minimatch: Minimatch;
 
   private sourceMapSupportInstalled: boolean;
   private sourceMaps: Object;
@@ -51,13 +57,15 @@ export class TranspileService implements ITranspileService {
               @inject(TYPE_DRIVER_BABEL_CORE) babelCore: BabelCore,
               @inject(TYPE_DRIVER_GULP_TYPESCRIPT) gulpTypescript: GulpTypescript,
               @inject(TYPE_DRIVER_TYPESCRIPT) typescript: Typescript,
-              @inject(TYPE_DRIVER_SOURCE_MAP_SUPPORT) sourceMapSupport: SourceMapSupport) {
+              @inject(TYPE_DRIVER_SOURCE_MAP_SUPPORT) sourceMapSupport: SourceMapSupport,
+              @inject(TYPE_DRIVER_MINIMATCH) minimatch: Minimatch) {
     this.loggerService = loggerService;
     this.configService = configService;
     this.sourceMapSupport = sourceMapSupport;
     this.babelCore = babelCore;
     this.gulpTypescript = gulpTypescript;
     this.typescript = typescript;
+    this.minimatch = minimatch;
     traceService.track(this);
 
     this.cache = {};
@@ -86,14 +94,10 @@ export class TranspileService implements ITranspileService {
   }
 
   public transpile(content: string, filename: string) {
-    // TODO: should be configurable via globals
-    const ignorePatterns: RegExp[] = [
-      /node_modules|bower_components|dist|vendor/,
-      /\.min\.js$/
-    ];
+    const globals = this.configService.getGlobalConfiguration();
 
     // skip node_modules & minified files
-    if (ignorePatterns.some(pattern => pattern.test(filename))) {
+    if (globals.ignoredSourceFiles.some(glob => this.minimatch(filename, glob))) {
       return content;
     }
 

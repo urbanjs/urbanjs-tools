@@ -54,8 +54,9 @@ export class ConfigService implements IConfigService {
     const knownGlobals = {
       allowLinking: true,
       babel: true,
+      typescript: true,
       sourceFiles: true,
-      typescript: true
+      ignoredSourceFiles: true
     };
 
     const unknownGlobals = Object.keys(configuration)
@@ -72,7 +73,14 @@ export class ConfigService implements IConfigService {
 
   @track()
   public getGlobalConfiguration() {
-    return this.globals;
+    const ignoredSourceFiles = [].concat(this.globals.sourceFiles || [])
+      .filter(fileGlob => fileGlob.startsWith('!'))
+      .map(fileGlob => fileGlob.slice(1));
+
+    return {
+      ...this.globals,
+      ignoredSourceFiles
+    };
   }
 
   @track()

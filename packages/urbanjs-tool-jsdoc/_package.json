@@ -21,6 +21,7 @@
     "jsdoc": "*",
     "gulp": "*",
     "gulp-typescript": "*",
+    "minimatch": "*",
     "mkdirp": "*",
     "reflect-metadata": "*",
     "source-map-support": "*",

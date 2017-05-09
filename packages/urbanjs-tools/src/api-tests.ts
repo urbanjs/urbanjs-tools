@@ -101,7 +101,7 @@ describe('api', () => {
     context('when mocha tool can be found', () => {
       it('requires setup file of mocha tool', () => {
         api.setupInMemoryTranspile();
-        expect.equal(requireDriverMock.require.calledWith(`${toolPrefix}-mocha/dist/setup-file`), true);
+        expect.equal(requireDriverMock.require.calledWith(`${toolPrefix}mocha/dist/setup-file`), true);
       });
     });
 
@@ -123,7 +123,7 @@ describe('api', () => {
           err => err === error
         );
 
-        const errorMessage = `Please install ${toolPrefix}-mocha to use .setupInMemoryTranspile api`;
+        const errorMessage = `Please install ${toolPrefix}mocha to use .setupInMemoryTranspile api`;
         expect.equal(loggerServiceMock.error.calledWith(errorMessage), true);
       });
     });

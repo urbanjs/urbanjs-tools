@@ -22,7 +22,7 @@ import {
   ITraceService,
   TYPE_SERVICE_TRACE
 } from 'urbanjs-tools-core';
-import {defaults} from './defaults';
+import {getDefaults} from './defaults';
 import {
   MochaConfig,
   MochaOptions,
@@ -65,7 +65,8 @@ export class Mocha implements ITool<MochaConfig> {
       this.loggerService.debug('running task', taskName);
 
       try {
-        const config = this.configService.mergeParameters<MochaConfig>(defaults, parameters, taskName);
+        const globals = this.configService.getGlobalConfiguration();
+        const config = this.configService.mergeParameters<MochaConfig>(getDefaults(globals), parameters, taskName);
         if (config.collectCoverage) {
           const coverageDirectoryPath = config.coverageDirectory || 'coverage';
           config.coverageDirectory = isAbsolute(coverageDirectoryPath)
@@ -104,7 +105,8 @@ export class Mocha implements ITool<MochaConfig> {
 
     const watchTaskName = `${taskName}:watch`;
     this.taskService.addTask(watchTaskName, [], async () => {
-      const config = this.configService.mergeParameters<MochaConfig>(defaults, parameters, watchTaskName);
+      const globals = this.configService.getGlobalConfiguration();
+      const config = this.configService.mergeParameters<MochaConfig>(getDefaults(globals), parameters, watchTaskName);
       gulp.watch(config.files, () => this.taskService.runTask(taskName));
     });
   }

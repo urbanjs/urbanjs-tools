@@ -1,6 +1,7 @@
-import {WebpackConfig} from './types';
 import {isAbsolute, join} from 'path';
 import {GlobalConfiguration} from 'urbanjs-tools-core';
+import * as minimatch from 'minimatch';
+import {WebpackConfig} from './types';
 
 export function getDefaults(globals: GlobalConfiguration): WebpackConfig {
   const processCwd = process.cwd();
@@ -74,13 +75,13 @@ export function getDefaults(globals: GlobalConfiguration): WebpackConfig {
     module: {
       rules: [
         {
-          test: /[^.min]\.tsx?$/, // minified files are ignored
-          exclude: /(node_modules|bower_components|vendor|dist)/,
+          test: /\.tsx?$/,
+          exclude: (filePath) => globals.ignoredSourceFiles.some(glob => minimatch(filePath, glob)),
           use: tsLoaders
         },
         {
-          test: /[^.min]\.js$/, // minified files are ignored
-          exclude: /(node_modules|bower_components|vendor|dist)/,
+          test: /\.js$/,
+          exclude: (filePath) => globals.ignoredSourceFiles.some(glob => minimatch(filePath, glob)),
           use: jsLoaders
         }
       ]

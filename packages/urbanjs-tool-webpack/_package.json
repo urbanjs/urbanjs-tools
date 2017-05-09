@@ -23,6 +23,7 @@
     "del": "*",
     "inversify": "*",
     "lodash": "*",
+    "minimatch": "*",
     "ts-loader": "*",
     "webpack": "*"
   },

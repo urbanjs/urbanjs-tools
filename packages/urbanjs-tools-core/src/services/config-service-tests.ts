@@ -158,22 +158,17 @@ describe('config service', () => {
 
     it('uses .mergeParameters()', () => {
       configService.mergeParameters = spy(() => ({}));
+      configService.globals = {};
 
-      const currentGlobals = configService.getGlobalConfiguration();
       const globals = {babel: true};
 
       configService.setGlobalConfiguration(globals);
-      expect.equal(configService.mergeParameters.calledWith(currentGlobals, globals, 'global'), true);
+      expect.equal(configService.mergeParameters.calledWith(configService.globals, globals, 'global'), true);
     });
 
     it('updates urbanJSToolGlobals environment variable', () => {
-      const globals = configService.getGlobalConfiguration();
-      const updatedGlobals = {
-        ...globals,
-        babel: undefined
-      };
-
-      configService.setGlobalConfiguration(updatedGlobals);
+      const updatedGlobals = {babel: undefined};
+      configService.setGlobalConfiguration(() => updatedGlobals);
 
       expect.equal(JSON.stringify(updatedGlobals), process.env.urbanJSToolGlobals);
     });
@@ -193,6 +188,29 @@ describe('config service', () => {
         expect.equal(result instanceof Error, true);
         expect.equal(loggerServiceMock.error.calledWith('Unknown globals: unknown'), true);
       });
+    });
+  });
+
+  describe('.getGlobalConfiguration()', () => {
+    it('returns previously set globals', () => {
+      configService.globals = {sourceFiles: []};
+      expect.deepEqual(configService.getGlobalConfiguration().sourceFiles, []);
+
+      configService.setGlobalConfiguration({sourceFiles: ['glob/path/**']});
+      expect.deepEqual(configService.getGlobalConfiguration().sourceFiles, ['glob/path/**']);
+    });
+
+    it('returns the computed fields (ignoredSourceFiles) correctly', () => {
+      configService.globals = {
+        sourceFiles: ['!glob/path/**']
+      };
+
+      const expectedGlobals = {
+        ...configService.globals,
+        ignoredSourceFiles: ['glob/path/**']
+      };
+
+      expect.deepEqual(configService.getGlobalConfiguration(), expectedGlobals);
     });
   });
 });

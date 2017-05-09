@@ -6,6 +6,7 @@ export function getDefaults(globals: GlobalConfiguration): EslintConfig {
   return {
     files: globals.sourceFiles,
     configFile: join(__dirname, '../.eslintrc'),
-    extensions: ['.js']
+    extensions: ['.js'],
+    useEslintrc: false
   };
 }
