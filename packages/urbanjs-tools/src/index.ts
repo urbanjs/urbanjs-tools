@@ -8,6 +8,13 @@ const configService = container.get<IConfigService>(TYPE_SERVICE_CONFIG);
 configService.setGlobalConfiguration(globals);
 
 const api = container.get<IApi>(TYPE_API);
+
+Object.keys(api).forEach(methodName => {
+  if (typeof api[methodName] === 'function') {
+    api[methodName] = api[methodName].bind(api);
+  }
+});
+
 export default api;
 
 module.exports = api;

@@ -12,7 +12,7 @@ function applyVersions(dependencies) {
     let version = dependencies[depName];
     if (urbanjsPackageName) {
       const rawPackageFile = `../packages/${urbanjsPackageName}/_package.json`;
-      version = require(rawPackageFile).version; // eslint-disable-line
+      version = `^${require(rawPackageFile).version}`; // eslint-disable-line
     } else if (pkg.devDependencies[depName]) {
       version = pkg.devDependencies[depName];
     } else if (version === '*') {

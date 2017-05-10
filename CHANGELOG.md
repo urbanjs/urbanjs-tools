@@ -2,8 +2,11 @@
 - Introduce `initializePresets` & `initializeTasks` methods to have bigger control over preset configuration
 - Introduce `runnerMemoryUsageLimit` options in `mocha` config
 - Introduce `setupInMemoryTranspile` method to set up in memory tanspile easily
+- Ignored files can be set via globals (`sourceFiles`)
 - `BREAKING` Get rid of lazy dependency install
 - `BREAKING` Remove jest task
+- `BREAKING` `.eslintrc` and `tslint.json` configuration files can be found in responsible packages separately
+    - please extend these files if needed
 - Update dependencies
     - `BREAKING`
         - Remove tslint-microsoft-contrib ruleset from tslint task

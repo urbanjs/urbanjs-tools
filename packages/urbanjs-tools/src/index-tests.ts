@@ -21,8 +21,14 @@ describe('index', () => {
   });
 
   it('exposes the api via require', () => {
-    const index = require('./index');
-    expect.equal(index, container.get<IApi>(TYPE_API));
+    const api = require('./index');
+    expect.equal(api, container.get<IApi>(TYPE_API));
+  });
+
+  it('all exposed methods are bound to correctly (this works)', () => {
+    const api = require('./index');
+    const getGlobalConfiguration = api.getGlobalConfiguration;
+    expect.equal(typeof getGlobalConfiguration(), 'object');
   });
 
   it('sets globals automatically', () => {
