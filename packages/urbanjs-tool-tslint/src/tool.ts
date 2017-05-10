@@ -52,6 +52,19 @@ export class Tslint implements ITool<TslintConfig> {
         throw e;
       }
     });
+
+    this.taskService.addTask(`${taskName}:fix`, [], async () => {
+      this.loggerService.debug('running task', `${taskName}:fix`);
+
+      try {
+        const defaults = getDefaults(this.configService.getGlobalConfiguration());
+        const config = this.configService.mergeParameters<TslintConfig>(defaults, parameters, taskName);
+        await this.validate({...config, fix: true});
+      } catch (e) {
+        this.loggerService.error(`Unexpected error in ${taskName}`, e);
+        throw e;
+      }
+    });
   }
 
   private async validate(config: TslintConfig): Promise<void> {

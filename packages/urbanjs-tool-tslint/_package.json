@@ -22,6 +22,7 @@
     "gulp-tslint": "*",
     "inversify": "*",
     "merge-stream": "*",
+    "mkdirp": "*",
     "through2": "*",
     "tslint": "*"
   },

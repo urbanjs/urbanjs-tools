@@ -44,7 +44,7 @@ You can run any of the gulp tasks above (e.g. ```gulp eslint```) or you can use 
 - `gulp pre-release`: analyzes the code base, runs tests, generates documentation, and transpiles/bundles (```pre-commit```, ```doc```, ```dist```, ```changelog```)
 
 Additionally you can use these modifiers:
-- `:fix` (`eslint`)
+- `:fix` (`eslint`, `tslint`)
 - `:watch` (`babel`, `webpack`, `mocha`)
 
 e.g. `gulp eslint:fix` or `gulp babel:watch`

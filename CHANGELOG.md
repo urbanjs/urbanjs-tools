@@ -7,6 +7,7 @@
 - `BREAKING` Remove jest task
 - `BREAKING` `.eslintrc` and `tslint.json` configuration files can be found in responsible packages separately
     - please extend these files if needed
+- Introduce `tslint:fix` task
 - Update dependencies
     - `BREAKING`
         - Remove tslint-microsoft-contrib ruleset from tslint task
