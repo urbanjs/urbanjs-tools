@@ -1,6 +1,6 @@
 {
   "name": "urbanjs-tool-check-file-names",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Urbanjs tool to help preserving the naming conventions of the source files",
   "keywords": [
     "check file names",
