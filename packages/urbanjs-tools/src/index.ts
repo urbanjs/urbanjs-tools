@@ -9,7 +9,17 @@ configService.setGlobalConfiguration(globals);
 
 const api = container.get<IApi>(TYPE_API);
 
-Object.keys(api).forEach(methodName => {
+[
+  'setupInMemoryTranspile',
+  'getGlobalConfiguration',
+  'setGlobalConfiguration',
+  'getTool',
+  'initializeTask',
+  'initializeTasks',
+  'initializePreset',
+  'initializePresets',
+  'initialize'
+].forEach(methodName => {
   if (typeof api[methodName] === 'function') {
     api[methodName] = api[methodName].bind(api);
   }

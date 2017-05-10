@@ -21,14 +21,32 @@ describe('index', () => {
   });
 
   it('exposes the api via require', () => {
-    const api = require('./index');
-    expect.equal(api, container.get<IApi>(TYPE_API));
+    const index = require('./index');
+    expect.equal(index, container.get<IApi>(TYPE_API));
   });
 
   it('all exposed methods are bound to correctly (this works)', () => {
-    const api = require('./index');
-    const getGlobalConfiguration = api.getGlobalConfiguration;
-    expect.equal(typeof getGlobalConfiguration(), 'object');
+    const publicMethods = {
+      setupInMemoryTranspile: spy(),
+      getGlobalConfiguration: spy(),
+      setGlobalConfiguration: spy(),
+      getTool: spy(),
+      initializeTask: spy(),
+      initializeTasks: spy(),
+      initializePreset: spy(),
+      initializePresets: spy(),
+      initialize: spy()
+    };
+
+    const apiMock = {...publicMethods};
+    container.rebind<IApi>(TYPE_API).toConstantValue(apiMock);
+    const index = require('./index');
+
+    Object.keys(publicMethods).forEach(methodName => {
+      const method = index[methodName];
+      method();
+      expect.equal(publicMethods[methodName].calledOn(apiMock), true);
+    });
   });
 
   it('sets globals automatically', () => {
