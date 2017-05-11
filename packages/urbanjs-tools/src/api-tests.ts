@@ -69,13 +69,6 @@ describe('api', () => {
       expect.deepEqual(Object.keys(api.tasks), Object.keys(toolNameByTaskName));
     });
 
-    it('warns about the deprecation', () => {
-      toolServiceMock.getTool = spy(() => true);
-      expect.equal(api.tasks.babel, true);
-      const expectedDeprecationMessage = '.tasks property will be removed in the next major version. Please use .initializeTasks or .initializePresets methods instead.';
-      expect.equal(loggerServiceMock.warn.calledWith(expectedDeprecationMessage), true);
-    });
-
     it('tasks are registrable gulp tool getters', () => {
       Object.keys(toolNameByTaskName).forEach(taskName => {
         const tool = {register: spy()};
@@ -306,13 +299,6 @@ describe('api', () => {
   });
 
   describe('.initialize()', () => {
-    it('warns about the deprecation', () => {
-      api.initializePreset = spy();
-      api.initialize(gulpMock, {});
-      const expectedDeprecationMessage = '.initialize method will be removed in the next major version. Please use .initializeTasks or .initializePresets methods instead.';
-      expect.equal(loggerServiceMock.warn.calledWith(expectedDeprecationMessage), true);
-    });
-
     it('initializes all default presets automatically', () => {
       api.initializePreset = spy();
       api.initialize(gulpMock, {});

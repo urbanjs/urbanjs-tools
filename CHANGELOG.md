@@ -1,4 +1,10 @@
-## Unreleased
+## CHANGELOG
+> This `CHANGELOG.md` is deprecated since monolith repository has been introduced.
+Please check `packages` folder for individual changelog files.
+
+## [Released separately]((https://github.com/urbanjs/tools/compare/1.2.4...monolith)) (2017-05-10)
+As an overview for the changes since last major version of `1.2.4`:
+
 - Introduce `initializePresets` & `initializeTasks` methods to have bigger control over preset configuration
 - Introduce `runnerMemoryUsageLimit` options in `mocha` config
 - Introduce `setupInMemoryTranspile` method to set up in memory tanspile easily

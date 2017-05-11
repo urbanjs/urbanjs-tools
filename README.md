@@ -1,17 +1,6 @@
 # urbanjs-tools
 [![Build Status](https://travis-ci.org/urbanjs/urbanjs-tools.svg?branch=master)](https://travis-ci.org/urbanjs/urbanjs-tools)
 
-## Usage
-
-Check the [wiki](https://github.com/urbanjs/urbanjs-tools/wiki) for detailed guides e.g.
-- [starting a new project](https://github.com/urbanjs/urbanjs-tools/wiki/3.1---How-to-start-new-project)
-- [integrating with existing project](https://github.com/urbanjs/urbanjs-tools/wiki/3.2---How-to-integrate-with-existing-project)
-- [configuring tasks](https://github.com/urbanjs/urbanjs-tools/wiki/3.3-How-to-configure-tasks)
-- [using global configuration](https://github.com/urbanjs/urbanjs-tools/wiki/3.4-How-to-use-globals)
-- [handling special use cases](https://github.com/urbanjs/urbanjs-tools/wiki/3.5---How-to-handle-special-use-cases)
-- [preinstalling dependencies](https://github.com/urbanjs/urbanjs-tools/wiki/3.6---How-to-preinstall-dependencies)
-- [configuring IDEs](https://github.com/urbanjs/urbanjs-tools/wiki/3.7---How-to-configure-the-editors)
-
 ### Quick start
 
 Initialize the necessary tasks and presets in your gulpfile.js:
@@ -36,7 +25,7 @@ tools.initialize(gulp, {
 
 You can run any of the gulp tasks above (e.g. ```gulp eslint```) or you can use these [presets](https://github.com/urbanjs/urbanjs-tools/wiki/3---Usage#available-presets):
 - `gulp test`: runs tests (```mocha```)
-- `gulp analyse`: analyzes the code base (```check-dependencies```, ```check-file-names```, ```eslint```, ```nsp```, ```retire```)
+- `gulp analyse`: analyzes the code base (```check-dependencies```, ```check-file-names```, ```eslint```, ```nsp```, ```retire```, ```tslint```)
 - `gulp pre-commit`: analyzes the code base and runs tests (```analyse```, ```test```)
 - `gulp doc`: generates the documentation (```jsdoc```)
 - `gulp dist`: runs the configured transpiler/bundler (```babel```, ```webpack```)
@@ -50,9 +39,10 @@ Additionally you can use these modifiers:
 e.g. `gulp eslint:fix` or `gulp babel:watch`
 
 ## Documentation
-Check out the [wiki](https://github.com/urbanjs/urbanjs-tools/wiki) for guides, examples and details.
-
-Also you can find the [API reference](http://urbanjs.github.io/tools/) here.
+Check out 
+- the [wiki](https://github.com/urbanjs/urbanjs-tools/wiki) for guides, examples and details
+- [api documentation](https://github.com/urbanjs/urbanjs-tools/blob/master/packages/urbanjs-tools/README.md)
+- README.md files of packages
 
 ## Contribution
 Highly appreciated any ideas how to make it more powerful.

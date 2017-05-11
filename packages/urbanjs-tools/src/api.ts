@@ -60,7 +60,6 @@ export class Api implements IApi {
       Object.defineProperty(this.tasks, taskName, {
         enumerable: true,
         get() {
-          loggerService.warn('.tasks property will be removed in the next major version. Please use .initializeTasks or .initializePresets methods instead.');
           return toolService.getTool(toolNameByTaskName[taskName]);
         }
       });
@@ -146,8 +145,6 @@ export class Api implements IApi {
 
   @track()
   public initialize(gulp: IGulp, config: { [key: string]: PresetConfig | ToolConfiguration<any> }) {
-    this.loggerService.warn('.initialize method will be removed in the next major version. Please use .initializeTasks or .initializePresets methods instead.');
-
     const presetConfigsByPresetName = Object.keys(presets).reduce((acc, presetName) => ({
       ...acc,
       [presetName]: true
