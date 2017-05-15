@@ -1,7 +1,7 @@
 {
   "name": "urbanjs-tool-check-dependencies",
-  "version": "0.2.0",
-  "description": "Urbanjs tool to help managing the external dependencies",
+  "version": "1.0.0",
+  "description": "Urbanjs tool to manage the external dependencies",
   "keywords": [
     "check dependencies",
     "node_modules",

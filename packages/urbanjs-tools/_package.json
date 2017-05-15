@@ -1,6 +1,6 @@
 {
   "name": "urbanjs-tools",
-  "version": "2.0.0-beta7",
+  "version": "2.0.0",
   "description": "Common dev tools for NPM packages",
   "keywords": [
     "development",
