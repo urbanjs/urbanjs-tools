@@ -44,10 +44,10 @@ export class ConfigService implements IConfigService {
   }
 
   @track()
-  public setGlobalConfiguration(configuration: ToolConfiguration<GlobalConfiguration>) {
-    configuration = this.mergeParameters(
+  public setGlobalConfiguration(value: ToolConfiguration<GlobalConfiguration>) {
+    const configuration = this.mergeParameters<GlobalConfiguration>(
       this.globals,
-      configuration,
+      value,
       'global'
     );
 

@@ -1,10 +1,10 @@
-import {inject, injectable} from 'inversify';
+import { inject, injectable } from 'inversify';
 import {
   IStreamService,
   ITraceService,
   TYPE_SERVICE_TRACE
 } from '../types';
-import {track} from '../decorators';
+import { track } from '../decorators';
 
 export const TYPE_DRIVER_THROUGH2 = 'TYPE_DRIVER_THROUGH2';
 export const TYPE_DRIVER_FORK_STREAM = 'TYPE_DRIVER_FORK_STREAM';
@@ -48,9 +48,11 @@ export class StreamService implements IStreamService {
   }
 
   @track()
-  public streamIf(condition: (file: Object) => boolean, conditionStream: NodeJS.ReadWriteStream, options?: { ignoreError?: boolean }) {
+  public streamIf<T>(condition: (file: T) => boolean,
+                     conditionStream: NodeJS.ReadWriteStream,
+                     options?: { ignoreError?: boolean }) {
     const forkStream = new this.forkStream({
-      classifier: (input: Object, cb: Function) => cb(null, condition(input))
+      classifier: (input: T, cb: Function) => cb(null, condition(input))
     });
 
     forkStream.a.pipe(conditionStream);

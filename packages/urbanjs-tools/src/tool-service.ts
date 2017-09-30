@@ -16,7 +16,8 @@ import {
   track
 } from 'urbanjs-tools-core';
 import {
-  NotFoundTool
+  NotFoundTool,
+  UrbanjsToolsError
 } from './errors';
 import {
   IToolService,
@@ -26,9 +27,6 @@ import {
   IRegistrableGulpTool,
   IRequireDriver, ToolContainerFactory
 } from './types';
-import {
-  UrbanjsToolsError
-} from './errors';
 
 @injectable()
 export class ToolService implements IToolService {

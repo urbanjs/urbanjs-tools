@@ -1,5 +1,5 @@
-import {inject, injectable} from 'inversify';
-import {ChildProcess} from 'child_process';
+import { inject, injectable } from 'inversify';
+import { ChildProcess } from 'child_process';
 import {
   ILoggerService,
   IShellService,
@@ -10,9 +10,10 @@ import {
   TYPE_SERVICE_CONFIG,
   ShellCommandOptions,
   ForkProcessOptions,
-  ChildProcessOptions
+  ChildProcessOptions,
+  ShellCommandResult
 } from '../types';
-import {track} from '../decorators';
+import { track } from '../decorators';
 
 export const TYPE_DRIVER_CHILD_PROCESS = 'TYPE_DRIVER_CHILD_PROCESS';
 
@@ -49,7 +50,7 @@ export class ShellService implements IShellService {
   public async runCommand(command: string, options: ShellCommandOptions = {}) {
     const childProcessOptions: ChildProcessOptions = this.getChildProcessOptions(<ChildProcessOptions>options);
 
-    return await new Promise((resolve, reject) => {
+    return await new Promise<ShellCommandResult>((resolve, reject) => {
       this.loggerService.debug('running command', command, options);
       this.childProcessDriver.exec(command, childProcessOptions, (err, stdout, stderr) => {
         this.loggerService.debug('err', err);

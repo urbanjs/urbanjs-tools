@@ -16,6 +16,9 @@
     "no-angle-bracket-type-assertion": false,
     "whitespace": false,
     "callable-types": false,
-    "max-classes-per-file": false
+    "max-classes-per-file": false,
+    "prefer-object-spread": false,
+    "no-submodule-imports": false,
+    "no-object-literal-type-assertion": false
   }
 }

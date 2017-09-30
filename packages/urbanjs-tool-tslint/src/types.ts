@@ -5,4 +5,5 @@ export type TslintConfig = {
   formatter?: string;
   formattersDirectory?: string;
   rulesDirectory?: string;
+  fix?: boolean;
 };

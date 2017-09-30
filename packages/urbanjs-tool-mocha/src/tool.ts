@@ -269,14 +269,14 @@ export class Mocha implements ITool<MochaConfig> {
           .catch(() => {
             hasError = true;
           })
-          .then(() => {
+          .then(async () => {
             if (!runnerOptions.runnerMemoryUsageLimit ||
               currentRunner.memoryUsage.heapTotal < runnerOptions.runnerMemoryUsageLimit) {
               freeRunners.push(currentRunner);
-              return Promise.resolve();
+              return;
             }
 
-            return this.closeRunner(currentRunner, mochaConfig);
+            await this.closeRunner(currentRunner, mochaConfig);
           })
           .then(() => {
             promises.splice(promises.indexOf(currentPromise), 1);

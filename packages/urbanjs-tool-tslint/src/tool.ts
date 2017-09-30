@@ -1,7 +1,7 @@
-import {inject, injectable} from 'inversify';
-import tslint, {PluginOptions} from 'gulp-tslint';
+import { inject, injectable } from 'inversify';
+import tslint, { PluginOptions } from 'gulp-tslint';
 import * as gulp from 'gulp';
-import {extname} from 'path';
+import { extname } from 'path';
 import {
   ITool,
   IConfigService,
@@ -16,8 +16,8 @@ import {
   IStreamService,
   TYPE_SERVICE_STREAM
 } from 'urbanjs-tools-core';
-import {getDefaults} from './defaults';
-import {TslintConfig} from './types';
+import { getDefaults } from './defaults';
+import { TslintConfig } from './types';
 
 @injectable()
 export class Tslint implements ITool<TslintConfig> {
@@ -68,13 +68,13 @@ export class Tslint implements ITool<TslintConfig> {
   }
 
   private async validate(config: TslintConfig): Promise<void> {
-    const tslintConfig: PluginOptions = {
+    const tslintConfig = {
       configuration: config.configFile,
       ...config,
       configFile: undefined,
       extensions: undefined,
       files: undefined
-    };
+    } as PluginOptions;
 
     const isTsFile = (file: { path: string }) => config.extensions.indexOf(extname(file.path)) !== -1;
 

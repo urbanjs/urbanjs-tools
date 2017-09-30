@@ -1,4 +1,4 @@
-import {ChildProcess} from 'child_process';
+import { ChildProcess } from 'child_process';
 
 export const TYPE_CONFIG_LOGGER = 'TYPE_CONFIG_LOGGER';
 export const TYPE_SERVICE_LOGGER = 'TYPE_SERVICE_LOGGER';
@@ -34,7 +34,11 @@ export type CLIServiceOptions = {
 };
 
 export interface ICLIService {
-  parseArgs<T extends { [key: string]: string | number | boolean }>(args: string[], options: CLIServiceOptions): T;
+  parseArgs<T extends {
+    [key: string]: string
+      | number
+      | boolean
+  }>(args: string[], options: CLIServiceOptions): T;
   showHelp(options: CLIServiceOptions): void;
 }
 
@@ -67,9 +71,9 @@ export interface ITraceService {
 
 export interface IStreamService {
   mergeStreams(streamA: NodeJS.ReadWriteStream, streamB: NodeJS.ReadWriteStream): NodeJS.ReadWriteStream;
-  streamIf<T extends Object>(predicate: (input: T) => boolean,
-                             stream: NodeJS.ReadWriteStream,
-                             options: { ignoreError: boolean });
+  streamIf<T>(predicate: (input: T) => boolean,
+              stream: NodeJS.ReadWriteStream,
+              options: { ignoreError: boolean });
 }
 
 export type TSCompilerOptions = Object & { extends?: string };

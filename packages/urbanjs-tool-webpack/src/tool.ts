@@ -1,7 +1,6 @@
 import {inject, injectable} from 'inversify';
 import {omit} from 'lodash';
 import * as webpack from 'webpack';
-import {Stats as WebpackStats} from '@types/webpack';
 import {
   ITool,
   IConfigService,
@@ -82,7 +81,7 @@ export class Webpack implements ITool<WebpackConfig> {
         }
 
         await new Promise(() => { //tslint:disable-line
-          webpack([].concat(config).map(itemConfig => omit(itemConfig, 'clean'))).watch(200, (err, stats) => {
+          webpack([].concat(config).map(itemConfig => omit(itemConfig, 'clean'))).watch({poll: 200}, (err, stats) => {
             this.logStats(stats);
 
             if (err) {
@@ -98,7 +97,7 @@ export class Webpack implements ITool<WebpackConfig> {
     });
   }
 
-  private logStats(stats?: WebpackStats) {
+  private logStats(stats?: webpack.Stats) {
     if (stats) {
       const statsJson = stats.toJson();
       const errors = statsJson.errors.concat(statsJson.warnings);

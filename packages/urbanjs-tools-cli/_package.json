@@ -1,6 +1,6 @@
 {
   "name": "urbanjs-tools-cli",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Command line interface of urbanjs tools",
   "keywords": [
     "development",

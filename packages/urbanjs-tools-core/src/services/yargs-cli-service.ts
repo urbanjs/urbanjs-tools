@@ -1,5 +1,4 @@
-import {Argv as IYargs} from '@types/yargs';
-import {inject, injectable} from 'inversify';
+import { inject, injectable } from 'inversify';
 import {
   CLIServiceOptions,
   ICLIService,
@@ -8,16 +7,35 @@ import {
   ITraceService,
   TYPE_SERVICE_TRACE
 } from '../types';
-import {track} from '../decorators';
+import { track } from '../decorators';
 
 export const TYPE_DRIVER_YARGS = 'TYPE_DRIVER_YARGS';
 
+export type YargsOptions = {
+  alias: string;
+  describe: string;
+  type: string;
+  demand?: boolean;
+};
+
+export type YargsDriver = {
+  parse(...args: any[]): any;
+  options(options: { [key: string]: YargsOptions }): YargsDriver;
+  showHelpOnFail(enable: boolean, message?: string): YargsDriver;
+  exitProcess(enabled: boolean): YargsDriver;
+  skipValidation(key: string): YargsDriver;
+  usage(message: string, options?: { [key: string]: YargsOptions }): YargsDriver;
+  showHelp(consoleLevel?: string): YargsDriver;
+  strict(): YargsDriver;
+  command(command: string, description: string): YargsDriver;
+};
+
 @injectable()
 export class YargsCLIService implements ICLIService {
-  private yargsDriver: () => IYargs;
+  private yargsDriver: () => YargsDriver;
   private loggerService: ILoggerService;
 
-  constructor(@inject(TYPE_DRIVER_YARGS) yargsDriver: () => IYargs,
+  constructor(@inject(TYPE_DRIVER_YARGS) yargsDriver: () => YargsDriver,
               @inject(TYPE_SERVICE_LOGGER) loggerService: ILoggerService,
               @inject(TYPE_SERVICE_TRACE) traceService: ITraceService) {
     this.loggerService = loggerService;
