@@ -93,10 +93,11 @@ export class CheckDependencies implements ITool<CheckDependenciesConfig> {
     });
 
     const shrinkwrapExists = await this.fsService.exists(join(dirname(packageFile), 'npm-shrinkwrap.json'));
+    const packageLockExists = await this.fsService.exists(join(dirname(packageFile), 'package-lock.json'));
     const yarnLockExists = await this.fsService.exists(join(dirname(packageFile), 'yarn.lock'));
 
-    // shrinkwrap does not exist...
-    if (!shrinkwrapExists && !yarnLockExists && problematicDependencies.length) {
+    // lock file does not exist...
+    if (!shrinkwrapExists && !yarnLockExists && !packageLockExists && problematicDependencies.length) {
       this.loggerService.error(this.toLogMessage('You have critical outdated packages:', problematicDependencies));
 
       throw new Error('critical dependencies');

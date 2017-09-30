@@ -37,7 +37,7 @@ describe('Check dependencies task', () => {
   it('should fail if outdated package found', async () => {
     await shellService.runCommandsInSequence(
       [
-        ['npm install del@2.0.0'],
+        ['npm install del@2.0.0 --no-save'],
         ['gulp check-dependencies', {
           expectToFail: true,
           expectToLog: 'You have critical outdated packages:\n- del'
