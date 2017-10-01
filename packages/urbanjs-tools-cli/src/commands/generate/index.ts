@@ -172,7 +172,7 @@ export class GenerateCommand implements ICommand {
       if (isTsProject) {
         promises.push(this.fileSystemService.writeFile(
           join(folderPath, 'tsconfig.json'),
-          JSON.stringify({extends: './node_modules/urbanjs-tools/tsconfig.json'})
+          await this.fileSystemService.readFile(join(__dirname, 'templates/tsconfig-json.txt'))
         ));
       }
 

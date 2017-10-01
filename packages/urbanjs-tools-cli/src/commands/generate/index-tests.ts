@@ -290,6 +290,7 @@ describe('cli', () => {
           [
             join(__dirname, './templates/package-ts.txt'),
             join(__dirname, './templates/gulpfile-ts.txt'),
+            join(__dirname, './templates/tsconfig-json.txt')
           ].forEach((path) => {
             expect.equal(fileSystemServiceMock.readFile.calledWith(path), true);
           });

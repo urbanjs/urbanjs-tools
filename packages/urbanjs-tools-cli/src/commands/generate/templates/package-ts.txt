@@ -13,6 +13,8 @@
     "babel-runtime": "^6.22.0"
   },
   "devDependencies": {
+    "@types/mocha": "*",
+    "@types/node": "*",
     "gulp": "^3.9.1",
     "urbanjs-tool-babel": "*",
     "urbanjs-tool-check-dependencies": "*",
